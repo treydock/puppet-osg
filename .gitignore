@@ -1,0 +1,21 @@
+# IDE related
+.idea
+.project
+
+# Testing and development
+.vagrant
+spec/fixtures
+
+# Ruby and RVM
+.ruby-version
+.rvmrc
+
+# Bundler
+Gemfile.lock
+
+# Puppet module generated
+metadata.json
+pkg/
+
+# RSpec fixtures
+spec/fixtures/modules
