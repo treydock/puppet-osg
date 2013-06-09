@@ -8,6 +8,8 @@ RSpec.configure do |c|
     :osfamily               => 'RedHat',
     :operatingsystem        => 'CentOS',
     :operatingsystemrelease => '6.4',
+    :architecture           => 'x86_64',
+    :os_maj_version         => '6',
   }
 
   c.before :each do

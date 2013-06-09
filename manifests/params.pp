@@ -25,12 +25,20 @@ class osg::params {
 
   case $::osfamily {
     'RedHat': {
-
     }
 
     default: {
       fail("Unsupported osfamily: ${::osfamily}, module ${module_name} only support osfamily RedHat")
     }
+  }
+
+  $baseurl = $::osg_baseurl ? {
+    undef   => 'UNSET',
+    default => $::osg_baseurl,
+  }
+  $mirrorlist = $::osg_mirrorlist ? {
+    undef   => "http://repo.grid.iu.edu/mirror/3.0/el${::os_maj_version}/osg-release/${::architecture}",
+    default => $::osg_mirrorlist,
   }
 
 }

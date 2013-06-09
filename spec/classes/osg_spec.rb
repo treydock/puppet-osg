@@ -9,5 +9,5 @@ describe 'osg' do
   end
 
   it { should contain_class('osg::params') }
-
+  it { should include_class('osg::repo') }
 end

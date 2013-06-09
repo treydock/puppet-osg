@@ -34,8 +34,10 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class osg (
-
+  $baseurl        = $osg::params::baseurl,
+  $mirrorlist     = $osg::params::mirrorlist
 ) inherits osg::params {
 
+  include osg::repo
 
 }
