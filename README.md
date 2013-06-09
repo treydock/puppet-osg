@@ -36,6 +36,10 @@ To test on CentOS 5.9 run the following:
 
     RSPEC_DESTROY=centos-59-x64 bundle exec rake spec:system
 
+## TODO
+
+* Expand CA Certs to handle all the possible options documented by OSG.  [Ref](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/InstallCertAuth)
+
 ## Further Information
 
 *
