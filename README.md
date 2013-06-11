@@ -1,14 +1,23 @@
-# puppet-osg
+# puppet-osg [![Build Status](https://travis-ci.org/treydock/puppet-osg.png)](https://travis-ci.org/treydock/puppet-osg)
 
-UNKNOWN
+This module is a work in progress to Puppet-ize the installation and management of the OSG software stack.
 
 ## Support
 
 Tested using
-* CentOS 5.9
-* CentOS 6.4
+* Scientific 6.4
 
 ## Usage
+
+### osg::gums
+
+Installs the OSG GUMS service and performs initial setup.
+
+    class { 'osg::gums':
+      db_password => 'secret',
+    }
+
+After Puppet applies this class, a script at `/root/gums-post-install.sh` can be run or used as reference to perform the remaining setup steps for GUMS.
 
 ## Development
 
@@ -32,9 +41,9 @@ For active development the `RSPEC_DESTROY=no` environment variable can be passed
 
     RSPEC_DESTROY=no bundle exec rake spec:system
 
-To test on CentOS 5.9 run the following:
+To test on CentOS 6.4 run the following:
 
-    RSPEC_DESTROY=centos-59-x64 bundle exec rake spec:system
+    RSPEC_DESTROY=centos-64-x64 bundle exec rake spec:system
 
 ## TODO
 

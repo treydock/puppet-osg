@@ -4,27 +4,31 @@
 #
 # === Variables
 #
-# Here you should define a list of variables that this module would require.
+# [*osg_baseurl*]
+#   Sets the baseurl used by the OSG yum repo.
 #
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
+# [*osg_mirrorlist*]
+#   Sets the mirrorlist used by the OSG yum repo.
+#   The mirrorlist value can be removed by assigning the value false or undef.
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Trey Dockendorf <treydock@gmail.com>
 #
 # === Copyright
 #
-# Copyright 2013 Your name here, unless otherwise noted.
+# Copyright 2013 Trey Dockendorf
 #
 class osg::params {
 
   case $::osfamily {
     'RedHat': {
+      case $::operatingsystemrelease {
+        /6.\d/ : { }
+        default : {
+          fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")
+        }
+      }
     }
 
     default: {

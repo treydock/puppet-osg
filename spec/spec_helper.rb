@@ -5,6 +5,7 @@ RSpec.configure do |c|
 
   c.add_setting :default_facts, :default => {}
   c.default_facts = {
+    :kernel                 => 'Linux',
     :osfamily               => 'RedHat',
     :operatingsystem        => 'CentOS',
     :operatingsystemrelease => '6.4',

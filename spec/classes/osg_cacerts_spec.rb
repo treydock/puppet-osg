@@ -17,4 +17,31 @@ describe 'osg::cacerts' do
       'require' => 'Yumrepo[osg]',
     })
   end
+
+  it do 
+    should contain_package('fetch-crl').with({
+      'ensure'  => 'installed',
+      'require' => 'Yumrepo[osg]',
+    })
+  end
+
+  it do
+    should contain_service('fetch-crl-boot').with({
+      'ensure'      => 'running',
+      'enable'      => 'true',
+      'hasstatus'   => 'true',
+      'hasrestart'  => 'true',
+      'require'     => 'Package[fetch-crl]',
+    })
+  end
+
+  it do
+    should contain_service('fetch-crl-cron').with({
+      'ensure'      => 'running',
+      'enable'      => 'true',
+      'hasstatus'   => 'true',
+      'hasrestart'  => 'true',
+      'require'     => 'Package[fetch-crl]',
+    })
+  end
 end

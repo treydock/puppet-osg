@@ -1,0 +1,43 @@
+DROP DATABASE IF EXISTS <%= @db_name %>;
+
+CREATE DATABASE <%= @db_name %>;
+
+GRANT ALL
+  ON <%= @db_name %>.*
+  TO <%= @db_username %>@'<%= @db_hostname %>' IDENTIFIED BY '<%= @db_password %>';
+
+USE <%= @db_name %>;
+
+CREATE TABLE `USERS` (
+ `ID` INTEGER AUTO_INCREMENT PRIMARY KEY,
+ `GROUP_NAME` VARCHAR(255) NOT NULL,
+ `DN` varchar(255) NOT NULL,
+ `FQAN` varchar(255) default NULL,
+ `EMAIL` varchar(255) default NULL 
+) TYPE=InnoDB;
+
+CREATE INDEX complete ON USERS (GROUP_NAME(10), DN(70), FQAN(30));
+
+CREATE TABLE `MAPPING` (
+ `ID` INTEGER AUTO_INCREMENT PRIMARY KEY,
+ `MAP` VARCHAR(255) NOT NULL,
+ `DN` varchar(255) default NULL,
+ `ACCOUNT` varchar(255) default NULL
+) TYPE=InnoDB;
+
+CREATE INDEX complete ON MAPPING (MAP(10), DN(70));
+
+CREATE TABLE `CONFIG` (
+ `ID` INTEGER AUTO_INCREMENT PRIMARY KEY,
+ `XML` MEDIUMTEXT NOT NULL,
+ `TIMESTAMP` DATETIME NOT NULL,
+ `CURRENT` BOOL NOT NULL,
+ `NAME` varchar(255),
+ `AUTOGEN` BOOL NOT NULL DEFAULT 0
+) TYPE=InnoDB;
+
+CREATE INDEX complete ON CONFIG (CURRENT, TIMESTAMP);
+
+USE mysql;
+
+FLUSH PRIVILEGES;

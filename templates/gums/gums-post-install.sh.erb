@@ -1,0 +1,15 @@
+#!/bin/bash
+
+TOMCAT_CMD="/var/lib/trustmanager-tomcat/configure.sh"
+echo "### Configuring Tomcat ###"
+echo "Running: ${TOMCAT_CMD}"
+$TOMCAT_CMD
+echo "### END Configuring Tomcat ###"
+
+GUMS_CMD="/usr/bin/gums-setup-mysql-database --user <%= @db_username %> --host <%= @db_hostname %>:<%= @db_port %> --password <%= @db_password %> --noprompt"
+echo "### Configuring GUMS ###"
+echo "Running: ${GUMS_CMD}"
+$GUMS_CMD
+echo "### END Configuring GUMS ###"
+
+exit 0
