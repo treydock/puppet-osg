@@ -30,10 +30,11 @@ class osg::repo (
 ) inherits osg {
 
   include epel
+  include osg::params
 
   Class['epel'] -> Class['osg::repo']
 
-  ensure_packages(['yum-plugin-priorities'])
+  ensure_packages($osg::params::repo_dependencies)
 
   $baseurl_real = $baseurl ? {
     'UNSET' => undef,

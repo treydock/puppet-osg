@@ -24,7 +24,9 @@ class osg::params {
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemrelease {
-        /6.\d/ : { }
+        /6.\d/ : {
+          $repo_dependencies  = ['yum-plugin-priorities']
+        }
         default : {
           fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")
         }

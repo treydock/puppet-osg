@@ -9,7 +9,8 @@ describe 'osg::repo' do
   end
 
   it { should contain_class('osg') }
-  it { should contain_class('epel') }
+  it { should include_class('osg::params') }
+  it { should include_class('epel') }
 
   it { should contain_package('yum-plugin-priorities').with_ensure('present') }
 
