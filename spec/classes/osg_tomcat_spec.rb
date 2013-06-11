@@ -10,6 +10,7 @@ describe 'osg::tomcat' do
 
   it { should contain_class('osg') }
   it { should include_class('osg::repo') }
+  it { should include_class('osg::params') }
 
   it do 
     should contain_package('tomcat6').with({

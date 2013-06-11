@@ -26,6 +26,7 @@ class osg::params {
       case $::operatingsystemrelease {
         /6.\d/ : {
           $repo_dependencies  = ['yum-plugin-priorities']
+          $tomcat_packages    = ['tomcat6']
         }
         default : {
           fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")

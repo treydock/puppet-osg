@@ -20,10 +20,11 @@ class osg::tomcat (
 ) inherits osg {
 
   include osg::repo
+  include osg::params
 
   Class['osg::repo'] -> Class['osg::tomcat']
 
-  ensure_packages(['tomcat6'])
+  ensure_packages($osg::params::tomcat_packages)
 
   service { 'tomcat6':
     ensure      => running,
