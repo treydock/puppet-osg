@@ -16,14 +16,16 @@ describe 'osg::gums' do
 
   let :param_defaults do
     {
-      :db_name          => 'GUMS_1_3',
-      :db_username      => 'gums',
-      :db_password      => Digest::SHA1.hexdigest('gums'),
-      :db_hostname      => 'localhost',
-      :db_port          => '3306',
-      :manage_firewall  => true,
-      :firewall_port    => '8443',
-      :manage_tomcat    => true,
+      :db_name            => 'GUMS_1_3',
+      :db_username        => 'gums',
+      :db_password        => Digest::SHA1.hexdigest('gums'),
+      :db_hostname        => 'localhost',
+      :db_port            => '3306',
+      :port               => '8443',
+      :manage_firewall    => true,
+      :firewall_interface => 'eth0',
+      :manage_tomcat      => true,
+      :manage_mysql       => true,
     }
   end
 
@@ -36,8 +38,10 @@ describe 'osg::gums' do
   it { should contain_class('osg') }
   it { should include_class('osg::repo') }
   it { should include_class('osg::cacerts') }
+  it { should include_class('osg::gums::configure') }
   it { should include_class('firewall') }
   it { should include_class('osg::tomcat') }
+  it { should include_class('osg::gums::mysql') }
 
   it do 
     should contain_package('osg-gums').with({
@@ -47,20 +51,22 @@ describe 'osg::gums' do
   end
 
   it do
-    should contain_file('/root/gums-post-install.sh').with({
+    should contain_file('/etc/gums/gums.config').with({
       'ensure'  => 'present',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0700',
-    }) \
-      .with_content(/^TOMCAT_CMD="\/var\/lib\/trustmanager-tomcat\/configure.sh"$/) \
-      .with_content(/^GUMS_CMD="\/usr\/bin\/gums-setup-mysql-database --user #{params[:db_username]} --host #{params[:db_hostname]}:#{params[:db_port]} --password #{params[:db_password]} --noprompt"$/)
+      'content' => nil,
+      'owner'   => 'tomcat',
+      'group'   => 'tomcat',
+      'mode'    => '0600',
+      'replace' => 'false',
+      'require' => 'Package[osg-gums]',
+    })
   end
 
   it do
     should contain_firewall('100 allow GUMS access').with({
-      'port'    => params[:firewall_port],
+      'port'    => params[:port],
       'proto'   => 'tcp',
+      'iniface' => params[:firewall_interface],
       'action'  => 'accept',
     })
   end
@@ -84,5 +90,25 @@ describe 'osg::gums' do
 
     it { should_not contain_class('firewall') }
     it { should_not contain_firewall('100 allow GUMS access') }
+  end
+
+  context 'with manage_mysql => false' do
+    let :params do
+      param_defaults.merge({
+        :manage_mysql  => false,
+      })
+    end
+
+    it { should_not contain_class('osg::gums::mysql') }
+  end
+
+  context 'with firewall_interface => eth1' do
+    let :params do
+      param_defaults.merge({
+        :firewall_interface => 'eth1',
+      })
+    end
+
+    it { should contain_firewall('100 allow GUMS access').with_iniface('eth1') }
   end
 end

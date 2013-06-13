@@ -14,6 +14,7 @@ describe 'osg::cacerts' do
   it do 
     should contain_package('osg-ca-certs').with({
       'ensure'  => 'latest',
+      'name'    => 'osg-ca-certs',
       'require' => 'Yumrepo[osg]',
     })
   end
@@ -21,6 +22,7 @@ describe 'osg::cacerts' do
   it do 
     should contain_package('fetch-crl').with({
       'ensure'  => 'installed',
+      'name'    => 'fetch-crl',
       'require' => 'Yumrepo[osg]',
     })
   end
