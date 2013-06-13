@@ -70,7 +70,7 @@ class osg::gums (
   $firewall_interface = 'eth0',
   $manage_tomcat      = true,
   $manage_mysql       = true
-) inherits osg {
+) inherits osg::params {
 
   $db_password_real = $db_password ? {
     'UNSET'   => sha1($db_username),
