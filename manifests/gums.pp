@@ -95,17 +95,17 @@ class osg::gums (
   }
   validate_bool($manage_mysql_real)
 
-  Class['osg::repo'] -> Class['osg::cacerts'] -> Class['osg::gums']
-  Class['osg::gums'] -> Class['osg::gums::configure']
-  if $manage_firewall_real { Class['firewall'] -> Class['osg::gums'] }
-  if $manage_tomcat_real { Class['osg::gums'] -> Class['osg::tomcat'] }
-
   include osg::repo
   include osg::cacerts
   include osg::gums::configure
   if $manage_firewall_real { include firewall }
   if $manage_tomcat_real { include osg::tomcat }
   if $manage_mysql_real { include osg::gums::mysql }
+
+  Class['osg::repo'] -> Class['osg::cacerts'] -> Class['osg::gums']
+  Class['osg::gums'] -> Class['osg::gums::configure']
+  if $manage_firewall_real { Class['firewall'] -> Class['osg::gums'] }
+  if $manage_tomcat_real { Class['osg::gums'] -> Class['osg::tomcat'] }
 
   package { 'osg-gums':
     ensure  => installed,
