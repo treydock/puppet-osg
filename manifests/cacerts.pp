@@ -34,6 +34,9 @@
 # [*crl_cron_service_enable*]
 #   Default:  true
 #
+# [*manage_updater*]
+#   Default: false
+#
 # === Examples
 #
 #  class { 'osg::cacerts': }
@@ -56,10 +59,18 @@ class osg::cacerts (
   $crl_boot_service_enable  = true,
   $crl_cron_service_name    = 'fetch-crl-cron',
   $crl_cron_service_ensure  = 'running',
-  $crl_cron_service_enable  = true
+  $crl_cron_service_enable  = true,
+  $manage_updater           = false
 ) inherits osg {
 
+  $manage_updater_real = is_string($manage_updater) ? {
+    true  => str2bool($manage_updater),
+    false => $manage_updater,
+  }
+  validate_bool($manage_updater_real)
+
   include osg::repo
+  if $manage_updater_real { include osg::cacerts::updater }
 
   package { 'osg-ca-certs':
     ensure  => $package_ensure,

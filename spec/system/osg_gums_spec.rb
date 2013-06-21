@@ -5,7 +5,6 @@ describe 'osg::gums class:' do
   context 'should run successfully' do
     pp = <<-EOS
       class { 'mysql::server': }
-      class { 'osg': }
       class { 'osg::gums': }
     EOS
 

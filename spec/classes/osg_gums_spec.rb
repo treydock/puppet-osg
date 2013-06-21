@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'osg::gums' do
 
   let :facts do
-    RSpec.configuration.default_facts.merge({
+    default_facts.merge({
 
     })
   end

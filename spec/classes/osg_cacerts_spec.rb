@@ -3,13 +3,14 @@ require 'spec_helper'
 describe 'osg::cacerts' do
 
   let :facts do
-    RSpec.configuration.default_facts.merge({
+    default_facts.merge({
 
     })
   end
 
   it { should contain_class('osg') }
   it { should include_class('osg::repo') }
+  it { should_not include_class('osg::cacerts::updater') }
 
   it do 
     should contain_package('osg-ca-certs').with({
@@ -45,5 +46,11 @@ describe 'osg::cacerts' do
       'hasrestart'  => 'true',
       'require'     => 'Package[fetch-crl]',
     })
+  end
+
+  context 'with manage_updater => true' do
+    let(:params){{ :manage_updater => true }}
+
+    it { should include_class('osg::cacerts::updater') }
   end
 end

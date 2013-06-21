@@ -27,6 +27,7 @@ class osg::params {
         /6.\d/ : {
           $repo_dependencies  = ['yum-plugin-priorities']
           $tomcat_packages    = ['tomcat6']
+          $crond_package_name = 'cronie'
         }
         default : {
           fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")

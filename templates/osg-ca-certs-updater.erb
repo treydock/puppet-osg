@@ -1,0 +1,2 @@
+# The test is reversed so the expression has an exit status of 0 if the lockfile does not exist.
+0 */6 * * * root [ ! -f /var/lock/subsys/osg-ca-certs-updater-cron ] || /usr/sbin/osg-ca-certs-updater <%= @args %>
