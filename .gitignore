@@ -12,6 +12,7 @@ spec/fixtures/manifests/
 .rvmrc
 
 # Bundler
+.bundle/
 Gemfile.lock
 
 # Puppet module generated

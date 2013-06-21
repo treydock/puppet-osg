@@ -1,4 +1,4 @@
-require 'facter/util/file_read'
+require 'facter/osg_version'
 require 'spec_helper'
 
 describe 'osg_version fact' do
