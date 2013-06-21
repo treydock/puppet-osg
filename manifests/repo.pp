@@ -64,5 +64,6 @@ class osg::repo (
     gpgcheck        => '1',
     gpgkey          => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
     priority        => '98',
+    require         => Yumrepo['epel'],
   }
 }

@@ -31,6 +31,11 @@ class osg::cacerts::updater (
   $replace_config           = true
 ) inherits osg::params {
 
+  include osg::repo
+  include osg::cacerts
+
+  Class['osg::cacerts'] -> Class['osg::cacerts::updater']
+
   $include_cron_real = is_string($include_cron) ? {
     true  => str2bool($include_cron),
     false => $include_cron,
@@ -61,11 +66,7 @@ class osg::cacerts::updater (
   $args_array = [ $min_age_arg, $max_age_arg, $random_wait_arg, $quiet_arg, $logfile_arg ]
   $args = join($args_array, ' ')
 
-  include osg::repo
-  include osg::cacerts
   if $include_cron_real { include cron }
-
-  Class['osg::cacerts'] -> Class['osg::cacerts::updater']
 
   package { 'osg-ca-certs-updater':
     ensure  => $package_ensure,

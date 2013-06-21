@@ -16,21 +16,23 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::tomcat (
-
-) inherits osg {
+  $tomcat_packages  = $osg::params::tomcat_packages
+) inherits osg::params {
 
   include osg::repo
-  include osg::params
 
   Class['osg::repo'] -> Class['osg::tomcat']
 
-  ensure_packages($osg::params::tomcat_packages)
+  ensure_packages($tomcat_packages)
 
-  service { 'tomcat6':
-    ensure      => running,
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
-    require     => Package['tomcat6'],
+  $tomcat_service_params = {
+    'ensure'      => 'running',
+    'enable'      => true,
+    'hasstatus'   => true,
+    'hasrestart'  => true,
+    'require'     => Package['tomcat6'],
   }
+
+  ensure_resource('service', 'tomcat6', $tomcat_service_params)
+
 }
