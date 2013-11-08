@@ -2,12 +2,11 @@
 
 [![Build Status](https://travis-ci.org/treydock/puppet-osg.png)](https://travis-ci.org/treydock/puppet-osg)
 
-This module will be changing drastically as it's developed and is a work in progress to Puppet-ize the installation and management of the OSG software stack.
+## Overview
 
-## Support
+**This module is still under development.  Use at your own risk!**
 
-Tested using
-* Scientific 6.4
+This module is a work-in-progress intended to Puppet-ize the installation and management of the OSG software stack.
 
 ## Usage
 
@@ -45,35 +44,39 @@ Example of configuring a Bestman2 server.
       noSudoOnLs            => false,
     }
 
+
+## Compatibility
+
+Tested using
+
+* CentOS 6.4
+* Scientific Linux 6.4
+
 ## Development
 
-### Dependencies
+### Testing
 
-* Ruby 1.8.7
-* Bundler
-* Vagrant >= 1.2.0
+Testing requires the following dependencies:
 
-### Unit testing
+* rake
+* bundler
 
-1. To install dependencies run `bundle install`
-2. Run tests using `bundle exec rake spec:all`
+Install gem dependencies
 
-### Vagrant system tests
+    bundle install
 
-1. Have Vagrant >= 1.2.0 installed
-2. Run tests using `bundle exec rake spec:system`
+Run unit tests
 
-For active development the `RSPEC_DESTROY=no` environment variable can be passed to keep the Vagrant VM from being destroyed after a test run.
+    bundle exec rake ci
 
-    RSPEC_DESTROY=no bundle exec rake spec:system
+If you have Vagrant >= 1.2.0 installed you can run system tests
 
-To test on CentOS 6.4 run the following:
-
-    RSPEC_DESTROY=centos-64-x64 bundle exec rake spec:system
+    bundle exec rake spec:system
 
 ## TODO
 
-* Expand CA Certs to handle all the possible options documented by OSG.  [Ref](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/InstallCertAuth)
+* Manage resources for Compute Elements
+* Manage GridFTP related resources
 
 ## Further Information
 

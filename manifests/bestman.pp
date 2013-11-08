@@ -39,7 +39,7 @@ class osg::bestman (
   $accessFileSysViaGsiftp = false,
   $service_ensure         = 'running',
   $service_enable         = true,
-  $service_autorestart    = true,
+  $service_autorestart    = true
 ) inherits osg::params {
 
   validate_re($ca_certs_type, '^(osg|igtf|empty)$')

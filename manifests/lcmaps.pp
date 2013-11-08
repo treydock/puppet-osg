@@ -24,7 +24,7 @@ class osg::lcmaps (
   $lcmaps_package_ensure = 'installed',
   $lcmaps_globus_package_ensure = 'installed',
   $lcmaps_config_replace = true,
-  $lcmaps_globus_config_replace = true,
+  $lcmaps_globus_config_replace = true
 ) inherits osg::params {
 
   validate_bool($with_glexec)
