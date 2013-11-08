@@ -51,6 +51,7 @@ class osg::cacerts::updater (
   $service_name             = 'osg-ca-certs-updater-cron',
   $service_ensure           = 'running',
   $service_enable           = true,
+  $service_autorestart      = true,
   $include_cron             = true,
   $replace_config           = true,
   $crl_package_name         = 'fetch-crl',
@@ -63,54 +64,70 @@ class osg::cacerts::updater (
   $crl_cron_service_enable  = true
 ) inherits osg::params {
 
-  require 'osg::repo'
+  require 'osg::cacerts'
 
-  $include_cron_real = is_string($include_cron) ? {
-    true  => str2bool($include_cron),
-    false => $include_cron,
+  validate_bool($service_autorestart)
+  validate_bool($include_cron)
+  validate_bool($replace_config)
+
+  # This gives the option to not manage the service 'ensure' state.
+  $service_ensure_real = $service_ensure ? {
+    'undef' => undef,
+    default => $service_ensure,
   }
-  validate_bool($include_cron_real)
+
+  # This gives the option to not manage the service 'enable' state.
+  $service_enable_real = $service_enable ? {
+    'undef' => undef,
+    default => $service_enable,
+  }
+
+  $service_subscribe = $service_autorestart ? {
+    true  => File['/etc/cron.d/osg-ca-certs-updater'],
+    false => undef,
+  }
 
   $min_age_arg = $min_age ? {
-    /undef|false/ => '',
+    /undef|false/ => 'UNSET',
     default       => "-a ${min_age}",
   }
   $max_age_arg = $max_age ? {
-    /undef|false/ => '',
+    /undef|false/ => 'UNSET',
     default       => "-x ${max_age}",
   }
   $random_wait_arg = $random_wait ? {
-    /undef|false/ => '',
+    /undef|false/ => 'UNSET',
     default       => "-r ${random_wait}",
   }
   $quiet_arg = $quiet ? {
-    /undef|false/ => '',
-    default       => '-q',
+    true          => '-q',
+    default       => 'UNSET',
   }
   $logfile_arg = $logfile ? {
-    /undef|false/ => '',
-    default       => "-l ${logfile}",
+    false   => 'UNSET',
+    'undef' => 'UNSET',
+    default => "-l ${logfile}",
   }
 
   $args_array = [ $min_age_arg, $max_age_arg, $random_wait_arg, $quiet_arg, $logfile_arg ]
-  $args = join($args_array, ' ')
+  $args = join(reject($args_array, 'UNSET'), ' ')
 
-  if $include_cron_real { include cron }
+  if $include_cron { include cron }
 
   package { 'osg-ca-certs-updater':
     ensure  => $package_ensure,
     name    => $package_name,
     before  => File['/etc/cron.d/osg-ca-certs-updater'],
-    require => Package['osg-ca-certs'],
+    require => Yumrepo['osg'],
   }
 
   service { 'osg-ca-certs-updater-cron':
-    ensure      => $service_ensure,
-    enable      => $service_enable,
+    ensure      => $service_ensure_real,
+    enable      => $service_enable_real,
     name        => $service_name,
     hasstatus   => true,
     hasrestart  => true,
-    require     => Package['osg-ca-certs-updater'],
+    subscribe   => $service_subscribe,
   }
 
   file { '/etc/cron.d/osg-ca-certs-updater':

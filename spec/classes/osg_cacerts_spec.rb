@@ -2,13 +2,10 @@ require 'spec_helper'
 
 describe 'osg::cacerts' do
 
-  let :facts do
-    default_facts.merge({
+  let(:facts) { default_facts }
 
-    })
-  end
-
-  it { should contain_class('osg') }
+  it { should create_class('osg::cacerts') }
+  it { should contain_class('osg::params') }
   it { should include_class('osg::repo') }
 
   it do 
@@ -17,5 +14,10 @@ describe 'osg::cacerts' do
       'name'    => 'osg-ca-certs',
       'require' => 'Yumrepo[osg]',
     })
+  end
+
+  context 'with package_ensure => "latest"' do
+    let(:params) {{ :package_ensure => 'latest' }}
+    it { should contain_package('osg-ca-certs').with_ensure('latest') }
   end
 end
