@@ -118,7 +118,7 @@ describe 'osg::cacerts::updater' do
   [
     'service_autorestart',
     'include_cron',
-    'replace_config',
+    'config_replace',
   ].each do |bool_param|
     context "with #{bool_param} => 'foo'" do
       let(:params) {{ bool_param.to_sym => 'foo' }}

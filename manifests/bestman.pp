@@ -20,10 +20,11 @@ class osg::bestman (
   $user_name              = 'bestman',
   $ca_certs_type          = 'empty',
   $with_gridmap_auth      = false,
-  $grid_map_file_name        = '/etc/bestman2/conf/grid-mapfile.empty',
+  $grid_map_file_name     = '/etc/bestman2/conf/grid-mapfile.empty',
   $with_gums_auth         = true,
-  $gums_hostname          = 'yourgums.yourdomain',
+  $gums_hostname          = 'UNSET',
   $gums_port              = '8443',
+  $gums_protocol          = 'XACML',
   $bestman_gumscertpath   = '/etc/grid-security/bestman/bestmancert.pem',
   $bestman_gumskeypath    = '/etc/grid-security/bestman/bestmankey.pem',
   $manage_firewall        = true,
@@ -31,9 +32,11 @@ class osg::bestman (
   $firewall_interface     = 'eth0',
   $localPathListToBlock   = [],
   $localPathListAllowed   = [],
-  $cert_file_name           = '/etc/grid-security/bestman/bestmancert.pem',
-  $key_file_name            = '/etc/grid-security/bestman/bestmankey.pem',
+  $cert_file_name         = '/etc/grid-security/bestman/bestmancert.pem',
+  $key_file_name          = '/etc/grid-security/bestman/bestmankey.pem',
   $supportedProtocolList  = [],
+  $noSudoOnLs             = true,
+  $accessFileSysViaGsiftp = false,
   $service_ensure         = 'running',
   $service_enable         = true,
   $service_autorestart    = true,
@@ -69,15 +72,25 @@ class osg::bestman (
     default => $service_enable,
   }
 
-  $file_notify = $service_autorestart ? {
-    true  => Service['bestman2'],
+  $service_subscribe = $service_autorestart ? {
+    true  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
     false => undef,
   }
 
   require  $ca_certs_class
-  if $manage_firewall { require 'firewall' }
+
+  if $with_gums_auth {
+    require 'osg::lcmaps'
+
+    $gums_hostname_real = $gums_hostname ? {
+      'UNSET' => $osg::lcmaps::gums_hostname,
+      default => $gums_hostname,
+    }
+  }
 
   if $manage_firewall {
+    require 'firewall'
+
     firewall { '100 allow bestman2 access':
       port    => $port,
       proto   => tcp,
@@ -89,54 +102,23 @@ class osg::bestman (
   package { 'osg-se-bestman':
     ensure  => installed,
     require => Yumrepo['osg'],
+    before  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ]
   }
 
-  # PROVIDES??
-  file { '/etc/grid-security/gsi-authz.conf':
-    ensure  => present,
-    content => template('osg/gsi-authz.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    notify  => $file_notify,
-    before  => Service['bestman2'],
-    require => Package['osg-se-bestman'],
-  }
-
-  # PROVIDES??
-  file { '/etc/lcmaps.db':
-    ensure  => present,
-    content => template('osg/lcmaps.db.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    notify  => $file_notify,
-    before  => Service['bestman2'],
-    require => Package['osg-se-bestman'],
-  }
-
-  # PROVIDES??
   file { '/etc/sysconfig/bestman2':
     ensure  => present,
-    content => template('osg/bestman2.erb'),
+    content => template('osg/bestman/bestman2.sysconfig.erb'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => $file_notify,
-    before  => Service['bestman2'],
-    require => Package['osg-se-bestman'],
   }
 
-  # PROVIDES??
   file { '/etc/bestman2/conf/bestman2.rc':
     ensure  => present,
-    content => template('osg/bestman2.rc.erb'),
+    content => template('osg/bestman/bestman2.rc.erb'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => $file_notify,
-    before  => Service['bestman2'],
-    require => Package['osg-se-bestman'],
   }
 
   service { 'bestman2':
@@ -144,6 +126,7 @@ class osg::bestman (
     enable      => $service_enable_real,
     hasstatus   => true,
     hasrestart  => true,
+    subscribe   => $service_subscribe,
   }
 
 }

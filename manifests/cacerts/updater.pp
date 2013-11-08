@@ -53,7 +53,7 @@ class osg::cacerts::updater (
   $service_enable           = true,
   $service_autorestart      = true,
   $include_cron             = true,
-  $replace_config           = true,
+  $config_replace           = true,
   $crl_package_name         = 'fetch-crl',
   $crl_package_ensure       = 'installed',
   $crl_boot_service_name    = 'fetch-crl-boot',
@@ -68,7 +68,7 @@ class osg::cacerts::updater (
 
   validate_bool($service_autorestart)
   validate_bool($include_cron)
-  validate_bool($replace_config)
+  validate_bool($config_replace)
 
   # This gives the option to not manage the service 'ensure' state.
   $service_ensure_real = $service_ensure ? {
@@ -133,7 +133,7 @@ class osg::cacerts::updater (
   file { '/etc/cron.d/osg-ca-certs-updater':
     ensure  => present,
     content => template('osg/osg-ca-certs-updater.erb'),
-    replace => $replace_config,
+    replace => $config_replace,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

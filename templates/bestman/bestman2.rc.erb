@@ -47,8 +47,8 @@ eventLogLevel=INFO
 <%= @localPathListAllowed.join(';') %>
 <% end -%>
 securePort=<%= @port %>
-CertFileName=<%= @CertFileName %>
-KeyFileName=<%= @KeyFileName %>
+CertFileName=<%= @cert_file_name %>
+KeyFileName=<%= @key_file_name %>
 ### ProxyFileName=PROXY_FILE_PATH
 ###########################################################
 # supportedProtocolList can be defined
@@ -90,7 +90,8 @@ checkSizeWithGsiftp=false
 #    daemon   ALL=(SRM_USR) NOPASSWD: SRM_CMD
 # 
 accessFileSysViaSudo=true
-noSudoOnLs=true
+noSudoOnLs=<%= @noSudoOnLs %>
+accessFileSysViaGsiftp=<%= @accessFileSysViaGsiftp %>
 ### accessFileSysViaGsiftp=false
 ###########################################################
 ### showChecksumWhenListingFile to return checksum in srmLs
@@ -132,11 +133,14 @@ LifetimeSecondsMappedIDCached=1800
 ### GUMSserviceURL=
 ### GUMSCurrHostDN=
 <% if @with_gums_auth -%>
-GUMSserviceURL=https://<%= @gums_hostname %>:<%= @gums_port %>/gums/services/GUMSXACMLAuthorizationServicePort
+GUMSProtocol=<%= @gums_protocol %>
+GUMSserviceURL=https://<%= @gums_hostname_real %>:<%= @gums_port %>/gums/services/GUMSXACMLAuthorizationServicePort
 <% end -%>
 ### Grid-mapfile will be used
 <% if @with_gridmap_auth -%>
-GridMapFileName=<%= @GridMapFileName %>
+GridMapFileName=<%= @grid_map_file_name %>
+<% else -%>
+#GridMapFileName=/etc/bestman2/conf/grid-mapfile.empty
 <% end -%>
 ### validateVomsProxy=false
 ###########################################################

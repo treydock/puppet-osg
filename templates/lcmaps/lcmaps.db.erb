@@ -142,7 +142,11 @@ gumsclient -> good | bad
 # Mapping policy: glexec
 # Purpose:        Used for glexec on the worker nodes.
 #
+<% if @with_glexec -%>
 glexec:
+<% else -%>
+#glexec:
+<% end -%>
 
 ## If you use glexec, pick an appropriate policy from the ones below.
 ## Make sure that only one policy is uncommented.

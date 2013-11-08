@@ -11,6 +11,14 @@ Tested using
 
 ## Usage
 
+### osg::lcmaps
+
+The minimal parameters necessary to use the osg::lcmaps class.
+
+    class { 'osg::lcmaps':
+      gums_hostname => 'gums.yourdomain.tld',
+    }
+
 ### osg::gums
 
 Installs the OSG GUMS service and performs initial setup.
@@ -22,6 +30,20 @@ Installs the OSG GUMS service and performs initial setup.
 After Puppet applies this class, a script at `/root/gums-post-install.sh` can be run or used as reference to perform the remaining setup steps for GUMS.
 
 ### osg::bestman
+
+Requires the *osg::lcmaps* class.
+
+Example of configuring a Bestman2 server.
+
+    class { 'osg::lcmaps':
+      gums_hostname => 'gums.yourdomain.tld',
+    }
+    class { 'osg::bestman':
+      with_gums_auth        => true,
+      localPathListAllowed  => ['/tmp','/home','/data'],
+      supportedProtocolList => ['gsiftp://gridftp.yourdomain.tld'],
+      noSudoOnLs            => false,
+    }
 
 ## Development
 
