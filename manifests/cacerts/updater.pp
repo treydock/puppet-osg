@@ -4,6 +4,30 @@
 #
 # === Parameters
 #
+# [*crl_package_name*]
+#   Default:  'fetch-crl',
+#
+# [*crl_package_ensure*]
+#   Default:  'installed',
+#
+# [*crl_boot_service_name*]
+#   Default:  'fetch-crl-boot',
+#
+# [*crl_boot_service_ensure*]
+#   Default:  'running',
+#
+# [*crl_boot_service_enable*]
+#   Default:  true,
+#
+# [*crl_cron_service_name*]
+#   Default:  'fetch-crl-cron',
+#
+# [*crl_cron_service_ensure*]
+#   Default:  'running',
+#
+# [*crl_cron_service_enable*]
+#   Default:  true
+#
 # === Examples
 #
 #  class { 'osg::cacerts::updater': }
@@ -28,13 +52,18 @@ class osg::cacerts::updater (
   $service_ensure           = 'running',
   $service_enable           = true,
   $include_cron             = true,
-  $replace_config           = true
+  $replace_config           = true,
+  $crl_package_name         = 'fetch-crl',
+  $crl_package_ensure       = 'installed',
+  $crl_boot_service_name    = 'fetch-crl-boot',
+  $crl_boot_service_ensure  = 'running',
+  $crl_boot_service_enable  = true,
+  $crl_cron_service_name    = 'fetch-crl-cron',
+  $crl_cron_service_ensure  = 'running',
+  $crl_cron_service_enable  = true
 ) inherits osg::params {
 
-  include osg::repo
-  include osg::cacerts
-
-  Class['osg::cacerts'] -> Class['osg::cacerts::updater']
+  require 'osg::repo'
 
   $include_cron_real = is_string($include_cron) ? {
     true  => str2bool($include_cron),
@@ -92,5 +121,29 @@ class osg::cacerts::updater (
     group   => 'root',
     mode    => '0644',
     require => Package[$osg::params::crond_package_name],
+  }
+
+  package { 'fetch-crl':
+    ensure  => $crl_package_ensure,
+    name    => $crl_package_name,
+    require => Yumrepo['osg'],
+  }
+
+  service { 'fetch-crl-boot':
+    ensure      => $crl_boot_service_ensure,
+    enable      => $crl_boot_service_enable,
+    name        => $crl_boot_service_name,
+    hasstatus   => true,
+    hasrestart  => true,
+    require     => Package['fetch-crl'],
+  }
+
+  service { 'fetch-crl-cron':
+    ensure      => $crl_cron_service_ensure,
+    enable      => $crl_cron_service_enable,
+    name        => $crl_cron_service_name,
+    hasstatus   => true,
+    hasrestart  => true,
+    require     => Package['fetch-crl'],
   }
 }

@@ -1,0 +1,64 @@
+#################################################################
+# BeStMan and BeStMan Clients Copyright(c) 2007-2011,
+# Lawrence Berkeley National Laboratory. All rights reserved.
+# Support at SRM@LBL.GOV and documents at http://sdm.lbl.gov/bestman
+#################################################################
+#
+# BESTMAN_SYSCONF contains both external env settings and internal definitions
+#
+#################################################################
+# Below is ONLY for ESTERNAL env settings
+#################################################################
+#
+#
+# Initialization
+SRM_HOME=/etc/bestman2
+BESTMAN_SYSCONF=/etc/sysconfig/bestman2
+BESTMAN_SYSCONF_LIB=/etc/sysconfig/bestman2lib
+BESTMAN2_CONF=/etc/bestman2/conf/bestman2.rc
+JAVA_HOME=/etc/alternatives/java_sdk
+#
+#
+# BeStMan2 server system init variables
+BESTMAN_LOG=/var/log/bestman2/bestman2.log
+BESTMAN_PID=/var/run/bestman2.pid
+BESTMAN_LOCK=/var/lock/bestman2
+SRM_OWNER=bestman
+#
+#
+# BeStMan2 server and clients common variables
+BESTMAN_LIB=/usr/share/java/bestman2
+X509_CERT_DIR=/etc/grid-security/certificates
+# GLOBUS_HOSTNAME=
+# GLOBUS_LOCATION=
+# GLOBUS_TCP_PORT_RANGE=
+# GLOBUS_TCP_SOURCE_RANGE=
+# VOMSDIR=
+# BESTMAN_JAVA_SRM_OTHER_OPTS=
+#
+#
+# BeStMan2 server variables
+BESTMAN_MAX_JAVA_HEAP=1024
+# BESTMAN_JAVA_STACK_SIZE=
+# BESTMAN_EVENT_LOG_COUNT=
+# BESTMAN_EVENT_LOG_SIZE=
+# BESTMAN_CONNECTOR_QUEUESIZE=
+# BESTMAN_CONNECTION_ACCEPTORSIZE=
+BESTMAN_GUMSCERTPATH=/etc/grid-security/bestman/bestmancert.pem
+BESTMAN_GUMSKEYPATH=/etc/grid-security/bestman/bestmankey.pem
+# BESTMAN_GUMSPROXYPATH=
+# BESTMAN_PLUGIN=
+# BESTMAN_EXTRALIB=
+BESTMAN_GUMS_ENABLED=yes
+JETTY_DEBUG_ENABLED=no
+BESTMAN_GATEWAYMODE_ENABLED=yes
+BESTMAN_FULLMODE_ENABLED=no
+#
+#
+# BeStMan2 clients variables
+JAVA_CLIENT_MAX_HEAP=512
+JAVA_CLIENT_MIN_HEAP=32
+# JAVA_CLIENT_STACK_SIZE=
+
+#################################################################
+

@@ -19,6 +19,8 @@ Installs the OSG GUMS service and performs initial setup.
 
 After Puppet applies this class, a script at `/root/gums-post-install.sh` can be run or used as reference to perform the remaining setup steps for GUMS.
 
+### osg::bestman
+
 ## Development
 
 ### Dependencies

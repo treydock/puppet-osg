@@ -1,18 +1,18 @@
-# == Class: osg::cacerts
+# == Class: osg::cacerts::empty
 #
-# Adds the OSG CA cert packages for OSG.
+# Adds the empty CA cert package for OSG.
 #
 # === Parameters
 #
 # [*package_name*]
-#   Default:  'osg-ca-certs',
+#   Default:  'empty-ca-certs',
 #
 # [*package_ensure*]
 #   Default:  'installed',
 #
 # === Examples
 #
-#  class { 'osg::cacerts': }
+#  class { 'osg::cacerts::empty': }
 #
 # === Authors
 #
@@ -22,14 +22,14 @@
 #
 # Copyright 2013 Trey Dockendorf
 #
-class osg::cacerts (
-  $package_name             = 'osg-ca-certs',
+class osg::cacerts::empty (
+  $package_name             = 'empty-ca-certs',
   $package_ensure           = 'installed'
 ) inherits osg::params {
 
   require 'osg::repo'
 
-  package { 'osg-ca-certs':
+  package { 'empty-ca-certs':
     ensure  => $package_ensure,
     name    => $package_name,
     require => Yumrepo['osg'],

@@ -1,18 +1,18 @@
-# == Class: osg::cacerts
+# == Class: osg::cacerts::igtf
 #
-# Adds the OSG CA cert packages for OSG.
+# Adds the igtf CA cert package for OSG.
 #
 # === Parameters
 #
 # [*package_name*]
-#   Default:  'osg-ca-certs',
+#   Default:  'igtf-ca-certs',
 #
 # [*package_ensure*]
 #   Default:  'installed',
 #
 # === Examples
 #
-#  class { 'osg::cacerts': }
+#  class { 'osg::cacerts::igtf': }
 #
 # === Authors
 #
@@ -22,14 +22,14 @@
 #
 # Copyright 2013 Trey Dockendorf
 #
-class osg::cacerts (
-  $package_name             = 'osg-ca-certs',
+class osg::cacerts::igtf (
+  $package_name             = 'igtf-ca-certs',
   $package_ensure           = 'installed'
 ) inherits osg::params {
 
   require 'osg::repo'
 
-  package { 'osg-ca-certs':
+  package { 'igtf-ca-certs':
     ensure  => $package_ensure,
     name    => $package_name,
     require => Yumrepo['osg'],
