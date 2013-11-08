@@ -33,6 +33,9 @@ eventLogLevel=INFO
 ## All definitions will include the default blocked list
 ## e.g. localPathListToBlock=/;/etc;/var 
 ### localPathListToBlock=BLOCKEDPATHS
+<% unless @localPathListToBlock.empty? -%>
+<%= @localPathListToBlock.join(';') %>
+<% end -%>
 ###########################################################
 # Provide permission for user access to the list of the local directories
 ## If a path is listed on both blocked and allowed list,
@@ -40,9 +43,12 @@ eventLogLevel=INFO
 ## e.g. localPathListAllowed=/home;/project 
 ###########################################################
 ### localPathListAllowed=
-securePort=8443
-CertFileName=/etc/grid-security/bestman/bestmancert.pem
-KeyFileName=/etc/grid-security/bestman/bestmankey.pem
+<% unless @localPathListAllowed.empty? -%>
+<%= @localPathListAllowed.join(';') %>
+<% end -%>
+securePort=<%= @port %>
+CertFileName=<%= @CertFileName %>
+KeyFileName=<%= @KeyFileName %>
 ### ProxyFileName=PROXY_FILE_PATH
 ###########################################################
 # supportedProtocolList can be defined
@@ -50,6 +56,9 @@ KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ##      Or, multiple transfer servers are supported
 ## supportedProtocolList=gsiftp://host1.domain.tld;gsiftp://host2.domain.tld
 ### supportedProtocolList=
+<% unless @supportedProtocolList.empty? -%>
+<%= @supportedProtocolList.join(';') %>
+<% end -%>
 ############################################################ 
 # NOTE: Each plugin entry must define the class name, jar file name, 
 # and the procotol name the policy applies to. Key values are class, 
@@ -122,8 +131,13 @@ LifetimeSecondsMappedIDCached=1800
 ### GUMSProtocol=XACML
 ### GUMSserviceURL=
 ### GUMSCurrHostDN=
+<% if @with_gums_auth -%>
+GUMSserviceURL=https://<%= @gums_hostname %>:<%= @gums_port %>/gums/services/GUMSXACMLAuthorizationServicePort
+<% end -%>
 ### Grid-mapfile will be used
-GridMapFileName=/etc/bestman2/conf/grid-mapfile.empty
+<% if @with_gridmap_auth -%>
+GridMapFileName=<%= @GridMapFileName %>
+<% end -%>
 ### validateVomsProxy=false
 ###########################################################
 # Do Not edit below unless you really really understand the entries

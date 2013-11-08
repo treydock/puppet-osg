@@ -1,4 +1,6 @@
-# puppet-osg [![Build Status](https://travis-ci.org/treydock/puppet-osg.png)](https://travis-ci.org/treydock/puppet-osg)
+# puppet-osg
+
+[![Build Status](https://travis-ci.org/treydock/puppet-osg.png)](https://travis-ci.org/treydock/puppet-osg)
 
 This module will be changing drastically as it's developed and is a work in progress to Puppet-ize the installation and management of the OSG software stack.
 
@@ -53,4 +55,4 @@ To test on CentOS 6.4 run the following:
 
 ## Further Information
 
-*
+* [Bestman2](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/InstallOSGBestmanSE)

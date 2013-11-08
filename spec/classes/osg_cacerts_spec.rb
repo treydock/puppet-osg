@@ -13,37 +13,9 @@ describe 'osg::cacerts' do
 
   it do 
     should contain_package('osg-ca-certs').with({
-      'ensure'  => 'latest',
+      'ensure'  => 'installed',
       'name'    => 'osg-ca-certs',
       'require' => 'Yumrepo[osg]',
-    })
-  end
-
-  it do 
-    should contain_package('fetch-crl').with({
-      'ensure'  => 'installed',
-      'name'    => 'fetch-crl',
-      'require' => 'Yumrepo[osg]',
-    })
-  end
-
-  it do
-    should contain_service('fetch-crl-boot').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'require'     => 'Package[fetch-crl]',
-    })
-  end
-
-  it do
-    should contain_service('fetch-crl-cron').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'require'     => 'Package[fetch-crl]',
     })
   end
 end

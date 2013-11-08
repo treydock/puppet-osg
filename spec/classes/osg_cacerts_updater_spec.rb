@@ -10,7 +10,6 @@ describe 'osg::cacerts::updater' do
 
   it { should contain_class('osg::params') }
   it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts') }
 
   it do 
     should contain_package('osg-ca-certs-updater').with({
@@ -43,6 +42,34 @@ describe 'osg::cacerts::updater' do
     .with_content(/^0 \*\/6 \* \* \* root/) \
     .with_content(/\[ ! -f \/var\/lock\/subsys\/osg-ca-certs-updater-cron \] ||/) \
     .with_content(/\/usr\/sbin\/osg-ca-certs-updater -a 23\s+-x 72\s+-r 30\s+-q\s+$/)
+  end
+
+  it do 
+    should contain_package('fetch-crl').with({
+      'ensure'  => 'installed',
+      'name'    => 'fetch-crl',
+      'require' => 'Yumrepo[osg]',
+    })
+  end
+
+  it do
+    should contain_service('fetch-crl-boot').with({
+      'ensure'      => 'running',
+      'enable'      => 'true',
+      'hasstatus'   => 'true',
+      'hasrestart'  => 'true',
+      'require'     => 'Package[fetch-crl]',
+    })
+  end
+
+  it do
+    should contain_service('fetch-crl-cron').with({
+      'ensure'      => 'running',
+      'enable'      => 'true',
+      'hasstatus'   => 'true',
+      'hasrestart'  => 'true',
+      'require'     => 'Package[fetch-crl]',
+    })
   end
 
   context 'with service_ensure => stopped' do
