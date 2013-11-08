@@ -28,8 +28,7 @@ class osg::bestman (
   $bestman_gumscertpath   = '/etc/grid-security/bestman/bestmancert.pem',
   $bestman_gumskeypath    = '/etc/grid-security/bestman/bestmankey.pem',
   $manage_firewall        = true,
-  $port                   = '8443',
-  $firewall_interface     = 'eth0',
+  $securePort             = '8443',
   $localPathListToBlock   = [],
   $localPathListAllowed   = [],
   $cert_file_name         = '/etc/grid-security/bestman/bestmancert.pem',
@@ -37,6 +36,10 @@ class osg::bestman (
   $supportedProtocolList  = [],
   $noSudoOnLs             = true,
   $accessFileSysViaGsiftp = false,
+  $manage_sudo            = true,
+  $sudo_priority          = 10,
+  $sudo_srm_commands      = $osg::params::sudo_srm_commands,
+  $sudo_srm_runas         = $osg::params::sudo_srm_runas,
   $service_ensure         = 'running',
   $service_enable         = true,
   $service_autorestart    = true
@@ -46,6 +49,7 @@ class osg::bestman (
   validate_bool($with_gridmap_auth)
   validate_bool($with_gums_auth)
   validate_bool($manage_firewall)
+  validate_bool($manage_sudo)
   validate_array($localPathListToBlock)
   validate_array($localPathListAllowed)
   validate_array($supportedProtocolList)
@@ -58,6 +62,16 @@ class osg::bestman (
     /igtf/  => 'osg::cacerts::igtf',
     /osg/   => 'osg::cacerts',
     default => 'osg::cacerts::empty',
+  }
+
+  $sudo_srm_cmd = is_string($sudo_srm_commands) ? {
+    true  => $sudo_srm_commands,
+    false => join($sudo_srm_commands, ',')
+  }
+
+  $sudo_srm_usr = is_string($sudo_srm_runas) ? {
+    true  => $sudo_srm_runas,
+    false => join($sudo_srm_runas, ',')
   }
 
   # This gives the option to not manage the service 'ensure' state.
@@ -91,11 +105,17 @@ class osg::bestman (
   if $manage_firewall {
     require 'firewall'
 
-    firewall { '100 allow bestman2 access':
-      port    => $port,
+    firewall { '100 allow SRMv2 access':
+      port    => $securePort,
       proto   => tcp,
-      iniface => $firewall_interface,
       action  => accept,
+    }
+  }
+
+  if $manage_sudo {
+    sudo::conf { 'bestman':
+      priority  => $sudo_priority,
+      content   => template('osg/bestman/bestman.sudo.erb'),
     }
   }
 

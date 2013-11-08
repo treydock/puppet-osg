@@ -21,6 +21,19 @@
 #
 class osg::params {
 
+  $sudo_srm_commands = [
+    '/bin/rm',
+    '/bin/mkdir',
+    '/bin/rmdir',
+    '/bin/mv',
+    '/bin/cp',
+    '/bin/ls',
+  ]
+  $sudo_srm_runas = [
+    'ALL',
+    '!root',
+  ]
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemrelease {

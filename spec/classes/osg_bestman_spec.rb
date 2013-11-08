@@ -20,15 +20,26 @@ describe 'osg::bestman' do
   it { should include_class('firewall') }
 
   it do
-    should contain_firewall('100 allow bestman2 access').with({
+    should contain_firewall('100 allow SRMv2 access').with({
       'port'    => '8443',
       'proto'   => 'tcp',
-      'iniface' => 'eth0',
       'action'  => 'accept',
     })
   end
 
-  it do 
+  it { should contain_sudo__conf('bestman').with_priority('10') }
+
+  it do
+    content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+    content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+      'Defaults:bestman !requiretty',
+      'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
+      'Runas_Alias SRM_USR = ALL,!root',
+      'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
+    ]
+  end
+
+  it do
     should contain_package('osg-se-bestman').with({
       'ensure'  => 'installed',
       'require' => 'Yumrepo[osg]',
@@ -118,6 +129,45 @@ describe 'osg::bestman' do
     })
   end
 
+  context 'with sudo_srm_commands => ["/foo/bar"]' do
+    let(:params){{ :sudo_srm_commands => ['/foo/bar'] }}
+    it do
+      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'Defaults:bestman !requiretty',
+        'Cmnd_Alias SRM_CMD = /foo/bar',
+        'Runas_Alias SRM_USR = ALL,!root',
+        'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
+      ]
+    end
+  end
+
+  context 'with sudo_srm_commands => "/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls"' do
+    let(:params){{ :sudo_srm_commands => '/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls' }}
+    it do
+      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'Defaults:bestman !requiretty',
+        'Cmnd_Alias SRM_CMD = /bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls',
+        'Runas_Alias SRM_USR = ALL,!root',
+        'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
+      ]
+    end
+  end
+
+  context 'with sudo_srm_runas => "ALL, !root"' do
+    let(:params){{ :sudo_srm_runas => 'ALL, !root' }}
+    it do
+      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'Defaults:bestman !requiretty',
+        'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
+        'Runas_Alias SRM_USR = ALL, !root',
+        'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
+      ]
+    end
+  end
+
   context 'with service_ensure => stopped' do
     let(:params){{ :service_ensure => 'stopped' }}
 
@@ -145,10 +195,16 @@ describe 'osg::bestman' do
     it { should_not contain_firewall('100 allow bestman2 access') }
   end
 
+  context 'with manage_sudo => false' do
+    let(:params) {{ :manage_sudo => false }}
+    it { should_not contain_sudo__conf('bestman') }
+  end
+
   [
     'with_gridmap_auth',
     'with_gums_auth',
     'manage_firewall',
+    'manage_sudo',
   ].each do |bool_param|
     context "with #{bool_param} => 'foo'" do
       let(:params) {{ bool_param.to_sym => 'foo' }}
