@@ -1,6 +1,6 @@
 # puppet-osg [![Build Status](https://travis-ci.org/treydock/puppet-osg.png)](https://travis-ci.org/treydock/puppet-osg)
 
-This module is a work in progress to Puppet-ize the installation and management of the OSG software stack.
+This module will be changing drastically as it's developed and is a work in progress to Puppet-ize the installation and management of the OSG software stack.
 
 ## Support
 
