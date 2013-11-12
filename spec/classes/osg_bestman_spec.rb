@@ -129,6 +129,21 @@ describe 'osg::bestman' do
     })
   end
 
+  context "with localPathListAllowed => ['/tmp','/home']" do
+    let(:params) {{ :localPathListAllowed => ['/tmp', '/home'] }}
+    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['localPathListAllowed=/tmp;/home']) }
+  end
+
+  context "with localPathListToBlock => ['/etc','/root']" do
+    let(:params) {{ :localPathListToBlock => ['/etc', '/root'] }}
+    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['localPathListToBlock=/etc;/root']) }
+  end
+
+  context "with supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com']" do
+    let(:params) {{ :supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com'] }}
+    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['supportedProtocolList=gsiftp://gridftp1.example.com;gsiftp://gridftp2.example.com']) }
+  end
+
   context 'with sudo_srm_commands => ["/foo/bar"]' do
     let(:params){{ :sudo_srm_commands => ['/foo/bar'] }}
     it do

@@ -55,6 +55,7 @@ class osg::repo (
     before  => Yumrepo['osg'],
   }
 
+  #TODO : Need consider_as_osg=yes
   yumrepo { 'osg':
     baseurl         => $baseurl_real,
     mirrorlist      => $mirrorlist_real,

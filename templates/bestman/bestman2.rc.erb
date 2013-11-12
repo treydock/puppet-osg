@@ -34,7 +34,7 @@ eventLogLevel=INFO
 ## e.g. localPathListToBlock=/;/etc;/var 
 ### localPathListToBlock=BLOCKEDPATHS
 <% unless @localPathListToBlock.empty? -%>
-<%= @localPathListToBlock.join(';') %>
+localPathListToBlock=<%= @localPathListToBlock.join(';') %>
 <% end -%>
 ###########################################################
 # Provide permission for user access to the list of the local directories
@@ -44,7 +44,7 @@ eventLogLevel=INFO
 ###########################################################
 ### localPathListAllowed=
 <% unless @localPathListAllowed.empty? -%>
-<%= @localPathListAllowed.join(';') %>
+localPathListAllowed=<%= @localPathListAllowed.join(';') %>
 <% end -%>
 securePort=<%= @securePort %>
 CertFileName=<%= @cert_file_name %>
@@ -57,7 +57,7 @@ KeyFileName=<%= @key_file_name %>
 ## supportedProtocolList=gsiftp://host1.domain.tld;gsiftp://host2.domain.tld
 ### supportedProtocolList=
 <% unless @supportedProtocolList.empty? -%>
-<%= @supportedProtocolList.join(';') %>
+supportedProtocolList=<%= @supportedProtocolList.join(';') %>
 <% end -%>
 ############################################################ 
 # NOTE: Each plugin entry must define the class name, jar file name, 
