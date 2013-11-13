@@ -18,7 +18,6 @@ describe 'osg::bestman' do
   it { should include_class('osg::repo') }
   it { should include_class('osg::cacerts::empty') }
   it { should include_class('osg::lcmaps') }
-  it { should include_class('firewall') }
 
   it do
     should contain_firewall('100 allow SRMv2 access').with({
@@ -230,7 +229,6 @@ describe 'osg::bestman' do
 
   context 'with manage_firewall => false' do
     let(:params) {{ :manage_firewall => false }}
-    it { should_not include_class('firewall') }
     it { should_not contain_firewall('100 allow bestman2 access') }
   end
 
