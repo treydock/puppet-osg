@@ -135,6 +135,9 @@ LifetimeSecondsMappedIDCached=1800
 <% if @with_gums_auth -%>
 GUMSProtocol=<%= @gums_protocol %>
 GUMSserviceURL=https://<%= @gums_hostname_real %>:<%= @gums_port %>/gums/services/GUMSXACMLAuthorizationServicePort
+<% if @gums_CurrHostDN and @gums_CurrHostDN != 'UNSET' -%>
+GUMSCurrHostDN=<%= @gums_CurrHostDN %>
+<% end -%>
 <% end -%>
 ### Grid-mapfile will be used
 <% if @with_gridmap_auth -%>

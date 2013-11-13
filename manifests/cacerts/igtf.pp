@@ -23,7 +23,7 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::cacerts::igtf (
-  $package_name             = 'igtf-ca-certs',
+  $package_name             = $osg::params::ca_cert_packages['igtf'],
   $package_ensure           = 'installed'
 ) inherits osg::params {
 

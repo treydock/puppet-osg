@@ -41,6 +41,12 @@ class osg::params {
           $repo_dependencies  = ['yum-plugin-priorities']
           $tomcat_packages    = ['tomcat6']
           $crond_package_name = 'cronie'
+
+          $ca_cert_packages   = {
+            'osg'   => 'osg-ca-certs',
+            'igtf'  => 'igtf-ca-certs',
+            'empty' => 'empty-ca-certs',
+          }
         }
         default : {
           fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")

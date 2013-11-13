@@ -23,13 +23,13 @@ JAVA_HOME=/etc/alternatives/java_sdk
 BESTMAN_LOG=/var/log/bestman2/bestman2.log
 BESTMAN_PID=/var/run/bestman2.pid
 BESTMAN_LOCK=/var/lock/bestman2
-SRM_OWNER=bestman
+SRM_OWNER=<%= @user_name %>
 #
 #
 # BeStMan2 server and clients common variables
 BESTMAN_LIB=/usr/share/java/bestman2
 X509_CERT_DIR=/etc/grid-security/certificates
-# GLOBUS_HOSTNAME=
+GLOBUS_HOSTNAME=<%= @globus_hostname %>
 # GLOBUS_LOCATION=
 # GLOBUS_TCP_PORT_RANGE=
 # GLOBUS_TCP_SOURCE_RANGE=

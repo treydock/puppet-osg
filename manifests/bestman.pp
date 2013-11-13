@@ -25,8 +25,10 @@ class osg::bestman (
   $gums_hostname          = 'UNSET',
   $gums_port              = '8443',
   $gums_protocol          = 'XACML',
+  $gums_CurrHostDN        = 'UNSET',
   $bestman_gumscertpath   = '/etc/grid-security/bestman/bestmancert.pem',
   $bestman_gumskeypath    = '/etc/grid-security/bestman/bestmankey.pem',
+  $globus_hostname        = $::fqdn,
   $manage_firewall        = true,
   $securePort             = '8443',
   $localPathListToBlock   = [],
@@ -91,7 +93,7 @@ class osg::bestman (
     false => undef,
   }
 
-  require  $ca_certs_class
+  require $ca_certs_class
 
   if $with_gums_auth {
     require 'osg::lcmaps'
@@ -119,10 +121,12 @@ class osg::bestman (
     }
   }
 
+  #TODO : Requires cert class
   package { 'osg-se-bestman':
     ensure  => installed,
     require => Yumrepo['osg'],
-    before  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ]
+    before  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
+    require => Package[$osg::params::ca_cert_packages[$ca_certs_type]],
   }
 
   file { '/etc/sysconfig/bestman2':

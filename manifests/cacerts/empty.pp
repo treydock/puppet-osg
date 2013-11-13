@@ -23,7 +23,7 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::cacerts::empty (
-  $package_name             = 'empty-ca-certs',
+  $package_name             = $osg::params::ca_cert_packages['empty'],
   $package_ensure           = 'installed'
 ) inherits osg::params {
 

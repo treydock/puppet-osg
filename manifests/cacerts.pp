@@ -23,7 +23,7 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::cacerts (
-  $package_name             = 'osg-ca-certs',
+  $package_name             = $osg::params::ca_cert_packages['osg'],
   $package_ensure           = 'installed'
 ) inherits osg::params {
 
