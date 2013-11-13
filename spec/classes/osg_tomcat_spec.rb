@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'osg::tomcat' do
+  include_context :defaults
 
   let :facts do
     default_facts.merge({

@@ -2,6 +2,7 @@ require 'facter/osg_version'
 require 'spec_helper'
 
 describe 'osg_version fact' do
+  include_context :defaults
 
   before do
     Facter.clear

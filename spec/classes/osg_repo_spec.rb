@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'osg::repo' do
+  include_context :defaults
 
   let :facts do
     default_facts.merge({

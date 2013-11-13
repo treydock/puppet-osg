@@ -105,8 +105,6 @@ class osg::bestman (
   }
 
   if $manage_firewall {
-    require 'firewall'
-
     firewall { '100 allow SRMv2 access':
       port    => $securePort,
       proto   => tcp,
@@ -121,12 +119,10 @@ class osg::bestman (
     }
   }
 
-  #TODO : Requires cert class
   package { 'osg-se-bestman':
     ensure  => installed,
-    require => Yumrepo['osg'],
     before  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
-    require => Package[$osg::params::ca_cert_packages[$ca_certs_type]],
+    require => [ Yumrepo['osg'], Package[$osg::params::ca_cert_packages[$ca_certs_type]] ],
   }
 
   file { '/etc/sysconfig/bestman2':

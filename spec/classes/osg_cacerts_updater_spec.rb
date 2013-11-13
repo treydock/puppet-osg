@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'osg::cacerts::updater' do
+  include_context :defaults
 
   let(:facts) { default_facts }
 
