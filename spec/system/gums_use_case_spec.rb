@@ -1,5 +1,5 @@
 require 'spec_helper_system'
-
+=begin
 describe 'Real world usage of osg::gums class:' do
 
   context 'should run successfully' do
@@ -29,3 +29,4 @@ describe 'Real world usage of osg::gums class:' do
     end
   end
 end
+=end

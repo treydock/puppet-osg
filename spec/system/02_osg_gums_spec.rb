@@ -1,5 +1,5 @@
 require 'spec_helper_system'
-
+=begin
 describe 'osg::gums class:' do
 
   context 'should run successfully' do
@@ -19,3 +19,4 @@ describe 'osg::gums class:' do
     end
   end
 end
+=end

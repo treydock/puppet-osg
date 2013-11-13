@@ -149,4 +149,9 @@ class osg::bestman (
     subscribe   => $service_subscribe,
   }
 
+  #TODO - Manage permissions of bestman_gumscertpath
+  #TODO - Manage permissions of bestman_gumskeypath
+  #TODO - Manage permissions of cert_file_name
+  #TODO - Manage permissions of key_file_name
+  #TODO - Manage permissiosn for log directory /var/log/bestman2
 }
