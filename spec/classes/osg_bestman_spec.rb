@@ -130,6 +130,34 @@ describe 'osg::bestman' do
     })
   end
 
+  it do
+    should contain_file('/etc/grid-security/bestman/bestmancert.pem').with({
+      'owner'   => 'bestman',
+      'group'   => 'bestman',
+      'mode'    => '0444',
+      'require' => 'Package[osg-se-bestman]',
+    })
+  end
+
+  it do
+    should contain_file('/etc/grid-security/bestman/bestmankey.pem').with({
+      'owner'   => 'bestman',
+      'group'   => 'bestman',
+      'mode'    => '0400',
+      'require' => 'Package[osg-se-bestman]',
+    })
+  end
+
+  it do
+    should contain_file('/var/log/bestman2').with({
+      'ensure'  => 'directory',
+      'owner'   => 'bestman',
+      'group'   => 'bestman',
+      'mode'    => '0755',
+      'require' => 'Package[osg-se-bestman]',
+    })
+  end
+
   context "with ca_certs_type => 'osg'" do
     let(:params) {{ :ca_certs_type => 'osg' }}
     it { should include_class('osg::cacerts') }
@@ -203,6 +231,48 @@ describe 'osg::bestman' do
         'Runas_Alias SRM_USR = ALL, !root',
         'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
       ]
+    end
+  end
+
+  context 'with bestman_gumscertpath => "/etc/grid-security/bestman/bestmangumscert.pem"' do
+    let(:params) {{ :bestman_gumscertpath => "/etc/grid-security/bestman/bestmangumscert.pem" }}
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmancert.pem').with({
+        'owner'   => 'bestman',
+        'group'   => 'bestman',
+        'mode'    => '0444',
+        'require' => 'Package[osg-se-bestman]',
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmangumscert.pem').with({
+        'owner'   => 'bestman',
+        'group'   => 'bestman',
+        'mode'    => '0444',
+        'require' => 'Package[osg-se-bestman]',
+      })
+    end
+  end
+
+  context 'with bestman_gumskeypath => "/etc/grid-security/bestman/bestmangumskey.pem"' do
+    let(:params) {{ :bestman_gumskeypath => "/etc/grid-security/bestman/bestmangumskey.pem" }}
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmankey.pem').with({
+        'owner'   => 'bestman',
+        'group'   => 'bestman',
+        'mode'    => '0400',
+        'require' => 'Package[osg-se-bestman]',
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmangumskey.pem').with({
+        'owner'   => 'bestman',
+        'group'   => 'bestman',
+        'mode'    => '0400',
+        'require' => 'Package[osg-se-bestman]',
+      })
     end
   end
 

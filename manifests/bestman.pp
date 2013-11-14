@@ -18,6 +18,7 @@
 #
 class osg::bestman (
   $user_name              = 'bestman',
+  $group_name             = 'bestman',
   $ca_certs_type          = 'empty',
   $with_gridmap_auth      = false,
   $grid_map_file_name     = '/etc/bestman2/conf/grid-mapfile.empty',
@@ -149,9 +150,57 @@ class osg::bestman (
     subscribe   => $service_subscribe,
   }
 
-  #TODO - Manage permissions of bestman_gumscertpath
-  #TODO - Manage permissions of bestman_gumskeypath
-  #TODO - Manage permissions of cert_file_name
-  #TODO - Manage permissions of key_file_name
-  #TODO - Manage permissiosn for log directory /var/log/bestman2
+  if $bestman_gumscertpath == $cert_file_name {
+    file { $bestman_gumscertpath:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0444',
+      require => Package['osg-se-bestman'],
+    }
+  } else {
+    file { $bestman_gumscertpath:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0444',
+      require => Package['osg-se-bestman'],
+    }
+
+    file { $cert_file_name:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0444',
+      require => Package['osg-se-bestman'],
+    }
+  }
+
+  if $bestman_gumskeypath == $key_file_name {
+    file { $bestman_gumskeypath:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0400',
+      require => Package['osg-se-bestman'],
+    }
+  } else {
+    file { $bestman_gumskeypath:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0400',
+      require => Package['osg-se-bestman'],
+    }
+
+    file { $key_file_name:
+      owner   => $user_name,
+      group   => $group_name,
+      mode    => '0400',
+      require => Package['osg-se-bestman'],
+    }
+  }
+
+  file { '/var/log/bestman2':
+    ensure  => directory,
+    owner   => $user_name,
+    group   => $group_name,
+    mode    => '0755',
+    require => Package['osg-se-bestman'],
+  }
 }

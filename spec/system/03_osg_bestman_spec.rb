@@ -3,6 +3,7 @@ require 'spec_helper_system'
 describe 'osg::bestman class:' do
   context 'should run successfully' do
     pp =<<-EOS
+class { 'sudo': purge => false, config_file_replace => false }
 class { 'osg::lcmaps': gums_hostname => 'gums.foo' }
 class { 'osg::bestman': service_ensure => 'stopped', service_enable => false, service_autorestart => false }
     EOS

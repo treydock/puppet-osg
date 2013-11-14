@@ -75,6 +75,8 @@ If you have Vagrant >= 1.2.0 installed you can run system tests
 
 ## TODO
 
+* Rename the osg::lcmaps class and resources to osg::gums::client to better reflect their purpose
+* Move osg::gums to osg::gums::server onec osg::gums::client class is in place
 * Manage resources for Compute Elements
 * Manage GridFTP related resources
 
