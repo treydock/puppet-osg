@@ -40,6 +40,28 @@ describe 'osg::bestman' do
   end
 
   it do
+    should contain_user('bestman').with({
+      'ensure'      => 'present',
+      'name'        => 'bestman',
+      'uid'         => nil,
+      'home'        => '/etc/bestman2',
+      'shell'       => '/bin/bash',
+      'system'      => 'true',
+      'comment'     => 'BeStMan 2 Server user',
+      'managehome'  => 'false',
+    })
+  end
+
+  it do
+    should contain_group('bestman').with({
+      'ensure'  => 'present',
+      'name'    => 'bestman',
+      'gid'     => nil,
+      'system'  => 'true',
+    })
+  end
+
+  it do
     should contain_package('osg-se-bestman').with({
       'ensure'  => 'installed',
       'require' => ['Yumrepo[osg]', 'Package[empty-ca-certs]'],
@@ -156,6 +178,16 @@ describe 'osg::bestman' do
       'mode'    => '0755',
       'require' => 'Package[osg-se-bestman]',
     })
+  end
+
+  context "with manage_user => false" do
+    let(:params) {{ :manage_user => false }}
+    it { should_not contain_user('bestman') }
+  end
+
+  context "with manage_group => false" do
+    let(:params) {{ :manage_group => false }}
+    it { should_not contain_group('bestman') }
   end
 
   context "with ca_certs_type => 'osg'" do
@@ -308,6 +340,8 @@ describe 'osg::bestman' do
   end
 
   [
+    'manage_user',
+    'manage_group',
     'with_gridmap_auth',
     'with_gums_auth',
     'manage_firewall',

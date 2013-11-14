@@ -30,10 +30,11 @@ After Puppet applies this class, a script at `/root/gums-post-install.sh` can be
 
 ### osg::bestman
 
-Requires the *osg::lcmaps* class.
+Requires the *osg::lcmaps* class and the *sudo* class.
 
 Example of configuring a Bestman2 server.
 
+    class { 'sudo': }
     class { 'osg::lcmaps':
       gums_hostname => 'gums.yourdomain.tld',
     }

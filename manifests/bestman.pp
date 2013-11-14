@@ -17,8 +17,18 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::bestman (
+  $manage_user            = true,
   $user_name              = 'bestman',
+  $user_uid               = 'UNSET',
+  $user_home              = '/etc/bestman2',
+  $user_shell             = '/bin/bash',
+  $user_system            = true,
+  $user_comment           = 'BeStMan 2 Server user',
+  $user_managehome        = false,
+  $manage_group           = true,
   $group_name             = 'bestman',
+  $group_gid              = 'UNSET',
+  $group_system           = true,
   $ca_certs_type          = 'empty',
   $with_gridmap_auth      = false,
   $grid_map_file_name     = '/etc/bestman2/conf/grid-mapfile.empty',
@@ -48,6 +58,8 @@ class osg::bestman (
   $service_autorestart    = true
 ) inherits osg::params {
 
+  validate_bool($manage_user)
+  validate_bool($manage_group)
   validate_re($ca_certs_type, '^(osg|igtf|empty)$')
   validate_bool($with_gridmap_auth)
   validate_bool($with_gums_auth)
@@ -59,6 +71,16 @@ class osg::bestman (
 
   if $with_gridmap_auth and $with_gums_auth {
     fail('with_gridmap_auth and with_gums_auth cannot both be true')
+  }
+
+  $user_uid_real = $user_uid ? {
+    'UNSET' => undef,
+    default => $user_uid,
+  }
+
+  $group_gid_real = $group_gid ? {
+    'UNSET' => undef,
+    default => $group_gid,
   }
 
   $ca_certs_class = $ca_certs_type ? {
@@ -117,6 +139,28 @@ class osg::bestman (
     sudo::conf { 'bestman':
       priority  => $sudo_priority,
       content   => template('osg/bestman/bestman.sudo.erb'),
+    }
+  }
+
+  if $manage_user {
+    user { 'bestman':
+      ensure      => 'present',
+      name        => $user_name,
+      uid         => $user_uid_real,
+      home        => $user_home,
+      shell       => $user_shell,
+      system      => $user_system,
+      comment     => $user_comment,
+      managehome  => $user_managehome,
+    }
+  }
+
+  if $manage_group {
+    group { 'bestman':
+      ensure  => present,
+      name    => $group_name,
+      gid     => $group_gid_real,
+      system  => $group_system,
     }
   }
 
