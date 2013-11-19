@@ -1,11 +1,9 @@
 require 'spec_helper_system'
 
-describe 'osg::bestman class:' do
+describe 'osg::rsv class:' do
   context 'should run successfully' do
     pp =<<-EOS
-class { 'sudo': purge => false, config_file_replace => false }
-class { 'osg::lcmaps': gums_hostname => 'gums.foo' }
-class { 'osg::bestman': service_ensure => 'stopped', service_autorestart => false }
+class { 'osg::rsv': service_ensure => 'stopped', service_autorestart => false }
     EOS
   
     context puppet_apply(pp) do
@@ -17,12 +15,11 @@ class { 'osg::bestman': service_ensure => 'stopped', service_autorestart => fals
     end
   end
 
-  describe package('osg-se-bestman') do
+  describe package('rsv') do
     it { should be_installed }
   end
 
-  describe service('bestman2') do
+  describe service('rsv') do
     it { should be_enabled }
-    it { should_not be_running }
   end
 end

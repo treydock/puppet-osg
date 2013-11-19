@@ -53,7 +53,7 @@ class osg::bestman (
   $sudo_priority          = 10,
   $sudo_srm_commands      = $osg::params::sudo_srm_commands,
   $sudo_srm_runas         = $osg::params::sudo_srm_runas,
-  $service_ensure         = 'running',
+  $service_ensure         = 'undef',
   $service_enable         = true,
   $service_autorestart    = true
 ) inherits osg::params {
@@ -74,13 +74,13 @@ class osg::bestman (
   }
 
   $user_uid_real = $user_uid ? {
-    'UNSET' => undef,
-    default => $user_uid,
+    /UNSET|undef/ => undef,
+    default       => $user_uid,
   }
 
   $group_gid_real = $group_gid ? {
-    'UNSET' => undef,
-    default => $group_gid,
+    /UNSET|undef/ => undef,
+    default       => $group_gid,
   }
 
   $ca_certs_class = $ca_certs_type ? {
@@ -101,18 +101,18 @@ class osg::bestman (
 
   # This gives the option to not manage the service 'ensure' state.
   $service_ensure_real = $service_ensure ? {
-    'undef' => undef,
-    default => $service_ensure,
+    /UNSET|undef/ => undef,
+    default       => $service_ensure,
   }
 
   # This gives the option to not manage the service 'enable' state.
   $service_enable_real = $service_enable ? {
-    'undef' => undef,
-    default => $service_enable,
+    /UNSET|undef/ => undef,
+    default       => $service_enable,
   }
 
-  $service_subscribe = $service_autorestart ? {
-    true  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
+  $file_notify = $service_autorestart ? {
+    true  => Service['bestman2'],
     false => undef,
   }
 
@@ -176,6 +176,7 @@ class osg::bestman (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => $file_notify,
   }
 
   file { '/etc/bestman2/conf/bestman2.rc':
@@ -184,6 +185,7 @@ class osg::bestman (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => $file_notify,
   }
 
   service { 'bestman2':
@@ -191,7 +193,7 @@ class osg::bestman (
     enable      => $service_enable_real,
     hasstatus   => true,
     hasrestart  => true,
-    subscribe   => $service_subscribe,
+    require     => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
   }
 
   if $bestman_gumscertpath == $cert_file_name {

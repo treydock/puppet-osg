@@ -75,6 +75,7 @@ describe 'osg::bestman' do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
+      'notify'  => 'Service[bestman2]',
     })
   end
 
@@ -111,6 +112,7 @@ describe 'osg::bestman' do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
+      'notify'  => 'Service[bestman2]',
     })
   end
 
@@ -144,11 +146,11 @@ describe 'osg::bestman' do
 
   it do
     should contain_service('bestman2').with({
-      'ensure'      => 'running',
+      'ensure'      => nil,
       'enable'      => 'true',
       'hasstatus'   => 'true',
       'hasrestart'  => 'true',
-      'subscribe'   => [ 'File[/etc/sysconfig/bestman2]', 'File[/etc/bestman2/conf/bestman2.rc]' ]
+      'require'     => [ 'File[/etc/sysconfig/bestman2]', 'File[/etc/bestman2/conf/bestman2.rc]' ]
     })
   end
 
@@ -178,6 +180,16 @@ describe 'osg::bestman' do
       'mode'    => '0755',
       'require' => 'Package[osg-se-bestman]',
     })
+  end
+
+  context "with user_uid => 100" do
+    let(:params) {{ :user_uid => 100 }}
+    it { should contain_user('bestman').with_uid('100') }
+  end
+
+  context "with group_gid => 100" do
+    let(:params) {{ :group_gid => 100 }}
+    it { should contain_group('bestman').with_gid('100') }
   end
 
   context "with manage_user => false" do
@@ -308,25 +320,36 @@ describe 'osg::bestman' do
     end
   end
 
+  context 'with service_ensure => running' do
+    let(:params){{ :service_ensure => 'running' }}
+    it { should contain_service('bestman2').with_ensure('running') }
+  end
+
   context 'with service_ensure => stopped' do
     let(:params){{ :service_ensure => 'stopped' }}
-
     it { should contain_service('bestman2').with_ensure('stopped') }
   end
 
-  context 'with service_ensure => "undef"' do
-    let(:params) {{ :service_ensure => "undef" }}
-    it { should contain_service('bestman2').with_ensure(nil) }
-  end
+  # Test service ensure and enable 'magic' values
+  [
+    'undef',
+    'UNSET',
+  ].each do |v|
+    context "with service_ensure => '#{v}'" do
+      let(:params) {{ :service_ensure => v }}
+      it { should contain_service('bestman2').with_ensure(nil) }
+    end
 
-  context 'with service_enable => "undef"' do
-    let(:params) {{ :service_enable => "undef" }}
-    it { should contain_service('bestman2').with_enable(nil) }
+    context "with service_enable => '#{v}'" do
+      let(:params) {{ :service_enable => v }}
+      it { should contain_service('bestman2').with_enable(nil) }
+    end
   end
 
   context 'with service_autorestart => false' do
     let(:params) {{ :service_autorestart => false }}
-    it { should contain_service('bestman2').with_subscribe(nil) }
+    it { should contain_file('/etc/bestman2/conf/bestman2.rc').with_notify(nil) }
+    it { should contain_file('/etc/sysconfig/bestman2').with_notify(nil) }
   end
 
   context 'with manage_firewall => false' do
