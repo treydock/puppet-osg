@@ -45,6 +45,18 @@ Example of configuring a Bestman2 server.
       noSudoOnLs            => false,
     }
 
+### osg::rsv
+
+Configure RSV monitoring.
+
+Example of configuring RSV for a bestman2 SRM server
+
+    class { 'osg::rsv':
+      srm_hosts => 'srm.yourdomain.tld',
+      srm_dir   => '/data/rsvhome',
+    }
+
+By default this class will put the necessary settings in **/etc/osg/config.d/30-rsv.ini**.  The actual configuration of RSV would require the manual execution of **osg-configure**.
 
 ## Compatibility
 
@@ -86,3 +98,4 @@ If you have Vagrant >= 1.2.0 installed you can run system tests
 ## Further Information
 
 * [Bestman2](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/InstallOSGBestmanSE)
+* [RSV](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/InstallRSV)

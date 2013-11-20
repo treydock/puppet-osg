@@ -29,7 +29,6 @@ class osg::rsv (
   $group_name             = 'rsv',
   $group_gid              = 'UNSET',
   $group_system           = true,
-  $ca_certs_type          = 'empty',
   $service_cert           = '/etc/grid-security/rsv/rsvcert.pem',
   $service_key            = '/etc/grid-security/rsv/rsvkey.pem',
   $service_proxy          = '/tmp/rsvproxy',
@@ -55,7 +54,6 @@ class osg::rsv (
 
   validate_bool($manage_user)
   validate_bool($manage_group)
-  validate_re($ca_certs_type, '^(osg|igtf|empty)$')
   validate_bool($with_httpd)
   validate_bool($manage_firewall)
   validate_bool($config_replace)
@@ -71,12 +69,6 @@ class osg::rsv (
   $group_gid_real = $group_gid ? {
     /UNSET|undef/ => undef,
     default       => $group_gid,
-  }
-
-  $ca_certs_class = $ca_certs_type ? {
-    /igtf/  => 'osg::cacerts::igtf',
-    /osg/   => 'osg::cacerts',
-    default => 'osg::cacerts::empty',
   }
 
   # This gives the option to not manage the service 'ensure' state.
@@ -111,8 +103,8 @@ class osg::rsv (
   $package_before   = [ File['/etc/rsv/rsv.conf'], File['/etc/rsv/consumers.conf'], File['/etc/osg/config.d/30-rsv.ini'] ]
   $service_require  = [ File['/etc/rsv/rsv.conf'], File['/etc/rsv/consumers.conf'], Service['condor-cron'] ]
 
-  require 'osg::condor_cron'
-  require $ca_certs_class
+  include osg::condor_cron
+  include osg::cacerts
 
   Class['osg::condor_cron'] -> Class['osg::rsv']
 
@@ -155,7 +147,7 @@ class osg::rsv (
   package { 'rsv':
     ensure  => installed,
     before  => $package_before,
-    require => [ Yumrepo['osg'], Package[$osg::params::ca_cert_packages[$ca_certs_type]] ],
+    require => [ Yumrepo['osg'], Package['osg-ca-certs'] ],
   }
 
   file { '/etc/osg/config.d/30-rsv.ini':

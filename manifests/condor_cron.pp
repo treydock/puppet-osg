@@ -29,7 +29,6 @@ class osg::condor_cron (
   $group_name             = 'cndrcron',
   $group_gid              = 'UNSET',
   $group_system           = true,
-  $ca_certs_type          = 'empty',
   $service_ensure         = 'undef',
   $service_enable         = true,
   $service_autorestart    = true,
@@ -38,7 +37,6 @@ class osg::condor_cron (
 
   validate_bool($manage_user)
   validate_bool($manage_group)
-  validate_re($ca_certs_type, '^(osg|igtf|empty)$')
   validate_bool($config_replace)
 
   $user_uid_real = $user_uid ? {
@@ -49,12 +47,6 @@ class osg::condor_cron (
   $group_gid_real = $group_gid ? {
     /UNSET|undef/ => undef,
     default       => $group_gid,
-  }
-
-  $ca_certs_class = $ca_certs_type ? {
-    /igtf/  => 'osg::cacerts::igtf',
-    /osg/   => 'osg::cacerts',
-    default => 'osg::cacerts::empty',
   }
 
   # This gives the option to not manage the service 'ensure' state.
@@ -84,7 +76,7 @@ class osg::condor_cron (
     $manage_condor_ids  = false
   }
 
-  require $ca_certs_class
+  include osg::cacerts
 
   if $manage_user {
     user { 'cndrcron':
@@ -111,7 +103,7 @@ class osg::condor_cron (
   package { 'condor-cron':
     ensure  => installed,
     before  => $package_before,
-    require => [ Yumrepo['osg'], Package[$osg::params::ca_cert_packages[$ca_certs_type]] ],
+    require => [ Yumrepo['osg'], Package['osg-ca-certs'] ],
   }
 
   if $manage_condor_ids {

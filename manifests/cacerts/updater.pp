@@ -64,7 +64,7 @@ class osg::cacerts::updater (
   $crl_cron_service_enable  = true
 ) inherits osg::params {
 
-  require 'osg::cacerts'
+  include osg::cacerts
 
   validate_bool($service_autorestart)
   validate_bool($include_cron)

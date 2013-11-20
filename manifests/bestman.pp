@@ -29,7 +29,6 @@ class osg::bestman (
   $group_name             = 'bestman',
   $group_gid              = 'UNSET',
   $group_system           = true,
-  $ca_certs_type          = 'empty',
   $with_gridmap_auth      = false,
   $grid_map_file_name     = '/etc/bestman2/conf/grid-mapfile.empty',
   $with_gums_auth         = true,
@@ -60,7 +59,6 @@ class osg::bestman (
 
   validate_bool($manage_user)
   validate_bool($manage_group)
-  validate_re($ca_certs_type, '^(osg|igtf|empty)$')
   validate_bool($with_gridmap_auth)
   validate_bool($with_gums_auth)
   validate_bool($manage_firewall)
@@ -81,12 +79,6 @@ class osg::bestman (
   $group_gid_real = $group_gid ? {
     /UNSET|undef/ => undef,
     default       => $group_gid,
-  }
-
-  $ca_certs_class = $ca_certs_type ? {
-    /igtf/  => 'osg::cacerts::igtf',
-    /osg/   => 'osg::cacerts',
-    default => 'osg::cacerts::empty',
   }
 
   $sudo_srm_cmd = is_string($sudo_srm_commands) ? {
@@ -116,7 +108,7 @@ class osg::bestman (
     false => undef,
   }
 
-  require $ca_certs_class
+  include osg::cacerts
 
   if $with_gums_auth {
     require 'osg::lcmaps'
@@ -167,7 +159,7 @@ class osg::bestman (
   package { 'osg-se-bestman':
     ensure  => installed,
     before  => [ File['/etc/sysconfig/bestman2'], File['/etc/bestman2/conf/bestman2.rc'] ],
-    require => [ Yumrepo['osg'], Package[$osg::params::ca_cert_packages[$ca_certs_type]] ],
+    require => [ Yumrepo['osg'], Package['osg-ca-certs'] ],
   }
 
   file { '/etc/sysconfig/bestman2':

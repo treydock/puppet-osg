@@ -11,7 +11,7 @@ describe 'osg::rsv' do
   it { should contain_class('osg::params') }
   it { should include_class('osg::condor_cron') }
   it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts::empty') }
+  it { should include_class('osg::cacerts') }
 
   it do
     should contain_firewall('100 allow RSV http access').with({
@@ -47,7 +47,7 @@ describe 'osg::rsv' do
     should contain_package('rsv').with({
       'ensure'  => 'installed',
       'before'  => ['File[/etc/rsv/rsv.conf]', 'File[/etc/rsv/consumers.conf]', 'File[/etc/osg/config.d/30-rsv.ini]'],
-      'require' => ['Yumrepo[osg]', 'Package[empty-ca-certs]'],
+      'require' => ['Yumrepo[osg]', 'Package[osg-ca-certs]'],
     })
   end
 
@@ -208,18 +208,6 @@ describe 'osg::rsv' do
   context "with manage_group => false" do
     let(:params) {{ :manage_group => false }}
     it { should_not contain_group('rsv') }
-  end
-
-  context "with ca_certs_type => 'osg'" do
-    let(:params) {{ :ca_certs_type => 'osg' }}
-    it { should include_class('osg::cacerts') }
-    it { should contain_package('rsv').with_require(['Yumrepo[osg]', 'Package[osg-ca-certs]']) }
-  end
-
-  context "with ca_certs_type => 'igtf'" do
-    let(:params) {{ :ca_certs_type => 'igtf' }}
-    it { should include_class('osg::cacerts::igtf') }
-    it { should contain_package('rsv').with_require(['Yumrepo[osg]', 'Package[igtf-ca-certs]']) }
   end
 
   context 'with service_ensure => running' do

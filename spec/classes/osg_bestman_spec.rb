@@ -16,7 +16,7 @@ describe 'osg::bestman' do
   it { should create_class('osg::bestman') }
   it { should contain_class('osg::params') }
   it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts::empty') }
+  it { should include_class('osg::cacerts') }
   it { should include_class('osg::lcmaps') }
 
   it do
@@ -64,7 +64,7 @@ describe 'osg::bestman' do
   it do
     should contain_package('osg-se-bestman').with({
       'ensure'  => 'installed',
-      'require' => ['Yumrepo[osg]', 'Package[empty-ca-certs]'],
+      'require' => ['Yumrepo[osg]', 'Package[osg-ca-certs]'],
       'before'  => [ 'File[/etc/sysconfig/bestman2]', 'File[/etc/bestman2/conf/bestman2.rc]' ],
     })
   end
@@ -200,18 +200,6 @@ describe 'osg::bestman' do
   context "with manage_group => false" do
     let(:params) {{ :manage_group => false }}
     it { should_not contain_group('bestman') }
-  end
-
-  context "with ca_certs_type => 'osg'" do
-    let(:params) {{ :ca_certs_type => 'osg' }}
-    it { should include_class('osg::cacerts') }
-    it { should contain_package('osg-se-bestman').with_require(['Yumrepo[osg]', 'Package[osg-ca-certs]']) }
-  end
-
-  context "with ca_certs_type => 'igtf'" do
-    let(:params) {{ :ca_certs_type => 'igtf' }}
-    it { should include_class('osg::cacerts::igtf') }
-    it { should contain_package('osg-se-bestman').with_require(['Yumrepo[osg]', 'Package[igtf-ca-certs]']) }
   end
 
   context "with localPathListAllowed => ['/tmp','/home']" do

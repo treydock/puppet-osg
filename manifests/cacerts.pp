@@ -23,11 +23,13 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::cacerts (
-  $package_name             = $osg::params::ca_cert_packages['osg'],
+  $package_name             = 'osg-ca-certs',
   $package_ensure           = 'installed'
 ) inherits osg::params {
 
-  require 'osg::repo'
+  validate_re($package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
+
+  include osg::repo
 
   package { 'osg-ca-certs':
     ensure  => $package_ensure,
