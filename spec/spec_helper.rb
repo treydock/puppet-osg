@@ -10,6 +10,7 @@ shared_context :defaults do
       :operatingsystemrelease => '6.4',
       :architecture           => 'x86_64',
       :os_maj_version         => '6',
+      :concat_basedir         => '/tmp',
     }
   end
 end

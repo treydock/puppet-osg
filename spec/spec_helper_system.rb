@@ -27,7 +27,7 @@ RSpec.configure do |c|
     shell('puppet module install stahnma/epel --modulepath /etc/puppet/modules --force')
     shell('puppet module install puppetlabs/firewall --modulepath /etc/puppet/modules --force')
     shell('puppet module install saz/sudo --modulepath /etc/puppet/modules --force')
-    # Clone latest puppetlabs-mysql to avoid deprecation warnings in Puppet 3.2.x
+    shell('puppet module install puppetlabs/apache --modulepath /etc/puppet/modules --version "~> 0.9.0" --force')
     shell('yum -y install git')
     shell('git clone git://github.com/treydock/puppet-cron.git /etc/puppet/modules/cron')
     

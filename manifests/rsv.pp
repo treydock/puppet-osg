@@ -33,6 +33,7 @@ class osg::rsv (
   $service_cert           = '/etc/grid-security/rsv/rsvcert.pem',
   $service_key            = '/etc/grid-security/rsv/rsvkey.pem',
   $service_proxy          = '/tmp/rsvproxy',
+  $with_httpd             = true,
   $manage_firewall        = true,
   $http_port              = '80',
   $service_ensure         = 'undef',
@@ -55,6 +56,7 @@ class osg::rsv (
   validate_bool($manage_user)
   validate_bool($manage_group)
   validate_re($ca_certs_type, '^(osg|igtf|empty)$')
+  validate_bool($with_httpd)
   validate_bool($manage_firewall)
   validate_bool($config_replace)
   validate_bool($configd_replace)
@@ -114,13 +116,19 @@ class osg::rsv (
 
   Class['osg::condor_cron'] -> Class['osg::rsv']
 
-  if $manage_firewall {
-    firewall { '100 allow RSV http access':
-      port    => $http_port,
-      proto   => tcp,
-      action  => accept,
+  if $with_httpd {
+    if $manage_firewall {
+      firewall { '100 allow RSV http access':
+        port    => $http_port,
+        proto   => tcp,
+        action  => accept,
+      }
     }
+
+    include apache
   }
+
+
 
   if $manage_user {
     user { 'rsv':

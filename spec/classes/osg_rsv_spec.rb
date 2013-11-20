@@ -265,6 +265,8 @@ describe 'osg::rsv' do
   [
     'manage_user',
     'manage_group',
+    'with_httpd',
+    'manage_firewall',
     'config_replace',
     'configd_replace',
     'enable_gratia',
