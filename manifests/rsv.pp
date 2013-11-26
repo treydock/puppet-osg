@@ -223,14 +223,6 @@ class osg::rsv (
     require => Package['rsv'],
   }
 
-  file { '/var/tmp/rsv':
-    ensure  => directory,
-    owner   => $user_name,
-    group   => $group_name,
-    mode    => '0755',
-    require => Package['rsv'],
-  }
-
   file { '/var/log/rsv':
     ensure  => directory,
     owner   => $user_name,

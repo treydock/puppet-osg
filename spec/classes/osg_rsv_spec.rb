@@ -149,16 +149,6 @@ describe 'osg::rsv' do
   end
 
   it do
-    should contain_file('/var/tmp/rsv').with({
-      'ensure'  => 'directory',
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0755',
-      'require' => 'Package[rsv]',
-    })
-  end
-
-  it do
     should contain_file('/var/log/rsv').with({
       'ensure'  => 'directory',
       'path'    => '/var/log/rsv',
