@@ -38,6 +38,7 @@ class osg::rsv (
   $service_ensure         = 'undef',
   $service_enable         = true,
   $service_autorestart    = true,
+  $with_osg_configure     = true,
   $config_replace         = false,
   $configd_replace        = true,
   $enable_gratia          = true,
@@ -56,6 +57,7 @@ class osg::rsv (
   validate_bool($manage_group)
   validate_bool($with_httpd)
   validate_bool($manage_firewall)
+  validate_bool($with_osg_configure)
   validate_bool($config_replace)
   validate_bool($configd_replace)
   validate_bool($enable_gratia)
@@ -85,6 +87,11 @@ class osg::rsv (
 
   $file_notify = $service_autorestart ? {
     true  => Service['rsv'],
+    false => undef,
+  }
+
+  $configd_notify = $with_osg_configure ? {
+    true  => Exec['osg-configure-rsv'],
     false => undef,
   }
 
@@ -120,7 +127,12 @@ class osg::rsv (
     include apache
   }
 
-
+  exec { 'osg-configure-rsv':
+    command     => '/usr/sbin/osg-configure --module=RSV --configure',
+    onlyif      => '/usr/sbin/osg-configure --module=RSV --verify',
+    user        => 'root',
+    refreshonly => true,
+  }
 
   if $manage_user {
     user { 'rsv':
@@ -157,7 +169,7 @@ class osg::rsv (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    #notify  => Exec['osg-configure-rsv'],
+    notify  => $configd_notify,
   }
 
   file { '/etc/rsv/rsv.conf':

@@ -2,20 +2,6 @@
 #
 # Adds the OSG yum repo
 #
-# === Parameters
-#
-# [*baseurl*]
-#   The baseurl used for the OSG yum repo.
-#   Default: undef
-#
-# [*mirrorlist*]
-#   The mirrorlist used for the OSG yum repo.
-#   Set to false to disable this line in the yum repo.
-#
-# === Examples
-#
-#  class { 'osg::repo': }
-#
 # === Authors
 #
 # Trey Dockendorf <treydock@gmail.com>
@@ -24,27 +10,27 @@
 #
 # Copyright 2013 Trey Dockendorf
 #
-class osg::repo (
-  $baseurl        = $osg::baseurl,
-  $mirrorlist     = $osg::mirrorlist
-) inherits osg {
+class osg::repo {
 
   include epel
+  include osg
   include osg::params
 
   Class['epel'] -> Class['osg::repo']
 
-  ensure_packages($osg::params::repo_dependencies)
+  $yum_priorities_package = $osg::params::yum_priorities_package
 
-  $baseurl_real = $baseurl ? {
+  $baseurl = $osg::baseurl_real ? {
     'UNSET' => undef,
-    default => $baseurl,
+    default => $osg::baseurl_real,
   }
-  $mirrorlist_real = $mirrorlist ? {
+  $mirrorlist = $osg::mirrorlist_real ? {
     false         => undef,
     /false|undef/ => undef,
-    default       => $mirrorlist,
+    default       => $osg::mirrorlist_real,
   }
+
+  ensure_packages([$yum_priorities_package])
 
   file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG':
     ensure  => present,
@@ -52,19 +38,23 @@ class osg::repo (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+  }
+
+  gpg_key { 'osg':
+    path    => '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
     before  => Yumrepo['osg'],
   }
 
   #TODO : Need consider_as_osg=yes
   yumrepo { 'osg':
-    baseurl         => $baseurl_real,
-    mirrorlist      => $mirrorlist_real,
+    baseurl         => $baseurl,
+    mirrorlist      => $mirrorlist,
     descr           => "OSG Software for Enterprise Linux ${::os_maj_version} - ${::architecture}",
     enabled         => '1',
     failovermethod  => 'priority',
     gpgcheck        => '1',
     gpgkey          => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
     priority        => '98',
-    require         => Yumrepo['epel'],
+    require         => [Package[$yum_priorities_package], Yumrepo['epel']],
   }
 }

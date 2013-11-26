@@ -58,6 +58,7 @@ describe 'osg::rsv' do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
+      'notify'  => 'Exec[osg-configure-rsv]',
     })
   end
 
@@ -226,11 +227,15 @@ describe 'osg::rsv' do
     it { should_not contain_firewall('100 allow RSV http access') }
   end
 
-
   context 'with service_autorestart => false' do
     let(:params) {{ :service_autorestart => false }}
     it { should contain_file('/etc/rsv/rsv.conf').with_notify(nil) }
     it { should contain_file('/etc/rsv/consumers.conf').with_notify(nil) }
+  end
+
+  context 'with with_osg_configure => false' do
+    let(:params) {{ :with_osg_configure => false }}
+    it { should contain_file('/etc/osg/config.d/30-rsv.ini').with_notify(nil) }
   end
 
   # Test service ensure and enable 'magic' values
@@ -255,6 +260,7 @@ describe 'osg::rsv' do
     'manage_group',
     'with_httpd',
     'manage_firewall',
+    'with_osg_configure',
     'config_replace',
     'configd_replace',
     'enable_gratia',

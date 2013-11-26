@@ -22,12 +22,13 @@ RSpec.configure do |c|
     puppet_master_install
 
     # Install module dependencies
-    shell('puppet module install puppetlabs/stdlib --modulepath /etc/puppet/modules --force')
-    shell('puppet module install puppetlabs/mysql --modulepath /etc/puppet/modules --version "~> 0.9.0" --force')
-    shell('puppet module install stahnma/epel --modulepath /etc/puppet/modules --force')
-    shell('puppet module install puppetlabs/firewall --modulepath /etc/puppet/modules --force')
-    shell('puppet module install saz/sudo --modulepath /etc/puppet/modules --force')
-    shell('puppet module install puppetlabs/apache --modulepath /etc/puppet/modules --version "~> 0.9.0" --force')
+    shell('[ -d /etc/puppet/modules/stdlib ] || puppet module install puppetlabs/stdlib --modulepath /etc/puppet/modules')
+    shell('[ -d /etc/puppet/modules/mysql ] || puppet module install puppetlabs/mysql --modulepath /etc/puppet/modules --version "~> 0.9.0"')
+    shell('[ -d /etc/puppet/modules/epel ] || puppet module install stahnma/epel --modulepath /etc/puppet/modules')
+    shell('[ -d /etc/puppet/modules/firewall ] || puppet module install puppetlabs/firewall --modulepath /etc/puppet/modules')
+    shell('[ -d /etc/puppet/modules/sudo ] || puppet module install saz/sudo --modulepath /etc/puppet/modules')
+    shell('[ -d /etc/puppet/modules/apache ] || puppet module install puppetlabs/apache --modulepath /etc/puppet/modules --version "~> 0.9.0"')
+    shell('[ -d /etc/puppet/modules/gpg_key ] || puppet module install treydock/gpg_key --modulepath /etc/puppet/modules')
     shell('yum -y install git')
     shell('git clone git://github.com/treydock/puppet-cron.git /etc/puppet/modules/cron')
     
