@@ -45,7 +45,7 @@ class osg::rsv (
   $ce_hosts               = 'UNAVAILABLE',
   $gridftp_hosts          = 'UNAVAILABLE',
   $gridftp_dir            = 'DEFAULT',
-  $gratia_probes          = 'UNAVAILABLE',
+  $gratia_probes          = 'DEFAULT',
   $gums_hosts             = 'UNAVAILABLE',
   $srm_hosts              = 'UNAVAILABLE',
   $srm_dir                = 'DEFAULT',
