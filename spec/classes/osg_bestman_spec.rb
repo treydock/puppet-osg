@@ -95,6 +95,8 @@ describe 'osg::bestman' do
       'X509_CERT_DIR=/etc/grid-security/certificates',
       'GLOBUS_HOSTNAME=foo.example.tld',
       'BESTMAN_MAX_JAVA_HEAP=1024',
+      'BESTMAN_EVENT_LOG_COUNT=10',
+      'BESTMAN_EVENT_LOG_SIZE=20971520',
       'BESTMAN_GUMSCERTPATH=/etc/grid-security/bestman/bestmancert.pem',
       'BESTMAN_GUMSKEYPATH=/etc/grid-security/bestman/bestmankey.pem',
       'BESTMAN_GUMS_ENABLED=yes',
@@ -306,6 +308,16 @@ describe 'osg::bestman' do
         'require' => 'Package[osg-se-bestman]',
       })
     end
+  end
+
+  context "with event_log_count => 20" do
+    let(:params) {{ :event_log_count => 20 }}
+    it { verify_contents(subject, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_COUNT=20']) }
+  end
+
+  context "with event_log_size => 50000000" do
+    let(:params) {{ :event_log_size => 50000000 }}
+    it { verify_contents(subject, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_SIZE=50000000']) }
   end
 
   context 'with service_ensure => running' do

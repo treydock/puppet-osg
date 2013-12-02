@@ -39,6 +39,8 @@ class osg::bestman (
   $bestman_gumscertpath   = '/etc/grid-security/bestman/bestmancert.pem',
   $bestman_gumskeypath    = '/etc/grid-security/bestman/bestmankey.pem',
   $globus_hostname        = $::fqdn,
+  $event_log_count        = 10,
+  $event_log_size         = 20971520,
   $manage_firewall        = true,
   $securePort             = '8443',
   $localPathListToBlock   = [],
