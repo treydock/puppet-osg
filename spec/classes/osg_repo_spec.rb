@@ -6,9 +6,9 @@ describe 'osg::repo' do
   let(:facts) { default_facts }
 
   it { should create_class('osg::repo') }
-  it { should include_class('osg') }
-  it { should include_class('osg::params') }
-  it { should include_class('epel') }
+  it { should contain_class('osg') }
+  it { should contain_class('osg::params') }
+  it { should contain_class('epel') }
 
   it { should contain_package('yum-plugin-priorities').with_ensure('present') }
 

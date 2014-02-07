@@ -37,12 +37,12 @@ describe 'osg::gums' do
   end
 
   it { should contain_class('osg::params') }
-  it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts') }
-  it { should include_class('osg::gums::configure') }
-  it { should include_class('firewall') }
-  it { should include_class('osg::tomcat') }
-  it { should include_class('osg::gums::mysql') }
+  it { should contain_class('osg::repo') }
+  it { should contain_class('osg::cacerts') }
+  it { should contain_class('osg::gums::configure') }
+  it { should contain_class('firewall') }
+  it { should contain_class('osg::tomcat') }
+  it { should contain_class('osg::gums::mysql') }
 
   it do 
     should contain_package('osg-gums').with({
@@ -79,7 +79,7 @@ describe 'osg::gums' do
       })
     end
 
-    it { should_not include_class('osg::tomcat') }
+    it { should_not contain_class('osg::tomcat') }
   end
 
   context 'with manage_firewall => false' do

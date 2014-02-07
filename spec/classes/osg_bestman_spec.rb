@@ -15,9 +15,9 @@ describe 'osg::bestman' do
 
   it { should create_class('osg::bestman') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts') }
-  it { should include_class('osg::lcmaps') }
+  it { should contain_class('osg::repo') }
+  it { should contain_class('osg::cacerts') }
+  it { should contain_class('osg::lcmaps') }
 
   it do
     should contain_firewall('100 allow SRMv2 access').with({
@@ -30,7 +30,7 @@ describe 'osg::bestman' do
   it { should contain_sudo__conf('bestman').with_priority('10') }
 
   it do
-    content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+    content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
     content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
       'Defaults:bestman !requiretty',
       'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
@@ -80,7 +80,7 @@ describe 'osg::bestman' do
   end
 
   it do
-    content = subject.resource('file', '/etc/sysconfig/bestman2').send(:parameters)[:content]
+    content = catalogue.resource('file', '/etc/sysconfig/bestman2').send(:parameters)[:content]
     content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
       'SRM_HOME=/etc/bestman2',
       'BESTMAN_SYSCONF=/etc/sysconfig/bestman2',
@@ -119,7 +119,7 @@ describe 'osg::bestman' do
   end
 
   it do
-    content = subject.resource('file', '/etc/bestman2/conf/bestman2.rc').send(:parameters)[:content]
+    content = catalogue.resource('file', '/etc/bestman2/conf/bestman2.rc').send(:parameters)[:content]
     content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
       'EventLogLocation=/var/log/bestman2',
       'eventLogLevel=INFO',
@@ -206,33 +206,33 @@ describe 'osg::bestman' do
 
   context "with localPathListAllowed => ['/tmp','/home']" do
     let(:params) {{ :localPathListAllowed => ['/tmp', '/home'] }}
-    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['localPathListAllowed=/tmp;/home']) }
+    it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['localPathListAllowed=/tmp;/home']) }
   end
 
   context "with localPathListToBlock => ['/etc','/root']" do
     let(:params) {{ :localPathListToBlock => ['/etc', '/root'] }}
-    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['localPathListToBlock=/etc;/root']) }
+    it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['localPathListToBlock=/etc;/root']) }
   end
 
   context "with supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com']" do
     let(:params) {{ :supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com'] }}
-    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['supportedProtocolList=gsiftp://gridftp1.example.com;gsiftp://gridftp2.example.com']) }
+    it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['supportedProtocolList=gsiftp://gridftp1.example.com;gsiftp://gridftp2.example.com']) }
   end
 
   context "with gums_CurrHostDN => '/CN=foo'" do
     let(:params) {{ :gums_CurrHostDN => '/CN=foo' }}
-    it { verify_contents(subject, '/etc/bestman2/conf/bestman2.rc', ['GUMSCurrHostDN=/CN=foo']) }
+    it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['GUMSCurrHostDN=/CN=foo']) }
   end
 
   context "with globus_hostname => 'foo.example.com'" do
     let(:params) {{ :globus_hostname => 'foo.example.com' }}
-    it { verify_contents(subject, '/etc/sysconfig/bestman2', ['GLOBUS_HOSTNAME=foo.example.com']) }
+    it { verify_contents(catalogue, '/etc/sysconfig/bestman2', ['GLOBUS_HOSTNAME=foo.example.com']) }
   end
 
   context 'with sudo_srm_commands => ["/foo/bar"]' do
     let(:params){{ :sudo_srm_commands => ['/foo/bar'] }}
     it do
-      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
       content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
         'Defaults:bestman !requiretty',
         'Cmnd_Alias SRM_CMD = /foo/bar',
@@ -245,7 +245,7 @@ describe 'osg::bestman' do
   context 'with sudo_srm_commands => "/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls"' do
     let(:params){{ :sudo_srm_commands => '/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls' }}
     it do
-      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
       content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
         'Defaults:bestman !requiretty',
         'Cmnd_Alias SRM_CMD = /bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls',
@@ -258,7 +258,7 @@ describe 'osg::bestman' do
   context 'with sudo_srm_runas => "ALL, !root"' do
     let(:params){{ :sudo_srm_runas => 'ALL, !root' }}
     it do
-      content = subject.resource('file', '10_bestman').send(:parameters)[:content]
+      content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
       content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
         'Defaults:bestman !requiretty',
         'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
@@ -312,12 +312,12 @@ describe 'osg::bestman' do
 
   context "with event_log_count => 20" do
     let(:params) {{ :event_log_count => 20 }}
-    it { verify_contents(subject, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_COUNT=20']) }
+    it { verify_contents(catalogue, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_COUNT=20']) }
   end
 
   context "with event_log_size => 50000000" do
     let(:params) {{ :event_log_size => 50000000 }}
-    it { verify_contents(subject, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_SIZE=50000000']) }
+    it { verify_contents(catalogue, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_SIZE=50000000']) }
   end
 
   context 'with service_ensure => running' do

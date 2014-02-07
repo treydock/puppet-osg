@@ -9,9 +9,9 @@ describe 'osg::rsv' do
 
   it { should create_class('osg::rsv') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::condor_cron') }
-  it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts') }
+  it { should contain_class('osg::condor_cron') }
+  it { should contain_class('osg::repo') }
+  it { should contain_class('osg::cacerts') }
 
   it do
     should contain_firewall('100 allow RSV http access').with({
@@ -63,7 +63,7 @@ describe 'osg::rsv' do
   end
 
   it do
-    content = subject.resource('file', '/etc/osg/config.d/30-rsv.ini').send(:parameters)[:content]
+    content = catalogue.resource('file', '/etc/osg/config.d/30-rsv.ini').send(:parameters)[:content]
     content.split("\n").reject { |c| c =~ /(^;|^$)/ }.should == [
       '[RSV]',
       'enabled = True',

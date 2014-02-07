@@ -9,8 +9,8 @@ describe 'osg::condor_cron' do
 
   it { should create_class('osg::condor_cron') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::repo') }
-  it { should include_class('osg::cacerts') }
+  it { should contain_class('osg::repo') }
+  it { should contain_class('osg::cacerts') }
 
   it do
     should contain_user('cndrcron').with({

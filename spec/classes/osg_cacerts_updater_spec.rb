@@ -7,8 +7,8 @@ describe 'osg::cacerts::updater' do
 
   it { should create_class('osg::cacerts::updater') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::cacerts') }
-  it { should include_class('cron') }
+  it { should contain_class('osg::cacerts') }
+  it { should contain_class('cron') }
 
   it do 
     should contain_package('osg-ca-certs-updater').with({
@@ -42,7 +42,7 @@ describe 'osg::cacerts::updater' do
   end
 
   it do
-    verify_contents(subject, '/etc/cron.d/osg-ca-certs-updater', [
+    verify_contents(catalogue, '/etc/cron.d/osg-ca-certs-updater', [
       '0 */6 * * * root [ ! -f /var/lock/subsys/osg-ca-certs-updater-cron ] || /usr/sbin/osg-ca-certs-updater -a 23 -x 72 -r 30 -q',
     ])
   end
@@ -101,7 +101,7 @@ describe 'osg::cacerts::updater' do
   context 'with logfile => /var/log/osg-ca-certs-updater.log' do
     let(:params){{ :logfile => '/var/log/osg-ca-certs-updater.log' }}
     it do
-      verify_contents(subject, '/etc/cron.d/osg-ca-certs-updater', [
+      verify_contents(catalogue, '/etc/cron.d/osg-ca-certs-updater', [
         '0 */6 * * * root [ ! -f /var/lock/subsys/osg-ca-certs-updater-cron ] || /usr/sbin/osg-ca-certs-updater -a 23 -x 72 -r 30 -q -l /var/log/osg-ca-certs-updater.log',
       ])
     end
@@ -110,7 +110,7 @@ describe 'osg::cacerts::updater' do
   context 'with logfile => /var/log/osg-ca-certs-updater.log and quiet => false' do
     let(:params){{ :quiet => false, :logfile => '/var/log/osg-ca-certs-updater.log' }}
     it do
-      verify_contents(subject, '/etc/cron.d/osg-ca-certs-updater', [
+      verify_contents(catalogue, '/etc/cron.d/osg-ca-certs-updater', [
         '0 */6 * * * root [ ! -f /var/lock/subsys/osg-ca-certs-updater-cron ] || /usr/sbin/osg-ca-certs-updater -a 23 -x 72 -r 30 -l /var/log/osg-ca-certs-updater.log',
       ])
     end

@@ -9,7 +9,7 @@ describe 'osg::lcmaps' do
 
   it { should create_class('osg::lcmaps') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::repo') }
+  it { should contain_class('osg::repo') }
 
   it do 
     should contain_package('lcmaps').with({
@@ -30,7 +30,7 @@ describe 'osg::lcmaps' do
   end
 
   it do
-    verify_contents(subject, '/etc/lcmaps.db', [
+    verify_contents(catalogue, '/etc/lcmaps.db', [
       '             "--endpoint https://gums.foo:8443/gums/services/GUMSXACMLAuthorizationServicePort"',
       'glexec:',
     ])
@@ -47,7 +47,7 @@ describe 'osg::lcmaps' do
   end
 
   it do
-    content = subject.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
+    content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
     content.split("\n").should == [
       '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
       'globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
@@ -82,7 +82,7 @@ describe 'osg::lcmaps' do
   context "when gums_port => '7443'" do
     let(:params) {{ :gums_hostname => 'gums.foo', :gums_port => '7443' }}
     it do
-      verify_contents(subject, '/etc/lcmaps.db', [
+      verify_contents(catalogue, '/etc/lcmaps.db', [
         '             "--endpoint https://gums.foo:7443/gums/services/GUMSXACMLAuthorizationServicePort"'
       ])
     end
@@ -90,7 +90,7 @@ describe 'osg::lcmaps' do
 
   context "when with_glexec => false" do
     let(:params) {{ :gums_hostname => 'gums.foo', :with_glexec => false }}
-    it { verify_contents(subject, '/etc/lcmaps.db', [ '#glexec:' ]) }
+    it { verify_contents(catalogue, '/etc/lcmaps.db', [ '#glexec:' ]) }
   end
 
   [
@@ -101,12 +101,12 @@ describe 'osg::lcmaps' do
     context "when globus_mapping => #{v}" do
       let(:params) {{ :gums_hostname => 'gums.foo', :globus_mapping => v }}
       it do
-        content = subject.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
+        content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
         content.should match '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout'
       end
 
       it do
-        content = subject.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
+        content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
         content.split("\n").should_not == [
           '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
           'globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',

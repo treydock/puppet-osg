@@ -7,7 +7,7 @@ describe 'osg::cacerts' do
 
   it { should create_class('osg::cacerts') }
   it { should contain_class('osg::params') }
-  it { should include_class('osg::repo') }
+  it { should contain_class('osg::repo') }
 
   it do 
     should contain_package('osg-ca-certs').with({
