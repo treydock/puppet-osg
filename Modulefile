@@ -1,5 +1,5 @@
 name    'treydock-osg'
-version '0.0.3'
+version '0.0.4'
 source 'git://github.com/treydock/puppet-osg.git'
 author 'treydock'
 license 'Apache License, Version 2.0'
