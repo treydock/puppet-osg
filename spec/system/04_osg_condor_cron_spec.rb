@@ -1,7 +1,7 @@
 require 'spec_helper_system'
 
 describe 'osg::condor_cron class:' do
-  context "when default parameters"
+  context "when default parameters" do
     it 'should run successfully' do
       pp =<<-EOS
   class { 'osg::condor_cron': service_ensure => 'stopped', service_autorestart => false }
