@@ -1,0 +1,4 @@
+CVMFS_REPOSITORIES="`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr ' ' ,`"
+CVMFS_CACHE_BASE=<%= @cache_base %>
+CVMFS_QUOTA_LIMIT=<%= @quota_limit %>
+CVMFS_HTTP_PROXY="<%= @http_proxy %>"

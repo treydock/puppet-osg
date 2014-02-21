@@ -1,4 +1,4 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 =begin
 describe 'osg::gums class:' do
   context 'should run successfully' do

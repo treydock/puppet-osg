@@ -1,4 +1,4 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'osg::bestman class:' do
   context "when default parameters" do
@@ -9,11 +9,8 @@ describe 'osg::bestman class:' do
         class { 'osg::bestman': service_ensure => 'stopped', service_autorestart => false }
       EOS
 
-      puppet_apply(pp) do |r|
-       r.exit_code.should_not == 1
-       r.refresh
-       r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe package('osg-se-bestman') do

@@ -1,17 +1,14 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'osg::condor_cron class:' do
   context "when default parameters" do
     it 'should run successfully' do
       pp =<<-EOS
-  class { 'osg::condor_cron': service_ensure => 'stopped', service_autorestart => false }
+        class { 'osg::condor_cron': service_ensure => 'stopped', service_autorestart => false }
       EOS
   
-      puppet_apply(pp) do |r|
-       r.exit_code.should_not == 1
-       r.refresh
-       r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe package('condor-cron') do
