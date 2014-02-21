@@ -35,6 +35,8 @@ describe 'osg::cvmfs' do
     })
   end
 
+  it { should contain_package('cvmfs').that_comes_before('File[/etc/cvmfs/default.local]') }
+  it { should contain_package('cvmfs').that_comes_before('File[/etc/cvmfs/domain.d/cern.ch.local]') }
   it { should contain_package('cvmfs').that_comes_before('File[/etc/fuse.conf]') }
   it { should contain_file('/etc/fuse.conf').that_comes_before('File_line[auto.master cvmfs]') }
   it { should contain_file_line('auto.master cvmfs').that_comes_before('Service[autofs]') }

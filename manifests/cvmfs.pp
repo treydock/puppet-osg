@@ -82,6 +82,7 @@ class osg::cvmfs (
   package { 'cvmfs':
     ensure  => installed,
     name    => 'osg-oasis',
+    before  => [ File['/etc/cvmfs/default.local'], File['/etc/cvmfs/domain.d/cern.ch.local'] ],
     require => Yumrepo['osg'],
   }
 
