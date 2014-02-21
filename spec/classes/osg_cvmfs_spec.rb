@@ -54,7 +54,7 @@ describe 'osg::cvmfs' do
     should contain_file('/etc/fuse.conf').with({
       'ensure'  => 'present',
       'path'    => '/etc/fuse.conf',
-      'content' => 'user_allow_other\n',
+      'content' => "user_allow_other\n",
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',

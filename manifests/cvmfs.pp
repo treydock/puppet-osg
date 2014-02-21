@@ -89,7 +89,7 @@ class osg::cvmfs (
   file { '/etc/fuse.conf':
     ensure  => present,
     path    => '/etc/fuse.conf',
-    content => 'user_allow_other\n',
+    content => "user_allow_other\n",
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
