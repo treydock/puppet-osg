@@ -50,4 +50,12 @@ class osg (
 
   include osg::repo
 
+  Osg_config<| |> ~> Exec['osg-configure']
+
+  exec { 'osg-configure':
+    command     => '/usr/sbin/osg-configure -c',
+    onlyif      => '/usr/sbin/osg-configure -v',
+    refreshonly => true,
+  }
+
 }
