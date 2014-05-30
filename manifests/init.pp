@@ -31,7 +31,8 @@
 class osg (
   $osg_release    = '3.0',
   $baseurl        = 'UNSET',
-  $mirrorlist     = 'UNSET'
+  $mirrorlist     = 'UNSET',
+  $gums_host      = "gums.${::domain}",
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The $osg_release parameter only supports 3.0, 3.1, and 3.2')

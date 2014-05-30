@@ -45,6 +45,7 @@ class osg::lcmaps (
     require => Yumrepo['osg'],
   }
 
+  #TODO: Replace with osg_config as osg-configure >= 1.0.0 handles this file
   file { '/etc/lcmaps.db':
     ensure  => present,
     replace => $lcmaps_config_replace,
@@ -54,6 +55,7 @@ class osg::lcmaps (
     mode    => '0644',
   }
 
+  #TODO: Replace with osg_config as osg-configure >= 1.0.0 handles this file
   file { '/etc/grid-security/gsi-authz.conf':
     ensure  => present,
     replace => $lcmaps_globus_config_replace,
