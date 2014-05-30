@@ -33,6 +33,7 @@ class osg (
   $baseurl        = 'UNSET',
   $mirrorlist     = 'UNSET',
   $gums_host      = "gums.${::domain}",
+  $shared_certs_path = '/apps/osg3/grid-security/certificates',
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The $osg_release parameter only supports 3.0, 3.1, and 3.2')
@@ -55,7 +56,7 @@ class osg (
 
   exec { 'osg-configure':
     command     => '/usr/sbin/osg-configure -c',
-    onlyif      => '/usr/sbin/osg-configure -v',
+    onlyif      => ['test -f /usr/sbin/osg-configure', '/usr/sbin/osg-configure -v'],
     refreshonly => true,
   }
 

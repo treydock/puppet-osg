@@ -42,6 +42,7 @@ class osg::ce::config {
     ensure  => 'directory',
     owner   => 'tomcat',
     group   => 'tomcat',
+    mode    => '0755',
   }
 
   file { '/etc/grid-security/http/httpcert.pem':

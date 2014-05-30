@@ -71,6 +71,7 @@ describe 'osg::ce' do
         :ensure => 'directory',
         :owner  => 'tomcat',
         :group  => 'tomcat',
+        :mode   => '0755',
       })
     end
 

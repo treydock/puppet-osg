@@ -7,7 +7,7 @@ describe 'osg::cacerts' do
 
   it { should create_class('osg::cacerts') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::repo') }
+  it { should contain_class('osg') }
 
   it do 
     should contain_package('osg-ca-certs').with({
@@ -17,11 +17,13 @@ describe 'osg::cacerts' do
     })
   end
 
+  it { should_not contain_file('/etc/grid-security/certificates') }
+
   context 'with package_ensure => "latest"' do
     let(:params) {{ :package_ensure => 'latest' }}
     it { should contain_package('osg-ca-certs').with_ensure('latest') }
   end
-  
+
   context 'when package_name => "empty-ca-certs"' do
     let(:params) {{ :package_name => 'empty-ca-certs' }}
 
@@ -31,6 +33,20 @@ describe 'osg::cacerts' do
         'name'    => 'empty-ca-certs',
         'require' => 'Yumrepo[osg]',
       })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/certificates').with({
+        :ensure   => 'link',
+        :target   => '/apps/osg3/grid-security/certificates',
+        :require  => 'Package[osg-ca-certs]',
+      })
+    end
+
+    context 'when osg::shared_certs_path => /foo/bar' do
+      let(:pre_condition) { "class { 'osg': shared_certs_path => '/foo/bar' }" }
+      let(:params) {{ :package_name => 'empty-ca-certs' }}
+      it { should contain_file('/etc/grid-security/certificates').with_target('/foo/bar') }
     end
   end
 
@@ -44,6 +60,8 @@ describe 'osg::cacerts' do
         'require' => 'Yumrepo[osg]',
       })
     end
+
+    it { should_not contain_file('/etc/grid-security/certificates') }
   end
 
   context 'when package_name => "foo"' do
