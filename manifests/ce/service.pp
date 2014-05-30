@@ -13,7 +13,7 @@ class osg::ce::service {
   service { 'globus-gridftp-server':
     ensure      => 'running',
     enable      => true,
-    hasstatus   => true, # status does not work!
+    hasstatus   => true, # TODO: status does not work!
     hasrestart  => true,
   }->
   service { $osg::ce::cemon_service_name:

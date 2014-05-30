@@ -17,6 +17,7 @@ describe 'osg::cacerts' do
     })
   end
 
+  it { should_not contain_file('/etc/grid-security') }
   it { should_not contain_file('/etc/grid-security/certificates') }
 
   context 'with package_ensure => "latest"' do
@@ -32,6 +33,16 @@ describe 'osg::cacerts' do
         'ensure'  => 'installed',
         'name'    => 'empty-ca-certs',
         'require' => 'Yumrepo[osg]',
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security').with({
+        :ensure => 'directory',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0755',
+        :before => 'File[/etc/grid-security/certificates]',
       })
     end
 
@@ -61,6 +72,7 @@ describe 'osg::cacerts' do
       })
     end
 
+    it { should_not contain_file('/etc/grid-security') }
     it { should_not contain_file('/etc/grid-security/certificates') }
   end
 

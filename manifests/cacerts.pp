@@ -38,6 +38,12 @@ class osg::cacerts (
   }
 
   if $package_name == 'empty-ca-certs' {
+    file { '/etc/grid-security':
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+    }->
     file { '/etc/grid-security/certificates':
       ensure  => 'link',
       target  => $osg::shared_certs_path,
