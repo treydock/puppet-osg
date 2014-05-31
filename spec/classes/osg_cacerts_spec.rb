@@ -17,7 +17,15 @@ describe 'osg::cacerts' do
     })
   end
 
-  it { should_not contain_file('/etc/grid-security') }
+  it do
+    should contain_file('/etc/grid-security').with({
+      :ensure => 'directory',
+      :owner  => 'root',
+      :group  => 'root',
+      :mode   => '0755',
+    })
+  end
+
   it { should_not contain_file('/etc/grid-security/certificates') }
 
   context 'with package_ensure => "latest"' do
@@ -37,20 +45,10 @@ describe 'osg::cacerts' do
     end
 
     it do
-      should contain_file('/etc/grid-security').with({
-        :ensure => 'directory',
-        :owner  => 'root',
-        :group  => 'root',
-        :mode   => '0755',
-        :before => 'File[/etc/grid-security/certificates]',
-      })
-    end
-
-    it do
       should contain_file('/etc/grid-security/certificates').with({
         :ensure   => 'link',
         :target   => '/apps/osg3/grid-security/certificates',
-        :require  => 'Package[osg-ca-certs]',
+        :require  => 'File[/etc/grid-security]',
       })
     end
 
@@ -72,7 +70,15 @@ describe 'osg::cacerts' do
       })
     end
 
-    it { should_not contain_file('/etc/grid-security') }
+    it do
+      should contain_file('/etc/grid-security').with({
+        :ensure => 'directory',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0755',
+      })
+    end
+
     it { should_not contain_file('/etc/grid-security/certificates') }
   end
 
