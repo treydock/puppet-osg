@@ -10,9 +10,9 @@ class osg::gridftp::config {
   $globus_tcp_source_range_min  = $osg::globus_tcp_source_range_min
   $globus_tcp_source_range_max  = $osg::globus_tcp_source_range_max
 
-  $hostcert_source = $osg::gridftp::hostcert ? {
+  $hostcert_source = $osg::gridftp::hostcert_source ? {
     'UNSET' => undef,
-    default => $osg::gridftp::hostcert,
+    default => $osg::gridftp::hostcert_source,
   }
 
   $hostkey_source = $osg::gridftp::hostkey_source ? {

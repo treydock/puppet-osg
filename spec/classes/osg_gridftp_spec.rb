@@ -21,9 +21,9 @@ describe 'osg::gridftp' do
   it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg::repo]') }
   it { should contain_class('osg::repo').that_comes_before('Class[osg::cacerts]') }
   it { should contain_class('osg::cacerts').that_comes_before('Class[osg::gridftp::install]') }
-  it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::gridftp::config]') }
-  it { should contain_class('osg::gridftp::config').that_comes_before('Class[osg::gums::client]') }
-  it { should contain_class('osg::gums::client').that_comes_before('Class[osg::gridftp::service]') }
+  it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::gums::client]') }
+  it { should contain_class('osg::gums::client').that_comes_before('Class[osg::gridftp::config]') }
+  it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
   it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
   it { should contain_anchor('osg::gridftp::end') }
 
@@ -105,6 +105,13 @@ describe 'osg::gridftp' do
         :source   => nil,
         :content  => nil,
       })
+    end
+
+    context 'when hostcert_source and hostkey_source defined' do
+      let(:params) {{ :hostcert_source => 'file:///foo/hostcert.pem', :hostkey_source => 'file:///foo/hostkey.pem' }}
+
+      it { should contain_file('/etc/grid-security/hostcert.pem').with_source('file:///foo/hostcert.pem') }
+      it { should contain_file('/etc/grid-security/hostkey.pem').with_source('file:///foo/hostkey.pem') }
     end
   end
 

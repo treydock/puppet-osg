@@ -29,8 +29,8 @@ class osg::gridftp (
   Class['osg::repo']->
   Class['osg::cacerts']->
   Class['osg::gridftp::install']->
-  Class['osg::gridftp::config']->
   Class['osg::gums::client']->
+  Class['osg::gridftp::config']~>
   Class['osg::gridftp::service']->
   Anchor['osg::gridftp::end']
 
