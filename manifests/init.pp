@@ -34,6 +34,10 @@ class osg (
   $mirrorlist     = 'UNSET',
   $gums_host      = "gums.${::domain}",
   $shared_certs_path = '/apps/osg3/grid-security/certificates',
+  $globus_tcp_port_range_min = '40000',
+  $globus_tcp_port_range_max = '41999',
+  $globus_tcp_source_range_min = '40000',
+  $globus_tcp_source_range_max = '41999',
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The $osg_release parameter only supports 3.0, 3.1, and 3.2')

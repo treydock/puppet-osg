@@ -15,10 +15,6 @@ describe 'osg::ce' do
     should contain_class('osg::gridftp').with({
       :cacerts_package_name        => 'empty-ca-certs',
       :cacerts_package_ensure      => 'installed',
-      :globus_tcp_port_range_min   => '40000',
-      :globus_tcp_port_range_max   => '41999',
-      :globus_tcp_source_range_min => '40000',
-      :globus_tcp_source_range_max => '41999',
       :hostcert_source             => 'UNSET',
       :hostkey_source              => 'UNSET',
     })

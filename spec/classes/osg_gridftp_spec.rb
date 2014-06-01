@@ -77,38 +77,6 @@ describe 'osg::gridftp' do
     end
 
     it do
-      should contain_file('/etc/profile.d/globus_firewall.sh').with({
-        :ensure   => 'file',
-        :owner    => 'root',
-        :group    => 'root',
-        :mode     => '0644',
-      })
-    end
-
-    it do
-      verify_contents(catalogue, '/etc/profile.d/globus_firewall.sh', [
-        'export GLOBUS_TCP_PORT_RANGE=40000,41999',
-        'export GLOBUS_TCP_SOURCE_RANGE=40000,41999',
-      ])
-    end
-
-    it do
-      should contain_file('/etc/profile.d/globus_firewall.csh').with({
-        :ensure   => 'file',
-        :owner    => 'root',
-        :group    => 'root',
-        :mode     => '0644',
-      })
-    end
-
-    it do
-      verify_contents(catalogue, '/etc/profile.d/globus_firewall.csh', [
-        'setenv GLOBUS_TCP_PORT_RANGE 40000,41999',
-        'setenv GLOBUS_TCP_SOURCE_RANGE 40000,41999',
-      ])
-    end
-
-    it do
       should contain_file('/etc/grid-security/hostcert.pem').with({
         :ensure => 'file',
         :owner  => 'root',
