@@ -27,6 +27,30 @@ describe 'osg::gridftp' do
   it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
   it { should contain_anchor('osg::gridftp::end') }
 
+  it do
+    should contain_firewall('100 allow GridFTP').with({
+      :action => 'accept',
+      :dport  => '2811',
+      :proto  => 'tcp',
+    })
+  end
+
+  it do
+    should contain_firewall('100 allow GLOBUS_TCP_PORT_RANGE').with({
+      :action => 'accept',
+      :dport  => '40000-41999',
+      :proto  => 'tcp',
+    })
+  end
+
+  it do
+    should contain_firewall('100 allow GLOBUS_TCP_SOURCE_RANGE').with({
+      :action => 'accept',
+      :sport  => '40000-41999',
+      :proto  => 'tcp',
+    })
+  end
+
   context 'osg::gridftp::install' do
     it do
       should contain_package('osg-gridftp').with({
@@ -47,8 +71,8 @@ describe 'osg::gridftp' do
 
     it do
       verify_contents(catalogue, '/etc/sysconfig/globus-gridftp-server', [
-        'export GLOBUS_TCP_PORT_RANGE=40000,49999',
-        'export GLOBUS_TCP_SOURCE_RANGE=40000,49999',
+        'export GLOBUS_TCP_PORT_RANGE=40000,41999',
+        'export GLOBUS_TCP_SOURCE_RANGE=40000,41999',
       ])
     end
 
@@ -63,8 +87,8 @@ describe 'osg::gridftp' do
 
     it do
       verify_contents(catalogue, '/etc/profile.d/globus_firewall.sh', [
-        'export GLOBUS_TCP_PORT_RANGE=40000,49999',
-        'export GLOBUS_TCP_SOURCE_RANGE=40000,49999',
+        'export GLOBUS_TCP_PORT_RANGE=40000,41999',
+        'export GLOBUS_TCP_SOURCE_RANGE=40000,41999',
       ])
     end
 
@@ -79,8 +103,8 @@ describe 'osg::gridftp' do
 
     it do
       verify_contents(catalogue, '/etc/profile.d/globus_firewall.csh', [
-        'setenv GLOBUS_TCP_PORT_RANGE 40000,49999',
-        'setenv GLOBUS_TCP_SOURCE_RANGE 40000,49999',
+        'setenv GLOBUS_TCP_PORT_RANGE 40000,41999',
+        'setenv GLOBUS_TCP_SOURCE_RANGE 40000,41999',
       ])
     end
 

@@ -4,9 +4,9 @@ class osg::gridftp (
   $cacerts_package_name = 'empty-ca-certs',
   $cacerts_package_ensure = 'installed',
   $globus_tcp_port_range_min = '40000',
-  $globus_tcp_port_range_max = '49999',
+  $globus_tcp_port_range_max = '41999',
   $globus_tcp_source_range_min = '40000',
-  $globus_tcp_source_range_max = '49999',
+  $globus_tcp_source_range_max = '41999',
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $manage_firewall = true,
@@ -41,7 +41,7 @@ class osg::gridftp (
   if $manage_firewall {
     firewall { '100 allow GridFTP':
       action  => 'accept',
-      port    => '2811',
+      dport   => '2811',
       proto   => 'tcp',
     }
     firewall { '100 allow GLOBUS_TCP_PORT_RANGE':
