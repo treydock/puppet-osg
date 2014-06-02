@@ -9,18 +9,13 @@ describe 'osg::gridftp' do
 
   it { should create_class('osg::gridftp') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg') }
 
-  it do
-    should contain_class('osg::cacerts').with({
+  it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg]') }
+  it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
+  it { should contain_class('osg::cacerts').with({
       :package_name   => 'empty-ca-certs',
       :package_ensure => 'installed',
-    })
-  end
-
-  it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg::repo]') }
-  it { should contain_class('osg::repo').that_comes_before('Class[osg::cacerts]') }
-  it { should contain_class('osg::cacerts').that_comes_before('Class[osg::gridftp::install]') }
+    }).that_comes_before('Class[osg::gridftp::install]') }
   it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::gums::client]') }
   it { should contain_class('osg::gums::client').that_comes_before('Class[osg::gridftp::config]') }
   it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }

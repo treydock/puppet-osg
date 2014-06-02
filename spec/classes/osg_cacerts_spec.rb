@@ -47,7 +47,7 @@ describe 'osg::cacerts' do
     it do
       should contain_file('/etc/grid-security/certificates').with({
         :ensure   => 'link',
-        :target   => '/apps/osg3/grid-security/certificates',
+        :target   => '/opt/grid-certificates',
         :require  => 'File[/etc/grid-security]',
       })
     end

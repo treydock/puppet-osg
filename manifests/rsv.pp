@@ -19,6 +19,7 @@
 class osg::rsv (
   $rsvcert_source         = 'UNSET',
   $rsvkey_source          = 'UNSET',
+  $manage_users           = true,
   $with_httpd             = true,
   $manage_firewall        = true,
   $http_port              = '80',
@@ -33,11 +34,13 @@ class osg::rsv (
   $srm_webservice_path    = 'DEFAULT',
 ) inherits osg::params {
 
+  validate_bool($manage_users)
   validate_bool($with_httpd)
   validate_bool($manage_firewall)
 
   include osg
   include osg::cacerts
+  include osg::rsv::users
   include osg::rsv::install
   include osg::rsv::config
   include osg::rsv::service
@@ -46,8 +49,9 @@ class osg::rsv (
   anchor { 'osg::rsv::end': }
 
   Anchor['osg::rsv::start']->
-  Class['osg::repo']->
+  Class['osg']->
   Class['osg::cacerts']->
+  Class['osg::rsv::users']->
   Class['osg::rsv::install']->
   Class['osg::rsv::config']~>
   Class['osg::rsv::service']->

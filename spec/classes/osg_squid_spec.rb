@@ -9,7 +9,7 @@ describe 'osg::squid' do
 
   it { should create_class('osg::squid') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::repo') }
+  it { should contain_class('osg') }
 
   it do
     should contain_firewall('100 allow squid access').with({

@@ -26,7 +26,7 @@ class osg::gridftp (
   anchor { 'osg::gridftp::end': }
 
   Anchor['osg::gridftp::start']->
-  Class['osg::repo']->
+  Class['osg']->
   Class['osg::cacerts']->
   Class['osg::gridftp::install']->
   Class['osg::gums::client']->

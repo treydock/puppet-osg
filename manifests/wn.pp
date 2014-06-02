@@ -20,7 +20,7 @@ class osg::wn (
   anchor { 'osg::wn::end': }
 
   Anchor['osg::wn::start']->
-  Class['osg::repo']->
+  Class['osg']->
   Class['osg::cacerts']->
   Package['osg-wn-client']->
   Anchor['osg::wn::end']

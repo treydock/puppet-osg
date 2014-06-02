@@ -29,40 +29,35 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg (
-  $osg_release    = '3.0',
-  $baseurl        = 'UNSET',
-  $mirrorlist     = 'UNSET',
-  $gums_host      = "gums.${::domain}",
-  $shared_certs_path = '/apps/osg3/grid-security/certificates',
+  $osg_release      = '3.1',
+  $repo_baseurl_bit = 'http://repo.grid.iu.edu',
+  $repo_use_mirrors = true,
+  $enable_osg_contrib = false,
+  $gums_host        = "gums.${::domain}",
+  $shared_certs_path = '/opt/grid-certificates',
   $globus_tcp_port_range_min = '40000',
   $globus_tcp_port_range_max = '41999',
   $globus_tcp_source_range_min = '40000',
   $globus_tcp_source_range_max = '41999',
 ) inherits osg::params {
 
-  validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The $osg_release parameter only supports 3.0, 3.1, and 3.2')
+  validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The osg_release parameter only supports 3.1 and 3.2')
+  validate_bool($repo_use_mirrors)
+  validate_bool($enable_osg_contrib)
 
-  $baseurl_real = $baseurl ? {
-    'UNSET' => 'UNSET',
-    default => $baseurl,
-  }
-  $mirrorlist_real = $mirrorlist ? {
-    'UNSET' => $osg_release ? {
-      '3.0'   => "http://repo.grid.iu.edu/mirror/3.0/el${::os_maj_version}/osg-release/${::architecture}",
-      default => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${::os_maj_version}/release/${::architecture}",
-    },
-    default => $mirrorlist,
-  }
+  anchor { 'osg::start': }
+  anchor { 'osg::end': }
 
+  include epel
   include osg::repo
 
-  Osg_config<| |> ~> Exec['osg-configure']
+  Anchor['osg::start']->
+  Yumrepo['epel']->
+  Class['osg::repo']->
+  Anchor['osg::end']
 
-  exec { 'osg-configure':
-    path        => ['/usr/bin','/bin','/usr/sbin','/sbin'],
-    command     => '/usr/sbin/osg-configure -c',
-    onlyif      => ['test -f /usr/sbin/osg-configure', '/usr/sbin/osg-configure -v'],
-    refreshonly => true,
-  }
+  include osg::configure
+
+  Osg_config<| |> ~> Exec['osg-configure']
 
 }

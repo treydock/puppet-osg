@@ -9,7 +9,7 @@ class osg::squid (
 
   validate_bool($manage_firewall)
 
-  include osg::repo
+  include osg
 
   if $manage_firewall {
     firewall { '100 allow squid access':

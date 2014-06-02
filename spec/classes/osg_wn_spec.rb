@@ -9,7 +9,6 @@ describe 'osg::wn' do
 
   it { should create_class('osg::wn') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg') }
 
   it do
     should contain_class('osg::cacerts').with({
@@ -24,7 +23,7 @@ describe 'osg::wn' do
     }).that_comes_before('Anchor[osg::wn::end]')
   end
 
-  it { should contain_anchor('osg::wn::start').that_comes_before('Class[osg::repo]') }
-  it { should contain_class('osg::repo').that_comes_before('Class[osg::cacerts]') }
+  it { should contain_anchor('osg::wn::start').that_comes_before('Class[osg]') }
+  it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
   it { should contain_anchor('osg::wn::end') }
 end

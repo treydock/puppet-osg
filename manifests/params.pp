@@ -12,6 +12,14 @@
 #
 class osg::params {
 
+  if $::operatingsystemmajrelease {
+    $os_releasever = $::operatingsystemmajrelease
+  } elsif $::os_maj_version {
+    $os_releasever = $::os_maj_version
+  } else {
+    $os_releasever = inline_template("<%= \"${::operatingsystemrelease}\".split('.').first %>")
+  }
+
   $sudo_srm_commands = [
     '/bin/rm',
     '/bin/mkdir',

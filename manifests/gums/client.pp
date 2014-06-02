@@ -6,6 +6,7 @@ class osg::gums::client {
 
   include osg
 
+  #TODO: Move to osg::configure class
   package { 'osg-configure-misc':
     ensure  => 'present',
     before  => Osg_config['Misc Services/gums_host'],

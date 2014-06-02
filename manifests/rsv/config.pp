@@ -26,12 +26,20 @@ class osg::rsv::config {
   osg_config { 'RSV/srm_dir':             value => $osg::rsv::srm_dir }
   osg_config { 'RSV/srm_webservice_path': value => $osg::rsv::srm_webservice_path }
 
+  file { '/etc/grid-security/rsv':
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+  }
+
   file { '/etc/grid-security/rsv/rsvcert.pem':
     ensure  => 'file',
     owner   => 'rsv',
     group   => 'rsv',
     mode    => '0444',
     source  => $rsvcert_source,
+    require => File['/etc/grid-security/rsv'],
   }
 
   file { '/etc/grid-security/rsv/rsvkey.pem':
@@ -40,6 +48,7 @@ class osg::rsv::config {
     group   => 'rsv',
     mode    => '0400',
     source  => $rsvkey_source,
+    require => File['/etc/grid-security/rsv'],
   }
 
   file { '/var/spool/rsv':

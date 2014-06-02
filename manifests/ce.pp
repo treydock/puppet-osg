@@ -9,21 +9,21 @@ class osg::ce (
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $httpcert_source = 'UNSET',
-  $htpkey_source = 'UNSET',
+  $httpkey_source = 'UNSET',
 ) inherits osg::params {
 
   include osg
 
   $cemon_service_name = $osg::osg_release ? {
-    /3.0|3.1/ => 'tomcat6',
-    /3.2/     => 'osg-info-services',
+    /3.1/ => 'tomcat6',
+    /3.2/ => 'osg-info-services',
   }
 
   class { 'osg::gridftp':
-    cacerts_package_name        => $cacerts_package_name,
-    cacerts_package_ensure      => $cacerts_package_ensure,
-    hostcert_source             => $hostcert_source,
-    hostkey_source              => $hostkey_source,
+    cacerts_package_name    => $cacerts_package_name,
+    cacerts_package_ensure  => $cacerts_package_ensure,
+    hostcert_source         => $hostcert_source,
+    hostkey_source          => $hostkey_source,
   }
 
   include osg::ce::install
