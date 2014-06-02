@@ -1,6 +1,6 @@
-# == Class: osg::repo
+# == Class: osg::repos
 #
-class osg::repo {
+class osg::repos {
 
   include osg
   include osg::params

@@ -1,3 +1,6 @@
+#
+# File managed by Puppet!
+#
 ###########################################################
 ###########################################################
 ###########################################################
@@ -47,8 +50,8 @@ localPathListToBlock=<%= @localPathListToBlock.join(';') %>
 localPathListAllowed=<%= @localPathListAllowed.join(';') %>
 <% end -%>
 securePort=<%= @securePort %>
-CertFileName=<%= @cert_file_name %>
-KeyFileName=<%= @key_file_name %>
+CertFileName=/etc/grid-security/bestman/bestmancert.pem
+KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ### ProxyFileName=PROXY_FILE_PATH
 ###########################################################
 # supportedProtocolList can be defined
@@ -132,19 +135,11 @@ LifetimeSecondsMappedIDCached=1800
 ### GUMSProtocol=XACML
 ### GUMSserviceURL=
 ### GUMSCurrHostDN=
-<% if @with_gums_auth -%>
-GUMSProtocol=<%= @gums_protocol %>
-GUMSserviceURL=https://<%= @gums_hostname_real %>:<%= @gums_port %>/gums/services/GUMSXACMLAuthorizationServicePort
-<% if @gums_CurrHostDN and @gums_CurrHostDN != 'UNSET' -%>
-GUMSCurrHostDN=<%= @gums_CurrHostDN %>
-<% end -%>
-<% end -%>
+GUMSProtocol=XACML
+GUMSserviceURL=https://<%= @gums_host %>:8443/gums/services/GUMSXACMLAuthorizationServicePort
+GUMSCurrHostDN=<%= @host_dn %>
 ### Grid-mapfile will be used
-<% if @with_gridmap_auth -%>
-GridMapFileName=<%= @grid_map_file_name %>
-<% else -%>
 #GridMapFileName=/etc/bestman2/conf/grid-mapfile.empty
-<% end -%>
 ### validateVomsProxy=false
 ###########################################################
 # Do Not edit below unless you really really understand the entries

@@ -1,7 +1,7 @@
 # == Class: osg::gridftp
 #
 class osg::gridftp (
-  $cacerts_package_name = 'empty-ca-certs',
+  $cacerts_package_name = 'osg-ca-certs',
   $cacerts_package_ensure = 'installed',
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',

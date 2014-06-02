@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe 'osg::repo' do
+describe 'osg::repos' do
   include_context :defaults
 
   let(:facts) { default_facts }
 
-  it { should create_class('osg::repo') }
+  it { should create_class('osg::repos') }
   it { should contain_class('osg') }
   it { should contain_class('osg::params') }
 

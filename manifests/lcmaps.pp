@@ -31,7 +31,7 @@ class osg::lcmaps (
   validate_bool($lcmaps_config_replace)
   validate_bool($lcmaps_globus_config_replace)
 
-  require 'osg::repo'
+  require 'osg'
 
   package { 'lcmaps':
     ensure  => $lcmaps_package_ensure,

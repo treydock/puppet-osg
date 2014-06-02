@@ -12,7 +12,7 @@ describe 'osg::wn' do
 
   it do
     should contain_class('osg::cacerts').with({
-      :package_name   => 'empty-ca-certs',
+      :package_name   => 'osg-ca-certs',
       :package_ensure => 'installed',
     }).that_comes_before('Package[osg-wn-client]')
   end

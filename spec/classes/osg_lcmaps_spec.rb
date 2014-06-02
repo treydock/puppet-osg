@@ -9,7 +9,7 @@ describe 'osg::lcmaps' do
 
   it { should create_class('osg::lcmaps') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::repo') }
+  it { should contain_class('osg') }
 
   it do 
     should contain_package('lcmaps').with({

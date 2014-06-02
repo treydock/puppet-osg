@@ -15,193 +15,179 @@ describe 'osg::bestman' do
 
   it { should create_class('osg::bestman') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::repo') }
-  it { should contain_class('osg::cacerts') }
-  it { should contain_class('osg::lcmaps') }
+
+  it { should contain_anchor('osg::bestman::start').that_comes_before('Class[osg]') }
+  it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
+  it { should contain_class('osg::cacerts').with({
+      :package_name   => 'osg-ca-certs',
+      :package_ensure => 'installed',
+    }).that_comes_before('Class[osg::bestman::install]') }
+  it { should contain_class('osg::bestman::install').that_comes_before('Class[osg::gums::client]') }
+  it { should contain_class('osg::gums::client').that_comes_before('Class[osg::bestman::config]') }
+  it { should contain_class('osg::bestman::config').that_comes_before('Class[osg::bestman::service]') }
+  it { should contain_class('osg::bestman::service').that_comes_before('Anchor[osg::bestman::end]') }
+  it { should contain_anchor('osg::bestman::end') }
 
   it do
     should contain_firewall('100 allow SRMv2 access').with({
-      'port'    => '8443',
-      'proto'   => 'tcp',
-      'action'  => 'accept',
+      :port    => '8443',
+      :proto   => 'tcp',
+      :action  => 'accept',
     })
   end
 
-  it { should contain_sudo__conf('bestman').with_priority('10') }
-
-  it do
-    content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
-    content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
-      'Defaults:bestman !requiretty',
-      'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
-      'Runas_Alias SRM_USR = ALL,!root',
-      'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
-    ]
+  context 'osg::bestman::install' do
+    it do
+      should contain_package('osg-se-bestman').with({
+        :ensure  => 'installed',
+      })
+    end
   end
 
-  it do
-    should contain_user('bestman').with({
-      'ensure'      => 'present',
-      'name'        => 'bestman',
-      'uid'         => nil,
-      'home'        => '/etc/bestman2',
-      'shell'       => '/bin/bash',
-      'system'      => 'true',
-      'comment'     => 'BeStMan 2 Server user',
-      'managehome'  => 'false',
-    })
+  context 'osg::bestman::config' do
+
+    it { should contain_sudo__conf('bestman').with_priority('10') }
+
+    it do
+      content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'Defaults:bestman !requiretty',
+        'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
+        'Runas_Alias SRM_USR = ALL,!root',
+        'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
+      ]
+    end
+
+    it do
+      should contain_file('/etc/grid-security/bestman').with({
+        :ensure => 'directory',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmancert.pem').with({
+        :ensure   => 'file',
+        :owner    => 'bestman',
+        :group    => 'bestman',
+        :mode     => '0444',
+        :source   => nil,
+        :require  => 'File[/etc/grid-security/bestman]',
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/bestman/bestmankey.pem').with({
+        :ensure   => 'file',
+        :owner    => 'bestman',
+        :group    => 'bestman',
+        :mode     => '0400',
+        :source   => nil,
+        :require  => 'File[/etc/grid-security/bestman]',
+      })
+    end
+
+
+    it do
+      should contain_file('/etc/sysconfig/bestman2').with({
+        :ensure  => 'file',
+        :owner   => 'root',
+        :group   => 'root',
+        :mode    => '0644',
+        :notify  => 'Service[bestman2]',
+      })
+    end
+
+    it do
+      content = catalogue.resource('file', '/etc/sysconfig/bestman2').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'SRM_HOME=/etc/bestman2',
+        'BESTMAN_SYSCONF=/etc/sysconfig/bestman2',
+        'BESTMAN_SYSCONF_LIB=/etc/sysconfig/bestman2lib',
+        'BESTMAN2_CONF=/etc/bestman2/conf/bestman2.rc',
+        'JAVA_HOME=/etc/alternatives/java_sdk',
+        'BESTMAN_LOG=/var/log/bestman2/bestman2.log',
+        'BESTMAN_PID=/var/run/bestman2.pid',
+        'BESTMAN_LOCK=/var/lock/bestman2',
+        'SRM_OWNER=bestman',
+        'BESTMAN_LIB=/usr/share/java/bestman2',
+        'X509_CERT_DIR=/etc/grid-security/certificates',
+        'GLOBUS_HOSTNAME=foo.example.tld',
+        'BESTMAN_MAX_JAVA_HEAP=1024',
+        'BESTMAN_EVENT_LOG_COUNT=10',
+        'BESTMAN_EVENT_LOG_SIZE=20971520',
+        'BESTMAN_GUMSCERTPATH=/etc/grid-security/bestman/bestmancert.pem',
+        'BESTMAN_GUMSKEYPATH=/etc/grid-security/bestman/bestmankey.pem',
+        'BESTMAN_GUMS_ENABLED=yes',
+        'JETTY_DEBUG_ENABLED=no',
+        'BESTMAN_GATEWAYMODE_ENABLED=yes',
+        'BESTMAN_FULLMODE_ENABLED=no',
+        'JAVA_CLIENT_MAX_HEAP=512',
+        'JAVA_CLIENT_MIN_HEAP=32',
+      ]
+    end
+
+    it do
+      should contain_file('/etc/bestman2/conf/bestman2.rc').with({
+        :ensure  => 'file',
+        :owner   => 'root',
+        :group   => 'root',
+        :mode    => '0644',
+        :notify  => 'Service[bestman2]',
+      })
+    end
+
+    it do
+      content = catalogue.resource('file', '/etc/bestman2/conf/bestman2.rc').send(:parameters)[:content]
+      content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        'EventLogLocation=/var/log/bestman2',
+        'eventLogLevel=INFO',
+        'securePort=8443',
+        'CertFileName=/etc/grid-security/bestman/bestmancert.pem',
+        'KeyFileName=/etc/grid-security/bestman/bestmankey.pem',
+        'pathForToken=true',
+        'fsConcurrency=40',
+        'checkSizeWithFS=true',
+        'checkSizeWithGsiftp=false',
+        'accessFileSysViaSudo=true',
+        'noSudoOnLs=true',
+        'accessFileSysViaGsiftp=false',
+        'MaxMappedIDCached=1000',
+        'LifetimeSecondsMappedIDCached=1800',
+        'GUMSProtocol=XACML',
+        'GUMSserviceURL=https://gums.example.tld:8443/gums/services/GUMSXACMLAuthorizationServicePort',
+        'GUMSCurrHostDN=/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=foo.example.tld',
+        'disableSpaceMgt=true',
+        'useBerkeleyDB=false',
+        'noCacheLog=true',
+        'Concurrency=40',
+        'FactoryID=srm/v2/server',
+        'noEventLog=false',
+      ]
+    end
+
+
+    it do
+      should contain_file('/var/log/bestman2').with({
+        :ensure  => 'directory',
+        :owner   => 'bestman',
+        :group   => 'bestman',
+        :mode    => '0755',
+      })
+    end
   end
 
-  it do
-    should contain_group('bestman').with({
-      'ensure'  => 'present',
-      'name'    => 'bestman',
-      'gid'     => nil,
-      'system'  => 'true',
-    })
-  end
-
-  it do
-    should contain_package('osg-se-bestman').with({
-      'ensure'  => 'installed',
-      'require' => ['Yumrepo[osg]', 'Package[osg-ca-certs]'],
-      'before'  => [ 'File[/etc/sysconfig/bestman2]', 'File[/etc/bestman2/conf/bestman2.rc]' ],
-    })
-  end
-
-  it do
-    should contain_file('/etc/sysconfig/bestman2').with({
-      'ensure'  => 'present',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'notify'  => 'Service[bestman2]',
-    })
-  end
-
-  it do
-    content = catalogue.resource('file', '/etc/sysconfig/bestman2').send(:parameters)[:content]
-    content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
-      'SRM_HOME=/etc/bestman2',
-      'BESTMAN_SYSCONF=/etc/sysconfig/bestman2',
-      'BESTMAN_SYSCONF_LIB=/etc/sysconfig/bestman2lib',
-      'BESTMAN2_CONF=/etc/bestman2/conf/bestman2.rc',
-      'JAVA_HOME=/etc/alternatives/java_sdk',
-      'BESTMAN_LOG=/var/log/bestman2/bestman2.log',
-      'BESTMAN_PID=/var/run/bestman2.pid',
-      'BESTMAN_LOCK=/var/lock/bestman2',
-      'SRM_OWNER=bestman',
-      'BESTMAN_LIB=/usr/share/java/bestman2',
-      'X509_CERT_DIR=/etc/grid-security/certificates',
-      'GLOBUS_HOSTNAME=foo.example.tld',
-      'BESTMAN_MAX_JAVA_HEAP=1024',
-      'BESTMAN_EVENT_LOG_COUNT=10',
-      'BESTMAN_EVENT_LOG_SIZE=20971520',
-      'BESTMAN_GUMSCERTPATH=/etc/grid-security/bestman/bestmancert.pem',
-      'BESTMAN_GUMSKEYPATH=/etc/grid-security/bestman/bestmankey.pem',
-      'BESTMAN_GUMS_ENABLED=yes',
-      'JETTY_DEBUG_ENABLED=no',
-      'BESTMAN_GATEWAYMODE_ENABLED=yes',
-      'BESTMAN_FULLMODE_ENABLED=no',
-      'JAVA_CLIENT_MAX_HEAP=512',
-      'JAVA_CLIENT_MIN_HEAP=32',
-    ]
-  end
-
-  it do
-    should contain_file('/etc/bestman2/conf/bestman2.rc').with({
-      'ensure'  => 'present',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'notify'  => 'Service[bestman2]',
-    })
-  end
-
-  it do
-    content = catalogue.resource('file', '/etc/bestman2/conf/bestman2.rc').send(:parameters)[:content]
-    content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
-      'EventLogLocation=/var/log/bestman2',
-      'eventLogLevel=INFO',
-      'securePort=8443',
-      'CertFileName=/etc/grid-security/bestman/bestmancert.pem',
-      'KeyFileName=/etc/grid-security/bestman/bestmankey.pem',
-      'pathForToken=true',
-      'fsConcurrency=40',
-      'checkSizeWithFS=true',
-      'checkSizeWithGsiftp=false',
-      'accessFileSysViaSudo=true',
-      'noSudoOnLs=true',
-      'accessFileSysViaGsiftp=false',
-      'MaxMappedIDCached=1000',
-      'LifetimeSecondsMappedIDCached=1800',
-      'GUMSProtocol=XACML',
-      'GUMSserviceURL=https://gums.foo:8443/gums/services/GUMSXACMLAuthorizationServicePort',
-      'disableSpaceMgt=true',
-      'useBerkeleyDB=false',
-      'noCacheLog=true',
-      'Concurrency=40',
-      'FactoryID=srm/v2/server',
-      'noEventLog=false',
-    ]
-  end
-
-  it do
-    should contain_service('bestman2').with({
-      'ensure'      => nil,
-      'enable'      => 'true',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'require'     => [ 'File[/etc/sysconfig/bestman2]', 'File[/etc/bestman2/conf/bestman2.rc]' ]
-    })
-  end
-
-  it do
-    should contain_file('/etc/grid-security/bestman/bestmancert.pem').with({
-      'owner'   => 'bestman',
-      'group'   => 'bestman',
-      'mode'    => '0444',
-      'require' => 'Package[osg-se-bestman]',
-    })
-  end
-
-  it do
-    should contain_file('/etc/grid-security/bestman/bestmankey.pem').with({
-      'owner'   => 'bestman',
-      'group'   => 'bestman',
-      'mode'    => '0400',
-      'require' => 'Package[osg-se-bestman]',
-    })
-  end
-
-  it do
-    should contain_file('/var/log/bestman2').with({
-      'ensure'  => 'directory',
-      'owner'   => 'bestman',
-      'group'   => 'bestman',
-      'mode'    => '0755',
-      'require' => 'Package[osg-se-bestman]',
-    })
-  end
-
-  context "with user_uid => 100" do
-    let(:params) {{ :user_uid => 100 }}
-    it { should contain_user('bestman').with_uid('100') }
-  end
-
-  context "with group_gid => 100" do
-    let(:params) {{ :group_gid => 100 }}
-    it { should contain_group('bestman').with_gid('100') }
-  end
-
-  context "with manage_user => false" do
-    let(:params) {{ :manage_user => false }}
-    it { should_not contain_user('bestman') }
-  end
-
-  context "with manage_group => false" do
-    let(:params) {{ :manage_group => false }}
-    it { should_not contain_group('bestman') }
+  context 'osg::bestman::service' do
+    it do
+      should contain_service('bestman2').with({
+        :ensure      => 'running',
+        :enable      => 'true',
+        :hasstatus   => 'true',
+        :hasrestart  => 'true',
+      })
+    end
   end
 
   context "with localPathListAllowed => ['/tmp','/home']" do
@@ -219,8 +205,8 @@ describe 'osg::bestman' do
     it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['supportedProtocolList=gsiftp://gridftp1.example.com;gsiftp://gridftp2.example.com']) }
   end
 
-  context "with gums_CurrHostDN => '/CN=foo'" do
-    let(:params) {{ :gums_CurrHostDN => '/CN=foo' }}
+  context "with host_dn => '/CN=foo'" do
+    let(:params) {{ :host_dn => '/CN=foo' }}
     it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['GUMSCurrHostDN=/CN=foo']) }
   end
 
@@ -268,48 +254,6 @@ describe 'osg::bestman' do
     end
   end
 
-  context 'with bestman_gumscertpath => "/etc/grid-security/bestman/bestmangumscert.pem"' do
-    let(:params) {{ :bestman_gumscertpath => "/etc/grid-security/bestman/bestmangumscert.pem" }}
-    it do
-      should contain_file('/etc/grid-security/bestman/bestmancert.pem').with({
-        'owner'   => 'bestman',
-        'group'   => 'bestman',
-        'mode'    => '0444',
-        'require' => 'Package[osg-se-bestman]',
-      })
-    end
-
-    it do
-      should contain_file('/etc/grid-security/bestman/bestmangumscert.pem').with({
-        'owner'   => 'bestman',
-        'group'   => 'bestman',
-        'mode'    => '0444',
-        'require' => 'Package[osg-se-bestman]',
-      })
-    end
-  end
-
-  context 'with bestman_gumskeypath => "/etc/grid-security/bestman/bestmangumskey.pem"' do
-    let(:params) {{ :bestman_gumskeypath => "/etc/grid-security/bestman/bestmangumskey.pem" }}
-    it do
-      should contain_file('/etc/grid-security/bestman/bestmankey.pem').with({
-        'owner'   => 'bestman',
-        'group'   => 'bestman',
-        'mode'    => '0400',
-        'require' => 'Package[osg-se-bestman]',
-      })
-    end
-
-    it do
-      should contain_file('/etc/grid-security/bestman/bestmangumskey.pem').with({
-        'owner'   => 'bestman',
-        'group'   => 'bestman',
-        'mode'    => '0400',
-        'require' => 'Package[osg-se-bestman]',
-      })
-    end
-  end
-
   context "with event_log_count => 20" do
     let(:params) {{ :event_log_count => 20 }}
     it { verify_contents(catalogue, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_COUNT=20']) }
@@ -320,41 +264,9 @@ describe 'osg::bestman' do
     it { verify_contents(catalogue, '/etc/sysconfig/bestman2', ['BESTMAN_EVENT_LOG_SIZE=50000000']) }
   end
 
-  context 'with service_ensure => running' do
-    let(:params){{ :service_ensure => 'running' }}
-    it { should contain_service('bestman2').with_ensure('running') }
-  end
-
-  context 'with service_ensure => stopped' do
-    let(:params){{ :service_ensure => 'stopped' }}
-    it { should contain_service('bestman2').with_ensure('stopped') }
-  end
-
-  # Test service ensure and enable 'magic' values
-  [
-    'undef',
-    'UNSET',
-  ].each do |v|
-    context "with service_ensure => '#{v}'" do
-      let(:params) {{ :service_ensure => v }}
-      it { should contain_service('bestman2').with_ensure(nil) }
-    end
-
-    context "with service_enable => '#{v}'" do
-      let(:params) {{ :service_enable => v }}
-      it { should contain_service('bestman2').with_enable(nil) }
-    end
-  end
-
-  context 'with service_autorestart => false' do
-    let(:params) {{ :service_autorestart => false }}
-    it { should contain_file('/etc/bestman2/conf/bestman2.rc').with_notify(nil) }
-    it { should contain_file('/etc/sysconfig/bestman2').with_notify(nil) }
-  end
-
   context 'with manage_firewall => false' do
     let(:params) {{ :manage_firewall => false }}
-    it { should_not contain_firewall('100 allow bestman2 access') }
+    it { should_not contain_firewall('100 allow SRMv2 access') }
   end
 
   context 'with manage_sudo => false' do
@@ -362,17 +274,26 @@ describe 'osg::bestman' do
     it { should_not contain_sudo__conf('bestman') }
   end
 
+  # Test validate_bool parameters
   [
-    'manage_user',
-    'manage_group',
-    'with_gridmap_auth',
-    'with_gums_auth',
     'manage_firewall',
     'manage_sudo',
-  ].each do |bool_param|
-    context "with #{bool_param} => 'foo'" do
-      let(:params) {{ bool_param.to_sym => 'foo' }}
-      it { expect { should create_class('osg::cacerts::updater') }.to raise_error(Puppet::Error, /is not a boolean/) }
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('osg::bestman') }.to raise_error(Puppet::Error, /is not a boolean/) }
+    end
+  end
+
+  # Test validate_array parameters
+  [
+    'localPathListToBlock',
+    'localPathListAllowed',
+    'supportedProtocolList',
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('osg::bestman') }.to raise_error(Puppet::Error, /is not an Array/) }
     end
   end
 end

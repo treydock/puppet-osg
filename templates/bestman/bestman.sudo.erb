@@ -1,4 +1,7 @@
-Defaults:<%= @user_name %> !requiretty
+#
+# File managed by Puppet!
+#
+Defaults:bestman !requiretty
 Cmnd_Alias SRM_CMD = <%= @sudo_srm_cmd %>
 Runas_Alias SRM_USR = <%= @sudo_srm_usr %>
-<%= @user_name %> ALL=(SRM_USR) NOPASSWD: SRM_CMD
+bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD

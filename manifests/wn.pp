@@ -1,7 +1,7 @@
 # == Class: osg::wn
 #
 class osg::wn (
-  $cacerts_package_name = 'empty-ca-certs',
+  $cacerts_package_name = 'osg-ca-certs',
   $cacerts_package_ensure = 'installed',
 ) inherits osg::params {
 

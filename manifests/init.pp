@@ -49,11 +49,11 @@ class osg (
   anchor { 'osg::end': }
 
   include epel
-  include osg::repo
+  include osg::repos
 
   Anchor['osg::start']->
   Yumrepo['epel']->
-  Class['osg::repo']->
+  Class['osg::repos']->
   Anchor['osg::end']
 
   include osg::configure

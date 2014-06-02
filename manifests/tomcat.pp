@@ -19,9 +19,9 @@ class osg::tomcat (
   $tomcat_packages  = $osg::params::tomcat_packages
 ) inherits osg::params {
 
-  include osg::repo
+  include osg
 
-  Class['osg::repo'] -> Class['osg::tomcat']
+  Class['osg'] -> Class['osg::tomcat']
 
   ensure_packages($tomcat_packages)
 

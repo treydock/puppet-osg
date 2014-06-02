@@ -4,7 +4,7 @@ class osg::ce (
   $batch_system_package_name = 'empty-torque',
   $ce_package_name = 'osg-ce-pbs',
   $use_slurm = true,
-  $cacerts_package_name = 'empty-ca-certs',
+  $cacerts_package_name = 'osg-ca-certs',
   $cacerts_package_ensure = 'installed',
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',

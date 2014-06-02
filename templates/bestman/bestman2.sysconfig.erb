@@ -1,3 +1,6 @@
+#
+# File managed by Puppet!
+#
 #################################################################
 # BeStMan and BeStMan Clients Copyright(c) 2007-2011,
 # Lawrence Berkeley National Laboratory. All rights reserved.
@@ -23,7 +26,7 @@ JAVA_HOME=/etc/alternatives/java_sdk
 BESTMAN_LOG=/var/log/bestman2/bestman2.log
 BESTMAN_PID=/var/run/bestman2.pid
 BESTMAN_LOCK=/var/lock/bestman2
-SRM_OWNER=<%= @user_name %>
+SRM_OWNER=bestman
 #
 #
 # BeStMan2 server and clients common variables
@@ -44,8 +47,8 @@ BESTMAN_EVENT_LOG_COUNT=<%= @event_log_count %>
 BESTMAN_EVENT_LOG_SIZE=<%= @event_log_size %>
 # BESTMAN_CONNECTOR_QUEUESIZE=
 # BESTMAN_CONNECTION_ACCEPTORSIZE=
-BESTMAN_GUMSCERTPATH=<%= @bestman_gumscertpath %>
-BESTMAN_GUMSKEYPATH=<%= @bestman_gumskeypath %>
+BESTMAN_GUMSCERTPATH=/etc/grid-security/bestman/bestmancert.pem
+BESTMAN_GUMSKEYPATH=/etc/grid-security/bestman/bestmankey.pem
 # BESTMAN_GUMSPROXYPATH=
 # BESTMAN_PLUGIN=
 # BESTMAN_EXTRALIB=

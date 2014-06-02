@@ -37,7 +37,7 @@ describe 'osg::gums' do
   end
 
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::repo') }
+  it { should contain_class('osg') }
   it { should contain_class('osg::cacerts') }
   it { should contain_class('osg::gums::configure') }
   it { should contain_class('firewall') }

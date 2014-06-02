@@ -4,6 +4,8 @@ class osg::squid (
   $customize_template = 'osg/squid/customize.sh.erb',
   $net_local = '10.0.0.0/8 172.16.0.0/12 192.168.0.0/16',
   $manage_firewall  = true,
+  $squid_firewall_ensure = 'present',
+  $monitoring_firewall_ensure = 'present',
   $public_interface = 'eth0',
 ) inherits osg::params {
 
@@ -13,12 +15,14 @@ class osg::squid (
 
   if $manage_firewall {
     firewall { '100 allow squid access':
+      ensure  => $squid_firewall_ensure,
       port    => '3128',
       proto   => 'tcp',
       action  => 'accept',
     }
 
     firewall { '100 allow squid monitoring':
+      ensure  => $monitoring_firewall_ensure,
       port    => '3401',
       proto   => 'udp',
       source  => '128.142.0.0/16',
@@ -27,6 +31,7 @@ class osg::squid (
     }
 
     firewall { '101 allow squid monitoring':
+      ensure  => $monitoring_firewall_ensure,
       port    => '3401',
       proto   => 'udp',
       source  => '188.185.0.0/17',

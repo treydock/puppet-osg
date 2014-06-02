@@ -13,7 +13,7 @@ describe 'osg::gridftp' do
   it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg]') }
   it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
   it { should contain_class('osg::cacerts').with({
-      :package_name   => 'empty-ca-certs',
+      :package_name   => 'osg-ca-certs',
       :package_ensure => 'installed',
     }).that_comes_before('Class[osg::gridftp::install]') }
   it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::gums::client]') }

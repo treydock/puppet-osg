@@ -22,3 +22,4 @@ pkg/
 
 # RSpec fixtures
 spec/fixtures/modules
+spec/fixtures/manifests

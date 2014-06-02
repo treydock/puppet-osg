@@ -10,7 +10,6 @@ describe 'osg::tomcat' do
   end
 
   it { should contain_class('osg') }
-  it { should contain_class('osg::repo') }
   it { should contain_class('osg::params') }
 
   it do 

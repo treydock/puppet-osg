@@ -13,46 +13,49 @@ describe 'osg::squid' do
 
   it do
     should contain_firewall('100 allow squid access').with({
-      'port'    => '3128',
-      'proto'   => 'tcp',
-      'action'  => 'accept',
+      :ensure => 'present',
+      :port   => '3128',
+      :proto  => 'tcp',
+      :action => 'accept',
     })
   end
 
   it do
     should contain_firewall('100 allow squid monitoring').with({
-      'port'    => '3401',
-      'proto'   => 'udp',
-      'source'  => '128.142.0.0/16',
-      'iniface' => 'eth0',
-      'action'  => 'accept',
+      :ensure   => 'present',
+      :port     => '3401',
+      :proto    => 'udp',
+      :source   => '128.142.0.0/16',
+      :iniface  => 'eth0',
+      :action   => 'accept',
     })
   end
 
   it do
     should contain_firewall('101 allow squid monitoring').with({
-      'port'    => '3401',
-      'proto'   => 'udp',
-      'source'  => '188.185.0.0/17',
-      'iniface' => 'eth0',
-      'action'  => 'accept',
+      :ensure   => 'present',
+      :port     => '3401',
+      :proto    => 'udp',
+      :source   => '188.185.0.0/17',
+      :iniface  => 'eth0',
+      :action   => 'accept',
     })
   end
 
   it do
     should contain_package('frontier-squid').with({
-      'ensure'  => 'present',
-      'require' => 'Yumrepo[osg]',
-      'before'  => 'File[/etc/squid/customize.sh]',
+      :ensure  => 'present',
+      :require => 'Yumrepo[osg]',
+      :before  => 'File[/etc/squid/customize.sh]',
     })
   end
 
   it do
     should contain_file('/etc/squid/customize.sh').with({
-      'ensure'  => 'file',
-      'owner'   => 'squid',
-      'group'   => 'squid',
-      'mode'    => '0755',
+      :ensure  => 'file',
+      :owner   => 'squid',
+      :group   => 'squid',
+      :mode    => '0755',
     })
   end
 
@@ -71,11 +74,11 @@ describe 'osg::squid' do
 
   it do
     should contain_service('frontier-squid').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'subscribe'   => 'File[/etc/squid/customize.sh]',
+      :ensure      => 'running',
+      :enable      => 'true',
+      :hasstatus   => 'true',
+      :hasrestart  => 'true',
+      :subscribe   => 'File[/etc/squid/customize.sh]',
     })
   end
 
