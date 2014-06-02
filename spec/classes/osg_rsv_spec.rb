@@ -9,207 +9,203 @@ describe 'osg::rsv' do
 
   it { should create_class('osg::rsv') }
   it { should contain_class('osg::params') }
-  it { should contain_class('osg::condor_cron') }
-  it { should contain_class('osg::repo') }
-  it { should contain_class('osg::cacerts') }
+  it { should contain_class('osg') }
+
+  it { should contain_anchor('osg::rsv::start').that_comes_before('Class[osg::repo]') }
+  it { should contain_class('osg::repo').that_comes_before('Class[osg::cacerts]') }
+  it { should contain_class('osg::cacerts').that_comes_before('Class[osg::rsv::install]') }
+  it { should contain_class('osg::rsv::install').that_comes_before('Class[osg::rsv::config]') }
+  it { should contain_class('osg::rsv::config').that_notifies('Class[osg::rsv::service]') }
+  it { should contain_class('osg::rsv::service').that_comes_before('Anchor[osg::rsv::end]') }
+  it { should contain_anchor('osg::rsv::end') }
 
   it do
     should contain_firewall('100 allow RSV http access').with({
-      'port'    => '80',
-      'proto'   => 'tcp',
-      'action'  => 'accept',
+      :dport   => '80',
+      :proto   => 'tcp',
+      :action  => 'accept',
     })
   end
 
-  it do
-    should contain_user('rsv').with({
-      'ensure'      => 'present',
-      'name'        => 'rsv',
-      'uid'         => nil,
-      'home'        => '/var/rsv',
-      'shell'       => '/bin/sh',
-      'system'      => 'true',
-      'comment'     => 'RSV monitoring',
-      'managehome'  => 'false',
-    })
+  it { should contain_class('apache') }
+
+  context 'osg::rsv::install' do
+    it do
+      should contain_package('rsv').with({
+        :ensure  => 'installed',
+      })
+    end
   end
 
-  it do
-    should contain_group('rsv').with({
-      'ensure'  => 'present',
-      'name'    => 'rsv',
-      'gid'     => nil,
-      'system'  => 'true',
-    })
+  context 'osg::rsv::config' do
+
+    [
+      {:name => 'RSV/ce_hosts', :value => 'UNAVAILABLE'},
+      {:name => 'RSV/gridftp_hosts', :value => 'UNAVAILABLE'},
+      {:name => 'RSV/gridftp_dir', :value => 'DEFAULT'},
+      {:name => 'RSV/gratia_probes', :value => 'DEFAULT'},
+      {:name => 'RSV/srm_hosts', :value => 'UNAVAILABLE'},
+      {:name => 'RSV/srm_dir', :value => 'DEFAULT'},
+      {:name => 'RSV/srm_webservice_path', :value => 'DEFAULT'},
+    ].each do |h|
+      it do
+        should contain_osg_config(h[:name]).with({
+          :value  => h[:value],
+          :path   => '30-rsv.ini',
+        })
+      end
+    end
+
+    it do
+      should contain_file('/etc/grid-security/rsv/rsvcert.pem').with({
+        :ensure => 'file',
+        :owner  => 'rsv',
+        :group  => 'rsv',
+        :mode   => '0444',
+        :source => nil,
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/rsv/rsvkey.pem').with({
+        :ensure => 'file',
+        :owner  => 'rsv',
+        :group  => 'rsv',
+        :mode   => '0400',
+        :source => nil,
+      })
+    end
+
+    it do
+      should contain_file('/var/spool/rsv').with({
+        :ensure => 'directory',
+        :owner  => 'rsv',
+        :group  => 'rsv',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/var/log/rsv').with({
+        :ensure => 'directory',
+        :owner  => 'rsv',
+        :group  => 'rsv',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/var/log/rsv/consumers').with({
+        :ensure   => 'directory',
+        :owner    => 'rsv',
+        :group    => 'rsv',
+        :mode     => '0755',
+        :require  => 'File[/var/log/rsv]',
+      })
+    end
+
+    it do
+      should contain_file('/var/log/rsv/metrics').with({
+        :ensure   => 'directory',
+        :owner    => 'rsv',
+        :group    => 'rsv',
+        :mode     => '0755',
+        :require  => 'File[/var/log/rsv]',
+      })
+    end
+
+    it do
+      should contain_file('/etc/condor-cron/config.d/condor_ids').with({
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0644',
+      })
+    end
+
+    it do
+      verify_contents(catalogue, '/etc/condor-cron/config.d/condor_ids', [
+        'CONDOR_IDS = 93.93',
+      ])
+    end
+
+    it do
+      should contain_file('/var/lib/condor-cron').with({
+        :ensure => 'directory',
+        :owner  => 'cndrcron',
+        :group  => 'cndrcron',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/var/lib/condor-cron/execute').with({
+        :ensure   => 'directory',
+        :owner    => 'cndrcron',
+        :group    => 'cndrcron',
+        :mode     => '0755',
+        :require  => 'File[/var/lib/condor-cron]',
+      })
+    end
+
+    it do
+      should contain_file('/var/lib/condor-cron/spool').with({
+        :ensure   => 'directory',
+        :owner    => 'cndrcron',
+        :group    => 'cndrcron',
+        :mode     => '0755',
+        :require  => 'File[/var/lib/condor-cron]',
+      })
+    end
+
+    it do
+      should contain_file('/var/run/condor-cron').with({
+        :ensure => 'directory',
+        :owner  => 'cndrcron',
+        :group  => 'cndrcron',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/var/lock/condor-cron').with({
+        :ensure => 'directory',
+        :owner  => 'cndrcron',
+        :group  => 'cndrcron',
+        :mode   => '0755',
+      })
+    end
+
+    it do
+      should contain_file('/var/log/condor-cron').with({
+        :ensure => 'directory',
+        :owner  => 'cndrcron',
+        :group  => 'cndrcron',
+        :mode   => '0755',
+      })
+    end
   end
 
-  it do
-    should contain_package('rsv').with({
-      'ensure'  => 'installed',
-      'before'  => ['File[/etc/rsv/rsv.conf]', 'File[/etc/rsv/consumers.conf]', 'File[/etc/osg/config.d/30-rsv.ini]'],
-      'require' => ['Yumrepo[osg]', 'Package[osg-ca-certs]'],
-    })
-  end
+  context 'osg::rsv::service' do
+    it do
+      should contain_service('rsv').with({
+        :ensure     => 'running',
+        :enable     => 'true',
+        :hasstatus  => 'false',
+        :hasrestart => 'true',
+        :status     => 'test -f /var/lock/subsys/rsv',
+      })
+    end
 
-  it do
-    should contain_file('/etc/osg/config.d/30-rsv.ini').with({
-      'ensure'  => 'present',
-      'replace' => 'true',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'notify'  => 'Exec[osg-configure-rsv]',
-    })
-  end
-
-  it do
-    content = catalogue.resource('file', '/etc/osg/config.d/30-rsv.ini').send(:parameters)[:content]
-    content.split("\n").reject { |c| c =~ /(^;|^$)/ }.should == [
-      '[RSV]',
-      'enabled = True',
-      'enable_gratia = True',
-      'service_cert  = /etc/grid-security/rsv/rsvcert.pem',
-      'service_key  = /etc/grid-security/rsv/rsvkey.pem',
-      'service_proxy = /tmp/rsvproxy',
-      'ce_hosts = UNAVAILABLE',
-      'gridftp_hosts = UNAVAILABLE',
-      'gridftp_dir = DEFAULT',
-      'gratia_probes = DEFAULT',
-      'gums_hosts = UNAVAILABLE',
-      'srm_hosts = UNAVAILABLE',
-      'srm_dir = DEFAULT',
-      'srm_webservice_path = DEFAULT',
-      'enable_local_probes = True',
-      'enable_nagios = False',
-      'nagios_send_nsca = False',
-      'condor_location = UNAVAILABLE',
-    ]
-  end
-
-  it do
-    should contain_file('/etc/rsv/rsv.conf').with({
-      'ensure'  => 'present',
-      'replace' => 'false',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'notify'  => 'Service[rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/etc/rsv/consumers.conf').with({
-      'ensure'  => 'present',
-      'replace' => 'false',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'notify'  => 'Service[rsv]',
-    })
-  end
-
-  it do
-    should contain_service('rsv').with({
-      'ensure'      => nil,
-      'enable'      => 'true',
-      'hasstatus'   => 'false',
-      'hasrestart'  => 'true',
-      'status'      => 'test -f /var/lock/subsys/rsv',
-      'require'     => ['File[/etc/rsv/rsv.conf]', 'File[/etc/rsv/consumers.conf]', 'Service[condor-cron]'],
-    })
-  end
-
-  it do
-    should contain_file('/etc/grid-security/rsv/rsvcert.pem').with({
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0444',
-      'require' => 'Package[rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/etc/grid-security/rsv/rsvkey.pem').with({
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0400',
-      'require' => 'Package[rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/var/spool/rsv').with({
-      'ensure'  => 'directory',
-      'path'    => '/var/spool/rsv',
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0755',
-      'require' => 'Package[rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/var/log/rsv').with({
-      'ensure'  => 'directory',
-      'path'    => '/var/log/rsv',
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0755',
-      'require' => 'Package[rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/var/log/rsv/consumers').with({
-      'ensure'  => 'directory',
-      'path'    => '/var/log/rsv/consumers',
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0755',
-      'require' => 'File[/var/log/rsv]',
-    })
-  end
-
-  it do
-    should contain_file('/var/log/rsv/metrics').with({
-      'ensure'  => 'directory',
-      'path'    => '/var/log/rsv/metrics',
-      'owner'   => 'rsv',
-      'group'   => 'rsv',
-      'mode'    => '0755',
-      'require' => 'File[/var/log/rsv]',
-    })
-  end
-
-  context "with user_uid => 100" do
-    let(:params) {{ :user_uid => 100 }}
-    it { should contain_user('rsv').with_uid('100') }
-  end
-
-  context "with group_gid => 100" do
-    let(:params) {{ :group_gid => 100 }}
-    it { should contain_group('rsv').with_gid('100') }
-  end
-
-  context "with manage_user => false" do
-    let(:params) {{ :manage_user => false }}
-    it { should_not contain_user('rsv') }
-  end
-
-  context "with manage_group => false" do
-    let(:params) {{ :manage_group => false }}
-    it { should_not contain_group('rsv') }
-  end
-
-  context 'with service_ensure => running' do
-    let(:params){{ :service_ensure => 'running' }}
-    it { should contain_service('rsv').with_ensure('running') }
-  end
-
-  context 'with service_ensure => stopped' do
-    let(:params){{ :service_ensure => 'stopped' }}
-
-    it { should contain_service('rsv').with_ensure('stopped') }
+    it do
+      should contain_service('condor-cron').with({
+        :ensure     => 'running',
+        :enable     => 'true',
+        :hasstatus  => 'true',
+        :hasrestart => 'true',
+        :before     => 'Service[rsv]',
+      })
+    end
   end
 
   context 'with manage_firewall => false' do
@@ -217,47 +213,13 @@ describe 'osg::rsv' do
     it { should_not contain_firewall('100 allow RSV http access') }
   end
 
-  context 'with service_autorestart => false' do
-    let(:params) {{ :service_autorestart => false }}
-    it { should contain_file('/etc/rsv/rsv.conf').with_notify(nil) }
-    it { should contain_file('/etc/rsv/consumers.conf').with_notify(nil) }
-  end
-
-  context 'with with_osg_configure => false' do
-    let(:params) {{ :with_osg_configure => false }}
-    it { should contain_file('/etc/osg/config.d/30-rsv.ini').with_notify(nil) }
-  end
-
-  # Test service ensure and enable 'magic' values
-  [
-    'undef',
-    'UNSET',
-  ].each do |v|
-    context "with service_ensure => '#{v}'" do
-      let(:params) {{ :service_ensure => v }}
-      it { should contain_service('rsv').with_ensure(nil) }
-    end
-
-    context "with service_enable => '#{v}'" do
-      let(:params) {{ :service_enable => v }}
-      it { should contain_service('rsv').with_enable(nil) }
-    end
-  end
-
   # Test verify_boolean parameters
   [
-    'manage_user',
-    'manage_group',
     'with_httpd',
     'manage_firewall',
-    'with_osg_configure',
-    'config_replace',
-    'configd_replace',
-    'enable_gratia',
-    'enable_local_probes',
-  ].each do |bool_param|
-    context "with #{bool_param} => 'foo'" do
-      let(:params) {{ bool_param.to_sym => 'foo' }}
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
       it { expect { should create_class('osg::rsv') }.to raise_error(Puppet::Error, /is not a boolean/) }
     end
   end
