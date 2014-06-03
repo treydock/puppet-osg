@@ -22,6 +22,7 @@ class osg::rsv (
   $manage_users           = true,
   $with_httpd             = true,
   $manage_firewall        = true,
+  $firewall_ensure        = 'present',
   $http_port              = '80',
   $cndrcron_uid           = '93',
   $cndrcron_gid           = '93',
@@ -60,6 +61,7 @@ class osg::rsv (
   if $with_httpd {
     if $manage_firewall {
       firewall { '100 allow RSV http access':
+        ensure  => $firewall_ensure,
         dport   => $http_port,
         proto   => tcp,
         action  => accept,
@@ -67,6 +69,16 @@ class osg::rsv (
     }
 
     include apache
+
+    file { '/etc/httpd/conf.d/rsv.conf':
+      ensure  => 'file',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('osg/rsv/rsv.apache.conf.erb'),
+      require => Package['httpd'],
+      notify  => Service['httpd'],
+    }
   }
 
 }

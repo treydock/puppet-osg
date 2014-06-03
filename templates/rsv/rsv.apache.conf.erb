@@ -1,0 +1,10 @@
+# Set options site directory
+<Directory "/usr/share/rsv/www">
+    Options None
+    AllowOverride None
+    Order Allow,Deny
+    Allow from all
+</Directory>
+
+# Create alias for site directory
+Alias /rsv /usr/share/rsv/www

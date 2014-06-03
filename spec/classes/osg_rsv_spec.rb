@@ -21,13 +21,37 @@ describe 'osg::rsv' do
 
   it do
     should contain_firewall('100 allow RSV http access').with({
-      :dport   => '80',
-      :proto   => 'tcp',
-      :action  => 'accept',
+      :ensure => 'present',
+      :dport  => '80',
+      :proto  => 'tcp',
+      :action => 'accept',
     })
   end
 
   it { should contain_class('apache') }
+
+  it do
+    should contain_file('/etc/httpd/conf.d/rsv.conf').with({
+      :ensure  => 'file',
+      :owner   => 'root',
+      :group   => 'root',
+      :mode    => '0644',
+      :require => 'Package[httpd]',
+      :notify  => 'Service[httpd]',
+    })
+  end
+
+  it do
+    verify_contents(catalogue, '/etc/httpd/conf.d/rsv.conf', [
+      '<Directory "/usr/share/rsv/www">',
+      '    Options None',
+      '    AllowOverride None',
+      '    Order Allow,Deny',
+      '    Allow from all',
+      '</Directory>',
+      'Alias /rsv /usr/share/rsv/www',
+    ])
+  end
 
   context 'osg::rsv::install' do
     it do
