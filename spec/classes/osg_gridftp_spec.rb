@@ -43,6 +43,13 @@ describe 'osg::gridftp' do
     })
   end
 
+  context 'when manage_firewall => false' do
+    let(:params) {{ :manage_firewall => false }}
+    it { should_not contain_firewall('100 allow GridFTP') }
+    it { should_not contain_firewall('100 allow GLOBUS_TCP_PORT_RANGE') }
+    it { should_not contain_firewall('100 allow GLOBUS_TCP_SOURCE_RANGE') }
+  end
+
   context 'osg::gridftp::install' do
     it do
       should contain_package('osg-gridftp').with({
@@ -115,6 +122,16 @@ describe 'osg::gridftp' do
         :hasstatus  => 'true',
         :hasrestart => 'true',
       })
+    end
+  end
+
+  # Test validate_bool parameters
+  [
+    'manage_firewall',
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('osg::gridftp') }.to raise_error(Puppet::Error, /is not a boolean/) }
     end
   end
 end

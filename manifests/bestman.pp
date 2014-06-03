@@ -2,6 +2,8 @@
 #
 class osg::bestman (
   $host_dn                = 'UNSET',
+  $hostcert_source        = 'UNSET',
+  $hostkey_source         = 'UNSET',
   $bestmancert_source     = 'UNSET',
   $bestmankey_source      = 'UNSET',
   $globus_hostname        = $::fqdn,

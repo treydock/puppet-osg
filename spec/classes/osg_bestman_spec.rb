@@ -195,13 +195,22 @@ describe 'osg::bestman' do
       })
     end
 
-    context 'when hostcert_source and hostkey_source defined' do
+    context 'when bestmancert_source and bestmankey_source defined' do
       let(:params) {{ :bestmancert_source => 'file:///foo/hostcert.pem', :bestmankey_source => 'file:///foo/hostkey.pem' }}
+
+      it { should contain_file('/etc/grid-security/hostcert.pem').without_source }
+      it { should contain_file('/etc/grid-security/hostkey.pem').without_source }
+      it { should contain_file('/etc/grid-security/bestman/bestmancert.pem').with_source('file:///foo/hostcert.pem') }
+      it { should contain_file('/etc/grid-security/bestman/bestmankey.pem').with_source('file:///foo/hostkey.pem') }
+    end
+
+    context 'when hostcert_source and hostkey_source defined' do
+      let(:params) {{ :hostcert_source => 'file:///foo/hostcert.pem', :hostkey_source => 'file:///foo/hostkey.pem' }}
 
       it { should contain_file('/etc/grid-security/hostcert.pem').with_source('file:///foo/hostcert.pem') }
       it { should contain_file('/etc/grid-security/hostkey.pem').with_source('file:///foo/hostkey.pem') }
-      it { should contain_file('/etc/grid-security/bestman/bestmancert.pem').with_source('file:///foo/hostcert.pem') }
-      it { should contain_file('/etc/grid-security/bestman/bestmankey.pem').with_source('file:///foo/hostkey.pem') }
+      it { should contain_file('/etc/grid-security/bestman/bestmancert.pem').without_source }
+      it { should contain_file('/etc/grid-security/bestman/bestmankey.pem').without_source }
     end
   end
 

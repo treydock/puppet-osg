@@ -8,7 +8,11 @@ class osg::ce (
   $hostkey_source = 'UNSET',
   $httpcert_source = 'UNSET',
   $httpkey_source = 'UNSET',
+  $manage_firewall = true,
 ) inherits osg::params {
+
+  validate_bool($use_slurm)
+  validate_bool($manage_firewall)
 
   include osg
 
@@ -18,8 +22,9 @@ class osg::ce (
   }
 
   class { 'osg::gridftp':
-    hostcert_source         => $hostcert_source,
-    hostkey_source          => $hostkey_source,
+    hostcert_source => $hostcert_source,
+    hostkey_source  => $hostkey_source,
+    manage_firewall => $manage_firewall,
   }
 
   include osg::ce::install
@@ -35,5 +40,14 @@ class osg::ce (
   Class['osg::ce::config']->
   Class['osg::ce::service']->
   Anchor['osg::ce::end']
+
+  if $manage_firewall {
+    firewall { '100 allow GRAM':
+      ensure  => 'present',
+      action  => 'accept',
+      dport   => '2119',
+      proto   => 'tcp',
+    }
+  }
 
 }

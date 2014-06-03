@@ -13,8 +13,9 @@ describe 'osg::ce' do
 
   it do
     should contain_class('osg::gridftp').with({
-      :hostcert_source             => 'UNSET',
-      :hostkey_source              => 'UNSET',
+      :hostcert_source  => 'UNSET',
+      :hostkey_source   => 'UNSET',
+      :manage_firewall  => 'true'
     })
   end
 
@@ -24,6 +25,20 @@ describe 'osg::ce' do
   it { should contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }
   it { should contain_class('osg::ce::service').that_comes_before('Anchor[osg::ce::end]') }
   it { should contain_anchor('osg::ce::end') }
+
+  it "should create Firewall[100 allow GRAM]" do
+    should contain_firewall('100 allow GRAM').with({
+      :ensure => 'present',
+      :action => 'accept',
+      :dport  => '2119',
+      :proto  => 'tcp',
+    })
+  end
+
+  context 'when manage_firewall => false' do
+    let(:params) {{ :manage_firewall => false }}
+    it { should_not contain_firewall('100 allow GRAM') }
+  end
 
   context 'osg::ce::install' do
     it do
@@ -120,6 +135,17 @@ describe 'osg::ce' do
         :hasrestart => 'true',
         :before     => nil, 
       })
+    end
+  end
+
+  # Test validate_bool parameters
+  [
+    'use_slurm',
+    'manage_firewall',
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('osg::ce') }.to raise_error(Puppet::Error, /is not a boolean/) }
     end
   end
 end

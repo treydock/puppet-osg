@@ -7,6 +7,16 @@ class osg::bestman::config {
 
   $gums_host = $osg::gums_host
 
+  $hostcert_source = $osg::bestman::hostcert_source ? {
+    'UNSET' => undef,
+    default => $osg::bestman::hostcert_source,
+  }
+
+  $hostkey_source = $osg::bestman::hostkey_source ? {
+    'UNSET' => undef,
+    default => $osg::bestman::hostkey_source,
+  }
+
   $bestmancert_source = $osg::bestman::bestmancert_source ? {
     'UNSET' => undef,
     default => $osg::bestman::bestmancert_source,
@@ -34,7 +44,7 @@ class osg::bestman::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0444',
-    source  => $bestmancert_source,
+    source  => $hostcert_source,
   }
 
   file { '/etc/grid-security/hostkey.pem':
@@ -42,7 +52,7 @@ class osg::bestman::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0400',
-    source  => $bestmankey_source,
+    source  => $hostkey_source,
   }
 
   file { '/etc/grid-security/bestman':
