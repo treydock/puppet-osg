@@ -1,16 +1,9 @@
 # == Class: osg::wn
 #
-class osg::wn (
-  $cacerts_package_name = 'osg-ca-certs',
-  $cacerts_package_ensure = 'installed',
-) inherits osg::params {
+class osg::wn inherits osg::params {
 
   include osg
-
-  class { 'osg::cacerts':
-    package_name    => $cacerts_package_name,
-    package_ensure  => $cacerts_package_ensure,
-  }
+  include osg::cacerts
 
   package { 'osg-wn-client':
     ensure  => 'present',

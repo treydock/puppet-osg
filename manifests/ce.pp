@@ -4,8 +4,6 @@ class osg::ce (
   $batch_system_package_name = 'empty-torque',
   $ce_package_name = 'osg-ce-pbs',
   $use_slurm = true,
-  $cacerts_package_name = 'osg-ca-certs',
-  $cacerts_package_ensure = 'installed',
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $httpcert_source = 'UNSET',
@@ -20,8 +18,6 @@ class osg::ce (
   }
 
   class { 'osg::gridftp':
-    cacerts_package_name    => $cacerts_package_name,
-    cacerts_package_ensure  => $cacerts_package_ensure,
     hostcert_source         => $hostcert_source,
     hostkey_source          => $hostkey_source,
   }

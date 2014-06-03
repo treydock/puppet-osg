@@ -13,8 +13,6 @@ describe 'osg::ce' do
 
   it do
     should contain_class('osg::gridftp').with({
-      :cacerts_package_name        => 'osg-ca-certs',
-      :cacerts_package_ensure      => 'installed',
       :hostcert_source             => 'UNSET',
       :hostkey_source              => 'UNSET',
     })

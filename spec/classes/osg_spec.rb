@@ -21,6 +21,12 @@ describe 'osg' do
     it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /The osg_release parameter only supports 3.1 and 3.2/) }
   end
 
+
+  context 'when cacerts_package_name => "foo"' do
+    let(:params) {{ :cacerts_package_name => 'foo' }}
+    it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /does not match "\^\(osg-ca-certs\|igtf-ca-certs\|empty-ca-certs\)\$"/) }
+  end
+
   # Test validate_bool parameters
   [
     'repo_use_mirrors',

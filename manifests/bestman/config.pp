@@ -29,6 +29,22 @@ class osg::bestman::config {
     }
   }
 
+  file { '/etc/grid-security/hostcert.pem':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0444',
+    source  => $bestmancert_source,
+  }
+
+  file { '/etc/grid-security/hostkey.pem':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0400',
+    source  => $bestmankey_source,
+  }
+
   file { '/etc/grid-security/bestman':
     ensure  => 'directory',
     owner   => 'root',

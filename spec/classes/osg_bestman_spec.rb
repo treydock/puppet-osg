@@ -18,10 +18,7 @@ describe 'osg::bestman' do
 
   it { should contain_anchor('osg::bestman::start').that_comes_before('Class[osg]') }
   it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
-  it { should contain_class('osg::cacerts').with({
-      :package_name   => 'osg-ca-certs',
-      :package_ensure => 'installed',
-    }).that_comes_before('Class[osg::bestman::install]') }
+  it { should contain_class('osg::cacerts').that_comes_before('Class[osg::bestman::install]') }
   it { should contain_class('osg::bestman::install').that_comes_before('Class[osg::gums::client]') }
   it { should contain_class('osg::gums::client').that_comes_before('Class[osg::bestman::config]') }
   it { should contain_class('osg::bestman::config').that_comes_before('Class[osg::bestman::service]') }
@@ -56,6 +53,26 @@ describe 'osg::bestman' do
         'Runas_Alias SRM_USR = ALL,!root',
         'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
       ]
+    end
+
+    it do
+      should contain_file('/etc/grid-security/hostcert.pem').with({
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0444',
+        :source => nil,
+      })
+    end
+
+    it do
+      should contain_file('/etc/grid-security/hostkey.pem').with({
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0400',
+        :source => nil,
+      })
     end
 
     it do
@@ -176,6 +193,15 @@ describe 'osg::bestman' do
         :group   => 'bestman',
         :mode    => '0755',
       })
+    end
+
+    context 'when hostcert_source and hostkey_source defined' do
+      let(:params) {{ :bestmancert_source => 'file:///foo/hostcert.pem', :bestmankey_source => 'file:///foo/hostkey.pem' }}
+
+      it { should contain_file('/etc/grid-security/hostcert.pem').with_source('file:///foo/hostcert.pem') }
+      it { should contain_file('/etc/grid-security/hostkey.pem').with_source('file:///foo/hostkey.pem') }
+      it { should contain_file('/etc/grid-security/bestman/bestmancert.pem').with_source('file:///foo/hostcert.pem') }
+      it { should contain_file('/etc/grid-security/bestman/bestmankey.pem').with_source('file:///foo/hostkey.pem') }
     end
   end
 

@@ -34,6 +34,8 @@ class osg (
   $repo_use_mirrors = true,
   $enable_osg_contrib = false,
   $gums_host        = "gums.${::domain}",
+  $cacerts_package_name = 'osg-ca-certs',
+  $cacerts_package_ensure = 'installed',
   $shared_certs_path = '/opt/grid-certificates',
   $globus_tcp_port_range_min = '40000',
   $globus_tcp_port_range_max = '41999',
@@ -42,6 +44,7 @@ class osg (
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The osg_release parameter only supports 3.1 and 3.2')
+  validate_re($cacerts_package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
 

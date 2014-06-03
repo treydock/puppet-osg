@@ -2,34 +2,13 @@
 #
 # Adds the OSG CA cert packages for OSG.
 #
-# === Parameters
 #
-# [*package_name*]
-#   Default:  'osg-ca-certs',
-#
-# [*package_ensure*]
-#   Default:  'installed',
-#
-# === Examples
-#
-#  class { 'osg::cacerts': }
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2013 Trey Dockendorf
-#
-class osg::cacerts (
-  $package_name             = 'osg-ca-certs',
-  $package_ensure           = 'installed',
-) inherits osg::params {
-
-  validate_re($package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
+class osg::cacerts inherits osg::params {
 
   include osg
+
+  $package_name   = $osg::cacerts_package_name
+  $package_ensure = $osg::cacerts_package_ensure
 
   package { 'osg-ca-certs':
     ensure  => $package_ensure,

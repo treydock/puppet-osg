@@ -1,8 +1,6 @@
 # == Class: osg::bestman
 #
 class osg::bestman (
-  $cacerts_package_name   = 'osg-ca-certs',
-  $cacerts_package_ensure = 'installed',
   $host_dn                = 'UNSET',
   $bestmancert_source     = 'UNSET',
   $bestmankey_source      = 'UNSET',
@@ -37,12 +35,8 @@ class osg::bestman (
     false => join($sudo_srm_runas, ',')
   }
 
-  class { 'osg::cacerts':
-    package_name    => $cacerts_package_name,
-    package_ensure  => $cacerts_package_ensure,
-  }
-
   include osg
+  include osg::cacerts
   include osg::gums::client
   include osg::bestman::install
   include osg::bestman::config

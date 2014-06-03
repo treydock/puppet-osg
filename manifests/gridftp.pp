@@ -1,8 +1,6 @@
 # == Class: osg::gridftp
 #
 class osg::gridftp (
-  $cacerts_package_name = 'osg-ca-certs',
-  $cacerts_package_ensure = 'installed',
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $manage_firewall = true,
@@ -11,12 +9,7 @@ class osg::gridftp (
   validate_bool($manage_firewall)
 
   include osg
-
-  class { 'osg::cacerts':
-    package_name    => $cacerts_package_name,
-    package_ensure  => $cacerts_package_ensure,
-  }
-
+  include osg::cacerts
   include osg::gums::client
   include osg::gridftp::install
   include osg::gridftp::config
