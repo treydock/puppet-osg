@@ -7,7 +7,6 @@ describe 'osg::bestman class:' do
     it 'should run successfully' do
       pp =<<-EOS
         class { 'sudo': purge => false }
-        file { '/opt/grid-certificates': ensure => 'directory' }->
         class { 'osg': }
         class { 'osg::bestman':
           bestmancert_source => 'file:///tmp/bestmancert.pem',

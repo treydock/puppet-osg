@@ -6,7 +6,6 @@ describe 'osg::gridftp class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
-        file { '/opt/grid-certificates': ensure => 'directory' }->
         class { 'osg': }
         class { 'osg::gridftp':
           hostcert_source => 'file:///tmp/hostcert.pem',
