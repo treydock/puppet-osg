@@ -1,0 +1,44 @@
+HOSTS:
+  ce:
+    roles:
+      - master
+      - ce
+    platform: el-6-x86_64
+    box : centos-65-x64-virtualbox-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box
+    hypervisor : vagrant
+  bestman:
+    roles:
+      - agent
+      - bestman
+    platform: el-6-x86_64
+    box : centos-65-x64-virtualbox-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box
+    hypervisor : vagrant
+  gridftp:
+    roles:
+      - agent
+      - gridftp
+    platform: el-6-x86_64
+    box : centos-65-x64-virtualbox-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box
+    hypervisor : vagrant
+  squid:
+    roles:
+      - agent
+      - squid
+    platform: el-6-x86_64
+    box : centos-65-x64-virtualbox-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box
+    hypervisor : vagrant
+  wn:
+    roles:
+      - agent
+      - wn
+    platform: el-6-x86_64
+    box : centos-65-x64-virtualbox-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box
+    hypervisor : vagrant
+CONFIG:
+  log_level: debug
+  type: foss
