@@ -6,7 +6,6 @@ describe 'osg::ce class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
-        file { '/opt/grid-certificates': ensure => 'directory' }->
         class { 'osg': }
         class { 'osg::ce':
           hostcert_source => 'file:///tmp/hostcert.pem',
