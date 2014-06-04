@@ -17,6 +17,11 @@ class osg::ce::install {
       ensure  => 'present',
       require => Package['osg-ce'],
     }
+
+    package { 'gratia-probe-slurm':
+      ensure  => 'present',
+      require => Package['osg-ce'],
+    }
   }
 
 }

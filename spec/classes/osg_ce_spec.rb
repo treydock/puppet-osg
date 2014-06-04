@@ -61,6 +61,13 @@ describe 'osg::ce' do
         :require  => 'Package[osg-ce]',
       })
     end
+
+    it do
+      should contain_package('gratia-probe-slurm').with({
+        :ensure   => 'present',
+        :require  => 'Package[osg-ce]',
+      })
+    end
   end
 
   context 'osg::ce::config' do
