@@ -3,7 +3,7 @@
 class osg::ce (
   $batch_system_package_name = 'empty-torque',
   $ce_package_name = 'osg-ce-pbs',
-  $use_slurm = true,
+  $use_slurm = false,
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $httpcert_source = 'UNSET',
