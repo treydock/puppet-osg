@@ -48,8 +48,8 @@ class osg::cvmfs (
 
   anchor { 'osg::cvmfs::start': }->
   Class['osg']->
-  class { 'osg::cvmfs::user': }->
   class { 'osg::cvmfs::install': }->
+  class { 'osg::cvmfs::user': }->
   class { 'osg::cvmfs::config': }->
   class { 'osg::cvmfs::service': }->
   anchor { 'osg::cvmfs::end': }

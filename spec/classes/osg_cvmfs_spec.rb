@@ -11,9 +11,9 @@ describe 'osg::cvmfs' do
   it { should contain_class('osg::params') }
 
   it { should contain_anchor('osg::cvmfs::start').that_comes_before('Class[osg]') }
-  it { should contain_class('osg').that_comes_before('Class[osg::cvmfs::user]') }
-  it { should contain_class('osg::cvmfs::user').that_comes_before('Class[osg::cvmfs::install]') }
-  it { should contain_class('osg::cvmfs::install').that_comes_before('Class[osg::cvmfs::config]') }
+  it { should contain_class('osg').that_comes_before('Class[osg::cvmfs::install]') }
+  it { should contain_class('osg::cvmfs::install').that_comes_before('Class[osg::cvmfs::user]') }
+  it { should contain_class('osg::cvmfs::user').that_comes_before('Class[osg::cvmfs::config]') }
   it { should contain_class('osg::cvmfs::config').that_comes_before('Class[osg::cvmfs::service]') }
   it { should contain_class('osg::cvmfs::service').that_comes_before('Anchor[osg::cvmfs::end]') }
   it { should contain_anchor('osg::cvmfs::end') }
@@ -66,8 +66,8 @@ describe 'osg::cvmfs' do
   context 'osg::cvmfs::install' do
     it do
       should contain_package('cvmfs').only_with({
-        :ensure  => 'installed',
-        :name    => 'osg-oasis',
+        :ensure   => 'installed',
+        :name     => 'osg-oasis',
       })
     end
   end
@@ -131,6 +131,16 @@ describe 'osg::cvmfs' do
       content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
         'CVMFS_SERVER_URL="http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs.racf.bnl.gov:8000/opt/@org@"',
       ]
+    end
+
+    it do
+      should contain_file('/var/lib/cvmfs').only_with({
+        :ensure  => 'directory',
+        :path    => '/var/lib/cvmfs',
+        :owner   => 'cvmfs',
+        :group   => 'cvmfs',
+        :mode    => '0700',
+      })
     end
   end
 

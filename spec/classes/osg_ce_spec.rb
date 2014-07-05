@@ -55,18 +55,25 @@ describe 'osg::ce' do
       })
     end
 
-    it do
-      should contain_package('osg-configure-slurm').with({
-        :ensure   => 'present',
-        :require  => 'Package[osg-ce]',
-      })
-    end
+    it { should_not contain_package('osg-configure-slurm') }
+    it { should_not contain_package('gratia-probe-slurm') }
 
-    it do
-      should contain_package('gratia-probe-slurm').with({
-        :ensure   => 'present',
-        :require  => 'Package[osg-ce]',
-      })
+    context 'when use_slurm => true' do
+      let(:params) {{ :use_slurm => true }}
+
+      it do
+        should contain_package('osg-configure-slurm').with({
+          :ensure   => 'present',
+          :require  => 'Package[osg-ce]',
+        })
+      end
+
+      it do
+        should contain_package('gratia-probe-slurm').with({
+          :ensure   => 'present',
+          :require  => 'Package[osg-ce]',
+        })
+      end
     end
   end
 
