@@ -16,6 +16,13 @@ class osg::cacerts inherits osg::params {
     require => Yumrepo['osg'],
   }
 
+  if $::osg::cacerts_install_other_packages {
+    package { 'cilogon-ca-certs':
+      ensure  => $::osg::cacerts_other_packages_ensure,
+      require => Yumrepo['osg'],
+    }
+  }
+
   file { '/etc/grid-security':
     ensure  => 'directory',
     owner   => 'root',

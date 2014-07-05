@@ -17,6 +17,8 @@ describe 'osg::cacerts' do
     })
   end
 
+  it { should_not contain_package('cilogon-ca-certs') }
+
   it do
     should contain_file('/etc/grid-security').with({
       :ensure => 'directory',
@@ -86,6 +88,30 @@ describe 'osg::cacerts' do
     end
 
     it { should_not contain_file('/etc/grid-security/certificates') }
+  end
+
+  context 'when osg::cacerts_install_other_packages => true' do
+    let(:pre_condition) { "class { 'osg': cacerts_install_other_packages => true }" }
+
+    it do
+      should contain_package('cilogon-ca-certs').with({
+        :ensure   => 'latest',
+        :require  => 'Yumrepo[osg]',
+      })
+    end
+
+    context 'when osg::cacerts_other_packages_ensure => "present"' do
+      let(:pre_condition) {
+        "class { 'osg': cacerts_install_other_packages => true, cacerts_other_packages_ensure => 'present' }"
+      }
+
+      it do
+        should contain_package('cilogon-ca-certs').with({
+          :ensure   => 'present',
+          :require  => 'Yumrepo[osg]',
+        })
+      end
+    end
   end
 
 end

@@ -31,6 +31,7 @@ describe 'osg' do
   [
     'repo_use_mirrors',
     'enable_osg_contrib',
+    'cacerts_install_other_packages',
   ].each do |param|
     context "with #{param} => 'foo'" do
       let(:params) {{ param.to_sym => 'foo' }}

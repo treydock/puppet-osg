@@ -35,7 +35,9 @@ class osg (
   $enable_osg_contrib = false,
   $gums_host        = "gums.${::domain}",
   $cacerts_package_name = 'osg-ca-certs',
+  $cacerts_install_other_packages = false,
   $cacerts_package_ensure = 'installed',
+  $cacerts_other_packages_ensure = 'latest',
   $shared_certs_path = '/opt/grid-certificates',
   $globus_tcp_port_range_min = '40000',
   $globus_tcp_port_range_max = '41999',
@@ -49,6 +51,7 @@ class osg (
   validate_re($cacerts_package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
+  validate_bool($cacerts_install_other_packages)
 
   anchor { 'osg::start': }
   anchor { 'osg::end': }
