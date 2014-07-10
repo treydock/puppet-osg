@@ -8,8 +8,8 @@ group :development, :test do
   gem 'puppet-lint',            :require => false
   gem 'puppet-syntax',          :require => false
   gem 'travis-lint',            :require => false
-  gem 'simplecov',              :require => false
-  gem 'coveralls',              :require => false
+  gem 'simplecov',              :require => false unless RUBY_VERSION =~ /^1.8/
+  gem 'coveralls',              :require => false unless RUBY_VERSION =~ /^1.8/
 end
 
 group :development do
