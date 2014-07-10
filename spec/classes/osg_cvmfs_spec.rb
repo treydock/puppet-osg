@@ -110,9 +110,11 @@ describe 'osg::cvmfs' do
       content = catalogue.resource('file', '/etc/cvmfs/default.local').send(:parameters)[:content]
       content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
         'CVMFS_REPOSITORIES="`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`"',
+        'CVMFS_STRICT_MOUNT=no',
         'CVMFS_CACHE_BASE=/var/cache/cvmfs',
         'CVMFS_QUOTA_LIMIT=20000',
         'CVMFS_HTTP_PROXY="http://squid.example.tld:3128"',
+        'GLITE_VERSION=',
       ]
     end
 
@@ -142,6 +144,13 @@ describe 'osg::cvmfs' do
         :mode    => '0700',
       })
     end
+
+    context "with strict_mount => true" do
+      let(:params) {{ :strict_mount => true }}
+      it do
+        verify_contents(catalogue, '/etc/cvmfs/default.local', ['CVMFS_STRICT_MOUNT=yes'])
+      end
+    end
   end
 
   context 'osg::cvmfs::service' do
@@ -169,6 +178,7 @@ describe 'osg::cvmfs' do
   [
     'manage_user',
     'manage_group',
+    'strict_mount',
   ].each do |bool_param|
     context "with #{bool_param} => 'foo'" do
       let(:params) {{ bool_param.to_sym => 'foo' }}
@@ -178,6 +188,7 @@ describe 'osg::cvmfs' do
 
   # Verify validate_array parameters
   [
+    'repositories',
     'http_proxies',
     'server_urls',
   ].each do |bool_param|
