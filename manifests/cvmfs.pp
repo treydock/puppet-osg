@@ -51,7 +51,7 @@ class osg::cvmfs (
 
   $repositories_real = $repositories[0] ? {
     'UNSET' => '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`',
-    default => $repositories,
+    default => join($repositories, ','),
   }
 
   include osg

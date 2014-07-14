@@ -151,6 +151,13 @@ describe 'osg::cvmfs' do
         verify_contents(catalogue, '/etc/cvmfs/default.local', ['CVMFS_STRICT_MOUNT=yes'])
       end
     end
+
+    context "when repositories => ['grid.cern.ch','cms.cern.ch']" do
+      let(:params) {{ :repositories => ['grid.cern.ch','cms.cern.ch'] }}
+      it do
+        verify_contents(catalogue, '/etc/cvmfs/default.local', ['CVMFS_REPOSITORIES="grid.cern.ch,cms.cern.ch"'])
+      end
+    end
   end
 
   context 'osg::cvmfs::service' do
