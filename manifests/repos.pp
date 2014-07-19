@@ -13,6 +13,7 @@ class osg::repos {
   if $osg::repo_use_mirrors {
     $baseurls   = {
       'osg'                       => 'absent',
+      'osg-empty'                 => 'absent',
       'osg-contrib'               => 'absent',
       'osg-development'           => 'absent',
       'osg-testing'               => 'absent',
@@ -23,6 +24,7 @@ class osg::repos {
 
     $mirrorlists = {
       'osg'                       => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/release/${::architecture}",
+      'osg-empty'                 => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/empty/${::architecture}",
       'osg-contrib'               => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/contrib/${::architecture}",
       'osg-development'           => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
       'osg-testing'               => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
@@ -33,6 +35,7 @@ class osg::repos {
   } else {
     $baseurls   = {
       'osg'                       => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/release/${::architecture}",
+      'osg-empty'                 => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/empty/${::architecture}",
       'osg-contrib'               => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/contrib/${::architecture}",
       'osg-development'           => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
       'osg-testing'               => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
@@ -43,6 +46,7 @@ class osg::repos {
 
     $mirrorlists = {
       'osg'                       => 'absent',
+      'osg-empty'                 => 'absent',
       'osg-contrib'               => 'absent',
       'osg-development'           => 'absent',
       'osg-testing'               => 'absent',
@@ -79,6 +83,13 @@ class osg::repos {
     baseurl     => $baseurls['osg'],
     mirrorlist  => $mirrorlists['osg'],
     descr       => "OSG Software for Enterprise Linux ${os_releasever} - ${::architecture}",
+    enabled     => '1',
+  }
+
+  yumrepo { 'osg-empty':
+    baseurl     => $baseurls['osg-empty'],
+    mirrorlist  => $mirrorlists['osg-empty'],
+    descr       => "OSG Software for Enterprise Linux ${os_releasever} - Empty Packages - ${::architecture}",
     enabled     => '1',
   }
 

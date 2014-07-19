@@ -29,6 +29,7 @@ describe 'osg::repos' do
 
   [
     {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+    {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
     {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
     {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
     {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -75,6 +76,7 @@ describe 'osg::repos' do
 
     [
       {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+      {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
       {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
       {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
       {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -121,6 +123,7 @@ describe 'osg::repos' do
 
       [
         {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+        {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
         {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
         {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
         {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
