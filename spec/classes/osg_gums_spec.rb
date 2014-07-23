@@ -126,7 +126,9 @@ describe 'osg::gums' do
       end
     end
 
-    it do 
+    it { should contain_class('mysql::server') }
+
+    it do
       should contain_file('/usr/lib/gums/sql/setupDatabase-puppet.mysql').with({
         :ensure   => 'file',
         :owner    => 'root',
