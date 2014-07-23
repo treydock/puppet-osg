@@ -98,7 +98,6 @@ describe 'osg::gums' do
         :owner    => 'tomcat',
         :group    => 'root',
         :mode     => '0664',
-        :notify   => 'Service[tomcat6]',
       }) \
         .with_content(/^\s+<Connector\sport="8443"\sSSLEnabled="true"$/)
     end
@@ -110,7 +109,6 @@ describe 'osg::gums' do
         :owner    => 'root',
         :group    => 'root',
         :mode     => '0644',
-        :notify   => 'Service[tomcat6]',
       })
     end
 
@@ -147,6 +145,13 @@ describe 'osg::gums' do
         :grant      => ['ALL'],
         :sql        => '/usr/lib/gums/sql/setupDatabase-puppet.mysql',
       })
+    end
+
+    context 'when httpcert_source and httpkey_source defined' do
+      let(:params) {{ :httpcert_source => 'file:///foo/httpcert.pem', :httpkey_source => 'file:///foo/httpkey.pem' }}
+
+      it { should contain_file('/etc/grid-security/http/httpcert.pem').with_source('file:///foo/httpcert.pem') }
+      it { should contain_file('/etc/grid-security/http/httpkey.pem').with_source('file:///foo/httpkey.pem') }
     end
 
     context 'when manage_tomcat => false' do

@@ -14,8 +14,6 @@ class osg::gums::config {
     default => $::osg::gums::httpkey_source,
   }
 
-  $port = $::osg::gums::port
-
   file { '/etc/grid-security/http':
     ensure  => 'directory',
     owner   => 'root',
@@ -28,7 +26,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0444',
-    source  => $hostcert_source,
+    source  => $httpcert_source,
     require => File['/etc/grid-security/http'],
   }
 
@@ -37,7 +35,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0400',
-    source  => $hostkey_source,
+    source  => $httpkey_source,
     require => File['/etc/grid-security/http'],
   }
 
