@@ -14,7 +14,6 @@ end
 
 group :development do
   gem 'beaker-rspec',           :require => false
-  gem 'vagrant-wrapper',        :require => false
 end
 
 if puppetversion = ENV['PUPPET_GEM_VERSION']

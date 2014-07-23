@@ -26,24 +26,9 @@ Installs the OSG GUMS service and performs initial setup.
       db_password => 'secret',
     }
 
-After Puppet applies this class, a script at `/root/gums-post-install.sh` can be run or used as reference to perform the remaining setup steps for GUMS.
+<strike>After Puppet applies this class, a script at `/root/gums-post-install.sh` can be run or used as reference to perform the remaining setup steps for GUMS.</strike>
 
 ### osg::bestman
-
-Requires the *osg::lcmaps* class and the *sudo* class.
-
-Example of configuring a Bestman2 server.
-
-    class { 'sudo': }
-    class { 'osg::lcmaps':
-      gums_hostname => 'gums.yourdomain.tld',
-    }
-    class { 'osg::bestman':
-      with_gums_auth        => true,
-      localPathListAllowed  => ['/tmp','/home','/data'],
-      supportedProtocolList => ['gsiftp://gridftp.yourdomain.tld'],
-      noSudoOnLs            => false,
-    }
 
 ### osg::rsv
 

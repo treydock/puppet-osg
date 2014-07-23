@@ -2,6 +2,7 @@ HOSTS:
   centos-65-x64:
     roles:
       - master
+      - gums
       - ce
       - gridftp
       - squid

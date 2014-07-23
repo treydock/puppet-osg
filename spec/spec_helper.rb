@@ -8,8 +8,6 @@ begin
   SimpleCov.start do
     add_filter '/spec/'
   end
-
-  at_exit { RSpec::Puppet::Coverage.report! }
 rescue Exception => e
   warn "Coveralls disabled"
 end
@@ -28,3 +26,5 @@ shared_context :defaults do
     }
   end
 end
+
+at_exit { RSpec::Puppet::Coverage.report! }
