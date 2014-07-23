@@ -86,7 +86,6 @@ class osg::bestman::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['bestman2'],
   }
 
   file { '/etc/bestman2/conf/bestman2.rc':
@@ -95,7 +94,6 @@ class osg::bestman::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['bestman2'],
   }
 
   file { '/var/log/bestman2':

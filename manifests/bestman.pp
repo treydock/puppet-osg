@@ -40,21 +40,15 @@ class osg::bestman (
   include osg
   include osg::cacerts
   include osg::gums::client
-  include osg::bestman::install
-  include osg::bestman::config
-  include osg::bestman::service
 
-  anchor { 'osg::bestman::start': }
-  anchor { 'osg::bestman::end': }
-
-  Anchor['osg::bestman::start']->
+  anchor { 'osg::bestman::start': }->
   Class['osg']->
   Class['osg::cacerts']->
-  Class['osg::bestman::install']->
+  class { 'osg::bestman::install': }->
   Class['osg::gums::client']->
-  Class['osg::bestman::config']->
-  Class['osg::bestman::service']->
-  Anchor['osg::bestman::end']
+  class { 'osg::bestman::config': }~>
+  class { 'osg::bestman::service': }->
+  anchor { 'osg::bestman::end': }
 
   if $manage_firewall {
     firewall { '100 allow SRMv2 access':

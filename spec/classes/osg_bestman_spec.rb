@@ -21,7 +21,7 @@ describe 'osg::bestman' do
   it { should contain_class('osg::cacerts').that_comes_before('Class[osg::bestman::install]') }
   it { should contain_class('osg::bestman::install').that_comes_before('Class[osg::gums::client]') }
   it { should contain_class('osg::gums::client').that_comes_before('Class[osg::bestman::config]') }
-  it { should contain_class('osg::bestman::config').that_comes_before('Class[osg::bestman::service]') }
+  it { should contain_class('osg::bestman::config').that_notifies('Class[osg::bestman::service]') }
   it { should contain_class('osg::bestman::service').that_comes_before('Anchor[osg::bestman::end]') }
   it { should contain_anchor('osg::bestman::end') }
 
@@ -113,7 +113,6 @@ describe 'osg::bestman' do
         :owner   => 'root',
         :group   => 'root',
         :mode    => '0644',
-        :notify  => 'Service[bestman2]',
       })
     end
 
@@ -152,7 +151,6 @@ describe 'osg::bestman' do
         :owner   => 'root',
         :group   => 'root',
         :mode    => '0644',
-        :notify  => 'Service[bestman2]',
       })
     end
 
