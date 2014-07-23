@@ -18,7 +18,7 @@ describe 'osg::gums' do
   it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
   it { should contain_class('osg::cacerts').that_comes_before('Class[osg::gums::install]') }
   it { should contain_class('osg::gums::install').that_comes_before('Class[osg::gums::config]') }
-  it { should contain_class('osg::gums::config').that_comes_before('Class[osg::gums::service]') }
+  it { should contain_class('osg::gums::config').that_notifies('Class[osg::gums::service]') }
   it { should contain_class('osg::gums::service').that_comes_before('Anchor[osg::gums::end]') }
   it { should contain_anchor('osg::gums::end') }
 

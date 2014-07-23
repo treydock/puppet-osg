@@ -85,7 +85,7 @@ class osg::gums (
   Class['osg']->
   Class['osg::cacerts']->
   class { 'osg::gums::install': }->
-  class { 'osg::gums::config': }->
+  class { 'osg::gums::config': }~>
   class { 'osg::gums::service': }->
   anchor { 'osg::gums::end': }
 

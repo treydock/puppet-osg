@@ -57,7 +57,6 @@ class osg::gums::config {
       owner   => 'tomcat',
       group   => 'root',
       mode    => '0664',
-      notify  => Service['tomcat6'],
     }
 
     file { '/etc/tomcat6/log4j-trustmanager.properties':
@@ -66,7 +65,6 @@ class osg::gums::config {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      notify  => Service['tomcat6'],
     }
 
     file { '/usr/share/tomcat6/lib/bcprov.jar':
