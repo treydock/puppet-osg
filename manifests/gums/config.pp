@@ -87,6 +87,8 @@ class osg::gums::config {
   }
 
   if $::osg::gums::manage_mysql {
+    include ::mysql::server
+
     file { '/usr/lib/gums/sql/setupDatabase-puppet.mysql':
       ensure  => 'file',
       content => template('osg/gums/setupDatabase.mysql.erb'),
