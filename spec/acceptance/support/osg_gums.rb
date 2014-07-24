@@ -8,7 +8,7 @@ shared_examples_for "osg::gums" do |node|
     it { should be_running }
   end
 
-  describe port(8443) do
+  describe port(8443), :node => node do
     it { should be_listening }
   end
 end
