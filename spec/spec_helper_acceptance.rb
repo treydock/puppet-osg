@@ -40,7 +40,7 @@ hosts.each do |host|
   if host['platform'] =~ /el-(5|6)/
     relver = $1
     on host, "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-#{relver}.noarch.rpm", { :acceptable_exit_codes => [0,1] }
-    on host, 'yum install -y puppet-3.5.1-1.el6', { :acceptable_exit_codes => [0,1] }
+    on host, 'yum install -y puppet', { :acceptable_exit_codes => [0,1] }
   end
 end
 
