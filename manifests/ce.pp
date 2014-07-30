@@ -15,6 +15,7 @@ class osg::ce (
   validate_bool($manage_firewall)
 
   include osg
+  include osg::gums::client
 
   $cemon_service_name = $osg::osg_release ? {
     /3.1/ => 'tomcat6',
@@ -27,19 +28,13 @@ class osg::ce (
     manage_firewall => $manage_firewall,
   }
 
-  include osg::ce::install
-  include osg::ce::config
-  include osg::ce::service
-
-  anchor { 'osg::ce::start': }
-  anchor { 'osg::ce::end': }
-
-  Anchor['osg::ce::start']->
+  anchor { 'osg::ce::start': }->
   Class['osg::gridftp']->
-  Class['osg::ce::install']->
-  Class['osg::ce::config']->
-  Class['osg::ce::service']->
-  Anchor['osg::ce::end']
+  class { 'osg::ce::install': }->
+  Class['osg::gums::client']->
+  class { 'osg::ce::config': }->
+  class { 'osg::ce::service': }->
+  anchor { 'osg::ce::end': }
 
   if $manage_firewall {
     firewall { '100 allow GRAM':
