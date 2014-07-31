@@ -11,21 +11,15 @@ class osg::gridftp (
   include osg
   include osg::cacerts
   include osg::gums::client
-  include osg::gridftp::install
-  include osg::gridftp::config
-  include osg::gridftp::service
 
-  anchor { 'osg::gridftp::start': }
-  anchor { 'osg::gridftp::end': }
-
-  Anchor['osg::gridftp::start']->
+  anchor { 'osg::gridftp::start': }->
   Class['osg']->
   Class['osg::cacerts']->
-  Class['osg::gridftp::install']->
+  class { 'osg::gridftp::install': }->
   Class['osg::gums::client']->
-  Class['osg::gridftp::config']~>
-  Class['osg::gridftp::service']->
-  Anchor['osg::gridftp::end']
+  class { 'osg::gridftp::config': }~>
+  class { 'osg::gridftp::service': }->
+  anchor { 'osg::gridftp::end': }
 
   if $manage_firewall {
     firewall { '100 allow GridFTP':

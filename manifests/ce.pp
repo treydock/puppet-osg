@@ -15,7 +15,6 @@ class osg::ce (
   validate_bool($manage_firewall)
 
   include osg
-  include osg::gums::client
 
   $cemon_service_name = $osg::osg_release ? {
     /3.1/ => 'tomcat6',
@@ -29,9 +28,8 @@ class osg::ce (
   }
 
   anchor { 'osg::ce::start': }->
-  Class['osg::gridftp']->
   class { 'osg::ce::install': }->
-  Class['osg::gums::client']->
+  Class['osg::gridftp']->
   class { 'osg::ce::config': }->
   class { 'osg::ce::service': }->
   anchor { 'osg::ce::end': }

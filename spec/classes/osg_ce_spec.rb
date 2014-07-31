@@ -19,10 +19,9 @@ describe 'osg::ce' do
     })
   end
 
-  it { should contain_anchor('osg::ce::start').that_comes_before('Class[osg::gridftp]') }
-  it { should contain_class('osg::gridftp').that_comes_before('Class[osg::ce::install]') }
-  it { should contain_class('osg::ce::install').that_comes_before('Class[osg::gums::client]') }
-  it { should contain_class('osg::gums::client').that_comes_before('Class[osg::ce::config]') }
+  it { should contain_anchor('osg::ce::start').that_comes_before('Class[osg::ce::install]') }
+  it { should contain_class('osg::ce::install').that_comes_before('Class[osg::gridftp]') }
+  it { should contain_class('osg::gridftp').that_comes_before('Class[osg::ce::config]') }
   it { should contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }
   it { should contain_class('osg::ce::service').that_comes_before('Anchor[osg::ce::end]') }
   it { should contain_anchor('osg::ce::end') }
