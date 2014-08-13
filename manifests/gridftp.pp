@@ -4,6 +4,7 @@ class osg::gridftp (
   $hostcert_source = 'UNSET',
   $hostkey_source = 'UNSET',
   $manage_firewall = true,
+  $standalone = true,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)
@@ -12,14 +13,23 @@ class osg::gridftp (
   include osg::cacerts
   include osg::gums::client
 
-  anchor { 'osg::gridftp::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::gridftp::install': }->
-  Class['osg::gums::client']->
-  class { 'osg::gridftp::config': }~>
-  class { 'osg::gridftp::service': }->
-  anchor { 'osg::gridftp::end': }
+  if $standalone {
+    anchor { 'osg::gridftp::start': }->
+    Class['osg']->
+    Class['osg::cacerts']->
+    class { 'osg::gridftp::install': }->
+    Class['osg::gums::client']->
+    class { 'osg::gridftp::config': }~>
+    class { 'osg::gridftp::service': }->
+    anchor { 'osg::gridftp::end': }
+  } else {
+    anchor { 'osg::gridftp::start': }->
+    class { 'osg::gridftp::install': }->
+    Class['osg::gums::client']->
+    class { 'osg::gridftp::config': }~>
+    class { 'osg::gridftp::service': }->
+    anchor { 'osg::gridftp::end': }
+  }
 
   if $manage_firewall {
     firewall { '100 allow GridFTP':

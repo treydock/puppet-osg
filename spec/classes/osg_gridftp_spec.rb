@@ -125,6 +125,17 @@ describe 'osg::gridftp' do
     end
   end
 
+  context 'when standalone => false' do
+    let(:params) {{ :standalone => false }}
+
+    it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg::gridftp::install]') }
+    it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::gums::client]') }
+    it { should contain_class('osg::gums::client').that_comes_before('Class[osg::gridftp::config]') }
+    it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
+    it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
+    it { should contain_anchor('osg::gridftp::end') }
+  end
+
   # Test validate_bool parameters
   [
     'manage_firewall',

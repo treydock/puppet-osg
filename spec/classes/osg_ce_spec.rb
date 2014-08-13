@@ -10,16 +10,20 @@ describe 'osg::ce' do
   it { should create_class('osg::ce') }
   it { should contain_class('osg::params') }
   it { should contain_class('osg') }
+  it { should contain_class('osg::cacerts') }
 
   it do
     should contain_class('osg::gridftp').with({
       :hostcert_source  => 'UNSET',
       :hostkey_source   => 'UNSET',
-      :manage_firewall  => 'true'
+      :manage_firewall  => 'true',
+      :standalone       => 'false'
     })
   end
 
-  it { should contain_anchor('osg::ce::start').that_comes_before('Class[osg::ce::install]') }
+  it { should contain_anchor('osg::ce::start').that_comes_before('Class[osg]') }
+  it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
+  it { should contain_class('osg::cacerts').that_comes_before('Class[osg::ce::install]') }
   it { should contain_class('osg::ce::install').that_comes_before('Class[osg::gridftp]') }
   it { should contain_class('osg::gridftp').that_comes_before('Class[osg::ce::config]') }
   it { should contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }

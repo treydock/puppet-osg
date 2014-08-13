@@ -15,6 +15,7 @@ class osg::ce (
   validate_bool($manage_firewall)
 
   include osg
+  include osg::cacerts
 
   $cemon_service_name = $osg::osg_release ? {
     /3.1/ => 'tomcat6',
@@ -25,9 +26,12 @@ class osg::ce (
     hostcert_source => $hostcert_source,
     hostkey_source  => $hostkey_source,
     manage_firewall => $manage_firewall,
+    standalone      => false,
   }
 
   anchor { 'osg::ce::start': }->
+  Class['osg']->
+  Class['osg::cacerts']->
   class { 'osg::ce::install': }->
   Class['osg::gridftp']->
   class { 'osg::ce::config': }->
