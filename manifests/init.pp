@@ -60,7 +60,7 @@ class osg (
   include osg::repos
 
   Anchor['osg::start']->
-  Yumrepo['epel']->
+  Class['epel']->
   Class['osg::repos']->
   Anchor['osg::end']
 

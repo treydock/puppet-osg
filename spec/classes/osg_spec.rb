@@ -10,8 +10,8 @@ describe 'osg' do
   it { should contain_class('epel') }
   it { should contain_class('osg::configure') }
 
-  it { should contain_anchor('osg::start').that_comes_before('Yumrepo[epel]') }
-  it { should contain_yumrepo('epel').that_comes_before('Class[osg::repos]') }
+  it { should contain_anchor('osg::start').that_comes_before('Class[epel]') }
+  it { should contain_class('epel').that_comes_before('Class[osg::repos]') }
   it { should contain_class('osg::repos').that_comes_before('Anchor[osg::end]') }
   it { should contain_anchor('osg::end') }
 

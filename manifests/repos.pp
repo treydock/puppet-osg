@@ -75,7 +75,7 @@ class osg::repos {
     gpgcheck        => '1',
     gpgkey          => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
     priority        => '98',
-    require         => Gpg_key['osg'],
+    require         => [Yumrepo['epel'], Gpg_key['osg']],
   }
 
   #TODO : Need consider_as_osg=yes

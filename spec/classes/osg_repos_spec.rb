@@ -46,7 +46,7 @@ describe 'osg::repos' do
         :gpgcheck       => '1',
         :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
         :priority       => '98',
-        :require        => 'Gpg_key[osg]',
+        :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
       })
     end
   end
@@ -67,7 +67,7 @@ describe 'osg::repos' do
         :gpgcheck       => '1',
         :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
         :priority       => '98',
-        :require        => 'Gpg_key[osg]',
+        :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
       })
     end
   end
@@ -92,7 +92,7 @@ describe 'osg::repos' do
           :gpgcheck       => '1',
           :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
           :priority       => '98',
-          :require        => 'Gpg_key[osg]',
+          :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
         })
       end
     end
@@ -113,7 +113,7 @@ describe 'osg::repos' do
           :gpgcheck       => '1',
           :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
           :priority       => '98',
-          :require        => 'Gpg_key[osg]',
+          :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
         })
       end
     end
@@ -138,7 +138,7 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
             :priority       => '98',
-            :require        => 'Gpg_key[osg]',
+            :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
           })
         end
       end
@@ -159,7 +159,7 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
             :priority       => '98',
-            :require        => 'Gpg_key[osg]',
+            :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
           })
         end
       end
@@ -186,7 +186,7 @@ describe 'osg::repos' do
         :gpgcheck       => '1',
         :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
         :priority       => '98',
-        :require        => 'Gpg_key[osg]',
+        :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
       })
     end
 
@@ -204,7 +204,7 @@ describe 'osg::repos' do
           :gpgcheck       => '1',
           :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
           :priority       => '98',
-          :require        => 'Gpg_key[osg]',
+          :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
         })
       end
     end
