@@ -52,10 +52,10 @@ RSpec.configure do |c|
 
   # Configure all nodes in nodeset
   c.before :suite do
-    hosts.each do |host|
-      # Install module
-      copy_root_module_to(host, :module_name => 'osg')
+    # Install module
+    puppet_module_install(:source => proj_root, :module_name => 'osg')
 
+    hosts.each do |host|
       # Install module dependencies
       modulefile_dependencies.each do |mod|
         on host, puppet("module", "install", "#{mod[:fullname]}", "--version",  "'#{mod[:version]}'"), { :acceptable_exit_codes => [0,1] }
