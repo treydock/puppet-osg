@@ -12,7 +12,8 @@ describe 'osg::squid' do
   it { should contain_class('osg') }
 
   it do
-    should contain_firewall('100 allow squid access').with({
+    should contain_firewall('100 allow squid access').only_with({
+      :name   => '100 allow squid access',
       :ensure => 'present',
       :port   => '3128',
       :proto  => 'tcp',
@@ -21,23 +22,23 @@ describe 'osg::squid' do
   end
 
   it do
-    should contain_firewall('100 allow squid monitoring').with({
+    should contain_firewall('100 allow squid monitoring').only_with({
+      :name     => '100 allow squid monitoring',
       :ensure   => 'present',
       :port     => '3401',
       :proto    => 'udp',
       :source   => '128.142.0.0/16',
-      :iniface  => 'eth0',
       :action   => 'accept',
     })
   end
 
   it do
-    should contain_firewall('101 allow squid monitoring').with({
+    should contain_firewall('101 allow squid monitoring').only_with({
+      :name     => '101 allow squid monitoring',
       :ensure   => 'present',
       :port     => '3401',
       :proto    => 'udp',
       :source   => '188.185.0.0/17',
-      :iniface  => 'eth0',
       :action   => 'accept',
     })
   end

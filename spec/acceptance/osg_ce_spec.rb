@@ -17,6 +17,7 @@ describe 'osg::ce class:' do
           rsvcert_source => 'file:///tmp/rsvcert.pem',
           rsvkey_source  => 'file:///tmp/rsvkey.pem',
         }
+        class { 'osg::cacerts::updater': }
       EOS
 
       pending("fails as gratia probes not yet enabled") do
@@ -27,6 +28,7 @@ describe 'osg::ce class:' do
 
     it_behaves_like "osg::repos", node
     it_behaves_like "osg::rsv", node
+    it_behaves_like "osg::cacerts::updater", node
 
   end
 end

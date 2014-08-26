@@ -10,20 +10,14 @@ class osg::client (
 
   include osg
   include osg::cacerts
-  include osg::client::install
-  include osg::client::config
-  include osg::client::service
 
-  anchor { 'osg::client::start': }
-  anchor { 'osg::client::end': }
-
-  Anchor['osg::client::start']->
+  anchor { 'osg::client::start': }->
   Class['osg']->
   Class['osg::cacerts']->
-  Class['osg::client::install']->
-  Class['osg::client::config']->
-  Class['osg::client::service']->
-  Anchor['osg::client::end']
+  class { 'osg::client::install': }->
+  class { 'osg::client::config': }->
+  class { 'osg::client::service': }->
+  anchor { 'osg::client::end': }
 
   if $manage_firewall {
     firewall { '100 allow GLOBUS_TCP_PORT_RANGE':

@@ -1,36 +1,8 @@
 # == Class: osg::cacerts::updater
 #
-# Adds the basic CA cert packages and services for OSG.
+# Manages the OSG cacert updater
 #
-# === Parameters
-#
-# [*crl_package_name*]
-#   Default:  'fetch-crl',
-#
-# [*crl_package_ensure*]
-#   Default:  'installed',
-#
-# [*crl_boot_service_name*]
-#   Default:  'fetch-crl-boot',
-#
-# [*crl_boot_service_ensure*]
-#   Default:  'running',
-#
-# [*crl_boot_service_enable*]
-#   Default:  true,
-#
-# [*crl_cron_service_name*]
-#   Default:  'fetch-crl-cron',
-#
-# [*crl_cron_service_ensure*]
-#   Default:  'running',
-#
-# [*crl_cron_service_enable*]
-#   Default:  true
-#
-# === Examples
-#
-#  class { 'osg::cacerts::updater': }
+# Public
 #
 # === Authors
 #
@@ -41,50 +13,93 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg::cacerts::updater (
+  $ensure                   = 'present',
   $min_age                  = '23',
   $max_age                  = '72',
   $random_wait              = '30',
   $quiet                    = true,
   $logfile                  = false,
   $package_name             = 'osg-ca-certs-updater',
-  $package_ensure           = 'installed',
+  $package_ensure           = 'UNSET',
   $service_name             = 'osg-ca-certs-updater-cron',
-  $service_ensure           = 'running',
-  $service_enable           = true,
-  $service_autorestart      = true,
+  $service_ensure           = 'UNSET',
+  $service_enable           = 'UNSET',
   $include_cron             = true,
   $config_replace           = true,
   $crl_package_name         = 'fetch-crl',
-  $crl_package_ensure       = 'installed',
+  $crl_package_ensure       = 'UNSET',
   $crl_boot_service_name    = 'fetch-crl-boot',
-  $crl_boot_service_ensure  = 'running',
-  $crl_boot_service_enable  = true,
+  $crl_boot_service_ensure  = 'UNSET',
+  $crl_boot_service_enable  = 'UNSET',
   $crl_cron_service_name    = 'fetch-crl-cron',
-  $crl_cron_service_ensure  = 'running',
-  $crl_cron_service_enable  = true
+  $crl_cron_service_ensure  = 'UNSET',
+  $crl_cron_service_enable  = 'UNSET',
 ) inherits osg::params {
 
   include osg::cacerts
 
-  validate_bool($service_autorestart)
   validate_bool($include_cron)
   validate_bool($config_replace)
 
-  # This gives the option to not manage the service 'ensure' state.
+  case $ensure {
+    'present': {
+      $package_ensure_default = 'installed'
+      $service_ensure_default = 'running'
+      $service_enable_default = true
+    }
+    'absent': {
+      $package_ensure_default = 'absent'
+      $service_ensure_default = 'stopped'
+      $service_enable_default = false
+    }
+    'disabled': {
+      $package_ensure_default = 'installed'
+      $service_ensure_default = 'stopped'
+      $service_enable_default = false
+    }
+    default: {
+      fail("Module osg::cacerts::updater: Parameter 'ensure' must be 'present', 'absent' or 'disabled': ${ensure} given")
+    }
+  }
+
+  $package_ensure_real = $package_ensure ? {
+    'UNSET' => $package_ensure_default,
+    default => $package_ensure,
+  }
+
+  $crl_package_ensure_real = $crl_package_ensure ? {
+    'UNSET' => $package_ensure_default,
+    default => $crl_package_ensure,
+  }
+
   $service_ensure_real = $service_ensure ? {
-    'undef' => undef,
+    'UNSET' => $service_ensure_default,
     default => $service_ensure,
   }
 
-  # This gives the option to not manage the service 'enable' state.
   $service_enable_real = $service_enable ? {
-    'undef' => undef,
+    'UNSET' => $service_enable_default,
     default => $service_enable,
   }
 
-  $service_subscribe = $service_autorestart ? {
-    true  => File['/etc/cron.d/osg-ca-certs-updater'],
-    false => undef,
+  $crl_boot_service_ensure_real = $crl_boot_service_ensure ? {
+    'UNSET' => $service_ensure_default,
+    default => $crl_boot_service_ensure,
+  }
+
+  $crl_boot_service_enable_real = $crl_boot_service_enable ? {
+    'UNSET' => $service_enable_default,
+    default => $crl_boot_service_enable,
+  }
+
+  $crl_cron_service_ensure_real = $crl_cron_service_ensure ? {
+    'UNSET' => $service_ensure_default,
+    default => $crl_cron_service_ensure,
+  }
+
+  $crl_cron_service_enable_real = $crl_cron_service_enable ? {
+    'UNSET' => $service_enable_default,
+    default => $crl_cron_service_enable,
   }
 
   $min_age_arg = $min_age ? {
@@ -115,7 +130,7 @@ class osg::cacerts::updater (
   if $include_cron { include cron }
 
   package { 'osg-ca-certs-updater':
-    ensure  => $package_ensure,
+    ensure  => $package_ensure_real,
     name    => $package_name,
     before  => File['/etc/cron.d/osg-ca-certs-updater'],
     require => Yumrepo['osg'],
@@ -127,7 +142,7 @@ class osg::cacerts::updater (
     name        => $service_name,
     hasstatus   => true,
     hasrestart  => true,
-    subscribe   => $service_subscribe,
+    subscribe   => File['/etc/cron.d/osg-ca-certs-updater'],
   }
 
   file { '/etc/cron.d/osg-ca-certs-updater':
@@ -141,14 +156,14 @@ class osg::cacerts::updater (
   }
 
   package { 'fetch-crl':
-    ensure  => $crl_package_ensure,
+    ensure  => $crl_package_ensure_real,
     name    => $crl_package_name,
     require => Yumrepo['osg'],
   }
 
   service { 'fetch-crl-boot':
-    ensure      => $crl_boot_service_ensure,
-    enable      => $crl_boot_service_enable,
+    ensure      => $crl_boot_service_ensure_real,
+    enable      => $crl_boot_service_enable_real,
     name        => $crl_boot_service_name,
     hasstatus   => true,
     hasrestart  => true,
@@ -156,8 +171,8 @@ class osg::cacerts::updater (
   }
 
   service { 'fetch-crl-cron':
-    ensure      => $crl_cron_service_ensure,
-    enable      => $crl_cron_service_enable,
+    ensure      => $crl_cron_service_ensure_real,
+    enable      => $crl_cron_service_enable_real,
     name        => $crl_cron_service_name,
     hasstatus   => true,
     hasrestart  => true,

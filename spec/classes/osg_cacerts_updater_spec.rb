@@ -12,32 +12,32 @@ describe 'osg::cacerts::updater' do
 
   it do 
     should contain_package('osg-ca-certs-updater').with({
-      'ensure'  => 'installed',
-      'name'    => 'osg-ca-certs-updater',
-      'before'  => 'File[/etc/cron.d/osg-ca-certs-updater]',
-      'require' => 'Yumrepo[osg]',
+      :ensure   => 'installed',
+      :name     => 'osg-ca-certs-updater',
+      :before   => 'File[/etc/cron.d/osg-ca-certs-updater]',
+      :require  => 'Yumrepo[osg]',
     })
   end
 
   it do
     should contain_service('osg-ca-certs-updater-cron').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'name'        => 'osg-ca-certs-updater-cron',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'subscribe'   => 'File[/etc/cron.d/osg-ca-certs-updater]',
+      :ensure       => 'running',
+      :enable       => 'true',
+      :name         => 'osg-ca-certs-updater-cron',
+      :hasstatus    => 'true',
+      :hasrestart   => 'true',
+      :subscribe    => 'File[/etc/cron.d/osg-ca-certs-updater]',
     })
   end
 
   it do
     should contain_file('/etc/cron.d/osg-ca-certs-updater').with({
-      'ensure'  => 'present',
-      'replace' => 'true',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'require' => 'Package[cronie]',
+      :ensure   => 'present',
+      :replace  => 'true',
+      :owner    => 'root',
+      :group    => 'root',
+      :mode     => '0644',
+      :require  => 'Package[cronie]',
     })
   end
 
@@ -49,53 +49,61 @@ describe 'osg::cacerts::updater' do
 
   it do 
     should contain_package('fetch-crl').with({
-      'ensure'  => 'installed',
-      'name'    => 'fetch-crl',
-      'require' => 'Yumrepo[osg]',
+      :ensure   => 'installed',
+      :name     => 'fetch-crl',
+      :require  => 'Yumrepo[osg]',
     })
   end
 
   it do
     should contain_service('fetch-crl-boot').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'name'        => 'fetch-crl-boot',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'require'     => 'Package[fetch-crl]',
+      :ensure       => 'running',
+      :enable       => 'true',
+      :name         => 'fetch-crl-boot',
+      :hasstatus    => 'true',
+      :hasrestart   => 'true',
+      :require      => 'Package[fetch-crl]',
     })
   end
 
   it do
     should contain_service('fetch-crl-cron').with({
-      'ensure'      => 'running',
-      'enable'      => 'true',
-      'name'        => 'fetch-crl-cron',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'require'     => 'Package[fetch-crl]',
+      :ensure       => 'running',
+      :enable       => 'true',
+      :name         => 'fetch-crl-cron',
+      :hasstatus    => 'true',
+      :hasrestart   => 'true',
+      :require      => 'Package[fetch-crl]',
     })
   end
 
   context 'with service_ensure => stopped' do
     let(:params){{ :service_ensure => 'stopped' }}
-
     it { should contain_service('osg-ca-certs-updater-cron').with_ensure('stopped') }
   end
 
-  context 'with service_ensure => "undef"' do
-    let(:params) {{ :service_ensure => "undef" }}
-    it { should contain_service('osg-ca-certs-updater-cron').with_ensure(nil) }
+  context "with ensure => 'absent'" do
+    let(:params) {{ :ensure => 'absent' }}
+    it { should contain_package('osg-ca-certs-updater').with_ensure('absent') }
+    it { should contain_service('osg-ca-certs-updater-cron').with_ensure('stopped') }
+    it { should contain_service('osg-ca-certs-updater-cron').with_enable('false') }
+    it { should contain_package('fetch-crl').with_ensure('absent') }
+    it { should contain_service('fetch-crl-boot').with_ensure('stopped') }
+    it { should contain_service('fetch-crl-boot').with_enable('false') }
+    it { should contain_service('fetch-crl-cron').with_ensure('stopped') }
+    it { should contain_service('fetch-crl-cron').with_enable('false') }
   end
 
-  context 'with service_enable => "undef"' do
-    let(:params) {{ :service_enable => "undef" }}
-    it { should contain_service('osg-ca-certs-updater-cron').with_enable(nil) }
-  end
-
-  context 'with service_autorestart => false' do
-    let(:params) {{ :service_autorestart => false }}
-    it { should contain_service('osg-ca-certs-updater-cron').with_subscribe(nil) }
+  context "with ensure => 'disabled'" do
+    let(:params) {{ :ensure => 'disabled' }}
+    it { should contain_package('osg-ca-certs-updater').with_ensure('installed') }
+    it { should contain_service('osg-ca-certs-updater-cron').with_ensure('stopped') }
+    it { should contain_service('osg-ca-certs-updater-cron').with_enable('false') }
+    it { should contain_package('fetch-crl').with_ensure('installed') }
+    it { should contain_service('fetch-crl-boot').with_ensure('stopped') }
+    it { should contain_service('fetch-crl-boot').with_enable('false') }
+    it { should contain_service('fetch-crl-cron').with_ensure('stopped') }
+    it { should contain_service('fetch-crl-cron').with_enable('false') }
   end
 
   context 'with logfile => /var/log/osg-ca-certs-updater.log' do
@@ -117,7 +125,6 @@ describe 'osg::cacerts::updater' do
   end
 
   [
-    'service_autorestart',
     'include_cron',
     'config_replace',
   ].each do |bool_param|
