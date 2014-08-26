@@ -6,7 +6,8 @@ class osg::squid (
   $manage_firewall  = true,
   $squid_firewall_ensure = 'present',
   $monitoring_firewall_ensure = 'present',
-  $public_interface = 'eth0',
+  $private_interface = undef,
+  $public_interface = undef,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)
@@ -18,6 +19,7 @@ class osg::squid (
       ensure  => $squid_firewall_ensure,
       port    => '3128',
       proto   => 'tcp',
+      iniface => $private_interface,
       action  => 'accept',
     }
 

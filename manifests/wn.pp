@@ -9,13 +9,10 @@ class osg::wn inherits osg::params {
     ensure  => 'present',
   }
 
-  anchor { 'osg::wn::start': }
-  anchor { 'osg::wn::end': }
-
-  Anchor['osg::wn::start']->
+  anchor { 'osg::wn::start': }->
   Class['osg']->
   Class['osg::cacerts']->
   Package['osg-wn-client']->
-  Anchor['osg::wn::end']
+  anchor { 'osg::wn::end': }
 
 }
