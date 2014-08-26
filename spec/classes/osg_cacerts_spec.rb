@@ -11,9 +11,9 @@ describe 'osg::cacerts' do
 
   it do 
     should contain_package('osg-ca-certs').with({
-      'ensure'  => 'installed',
-      'name'    => 'osg-ca-certs',
-      'require' => 'Yumrepo[osg]',
+      :ensure   => 'installed',
+      :name     => 'osg-ca-certs',
+      :require  => 'Yumrepo[osg]',
     })
   end
 
@@ -32,6 +32,7 @@ describe 'osg::cacerts' do
   it do
     should contain_file('/etc/grid-security/certificates').with({
       :ensure => 'directory',
+      :before => 'Package[osg-ca-certs]',
     })
   end
 
@@ -45,17 +46,17 @@ describe 'osg::cacerts' do
 
     it do 
       should contain_package('osg-ca-certs').with({
-        'ensure'  => 'installed',
-        'name'    => 'empty-ca-certs',
-        'require' => 'Yumrepo[osg]',
+        :ensure   => 'installed',
+        :name     => 'empty-ca-certs',
+        :require  => 'Yumrepo[osg]',
       })
     end
 
     it do
       should contain_file('/etc/grid-security/certificates').with({
-        :ensure   => 'link',
-        :target   => '/opt/grid-certificates',
-        :require  => 'File[/etc/grid-security]',
+        :ensure => 'link',
+        :target => '/opt/grid-certificates',
+        :before => 'Package[osg-ca-certs]',
       })
     end
 
@@ -77,9 +78,9 @@ describe 'osg::cacerts' do
 
     it do 
       should contain_package('osg-ca-certs').with({
-        'ensure'  => 'installed',
-        'name'    => 'igtf-ca-certs',
-        'require' => 'Yumrepo[osg]',
+        :ensure   => 'installed',
+        :name     => 'igtf-ca-certs',
+        :require  => 'Yumrepo[osg]',
       })
     end
 
@@ -96,6 +97,7 @@ describe 'osg::cacerts' do
     it do
       should contain_file('/etc/grid-security/certificates').with({
         :ensure => 'directory',
+        :before => 'Package[osg-ca-certs]',
       })
     end
   end

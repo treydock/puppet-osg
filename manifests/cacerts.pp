@@ -35,12 +35,12 @@ class osg::cacerts inherits osg::params {
     file { '/etc/grid-security/certificates':
       ensure  => 'link',
       target  => $osg::shared_certs_path,
-      require => File['/etc/grid-security'],
+      before  => Package['osg-ca-certs'],
     }
   } else {
     file { '/etc/grid-security/certificates':
       ensure  => 'directory',
-      require => File['/etc/grid-security'],
+      before  => Package['osg-ca-certs'],
     }
   }
 
