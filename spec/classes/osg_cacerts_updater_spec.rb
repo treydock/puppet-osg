@@ -57,8 +57,8 @@ describe 'osg::cacerts::updater' do
 
   it do
     should contain_service('fetch-crl-boot').with({
-      :ensure       => 'running',
-      :enable       => 'true',
+      :ensure       => 'stopped',
+      :enable       => 'false',
       :name         => 'fetch-crl-boot',
       :hasstatus    => 'true',
       :hasrestart   => 'true',

@@ -25,10 +25,15 @@ describe 'osg::cacerts' do
       :owner  => 'root',
       :group  => 'root',
       :mode   => '0755',
+      :before => 'File[/etc/grid-security/certificates]',
     })
   end
 
-  it { should_not contain_file('/etc/grid-security/certificates') }
+  it do
+    should contain_file('/etc/grid-security/certificates').with({
+      :ensure => 'directory',
+    })
+  end
 
   context 'when osg::cacerts_package_ensure => "latest"' do
     let(:pre_condition) { "class { 'osg': cacerts_package_ensure => 'latest' }" }
@@ -84,10 +89,15 @@ describe 'osg::cacerts' do
         :owner  => 'root',
         :group  => 'root',
         :mode   => '0755',
+        :before => 'File[/etc/grid-security/certificates]',
       })
     end
 
-    it { should_not contain_file('/etc/grid-security/certificates') }
+    it do
+      should contain_file('/etc/grid-security/certificates').with({
+        :ensure => 'directory',
+      })
+    end
   end
 
   context 'when osg::cacerts_install_other_packages => true' do

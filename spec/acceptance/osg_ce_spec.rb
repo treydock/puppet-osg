@@ -22,12 +22,16 @@ describe 'osg::ce class:' do
 
       pending("fails as gratia probes not yet enabled") do
         apply_manifest_on(node, pp, :catch_failures => true)
+      end
+
+      pending("fails as gratia probes not yet enabled") do
         apply_manifest_on(node, pp, :catch_changes => true)
       end
     end
 
     it_behaves_like "osg::repos", node
     it_behaves_like "osg::rsv", node
+    it_behaves_like "osg::cacerts", node
     it_behaves_like "osg::cacerts::updater", node
 
   end

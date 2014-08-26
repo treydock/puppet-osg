@@ -29,14 +29,14 @@ class osg::cacerts::updater (
   $crl_package_name         = 'fetch-crl',
   $crl_package_ensure       = 'UNSET',
   $crl_boot_service_name    = 'fetch-crl-boot',
-  $crl_boot_service_ensure  = 'UNSET',
-  $crl_boot_service_enable  = 'UNSET',
+  $crl_boot_service_ensure  = 'stopped',
+  $crl_boot_service_enable  = false,
   $crl_cron_service_name    = 'fetch-crl-cron',
   $crl_cron_service_ensure  = 'UNSET',
   $crl_cron_service_enable  = 'UNSET',
 ) inherits osg::params {
 
-  include osg::cacerts
+  require 'osg::cacerts'
 
   validate_bool($include_cron)
   validate_bool($config_replace)
