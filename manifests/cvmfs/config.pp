@@ -67,6 +67,7 @@ class osg::cvmfs::config {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      notify  => Exec['cvmfs_config reload'],
     }
   }
 
