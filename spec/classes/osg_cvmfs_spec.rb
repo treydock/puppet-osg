@@ -136,6 +136,13 @@ describe 'osg::cvmfs' do
     end
 
     it do
+      should contain_file('/etc/cvmfs/config.d/cms.cern.ch.local').only_with({
+        :ensure  => 'absent',
+        :path    => '/etc/cvmfs/config.d/cms.cern.ch.local',
+      })
+    end
+
+    it do
       should contain_file('/var/lib/cvmfs').only_with({
         :ensure  => 'directory',
         :path    => '/var/lib/cvmfs',
@@ -156,6 +163,25 @@ describe 'osg::cvmfs' do
       let(:params) {{ :repositories => ['grid.cern.ch','cms.cern.ch'] }}
       it do
         verify_contents(catalogue, '/etc/cvmfs/default.local', ['CVMFS_REPOSITORIES="grid.cern.ch,cms.cern.ch"'])
+      end
+    end
+
+    context "when cms_local_site => 'T3_FOO'" do
+      let(:params) {{ :cms_local_site => 'T3_FOO' }}
+
+      it do
+        should contain_file('/etc/cvmfs/config.d/cms.cern.ch.local').only_with({
+          :ensure   => 'file',
+          :path     => '/etc/cvmfs/config.d/cms.cern.ch.local',
+          :content  => /.*/,
+          :owner    => 'root',
+          :group    => 'root',
+          :mode     => '0644',
+        })
+      end
+
+      it "should export CMS_LOCAL_SITE" do
+        verify_contents(catalogue, '/etc/cvmfs/config.d/cms.cern.ch.local', ['export CMS_LOCAL_SITE=T3_FOO'])
       end
     end
   end

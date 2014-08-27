@@ -40,6 +40,7 @@ class osg::cvmfs (
     'http://cvmfs.racf.bnl.gov:8000/opt/@org@',
   ],
   $glite_version          = '',
+  $cms_local_site         = 'UNSET',
 ) inherits osg::params {
 
   validate_bool($manage_user)
