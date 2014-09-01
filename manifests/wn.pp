@@ -9,10 +9,15 @@ class osg::wn inherits osg::params {
     ensure  => 'present',
   }
 
+  package { 'xrootd-client':
+    ensure  => 'present',
+  }
+
   anchor { 'osg::wn::start': }->
   Class['osg']->
   Class['osg::cacerts']->
   Package['osg-wn-client']->
+  Package['xrootd-client']->
   anchor { 'osg::wn::end': }
 
 }
