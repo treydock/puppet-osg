@@ -4,10 +4,6 @@ class osg::rsv::config {
 
   include osg::rsv
 
-  Osg_config {
-    path  => '30-rsv.ini',
-  }
-
   $rsvcert_source = $osg::rsv::rsvcert_source ? {
     'UNSET' => undef,
     default => $osg::rsv::rsvcert_source,
@@ -18,13 +14,13 @@ class osg::rsv::config {
     default => $osg::rsv::rsvkey_source,
   }
 
-  osg_config { 'RSV/ce_hosts':            value => $osg::rsv::ce_hosts }
-  osg_config { 'RSV/gridftp_hosts':       value => $osg::rsv::gridftp_hosts }
-  osg_config { 'RSV/gridftp_dir':         value => $osg::rsv::gridftp_dir }
-  osg_config { 'RSV/gratia_probes':       value => $osg::rsv::gratia_probes }
-  osg_config { 'RSV/srm_hosts':           value => $osg::rsv::srm_hosts }
-  osg_config { 'RSV/srm_dir':             value => $osg::rsv::srm_dir }
-  osg_config { 'RSV/srm_webservice_path': value => $osg::rsv::srm_webservice_path }
+  osg_local_site_settings { 'RSV/ce_hosts':            value => $osg::rsv::ce_hosts }
+  osg_local_site_settings { 'RSV/gridftp_hosts':       value => $osg::rsv::gridftp_hosts }
+  osg_local_site_settings { 'RSV/gridftp_dir':         value => $osg::rsv::gridftp_dir }
+  osg_local_site_settings { 'RSV/gratia_probes':       value => $osg::rsv::gratia_probes }
+  osg_local_site_settings { 'RSV/srm_hosts':           value => $osg::rsv::srm_hosts }
+  osg_local_site_settings { 'RSV/srm_dir':             value => $osg::rsv::srm_dir }
+  osg_local_site_settings { 'RSV/srm_webservice_path': value => $osg::rsv::srm_webservice_path }
 
   file { '/etc/grid-security/rsv':
     ensure  => 'directory',

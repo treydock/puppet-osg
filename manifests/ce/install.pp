@@ -2,9 +2,11 @@
 #
 class osg::ce::install {
 
-  package { $osg::ce::batch_system_package_name:
-    ensure  => 'present',
-    before  => Package['osg-ce'],
+  if $osg::ce::gram_gateway_enabled {
+    package { $osg::ce::batch_system_package_name:
+      ensure  => 'present',
+      before  => Package['osg-ce'],
+    }
   }
 
   package { 'osg-ce':

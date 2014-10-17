@@ -119,9 +119,8 @@ describe 'osg::rsv' do
       {:name => 'RSV/srm_webservice_path', :value => 'DEFAULT'},
     ].each do |h|
       it do
-        should contain_osg_config(h[:name]).with({
+        should contain_osg_local_site_settings(h[:name]).with({
           :value  => h[:value],
-          :path   => '30-rsv.ini',
         })
       end
     end

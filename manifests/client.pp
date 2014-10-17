@@ -1,15 +1,42 @@
 # == Class: osg::client
 #
 class osg::client (
-  $with_condor = true,
-  $manage_firewall = true,
+  $with_condor                = true,
+  $with_condor_ce             = true,
+  $manage_firewall            = true,
+  $condor_service_ensure      = 'stopped',
+  $condor_service_enable      = false,
+  $condor_ce_service_ensure   = 'stopped',
+  $condor_ce_service_enable   = false,
+  $condor_configs_override    = {},
+  $condor_ce_configs_override = {},
 ) inherits osg::params {
 
   validate_bool($with_condor)
+  validate_bool($with_condor_ce)
   validate_bool($manage_firewall)
+  validate_hash($condor_configs_override)
+  validate_hash($condor_ce_configs_override)
 
   include osg
   include osg::cacerts
+
+  $condor_configs_default = {
+    'SCHEDD_HOST'       => $osg::condor_schedd_host,
+    'COLLECTOR_HOST'    => $osg::condor_collector_host,
+    'use_x509userproxy' => 'true',
+    'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
+  }
+
+  $condor_ce_configs_default = {
+    'SCHEDD_HOST'       => $osg::condor_schedd_host,
+    'COLLECTOR_HOST'    => $osg::condor_collector_host,
+    'use_x509userproxy' => 'true',
+    'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
+  }
+
+  $condor_configs    = merge($condor_configs_default, $condor_configs_override)
+  $condor_ce_configs = merge($condor_ce_configs_default, $condor_ce_configs_override)
 
   anchor { 'osg::client::start': }->
   Class['osg']->

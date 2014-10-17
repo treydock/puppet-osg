@@ -85,6 +85,7 @@ describe 'osg::client' do
         'setenv GLOBUS_TCP_SOURCE_RANGE 40000,41999',
       ])
     end
+=begin
     it do
       should contain_file('/etc/condor/config.d/10firewall_condor.config').with({
         :ensure   => 'file',
@@ -110,19 +111,63 @@ describe 'osg::client' do
         :notify  => 'Service[condor]',
       })
     end
+=end
+
+    it do
+      should contain_file('/etc/condor/config.d/99-local.conf').with({
+        :ensure   => 'file',
+        :owner    => 'root',
+        :group    => 'root',
+        :mode     => '0644',
+      })
+    end
+
+    it do
+      verify_contents(catalogue, '/etc/condor/config.d/99-local.conf', [
+        'SUBMIT_EXPRS=$(SUBMIT_EXPRS), use_x509userproxy',
+        'use_x509userproxy=true',
+      ])
+    end
+
+    it do
+      should contain_file('/etc/condor-ce/config.d/99-local.conf').with({
+        :ensure   => 'file',
+        :owner    => 'root',
+        :group    => 'root',
+        :mode     => '0644',
+      })
+    end
+
+    it do
+      verify_contents(catalogue, '/etc/condor-ce/config.d/99-local.conf', [
+        'SUBMIT_EXPRS=$(SUBMIT_EXPRS), use_x509userproxy',
+        'use_x509userproxy=true',
+      ])
+    end
 
     context 'when with_condor => false' do
       let(:params) {{ :with_condor => false }}
-      it { should_not contain_file('/etc/condor/config.d/10firewall_condor.config') }
-      it { should_not contain_file_line('condor DAEMON_LIST') }
+      #it { should_not contain_file('/etc/condor/config.d/10firewall_condor.config') }
+      #it { should_not contain_file_line('condor DAEMON_LIST') }
+      it { should_not contain_file('/etc/condor/config.d/99-local.conf') }
+      it { should_not contain_file('/etc/condor-ce/config.d/99-local.conf') }
     end
   end
 
   context 'osg::client::service' do
     it do
       should contain_service('condor').with({
-        :ensure     => 'running',
-        :enable     => 'true',
+        :ensure     => 'stopped',
+        :enable     => 'false',
+        :hasstatus  => 'true',
+        :hasrestart => 'true',
+      })
+    end
+
+    it do
+      should contain_service('condor-ce').with({
+        :ensure     => 'stopped',
+        :enable     => 'false',
         :hasstatus  => 'true',
         :hasrestart => 'true',
       })
@@ -131,6 +176,7 @@ describe 'osg::client' do
     context 'when with_condor => false' do
       let(:params) {{ :with_condor => false }}
       it { should_not contain_service('condor') }
+      it { should_not contain_service('condor-ce') }
     end
   end
 

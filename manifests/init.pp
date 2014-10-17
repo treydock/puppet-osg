@@ -45,6 +45,8 @@ class osg (
   $globus_tcp_source_range_max = '41999',
   $condor_lowport = '40000',
   $condor_highport = '41999',
+  $condor_schedd_host = 'UNSET',
+  $condor_collector_host = 'UNSET',
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.0|3.1|3.2)$', 'The osg_release parameter only supports 3.1 and 3.2')

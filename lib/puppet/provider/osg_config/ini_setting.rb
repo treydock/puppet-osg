@@ -36,7 +36,7 @@ Puppet::Type.type(:osg_config).provide(
     ' = '
   end
 
-  def file_path
-    resource[:path]
+  def self.file_path
+    nil
   end
 end

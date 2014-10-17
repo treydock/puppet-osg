@@ -13,9 +13,8 @@ class osg::gums::client {
     require => Yumrepo['osg'],
   }
 
-  osg_config { 'Misc Services/gums_host':
+  osg_local_site_settings { 'Misc Services/gums_host':
     value   => $osg::gums_host,
-    path    => '10-misc.ini',
   }
 
   service { 'gums-client-cron':

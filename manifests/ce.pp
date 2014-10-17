@@ -1,6 +1,8 @@
 # == Class: osg::ce
 #
 class osg::ce (
+  $gram_gateway_enabled = true,
+  $htcondor_gateway_enabled = true,
   $batch_system_package_name = 'empty-torque',
   $ce_package_name = 'osg-ce-pbs',
   $use_slurm = false,
@@ -8,9 +10,13 @@ class osg::ce (
   $hostkey_source = 'UNSET',
   $httpcert_source = 'UNSET',
   $httpkey_source = 'UNSET',
+  $htcondor_ce_port = '9619',
+  $htcondor_ce_shared_port = '9620',
   $manage_firewall = true,
 ) inherits osg::params {
 
+  validate_bool($gram_gateway_enabled)
+  validate_bool($htcondor_gateway_enabled)
   validate_bool($use_slurm)
   validate_bool($manage_firewall)
 
@@ -39,11 +45,28 @@ class osg::ce (
   anchor { 'osg::ce::end': }
 
   if $manage_firewall {
-    firewall { '100 allow GRAM':
-      ensure  => 'present',
-      action  => 'accept',
-      dport   => '2119',
-      proto   => 'tcp',
+    if $gram_gateway_enabled {
+      firewall { '100 allow GRAM':
+        ensure  => 'present',
+        action  => 'accept',
+        dport   => '2119',
+        proto   => 'tcp',
+      }
+    }
+
+    if $htcondor_gateway_enabled {
+      firewall { '100 allow HTCondorCE':
+        ensure  => 'present',
+        action  => 'accept',
+        dport   => $htcondor_ce_port,
+        proto   => 'tcp',
+      }
+      firewall { '100 allow HTCondorCE shared_port':
+        ensure  => 'present',
+        action  => 'accept',
+        dport   => $htcondor_ce_shared_port,
+        proto   => 'tcp',
+      }
     }
   }
 

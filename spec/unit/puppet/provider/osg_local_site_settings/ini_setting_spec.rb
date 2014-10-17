@@ -16,15 +16,14 @@ $LOAD_PATH.push(
     'lib')
 )
 require 'spec_helper'
-provider_class = Puppet::Type.type(:osg_config).provider(:ini_setting)
+provider_class = Puppet::Type.type(:osg_local_site_settings).provider(:ini_setting)
 describe provider_class do
   it 'should set section and setting' do
-    resource = Puppet::Type::Osg_config.new(
-      {:name => 'vars/foo', :value => 'bar', :path => '01-baz.ini'}
+    resource = Puppet::Type::Osg_local_site_settings.new(
+      {:name => 'vars/foo', :value => 'bar'}
     )
     provider = provider_class.new(resource)
     provider.section.should == 'vars'
     provider.setting.should == 'foo'
-    provider.file_path.should == '/etc/osg/config.d/01-baz.ini'
   end
 end

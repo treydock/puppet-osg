@@ -9,9 +9,8 @@ describe 'osg::gums::client' do
   it { should contain_class('osg') }
 
   it do 
-    should contain_osg_config('Misc Services/gums_host').with({
+    should contain_osg_local_site_settings('Misc Services/gums_host').with({
       :value  => 'gums.example.tld',
-      :path   => '10-misc.ini',
     })
   end
 
@@ -27,6 +26,6 @@ describe 'osg::gums::client' do
 
   context 'when gums_host defined' do
     let(:pre_condition) { "class { 'osg': gums_host => 'foo.bar' }" }
-    it { should contain_osg_config('Misc Services/gums_host').with_value('foo.bar') }
+    it { should contain_osg_local_site_settings('Misc Services/gums_host').with_value('foo.bar') }
   end
 end

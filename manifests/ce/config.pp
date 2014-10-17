@@ -37,4 +37,14 @@ class osg::ce::config {
     require => File['/etc/grid-security/http'],
   }
 
+  osg_local_site_settings { 'Gateway/gram_gateway_enabled':
+    value => $osg::ce::gram_gateway_enabled
+  }
+
+  osg_local_site_settings { 'Gateway/htcondor_gateway_enabled':
+    value => $osg::ce::htcondor_gateway_enabled
+  }
+
+  # TODO Manage /etc/condor-ce/config.d/99-local.conf
+
 }
