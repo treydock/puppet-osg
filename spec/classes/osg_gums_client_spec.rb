@@ -20,7 +20,7 @@ describe 'osg::gums::client' do
       :enable      => 'true',
       :hasstatus   => 'true',
       :hasrestart  => 'true',
-      :require     => 'Osg_config[Misc Services/gums_host]',
+      :require     => 'Osg_local_site_settings[Misc Services/gums_host]',
     })
   end
 

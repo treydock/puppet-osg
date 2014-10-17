@@ -9,7 +9,7 @@ class osg::gums::client {
   #TODO: Move to osg::configure class
   package { 'osg-configure-misc':
     ensure  => 'present',
-    before  => Osg_config['Misc Services/gums_host'],
+    before  => Osg_local_site_settings['Misc Services/gums_host'],
     require => Yumrepo['osg'],
   }
 
@@ -22,7 +22,7 @@ class osg::gums::client {
     enable      => true,
     hasstatus   => true,
     hasrestart  => true,
-    require     => Osg_config['Misc Services/gums_host'],
+    require     => Osg_local_site_settings['Misc Services/gums_host'],
   }
 
 }
