@@ -14,4 +14,10 @@ class osg::client::install {
     }
   }
 
+  if $osg::client::with_condor_ce {
+    package { 'htcondor-ce':
+      ensure  => 'present',
+    }
+  }
+
 }

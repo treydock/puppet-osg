@@ -47,9 +47,20 @@ describe 'osg::client' do
       })
     end
 
+    it do
+      should contain_package('htcondor-ce').with({
+        :ensure => 'present',
+      })
+    end
+
     context 'when with_condor => false' do
       let(:params) {{ :with_condor => false }}
       it { should_not contain_package('condor') }
+    end
+
+    context 'when with_condor_ce => false' do
+      let(:params) {{ :with_condor_ce => false }}
+      it { should_not contain_package('htcondor-ce') }
     end
   end
 
