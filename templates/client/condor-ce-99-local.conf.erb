@@ -1,6 +1,6 @@
 # File managed by Puppet - DO NOT EDIT
-<% @condor_configs.keys.sort.each do |config| -%>
-<% value = @condor_configs[config] -%>
+<% @condor_ce_configs.keys.sort.each do |config| -%>
+<% value = @condor_ce_configs[config] -%>
 <% if value != :undef and value != 'UNSET' -%>
 <%= config %>=<%= value %>
 <% end -%>
