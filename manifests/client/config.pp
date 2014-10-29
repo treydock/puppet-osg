@@ -12,6 +12,18 @@ class osg::client::config {
   $condor_lowport               = $osg::condor_lowport
   $condor_highport              = $osg::condor_highport
 
+  if $osg::client::enable_condor_service {
+    $condor_notify = Service['condor']
+  } else {
+    $condor_notify = undef
+  }
+
+  if $osg::client::enable_condor_ce_service {
+    $condor_ce_notify = Service['condor-ce']
+  } else {
+    $condor_ce_notify = undef
+  }
+
   file { '/etc/profile.d/globus_firewall.sh':
     ensure  => 'file',
     owner   => 'root',
@@ -53,6 +65,7 @@ class osg::client::config {
       group   => 'root',
       mode    => '0644',
       content => template('osg/client/condor-99-local.conf.erb'),
+      notify  => $condor_notify,
     }
 
     file { '/etc/condor-ce/config.d/99-local.conf':
@@ -61,6 +74,7 @@ class osg::client::config {
       group   => 'root',
       mode    => '0644',
       content => template('osg/client/condor-ce-99-local.conf.erb'),
+      notify  => $condor_ce_notify,
     }
   }
 
