@@ -41,23 +41,21 @@ class osg::client::config {
   }
 
   if $osg::client::with_condor {
-    /*
-    file { '/etc/condor/config.d/10firewall_condor.config':
-      ensure  => 'file',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template('osg/client/10firewall_condor.config.erb'),
-      notify  => Service['condor'],
-    }
-
-    file_line { 'condor DAEMON_LIST':
-      path    => '/etc/condor/config.d/00personal_condor.config',
-      line    => 'DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD',
-      match   => '^DAEMON_LIST.*',
-      notify  => Service['condor'],
-    }
-    */
+    # file { '/etc/condor/config.d/10firewall_condor.config':
+    #   ensure  => 'file',
+    #   owner   => 'root',
+    #   group   => 'root',
+    #   mode    => '0644',
+    #   content => template('osg/client/10firewall_condor.config.erb'),
+    #   notify  => Service['condor'],
+    # }
+    #
+    # file_line { 'condor DAEMON_LIST':
+    #   path    => '/etc/condor/config.d/00personal_condor.config',
+    #   line    => 'DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD',
+    #   match   => '^DAEMON_LIST.',
+    #   notify  => Service['condor'],
+    # }
 
     file { '/etc/condor/config.d/99-local.conf':
       ensure  => 'file',

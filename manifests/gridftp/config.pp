@@ -29,26 +29,26 @@ class osg::gridftp::config {
   }
 
   file { '/etc/grid-security/hostcert.pem':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0444',
-    source  => $hostcert_source,
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0444',
+    source => $hostcert_source,
   }
 
   file { '/etc/grid-security/hostkey.pem':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0400',
-    source  => $hostkey_source,
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0400',
+    source => $hostkey_source,
   }
 
   file { '/etc/grid-security/grid-mapfile':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
 }

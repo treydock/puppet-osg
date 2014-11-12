@@ -57,11 +57,11 @@ class osg::squid (
   }
 
   service { 'frontier-squid':
-    ensure      => 'running',
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
-    subscribe   => File['/etc/squid/customize.sh'],
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    subscribe  => File['/etc/squid/customize.sh'],
   }
 
 }

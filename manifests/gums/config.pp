@@ -15,10 +15,10 @@ class osg::gums::config {
   }
 
   file { '/etc/grid-security/http':
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { '/etc/grid-security/http/httpcert.pem':
@@ -58,31 +58,31 @@ class osg::gums::config {
     }
 
     file { '/etc/tomcat6/log4j-trustmanager.properties':
-      ensure  => 'file',
-      source  => 'file:///var/lib/trustmanager-tomcat/log4j-trustmanager.properties',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
+      ensure => 'file',
+      source => 'file:///var/lib/trustmanager-tomcat/log4j-trustmanager.properties',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
     }
 
     file { '/usr/share/tomcat6/lib/bcprov.jar':
-      ensure  => 'link',
-      target  => '/usr/share/java/bcprov.jar',
+      ensure => 'link',
+      target => '/usr/share/java/bcprov.jar',
     }
 
     file { '/usr/share/tomcat6/lib/trustmanager.jar':
-      ensure  => 'link',
-      target  => '/usr/share/java/trustmanager.jar',
+      ensure => 'link',
+      target => '/usr/share/java/trustmanager.jar',
     }
 
     file { '/usr/share/tomcat6/lib/trustmanager-tomcat.jar':
-      ensure  => 'link',
-      target  => '/usr/share/java/trustmanager-tomcat.jar',
+      ensure => 'link',
+      target => '/usr/share/java/trustmanager-tomcat.jar',
     }
 
     file { '/usr/share/tomcat6/lib/commons-logging.jar':
-      ensure  => 'link',
-      target  => '/usr/share/java/commons-logging.jar',
+      ensure => 'link',
+      target => '/usr/share/java/commons-logging.jar',
     }
   }
 
@@ -99,11 +99,11 @@ class osg::gums::config {
     }
 
     mysql::db { $::osg::gums::db_name:
-      user      => $::osg::gums::db_username,
-      password  => $::osg::gums::db_password,
-      host      => $::osg::gums::db_hostname,
-      grant     => ['ALL'],
-      sql       => '/usr/lib/gums/sql/setupDatabase-puppet.mysql',
+      user     => $::osg::gums::db_username,
+      password => $::osg::gums::db_password,
+      host     => $::osg::gums::db_hostname,
+      grant    => ['ALL'],
+      sql      => '/usr/lib/gums/sql/setupDatabase-puppet.mysql',
     }
   }
 

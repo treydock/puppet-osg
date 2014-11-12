@@ -137,12 +137,12 @@ class osg::cacerts::updater (
   }
 
   service { 'osg-ca-certs-updater-cron':
-    ensure      => $service_ensure_real,
-    enable      => $service_enable_real,
-    name        => $service_name,
-    hasstatus   => true,
-    hasrestart  => true,
-    subscribe   => File['/etc/cron.d/osg-ca-certs-updater'],
+    ensure     => $service_ensure_real,
+    enable     => $service_enable_real,
+    name       => $service_name,
+    hasstatus  => true,
+    hasrestart => true,
+    subscribe  => File['/etc/cron.d/osg-ca-certs-updater'],
   }
 
   file { '/etc/cron.d/osg-ca-certs-updater':
@@ -162,20 +162,20 @@ class osg::cacerts::updater (
   }
 
   service { 'fetch-crl-boot':
-    ensure      => $crl_boot_service_ensure_real,
-    enable      => $crl_boot_service_enable_real,
-    name        => $crl_boot_service_name,
-    hasstatus   => true,
-    hasrestart  => true,
-    require     => Package['fetch-crl'],
+    ensure     => $crl_boot_service_ensure_real,
+    enable     => $crl_boot_service_enable_real,
+    name       => $crl_boot_service_name,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package['fetch-crl'],
   }
 
   service { 'fetch-crl-cron':
-    ensure      => $crl_cron_service_ensure_real,
-    enable      => $crl_cron_service_enable_real,
-    name        => $crl_cron_service_name,
-    hasstatus   => true,
-    hasrestart  => true,
-    require     => Package['fetch-crl'],
+    ensure     => $crl_cron_service_ensure_real,
+    enable     => $crl_cron_service_enable_real,
+    name       => $crl_cron_service_name,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package['fetch-crl'],
   }
 }

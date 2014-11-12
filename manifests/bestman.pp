@@ -52,9 +52,9 @@ class osg::bestman (
 
   if $manage_firewall {
     firewall { '100 allow SRMv2 access':
-      port    => $securePort,
-      proto   => 'tcp',
-      action  => 'accept',
+      port   => $securePort,
+      proto  => 'tcp',
+      action => 'accept',
     }
   }
 

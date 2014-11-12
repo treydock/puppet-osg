@@ -23,7 +23,7 @@ PuppetLint::RakeTask.new :lint do |config|
   config.ignore_paths = exclude_paths
   config.fail_on_warnings = false
   config.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
-  config.disable_checks = ["80chars", "class_inherits_from_params_class"]
+  config.disable_checks = ["80chars", "class_inherits_from_params_class", "quoted_booleans"]
   #config.relative = true
 end
 PuppetLint.configuration.relative = true

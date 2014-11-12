@@ -25,10 +25,10 @@ class osg::rsv::config {
   osg_local_site_settings { 'RSV/srm_webservice_path': value => $osg::rsv::srm_webservice_path }
 
   file { '/etc/grid-security/rsv':
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { '/etc/grid-security/rsv/rsvcert.pem':
@@ -50,17 +50,17 @@ class osg::rsv::config {
   }
 
   file { '/var/spool/rsv':
-    ensure  => 'directory',
-    owner   => 'rsv',
-    group   => 'rsv',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'rsv',
+    group  => 'rsv',
+    mode   => '0755',
   }
 
   file { '/var/log/rsv':
-    ensure  => 'directory',
-    owner   => 'rsv',
-    group   => 'rsv',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'rsv',
+    group  => 'rsv',
+    mode   => '0755',
   }
 
   file { '/var/log/rsv/consumers':
@@ -88,10 +88,10 @@ class osg::rsv::config {
   }
 
   file { '/var/lib/condor-cron':
-    ensure  => 'directory',
-    owner   => 'cndrcron',
-    group   => 'cndrcron',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'cndrcron',
+    group  => 'cndrcron',
+    mode   => '0755',
   }
 
   file { '/var/lib/condor-cron/execute':
@@ -111,23 +111,23 @@ class osg::rsv::config {
   }
 
   file { '/var/run/condor-cron':
-    ensure  => 'directory',
-    owner   => 'cndrcron',
-    group   => 'cndrcron',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'cndrcron',
+    group  => 'cndrcron',
+    mode   => '0755',
   }
 
   file { '/var/lock/condor-cron':
-    ensure  => 'directory',
-    owner   => 'cndrcron',
-    group   => 'cndrcron',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'cndrcron',
+    group  => 'cndrcron',
+    mode   => '0755',
   }
 
   file { '/var/log/condor-cron':
-    ensure  => 'directory',
-    owner   => 'cndrcron',
-    group   => 'cndrcron',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'cndrcron',
+    group  => 'cndrcron',
+    mode   => '0755',
   }
 }

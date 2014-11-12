@@ -22,17 +22,17 @@ class osg::client::service {
 
   if $osg::client::with_condor {
     service { 'condor':
-      ensure      => $condor_ensure,
-      enable      => $condor_enable,
-      hasstatus   => true,
-      hasrestart  => true,
+      ensure     => $condor_ensure,
+      enable     => $condor_enable,
+      hasstatus  => true,
+      hasrestart => true,
     }
 
     service { 'condor-ce':
-      ensure      => $condor_ce_ensure,
-      enable      => $condor_ce_enable,
-      hasstatus   => true,
-      hasrestart  => true,
+      ensure     => $condor_ce_ensure,
+      enable     => $condor_ce_enable,
+      hasstatus  => true,
+      hasrestart => true,
     }
   }
 

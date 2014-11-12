@@ -33,20 +33,20 @@ class osg::gridftp (
 
   if $manage_firewall {
     firewall { '100 allow GridFTP':
-      action  => 'accept',
-      dport   => '2811',
-      proto   => 'tcp',
+      action => 'accept',
+      dport  => '2811',
+      proto  => 'tcp',
     }
     firewall { '100 allow GLOBUS_TCP_PORT_RANGE':
-      action  => 'accept',
-      dport   => "${osg::globus_tcp_port_range_min}-${osg::globus_tcp_port_range_max}",
-      proto   => 'tcp',
+      action => 'accept',
+      dport  => "${osg::globus_tcp_port_range_min}-${osg::globus_tcp_port_range_max}",
+      proto  => 'tcp',
     }
 
     firewall { '100 allow GLOBUS_TCP_SOURCE_RANGE':
-      action  => 'accept',
-      sport   => "${osg::globus_tcp_source_range_min}-${osg::globus_tcp_source_range_max}",
-      proto   => 'tcp',
+      action => 'accept',
+      sport  => "${osg::globus_tcp_source_range_min}-${osg::globus_tcp_source_range_max}",
+      proto  => 'tcp',
     }
   }
 

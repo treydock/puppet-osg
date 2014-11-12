@@ -34,32 +34,32 @@ class osg::bestman::config {
 
   if $osg::bestman::manage_sudo {
     sudo::conf { 'bestman':
-      priority  => 10,
-      content   => template('osg/bestman/bestman.sudo.erb'),
+      priority => 10,
+      content  => template('osg/bestman/bestman.sudo.erb'),
     }
   }
 
   file { '/etc/grid-security/hostcert.pem':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0444',
-    source  => $hostcert_source,
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0444',
+    source => $hostcert_source,
   }
 
   file { '/etc/grid-security/hostkey.pem':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0400',
-    source  => $hostkey_source,
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0400',
+    source => $hostkey_source,
   }
 
   file { '/etc/grid-security/bestman':
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { '/etc/grid-security/bestman/bestmancert.pem':
@@ -97,9 +97,9 @@ class osg::bestman::config {
   }
 
   file { '/var/log/bestman2':
-    ensure  => 'directory',
-    owner   => 'bestman',
-    group   => 'bestman',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'bestman',
+    group  => 'bestman',
+    mode   => '0755',
   }
 }

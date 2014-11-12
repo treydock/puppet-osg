@@ -63,10 +63,10 @@ class osg::rsv (
   if $with_httpd {
     if $manage_firewall {
       firewall { '100 allow RSV http access':
-        ensure  => $firewall_ensure,
-        dport   => $http_port,
-        proto   => tcp,
-        action  => accept,
+        ensure => $firewall_ensure,
+        dport  => $http_port,
+        proto  => tcp,
+        action => accept,
       }
     }
 

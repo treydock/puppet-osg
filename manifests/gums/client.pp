@@ -18,11 +18,11 @@ class osg::gums::client {
   }
 
   service { 'gums-client-cron':
-    ensure      => 'running',
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
-    require     => Osg_local_site_settings['Misc Services/gums_host'],
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Osg_local_site_settings['Misc Services/gums_host'],
   }
 
 }

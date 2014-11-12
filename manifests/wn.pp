@@ -15,8 +15,8 @@ class osg::wn inherits osg::params {
   }
 
   package { 'xrootd-client':
-    ensure  => 'present',
-    name    => $xrootd_client_package_name,
+    ensure => 'present',
+    name   => $xrootd_client_package_name,
   }
 
   anchor { 'osg::wn::start': }->

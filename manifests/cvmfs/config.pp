@@ -29,11 +29,11 @@ class osg::cvmfs::config {
   }
 
   file_line { 'auto.master cvmfs':
-    ensure  => 'present',
-    path    => '/etc/auto.master',
-    line    => '/cvmfs /etc/auto.cvmfs',
-    match   => '^/cvmfs.*',
-    notify  => Service['autofs'],
+    ensure => 'present',
+    path   => '/etc/auto.master',
+    line   => '/cvmfs /etc/auto.cvmfs',
+    match  => '^/cvmfs.*',
+    notify => Service['autofs'],
   }
 
   file { '/etc/cvmfs/default.local':
@@ -56,8 +56,8 @@ class osg::cvmfs::config {
 
   if $osg::cvmfs::cms_local_site == 'UNSET' or ! $osg::cvmfs::cms_local_site {
     file { '/etc/cvmfs/config.d/cms.cern.ch.local':
-      ensure  => 'absent',
-      path    => '/etc/cvmfs/config.d/cms.cern.ch.local',
+      ensure => 'absent',
+      path   => '/etc/cvmfs/config.d/cms.cern.ch.local',
     }
   } else {
     file { '/etc/cvmfs/config.d/cms.cern.ch.local':
@@ -72,10 +72,10 @@ class osg::cvmfs::config {
   }
 
   file { '/var/lib/cvmfs':
-    ensure  => 'directory',
-    owner   => $::osg::cvmfs::user_name,
-    group   => $::osg::cvmfs::group_name,
-    mode    => '0700',
+    ensure => 'directory',
+    owner  => $::osg::cvmfs::user_name,
+    group  => $::osg::cvmfs::group_name,
+    mode   => '0700',
   }
 
 }

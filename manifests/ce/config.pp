@@ -13,10 +13,10 @@ class osg::ce::config {
   }
 
   file { '/etc/grid-security/http':
-    ensure  => 'directory',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0755',
+    ensure => 'directory',
+    owner  => 'tomcat',
+    group  => 'tomcat',
+    mode   => '0755',
   }
 
   file { '/etc/grid-security/http/httpcert.pem':

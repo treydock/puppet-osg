@@ -4,10 +4,10 @@ class osg::cvmfs::service {
 
   if !defined(Service['autofs']) {
     service { 'autofs':
-      ensure      => 'running',
-      enable      => true,
-      hasstatus   => true,
-      hasrestart  => true,
+      ensure     => 'running',
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
     }
   }
 

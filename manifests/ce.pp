@@ -47,25 +47,25 @@ class osg::ce (
   if $manage_firewall {
     if $gram_gateway_enabled {
       firewall { '100 allow GRAM':
-        ensure  => 'present',
-        action  => 'accept',
-        dport   => '2119',
-        proto   => 'tcp',
+        ensure => 'present',
+        action => 'accept',
+        dport  => '2119',
+        proto  => 'tcp',
       }
     }
 
     if $htcondor_gateway_enabled {
       firewall { '100 allow HTCondorCE':
-        ensure  => 'present',
-        action  => 'accept',
-        dport   => $htcondor_ce_port,
-        proto   => 'tcp',
+        ensure => 'present',
+        action => 'accept',
+        dport  => $htcondor_ce_port,
+        proto  => 'tcp',
       }
       firewall { '100 allow HTCondorCE shared_port':
-        ensure  => 'present',
-        action  => 'accept',
-        dport   => $htcondor_ce_shared_port,
-        proto   => 'tcp',
+        ensure => 'present',
+        action => 'accept',
+        dport  => $htcondor_ce_shared_port,
+        proto  => 'tcp',
       }
     }
   }
