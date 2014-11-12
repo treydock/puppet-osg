@@ -68,6 +68,6 @@ class osg (
 
   include osg::configure
 
-  Osg_config<| |> ~> Exec['osg-configure']
+  Osg_local_site_settings<| |> ~> Exec['osg-configure']
 
 }
