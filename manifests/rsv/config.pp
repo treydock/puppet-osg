@@ -15,6 +15,8 @@ class osg::rsv::config {
   }
 
   osg_local_site_settings { 'RSV/ce_hosts':            value => $osg::rsv::ce_hosts }
+  osg_local_site_settings { 'RSV/gram_ce_hosts':       value => $osg::rsv::gram_ce_hosts }
+  osg_local_site_settings { 'RSV/htcondor_ce_hosts':   value => $osg::rsv::htcondor_ce_hosts }
   osg_local_site_settings { 'RSV/gridftp_hosts':       value => $osg::rsv::gridftp_hosts }
   osg_local_site_settings { 'RSV/gridftp_dir':         value => $osg::rsv::gridftp_dir }
   osg_local_site_settings { 'RSV/gratia_probes':       value => $osg::rsv::gratia_probes }

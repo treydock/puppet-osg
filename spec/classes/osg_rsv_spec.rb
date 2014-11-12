@@ -111,6 +111,8 @@ describe 'osg::rsv' do
 
     [
       {:name => 'RSV/ce_hosts', :value => 'UNAVAILABLE'},
+      {:name => 'RSV/gram_ce_hosts', :value => 'UNAVAILABLE'},
+      {:name => 'RSV/htcondor_ce_hosts', :value => 'UNAVAILABLE'},
       {:name => 'RSV/gridftp_hosts', :value => 'UNAVAILABLE'},
       {:name => 'RSV/gridftp_dir', :value => 'DEFAULT'},
       {:name => 'RSV/gratia_probes', :value => 'DEFAULT'},

@@ -26,6 +26,8 @@ class osg::rsv (
   $http_port              = '80',
   $cndrcron_uid           = '93',
   $cndrcron_gid           = '93',
+  $gram_ce_hosts          = 'UNAVAILABLE',
+  $htcondor_ce_hosts      = 'UNAVAILABLE',
   $ce_hosts               = 'UNAVAILABLE',
   $gridftp_hosts          = 'UNAVAILABLE',
   $gridftp_dir            = 'DEFAULT',
