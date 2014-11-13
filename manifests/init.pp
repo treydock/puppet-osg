@@ -31,6 +31,9 @@
 class osg (
   $osg_release      = '3.1',
   $repo_baseurl_bit = 'http://repo.grid.iu.edu',
+  $repo_development_baseurl_bit = undef,
+  $repo_testing_baseurl_bit = undef,
+  $repo_upcoming_baseurl_bit = undef,
   $repo_use_mirrors = true,
   $enable_osg_contrib = false,
   $gums_host        = "gums.${::domain}",
@@ -54,6 +57,10 @@ class osg (
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
   validate_bool($cacerts_install_other_packages)
+
+  $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
+  $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
+  $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
 
   anchor { 'osg::start': }
   anchor { 'osg::end': }

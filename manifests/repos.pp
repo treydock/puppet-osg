@@ -37,11 +37,11 @@ class osg::repos {
       'osg'                       => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/release/${::architecture}",
       'osg-empty'                 => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/empty/${::architecture}",
       'osg-contrib'               => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/contrib/${::architecture}",
-      'osg-development'           => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
-      'osg-testing'               => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
-      'osg-upcoming'              => "${repo_baseurl_bit}/osg/upcoming/el${os_releasever}/release/${::architecture}",
-      'osg-upcoming-development'  => "${repo_baseurl_bit}/osg/upcoming/el${os_releasever}/development/${::architecture}",
-      'osg-upcoming-testing'      => "${repo_baseurl_bit}/osg/upcoming/el${os_releasever}/testing/${::architecture}",
+      'osg-development'           => "${osg::repo_development_baseurl_bit_real}/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
+      'osg-testing'               => "${osg::repo_testing_baseurl_bit_real}/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
+      'osg-upcoming'              => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/release/${::architecture}",
+      'osg-upcoming-development'  => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/development/${::architecture}",
+      'osg-upcoming-testing'      => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/testing/${::architecture}",
     }
 
     $mirrorlists = {
