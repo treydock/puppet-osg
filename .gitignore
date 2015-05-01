@@ -17,7 +17,6 @@ coverage/
 Gemfile.lock
 
 # Puppet module generated
-metadata.json
 pkg/
 
 # RSpec fixtures
