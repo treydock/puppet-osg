@@ -27,6 +27,10 @@ class osg::bestman (
   validate_array($localPathListAllowed)
   validate_array($supportedProtocolList)
 
+  include osg
+  include osg::cacerts
+  include osg::gums::client
+
   $sudo_srm_cmd = is_string($sudo_srm_commands) ? {
     true  => $sudo_srm_commands,
     false => join($sudo_srm_commands, ',')
@@ -37,9 +41,32 @@ class osg::bestman (
     false => join($sudo_srm_runas, ',')
   }
 
-  include osg
-  include osg::cacerts
-  include osg::gums::client
+  $gums_host = $osg::gums_host
+
+  $_hostcert_source = $hostcert_source ? {
+    'UNSET' => undef,
+    default => $hostcert_source,
+  }
+
+  $_hostkey_source = $hostkey_source ? {
+    'UNSET' => undef,
+    default => $hostkey_source,
+  }
+
+  $_bestmancert_source = $bestmancert_source ? {
+    'UNSET' => undef,
+    default => $bestmancert_source,
+  }
+
+  $_bestmankey_source = $bestmankey_source ? {
+    'UNSET' => undef,
+    default => $bestmankey_source,
+  }
+
+  $_host_dn = $host_dn ? {
+    'UNSET' => "/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=${::fqdn}",
+    default => $host_dn,
+  }
 
   anchor { 'osg::bestman::start': }->
   Class['osg']->

@@ -2,6 +2,6 @@
 # File managed by Puppet!
 #
 Defaults:bestman !requiretty
-Cmnd_Alias SRM_CMD = <%= @sudo_srm_cmd %>
-Runas_Alias SRM_USR = <%= @sudo_srm_usr %>
+Cmnd_Alias SRM_CMD = <%= scope.lookupvar('osg::bestman::sudo_srm_cmd') %>
+Runas_Alias SRM_USR = <%= scope.lookupvar('osg::bestman::sudo_srm_usr') %>
 bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD

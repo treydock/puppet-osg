@@ -81,6 +81,16 @@ class osg::gums (
   include osg
   include osg::cacerts
 
+  $_httpcert_source = $httpcert_source ? {
+    'UNSET' => undef,
+    default => $httpcert_source,
+  }
+
+  $_httpkey_source = $httpkey_source ? {
+    'UNSET' => undef,
+    default => $httpkey_source,
+  }
+
   anchor { 'osg::gums::start': }->
   Class['osg']->
   Class['osg::cacerts']->

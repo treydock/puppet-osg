@@ -6,7 +6,7 @@ echo "Running: ${TOMCAT_CMD}"
 $TOMCAT_CMD
 echo "### END Configuring Tomcat ###"
 
-GUMS_CMD="/usr/bin/gums-setup-mysql-database --user <%= @db_username %> --host <%= @db_hostname %>:<%= @db_port %> --password <%= @db_password %> --noprompt"
+GUMS_CMD="/usr/bin/gums-setup-mysql-database --user <%= scope.lookupvar('osg::gums::db_username') %> --host <%= scope.lookupvar('osg::gums::db_hostname') %>:<%= scope.lookupvar('osg::gums::db_port') %> --password <%= scope.lookupvar('osg::gums::db_password') %> --noprompt"
 echo "### Configuring GUMS ###"
 echo "Running: ${GUMS_CMD}"
 $GUMS_CMD

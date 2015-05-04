@@ -1,4 +1,4 @@
 #
 # File managed by Puppet!
 #
-CONDOR_IDS = <%= @cndrcron_uid %>.<%= @cndrcron_gid %>
+CONDOR_IDS = <%= scope.lookupvar('osg::rsv::cndrcron_uid') %>.<%= scope.lookupvar('osg::rsv::cndrcron_gid') %>

@@ -1,4 +1,4 @@
-USE <%= @db_name %>;
+USE <%= scope.lookupvar('osg::gums::db_name') %>;
 
 CREATE TABLE `USERS` (
  `ID` INTEGER AUTO_INCREMENT PRIMARY KEY,

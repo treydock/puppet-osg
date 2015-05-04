@@ -1,6 +1,6 @@
-CVMFS_REPOSITORIES="<%= @repositories_real %>"
-CVMFS_STRICT_MOUNT=<%= @strict_mount ? "yes" : "no" %>
-CVMFS_CACHE_BASE=<%= @cache_base %>
-CVMFS_QUOTA_LIMIT=<%= @quota_limit %>
-CVMFS_HTTP_PROXY="<%= @http_proxies.join("|") %>"
-GLITE_VERSION=<%= @glite_version %>
+CVMFS_REPOSITORIES="<%= scope.lookupvar('osg::cvmfs::repositories_real') %>"
+CVMFS_STRICT_MOUNT=<%= scope.lookupvar('osg::cvmfs::strict_mount') ? "yes" : "no" %>
+CVMFS_CACHE_BASE=<%= scope.lookupvar('osg::cvmfs::cache_base') %>
+CVMFS_QUOTA_LIMIT=<%= scope.lookupvar('osg::cvmfs::quota_limit') %>
+CVMFS_HTTP_PROXY="<%= scope.lookupvar('osg::cvmfs::http_proxies').join("|") %>"
+GLITE_VERSION=<%= scope.lookupvar('osg::cvmfs::glite_version') %>

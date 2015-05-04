@@ -36,8 +36,8 @@ eventLogLevel=INFO
 ## All definitions will include the default blocked list
 ## e.g. localPathListToBlock=/;/etc;/var 
 ### localPathListToBlock=BLOCKEDPATHS
-<% unless @localPathListToBlock.empty? -%>
-localPathListToBlock=<%= @localPathListToBlock.join(';') %>
+<% unless scope.lookupvar('osg::bestman::localPathListToBlock').empty? -%>
+localPathListToBlock=<%= scope.lookupvar('osg::bestman::localPathListToBlock').join(';') %>
 <% end -%>
 ###########################################################
 # Provide permission for user access to the list of the local directories
@@ -46,10 +46,10 @@ localPathListToBlock=<%= @localPathListToBlock.join(';') %>
 ## e.g. localPathListAllowed=/home;/project 
 ###########################################################
 ### localPathListAllowed=
-<% unless @localPathListAllowed.empty? -%>
-localPathListAllowed=<%= @localPathListAllowed.join(';') %>
+<% unless scope.lookupvar('osg::bestman::localPathListAllowed').empty? -%>
+localPathListAllowed=<%= scope.lookupvar('osg::bestman::localPathListAllowed').join(';') %>
 <% end -%>
-securePort=<%= @securePort %>
+securePort=<%= scope.lookupvar('osg::bestman::securePort') %>
 CertFileName=/etc/grid-security/bestman/bestmancert.pem
 KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ### ProxyFileName=PROXY_FILE_PATH
@@ -59,8 +59,8 @@ KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ##      Or, multiple transfer servers are supported
 ## supportedProtocolList=gsiftp://host1.domain.tld;gsiftp://host2.domain.tld
 ### supportedProtocolList=
-<% unless @supportedProtocolList.empty? -%>
-supportedProtocolList=<%= @supportedProtocolList.join(';') %>
+<% unless scope.lookupvar('osg::bestman::supportedProtocolList').empty? -%>
+supportedProtocolList=<%= scope.lookupvar('osg::bestman::supportedProtocolList').join(';') %>
 <% end -%>
 ############################################################ 
 # NOTE: Each plugin entry must define the class name, jar file name, 
@@ -93,8 +93,8 @@ checkSizeWithGsiftp=false
 #    daemon   ALL=(SRM_USR) NOPASSWD: SRM_CMD
 # 
 accessFileSysViaSudo=true
-noSudoOnLs=<%= @noSudoOnLs %>
-accessFileSysViaGsiftp=<%= @accessFileSysViaGsiftp %>
+noSudoOnLs=<%= scope.lookupvar('osg::bestman::noSudoOnLs') %>
+accessFileSysViaGsiftp=<%= scope.lookupvar('osg::bestman::accessFileSysViaGsiftp') %>
 ### accessFileSysViaGsiftp=false
 ###########################################################
 ### showChecksumWhenListingFile to return checksum in srmLs
@@ -136,8 +136,8 @@ LifetimeSecondsMappedIDCached=1800
 ### GUMSserviceURL=
 ### GUMSCurrHostDN=
 GUMSProtocol=XACML
-GUMSserviceURL=https://<%= @gums_host %>:8443/gums/services/GUMSXACMLAuthorizationServicePort
-GUMSCurrHostDN=<%= @host_dn %>
+GUMSserviceURL=https://<%= scope.lookupvar('osg::bestman::gums_host') %>:8443/gums/services/GUMSXACMLAuthorizationServicePort
+GUMSCurrHostDN=<%= scope.lookupvar('osg::bestman::_host_dn') %>
 ### Grid-mapfile will be used
 #GridMapFileName=/etc/bestman2/conf/grid-mapfile.empty
 ### validateVomsProxy=false

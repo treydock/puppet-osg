@@ -11,6 +11,8 @@ class osg::client::config {
   $globus_tcp_source_range_max  = $osg::globus_tcp_source_range_max
   $condor_lowport               = $osg::condor_lowport
   $condor_highport              = $osg::condor_highport
+  $condor_configs               = $osg::client::condor_configs
+  $condor_ce_configs            = $osg::client::condor_ce_configs
 
   if $osg::client::enable_condor_service {
     $condor_notify = Service['condor']

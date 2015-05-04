@@ -5,33 +5,6 @@ class osg::bestman::config {
   include osg
   include osg::bestman
 
-  $gums_host = $osg::gums_host
-
-  $hostcert_source = $osg::bestman::hostcert_source ? {
-    'UNSET' => undef,
-    default => $osg::bestman::hostcert_source,
-  }
-
-  $hostkey_source = $osg::bestman::hostkey_source ? {
-    'UNSET' => undef,
-    default => $osg::bestman::hostkey_source,
-  }
-
-  $bestmancert_source = $osg::bestman::bestmancert_source ? {
-    'UNSET' => undef,
-    default => $osg::bestman::bestmancert_source,
-  }
-
-  $bestmankey_source = $osg::bestman::bestmankey_source ? {
-    'UNSET' => undef,
-    default => $osg::bestman::bestmankey_source,
-  }
-
-  $host_dn = $osg::bestman::host_dn ? {
-    'UNSET' => "/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=${::fqdn}",
-    default => $osg::bestman::host_dn,
-  }
-
   if $osg::bestman::manage_sudo {
     sudo::conf { 'bestman':
       priority => 10,
@@ -44,7 +17,7 @@ class osg::bestman::config {
     owner  => 'root',
     group  => 'root',
     mode   => '0444',
-    source => $hostcert_source,
+    source => $osg::bestman::_hostcert_source,
   }
 
   file { '/etc/grid-security/hostkey.pem':
@@ -52,7 +25,7 @@ class osg::bestman::config {
     owner  => 'root',
     group  => 'root',
     mode   => '0400',
-    source => $hostkey_source,
+    source => $osg::bestman::_hostkey_source,
   }
 
   file { '/etc/grid-security/bestman':
@@ -67,7 +40,7 @@ class osg::bestman::config {
     owner   => 'bestman',
     group   => 'bestman',
     mode    => '0444',
-    source  => $bestmancert_source,
+    source  => $osg::bestman::_bestmancert_source,
     require => File['/etc/grid-security/bestman'],
   }
 
@@ -76,7 +49,7 @@ class osg::bestman::config {
     owner   => 'bestman',
     group   => 'bestman',
     mode    => '0400',
-    source  => $bestmankey_source,
+    source  => $osg::bestman::_bestmankey_source,
     require => File['/etc/grid-security/bestman'],
   }
 

@@ -135,7 +135,7 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
-            :before     => 'Service[gratia-probes-cron]', 
+            :before     => ['Service[gratia-probes-cron]'],
           })
         end
 
@@ -145,7 +145,7 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
-            :before     => 'Service[osg-cleanup-cron]', 
+            :before     => ['Service[osg-cleanup-cron]'],
           })
         end
 

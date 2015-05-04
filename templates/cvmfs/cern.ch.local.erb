@@ -1,1 +1,1 @@
-CVMFS_SERVER_URL="<%= @server_urls.join(";") %>"
+CVMFS_SERVER_URL="<%= scope.lookupvar('osg::cvmfs::server_urls').join(";") %>"

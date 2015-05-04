@@ -2,18 +2,6 @@
 #
 class osg::gums::config {
 
-  include ::osg::gums
-
-  $httpcert_source = $::osg::gums::httpcert_source ? {
-    'UNSET' => undef,
-    default => $::osg::gums::httpcert_source,
-  }
-
-  $httpkey_source = $::osg::gums::httpkey_source ? {
-    'UNSET' => undef,
-    default => $::osg::gums::httpkey_source,
-  }
-
   file { '/etc/grid-security/http':
     ensure => 'directory',
     owner  => 'root',
@@ -26,7 +14,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0444',
-    source  => $httpcert_source,
+    source  => $::osg::gums::_httpcert_source,
     require => File['/etc/grid-security/http'],
   }
 
@@ -35,7 +23,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0400',
-    source  => $httpkey_source,
+    source  => $::osg::gums::_httpkey_source,
     require => File['/etc/grid-security/http'],
   }
 
