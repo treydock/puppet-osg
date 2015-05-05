@@ -1,5 +1,4 @@
-# == Class: osg::rsv::service
-#
+# Private class: See README.md.
 class osg::rsv::service {
 
   service { 'rsv':

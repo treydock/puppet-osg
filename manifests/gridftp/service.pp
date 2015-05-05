@@ -1,5 +1,4 @@
-# == Class: osg::gridftp::service
-#
+# Private class: See README.md.
 class osg::gridftp::service {
 
   service { 'globus-gridftp-server':

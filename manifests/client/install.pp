@@ -1,5 +1,4 @@
-# == Class: osg::client::install
-#
+# Private class: See README.md.
 class osg::client::install {
 
   include osg::client

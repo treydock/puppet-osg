@@ -1,5 +1,4 @@
-# == Class: osg::gums::service
-#
+# Private class: See README.md.
 class osg::gums::service {
 
   include ::osg::gums

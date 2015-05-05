@@ -1,5 +1,4 @@
-# == Class: osg::repos
-#
+# Private class: See README.md.
 class osg::repos {
 
   include osg

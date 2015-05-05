@@ -1,15 +1,4 @@
-# == Class: osg::params
-#
-# The osg configuration settings.
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2013 Trey Dockendorf
-#
+# Private class: See README.md.
 class osg::params {
 
   if $::operatingsystemmajrelease {
@@ -35,14 +24,14 @@ class osg::params {
 
   case $::osfamily {
     'RedHat': {
-      case $::operatingsystemrelease {
-        /6.\d/ : {
+      case $os_releasever {
+        '6': {
           $yum_priorities_package = 'yum-plugin-priorities'
           $tomcat_packages        = ['tomcat6']
           $crond_package_name     = 'cronie'
         }
-        default : {
-          fail("Unsupported operatingsystemrelease: ${::operatingsystemrelease}, module ${module_name} only support operatingsystemrelease >= 6.0")
+        default: {
+          fail("Unsupported operating system: EL${os_releasever}, module ${module_name} only support EL6")
         }
       }
     }

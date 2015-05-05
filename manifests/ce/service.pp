@@ -1,5 +1,4 @@
-# == Class: osg::ce::service
-#
+# Private class: See README.md.
 class osg::ce::service {
 
   include osg::ce

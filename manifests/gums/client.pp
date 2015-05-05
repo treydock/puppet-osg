@@ -1,7 +1,4 @@
-# == Class: osg::gums::client
-#
-# Installs and configures a GUMS client for use with OSG.
-#
+# Private class: See README.md.
 class osg::gums::client {
 
   include osg

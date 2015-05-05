@@ -51,6 +51,16 @@ describe 'Puppet::Type.type(:osg_gip_config)' do
     @osg_gip_config[:ensure].should == :absent
   end
 
+  it 'should change true to True' do
+    @osg_gip_config[:value] = true
+    @osg_gip_config[:value].should == 'True'
+  end
+
+  it 'should change false to False' do
+    @osg_gip_config[:value] = false
+    @osg_gip_config[:value].should == 'False'
+  end
+
   it 'should not accept invalid ensure values' do
     expect {
       @osg_gip_config[:ensure] = :latest

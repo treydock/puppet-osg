@@ -15,7 +15,14 @@ Puppet::Type.newtype(:osg_gip_config) do
   newproperty(:value) do
     desc 'The value of the setting to be defined.'
     munge do |v|
-      v.to_s.strip
+      case v
+      when TrueClass
+        'True'
+      when FalseClass
+        'False'
+      else
+        v.to_s.strip
+      end
     end
   end
 

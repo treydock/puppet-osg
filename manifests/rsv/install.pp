@@ -1,5 +1,4 @@
-# == Class: osg::rsv::install
-#
+# Private class: See README.md.
 class osg::rsv::install {
 
   package { 'rsv':

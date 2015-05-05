@@ -1,5 +1,4 @@
-# == Class: osg::cvmfs::service
-#
+# Private class: See README.md.
 class osg::cvmfs::service {
 
   if !defined(Service['autofs']) {

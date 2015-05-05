@@ -1,21 +1,4 @@
-# == Class: osg::cvmfs
-#
-# Installs and configures a cvmfs client for use with OSG.
-#
-# === Parameters
-#
-# === Examples
-#
-#  class { 'osg::cvmfs': }
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2014 Trey Dockendorf
-#
+# Private class: See README.md.
 class osg::cvmfs::config {
 
   file { '/etc/fuse.conf':

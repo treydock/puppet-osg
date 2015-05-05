@@ -1,5 +1,4 @@
-# == Class: osg::wn
-#
+# Class: osg::wn: See README.md for documentation.
 class osg::wn inherits osg::params {
 
   include osg

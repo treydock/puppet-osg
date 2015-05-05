@@ -1,5 +1,4 @@
-# == Class: osg::cvmfs::user
-#
+# Private class: See README.md.
 class osg::cvmfs::user {
 
   include ::osg::cvmfs
@@ -12,6 +11,21 @@ class osg::cvmfs::user {
   $group_gid = $::osg::cvmfs::group_gid ? {
     /UNSET|undef/ => undef,
     default       => $::osg::cvmfs::group_gid,
+  }
+
+  if $osg::cvmfs::manage_fuse_group {
+    if $osg::cvmfs::manage_user {
+      $_fuse_group_before = User['cvmfs']
+    } else {
+      $_fuse_group_before = undef
+    }
+    group { 'fuse':
+      ensure => 'present',
+      name   => $osg::cvmfs::fuse_group_name,
+      gid    => $osg::cvmfs::fuse_group_gid,
+      system => $osg::cvmfs::fuse_group_system,
+      before => $_fuse_group_before,
+    }
   }
 
   if $::osg::cvmfs::manage_user {

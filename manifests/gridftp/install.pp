@@ -1,5 +1,4 @@
-# == Class: osg::gridftp::install
-#
+# Private class: See README.md.
 class osg::gridftp::install {
 
   package { 'osg-gridftp':

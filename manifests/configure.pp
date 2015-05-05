@@ -1,5 +1,4 @@
-# == Class: osg::configure
-#
+# Private class: See README.md.
 class osg::configure {
 
   exec { 'osg-configure':

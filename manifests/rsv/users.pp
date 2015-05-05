@@ -1,5 +1,4 @@
-# == Class: osg::rsv::users
-#
+# Private class: See README.md.
 class osg::rsv::users {
 
   include osg::rsv

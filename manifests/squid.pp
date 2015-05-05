@@ -1,13 +1,12 @@
-# == Class: osg::squid
-#
+# Class: osg::squid: See README.md for documentation.
 class osg::squid (
-  $customize_template = 'osg/squid/customize.sh.erb',
-  $net_local = '10.0.0.0/8 172.16.0.0/12 192.168.0.0/16',
-  $manage_firewall  = true,
-  $squid_firewall_ensure = 'present',
+  $customize_template         = 'osg/squid/customize.sh.erb',
+  $net_local                  = '10.0.0.0/8 172.16.0.0/12 192.168.0.0/16',
+  $manage_firewall            = true,
+  $squid_firewall_ensure      = 'present',
   $monitoring_firewall_ensure = 'present',
-  $private_interface = undef,
-  $public_interface = undef,
+  $private_interface          = undef,
+  $public_interface           = undef,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)

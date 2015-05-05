@@ -1,5 +1,4 @@
-# == Class: osg::ce::config
-#
+# Private class: See README.md.
 class osg::ce::config {
 
   file { '/etc/grid-security/http':

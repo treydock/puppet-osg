@@ -1,5 +1,4 @@
-# == Class: osg::client
-#
+# Class: osg::client: See README.md for documentation.
 class osg::client (
   $with_condor                = true,
   $with_condor_ce             = true,

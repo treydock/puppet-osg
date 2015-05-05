@@ -1,5 +1,4 @@
-# == Class: osg::bestman::config
-#
+# Private class: See README.md.
 class osg::bestman::config {
 
   include osg

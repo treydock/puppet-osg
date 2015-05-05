@@ -1,5 +1,4 @@
-# == Class: osg::bestman::install
-#
+# Private class: See README.md.
 class osg::bestman::install {
 
   package { 'osg-se-bestman':

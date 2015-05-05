@@ -1,5 +1,4 @@
-# == Class: osg::gums::config
-#
+# Private class: See README.md.
 class osg::gums::config {
 
   file { '/etc/grid-security/http':

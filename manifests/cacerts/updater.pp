@@ -1,17 +1,4 @@
-# == Class: osg::cacerts::updater
-#
-# Manages the OSG cacert updater
-#
-# Public
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2013 Trey Dockendorf
-#
+# Class: osg::cacerts::updater: See README.md for documentation.
 class osg::cacerts::updater (
   $ensure                   = 'present',
   $min_age                  = '23',

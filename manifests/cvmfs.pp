@@ -1,21 +1,4 @@
-# == Class: osg::cvmfs
-#
-# Installs and configures a cvmfs client for use with OSG.
-#
-# === Parameters
-#
-# === Examples
-#
-#  class { 'osg::cvmfs': }
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2014 Trey Dockendorf
-#
+# Class: osg::cvmfs: See README.md for documentation.
 class osg::cvmfs (
   $manage_user            = true,
   $user_name              = 'cvmfs',
@@ -29,6 +12,10 @@ class osg::cvmfs (
   $group_name             = 'cvmfs',
   $group_gid              = 'UNSET',
   $group_system           = true,
+  $manage_fuse_group      = true,
+  $fuse_group_name        = 'fuse',
+  $fuse_group_gid         = undef,
+  $fuse_group_system      = true,
   $repositories           = ['UNSET'],
   $strict_mount           = false,
   $cache_base             = '/var/cache/cvmfs',
@@ -45,6 +32,7 @@ class osg::cvmfs (
 
   validate_bool($manage_user)
   validate_bool($manage_group)
+  validate_bool($manage_fuse_group)
   validate_bool($strict_mount)
   validate_array($repositories)
   validate_array($http_proxies)
@@ -59,8 +47,8 @@ class osg::cvmfs (
 
   anchor { 'osg::cvmfs::start': }->
   Class['osg']->
-  class { 'osg::cvmfs::install': }->
   class { 'osg::cvmfs::user': }->
+  class { 'osg::cvmfs::install': }->
   class { 'osg::cvmfs::config': }->
   class { 'osg::cvmfs::service': }->
   anchor { 'osg::cvmfs::end': }

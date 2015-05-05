@@ -1,5 +1,4 @@
-# == Class: osg::client::service
-#
+# Private class: See README.md.
 class osg::client::service {
 
   include osg::client

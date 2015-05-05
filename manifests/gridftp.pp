@@ -1,10 +1,9 @@
-# == Class: osg::gridftp
-#
+# Class: osg::gridftp: See README.md for documentation.
 class osg::gridftp (
-  $hostcert_source = 'UNSET',
-  $hostkey_source = 'UNSET',
-  $manage_firewall = true,
-  $standalone = true,
+  $hostcert_source  = 'UNSET',
+  $hostkey_source   = 'UNSET',
+  $manage_firewall  = true,
+  $standalone       = true,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)

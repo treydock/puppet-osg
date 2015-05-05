@@ -1,5 +1,4 @@
-# == Class: osg::bestman::service
-#
+# Private class: See README.md.
 class osg::bestman::service {
 
   service { 'bestman2':

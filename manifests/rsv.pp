@@ -1,21 +1,4 @@
-# == Class: osg::rsv
-#
-# Installs and configures RSV for use with OSG.
-#
-# === Parameters
-#
-# === Examples
-#
-#  class { 'osg::rsv': }
-#
-# === Authors
-#
-# Trey Dockendorf <treydock@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2013 Trey Dockendorf
-#
+# Class: osg::rsv: See README.md for documentation.
 class osg::rsv (
   $rsvcert_source         = 'UNSET',
   $rsvkey_source          = 'UNSET',

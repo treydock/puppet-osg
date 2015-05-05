@@ -1,8 +1,4 @@
-# == Class: osg::cacerts
-#
-# Adds the OSG CA cert packages for OSG.
-#
-#
+# Private class: See README.md.
 class osg::cacerts inherits osg::params {
 
   include osg

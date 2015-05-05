@@ -1,5 +1,4 @@
-# == Class: osg::ce::install
-#
+# Private class: See README.md.
 class osg::ce::install {
 
   package { $osg::ce::batch_system_package_name:

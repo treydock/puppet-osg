@@ -15,14 +15,23 @@ describe 'osg::cvmfs' do
       it { should contain_class('osg::params') }
 
       it { should contain_anchor('osg::cvmfs::start').that_comes_before('Class[osg]') }
-      it { should contain_class('osg').that_comes_before('Class[osg::cvmfs::install]') }
-      it { should contain_class('osg::cvmfs::install').that_comes_before('Class[osg::cvmfs::user]') }
-      it { should contain_class('osg::cvmfs::user').that_comes_before('Class[osg::cvmfs::config]') }
+      it { should contain_class('osg').that_comes_before('Class[osg::cvmfs::user]') }
+      it { should contain_class('osg::cvmfs::user').that_comes_before('Class[osg::cvmfs::install]') }
+      it { should contain_class('osg::cvmfs::install').that_comes_before('Class[osg::cvmfs::config]') }
       it { should contain_class('osg::cvmfs::config').that_comes_before('Class[osg::cvmfs::service]') }
       it { should contain_class('osg::cvmfs::service').that_comes_before('Anchor[osg::cvmfs::end]') }
       it { should contain_anchor('osg::cvmfs::end') }
 
       context 'osg::cvmfs::user' do
+
+        it do
+          should contain_group('fuse').only_with({
+            :ensure => 'present',
+            :name   => 'fuse',
+            :system => 'true',
+            :before => 'User[cvmfs]',
+          })
+        end
 
         it do
           should contain_user('cvmfs').only_with({
@@ -56,14 +65,25 @@ describe 'osg::cvmfs' do
           it { should contain_group('cvmfs').with_gid('100') }
         end
 
+        context "with fuse_group_gid => 100" do
+          let(:params) {{ :fuse_group_gid => 99 }}
+          it { should contain_group('fuse').with_gid('99') }
+        end
+
         context "with manage_user => false" do
           let(:params) {{ :manage_user => false }}
+          it { should contain_group('fuse').without_before }
           it { should_not contain_user('cvmfs') }
         end
 
         context "with manage_group => false" do
           let(:params) {{ :manage_group => false }}
           it { should_not contain_group('cvmfs') }
+        end
+
+        context "when manage_fuse_group => false" do
+          let(:params) {{ :manage_fuse_group => false }}
+          it { should_not contain_group('fuse') }
         end
       end
 

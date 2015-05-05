@@ -1,5 +1,4 @@
-# == Class: osg::bestman
-#
+# Class: osg::bestman: See README.md for documentation.
 class osg::bestman (
   $host_dn                = 'UNSET',
   $hostcert_source        = 'UNSET',

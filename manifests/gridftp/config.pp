@@ -1,5 +1,4 @@
-# == Class: osg::gridftp::config
-#
+# Private class: See README.md.
 class osg::gridftp::config {
 
   include osg
