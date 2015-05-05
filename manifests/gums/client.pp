@@ -14,7 +14,7 @@ class osg::gums::client {
   }
 
   osg_local_site_settings { 'Misc Services/gums_host':
-    value   => $osg::gums_host,
+    value   => $osg::_gums_host,
   }
 
   service { 'gums-client-cron':

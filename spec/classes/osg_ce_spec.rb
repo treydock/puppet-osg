@@ -52,6 +52,13 @@ describe 'osg::ce' do
         it do
           should contain_package('empty-torque').with({
             :ensure => 'present',
+            :before => 'Package[condor]',
+          })
+        end
+
+        it do
+          should contain_package('condor').with({
+            :ensure => 'present',
             :before => 'Package[osg-ce]',
           })
         end
@@ -125,12 +132,12 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
-            :before     => 'Service[tomcat6]', 
+            :before     => 'Service[osg-info-services]', 
           })
         end
 
         it do
-          should contain_service('tomcat6').with({
+          should contain_service('osg-info-services').with({
             :ensure     => 'running',
             :enable     => 'true',
             :hasstatus  => 'true',

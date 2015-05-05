@@ -3,6 +3,18 @@
 class osg::ce (
   $gram_gateway_enabled = true,
   $htcondor_gateway_enabled = true,
+  $site_info_group = 'OSG',
+  $site_info_host_name = $::fqdn,
+  $site_info_resource = 'UNAVAILABLE',
+  $site_info_resource_group = 'UNAVAILABLE',
+  $site_info_sponsor = 'UNAVAILABLE',
+  $site_info_site_policy = 'UNAVAILABLE',
+  $site_info_contact = 'UNAVAILABLE',
+  $site_info_email = 'UNAVAILABLE',
+  $site_info_city = 'UNAVAILABLE',
+  $site_info_country = 'UNAVAILABLE',
+  $site_info_longitude = 'UNAVAILABLE',
+  $site_info_latitude = 'UNAVAILABLE',
   $batch_system_package_name = 'empty-torque',
   $ce_package_name = 'osg-ce-pbs',
   $use_slurm = false,
@@ -26,6 +38,16 @@ class osg::ce (
   $cemon_service_name = $osg::osg_release ? {
     /3.1/ => 'tomcat6',
     /3.2/ => 'osg-info-services',
+  }
+
+  $_httpcert_source = $httpcert_source ? {
+    'UNSET' => undef,
+    default => $httpcert_source,
+  }
+
+  $_httpkey_source = $httpkey_source ? {
+    'UNSET' => undef,
+    default => $httpkey_source,
   }
 
   class { 'osg::gridftp':

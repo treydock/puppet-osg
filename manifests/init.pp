@@ -29,14 +29,14 @@
 # Copyright 2013 Trey Dockendorf
 #
 class osg (
-  $osg_release      = '3.1',
+  $osg_release      = '3.2',
   $repo_baseurl_bit = 'http://repo.grid.iu.edu',
   $repo_development_baseurl_bit = undef,
   $repo_testing_baseurl_bit = undef,
   $repo_upcoming_baseurl_bit = undef,
   $repo_use_mirrors = true,
   $enable_osg_contrib = false,
-  $gums_host        = "gums.${::domain}",
+  $gums_host        = undef,
   $cacerts_package_name = 'osg-ca-certs',
   $cacerts_install_other_packages = false,
   $cacerts_package_ensure = 'installed',
@@ -61,6 +61,7 @@ class osg (
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
+  $_gums_host                         = pick($gums_host, "gums.${::domain}")
 
   anchor { 'osg::start': }
   anchor { 'osg::end': }

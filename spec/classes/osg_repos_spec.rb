@@ -31,10 +31,9 @@ describe 'osg::repos' do
         })
       end
 
-      it { should_not contain_yumrepo('osg-empty') }
-
       [
         {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+        {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
         {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
         {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
         {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -43,7 +42,7 @@ describe 'osg::repos' do
           should contain_yumrepo(h[:name]).only_with({
             :name           => h[:name],
             :baseurl        => 'absent',
-            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/3.1/el6/#{h[:path]}/x86_64",
+            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/3.2/el6/#{h[:path]}/x86_64",
             :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
             :enabled        => h[:enabled],
             :failovermethod => 'priority',
@@ -81,6 +80,7 @@ describe 'osg::repos' do
 
         [
           {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+          {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
           {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
           {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
           {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -88,7 +88,7 @@ describe 'osg::repos' do
           it do
             should contain_yumrepo(h[:name]).only_with({
               :name           => h[:name],
-              :baseurl        => "http://repo.grid.iu.edu/osg/3.1/el6/#{h[:path]}/x86_64",
+              :baseurl        => "http://repo.grid.iu.edu/osg/3.2/el6/#{h[:path]}/x86_64",
               :mirrorlist     => 'absent',
               :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
               :enabled        => h[:enabled],
@@ -127,6 +127,7 @@ describe 'osg::repos' do
 
           [
             {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
+            {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
             {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
             {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
             {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -134,7 +135,7 @@ describe 'osg::repos' do
             it do
               should contain_yumrepo(h[:name]).only_with({
                 :name           => h[:name],
-                :baseurl        => "http://foo.example.com/osg/3.1/el6/#{h[:path]}/x86_64",
+                :baseurl        => "http://foo.example.com/osg/3.2/el6/#{h[:path]}/x86_64",
                 :mirrorlist     => 'absent',
                 :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
                 :enabled        => h[:enabled],
@@ -176,44 +177,11 @@ describe 'osg::repos' do
         it { should contain_yumrepo('osg-contrib').with_enabled('1') }
       end
 
-      context "when osg_release => '3.2'" do
-        let(:pre_condition) { "class { 'osg': osg_release => '3.2' }" }
+      context "when osg_release => '3.1'" do
+        let(:pre_condition) { "class { 'osg': osg_release => '3.1' }" }
 
-        it do
-          should contain_yumrepo('osg-empty').only_with({
-            :name           => 'osg-empty',
-            :baseurl        => 'absent',
-            :mirrorlist     => 'http://repo.grid.iu.edu/mirror/osg/3.2/el6/empty/x86_64',
-            :descr          => 'OSG Software for Enterprise Linux 6 - Empty Packages - x86_64',
-            :enabled        => '1',
-            :failovermethod => 'priority',
-            :gpgcheck       => '1',
-            :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
-            :priority       => '98',
-            :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
-          })
-        end
-
-        context "when repo_use_mirrors => false" do
-          let(:pre_condition) { "class { 'osg': osg_release => '3.2', repo_use_mirrors => false }"}
-
-          it do
-            should contain_yumrepo('osg-empty').only_with({
-              :name           => 'osg-empty',
-              :baseurl        => 'http://repo.grid.iu.edu/osg/3.2/el6/empty/x86_64',
-              :mirrorlist     => 'absent',
-              :descr          => 'OSG Software for Enterprise Linux 6 - Empty Packages - x86_64',
-              :enabled        => '1',
-              :failovermethod => 'priority',
-              :gpgcheck       => '1',
-              :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
-              :priority       => '98',
-              :require        => ['Yumrepo[epel]','Gpg_key[osg]'],
-            })
-          end
-        end
+        it { should_not contain_yumrepo('osg-empty') }
       end
-
     end
   end
 end

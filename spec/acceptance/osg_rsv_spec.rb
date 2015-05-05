@@ -1,13 +1,16 @@
 require 'spec_helper_acceptance'
 
-describe 'osg::client class:' do
+describe 'osg::rsv class:' do
   context "when default parameters" do
-    node = only_host_with_role(hosts, 'client')
+    node = only_host_with_role(hosts, 'rsv')
 
     it 'should run successfully' do
       pp =<<-EOS
         class { 'osg': }
-        class { 'osg::client': }
+        class { 'osg::rsv':
+          rsvcert_source => 'file:///tmp/rsvcert.pem',
+          rsvkey_source  => 'file:///tmp/rsvkey.pem',
+        }
       EOS
 
       apply_manifest_on(node, pp, :catch_failures => true)
@@ -15,7 +18,7 @@ describe 'osg::client class:' do
     end
 
     it_behaves_like "osg::repos", node
-    it_behaves_like "osg::client", node
+    it_behaves_like "osg::rsv", node
 
   end
 end

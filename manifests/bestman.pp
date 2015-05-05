@@ -41,7 +41,7 @@ class osg::bestman (
     false => join($sudo_srm_runas, ',')
   }
 
-  $gums_host = $osg::gums_host
+  $gums_host = $osg::_gums_host
 
   $_hostcert_source = $hostcert_source ? {
     'UNSET' => undef,

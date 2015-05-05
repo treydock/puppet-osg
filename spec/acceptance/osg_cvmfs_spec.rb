@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'osg::cvmfs class:' do
   context "when default parameters" do
-    node = only_host_with_role(hosts, 'cvmfs')
+    node = only_host_with_role(hosts, 'wn')
 
     it 'should run successfully' do
       pp =<<-EOS

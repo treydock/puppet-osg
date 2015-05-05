@@ -8,24 +8,13 @@ module SystemHelper
   def modulefile_dependencies
     dependencies = []
 
-    modulefile = File.join(proj_root, "Modulefile")
+    modulefile = File.join(proj_root, "metadata.json")
     
     return false unless File.exists?(modulefile)
 
-    File.open(modulefile).each do |line|
-      if line =~ /^dependency\s+(.*)/
-        dependency = {}
-        m = $1.split(',')
-        fullname = m[0].tr("'|\"", "")
-        dependency[:fullname] = fullname
-        dependency[:name] = fullname.split("/").last
-        dependency[:version] = m[1].tr("'|\"", "").strip
-        dependencies << dependency
-      else
-        next
-      end
-    end
-
+    file = File.read(modulefile)
+    data = JSON.parse(file)
+    dependencies = data["dependencies"]
     dependencies
   end
 end
@@ -58,7 +47,7 @@ RSpec.configure do |c|
     hosts.each do |host|
       # Install module dependencies
       modulefile_dependencies.each do |mod|
-        on host, puppet("module", "install", "#{mod[:fullname]}", "--version",  "'#{mod[:version]}'"), { :acceptable_exit_codes => [0,1] }
+        on host, puppet("module", "install", "#{mod['name']}", "--version",  "'#{mod['version_requirement']}'"), { :acceptable_exit_codes => [0,1] }
       end
 
       on host, 'yum -y install git'
