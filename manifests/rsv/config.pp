@@ -1,8 +1,6 @@
 # Private class: See README.md.
 class osg::rsv::config {
 
-  include osg::rsv
-
   $rsvcert_source = $osg::rsv::rsvcert_source ? {
     'UNSET' => undef,
     default => $osg::rsv::rsvcert_source,

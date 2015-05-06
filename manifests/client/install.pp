@@ -1,8 +1,6 @@
 # Private class: See README.md.
 class osg::client::install {
 
-  include osg::client
-
   if $osg::client::with_condor {
     if $osg::client::with_condor_ce {
       $_condor_before = Package['htcondor-ce']

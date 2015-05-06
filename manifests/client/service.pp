@@ -1,8 +1,6 @@
 # Private class: See README.md.
 class osg::client::service {
 
-  include osg::client
-
   if $osg::client::enable_condor_service {
     $condor_ensure = 'running'
     $condor_enable = true

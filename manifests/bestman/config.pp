@@ -1,9 +1,6 @@
 # Private class: See README.md.
 class osg::bestman::config {
 
-  include osg
-  include osg::bestman
-
   if $osg::bestman::manage_sudo {
     sudo::conf { 'bestman':
       priority => 10,

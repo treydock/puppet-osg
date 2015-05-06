@@ -6,6 +6,8 @@ describe 'osg::bestman class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
+        # Prevent sudo module from breaking Vagrant
+        class { 'sudo': purge => false, config_file_replace => false }
         class { 'osg': }
         class { 'osg::bestman':
           bestmancert_source => 'file:///tmp/bestmancert.pem',

@@ -56,8 +56,8 @@ class osg::cvmfs::config {
 
   file { '/var/lib/cvmfs':
     ensure => 'directory',
-    owner  => $::osg::cvmfs::user_name,
-    group  => $::osg::cvmfs::group_name,
+    owner  => $osg::cvmfs::user_name,
+    group  => $osg::cvmfs::group_name,
     mode   => '0700',
   }
 

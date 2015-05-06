@@ -13,7 +13,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0444',
-    source  => $::osg::gums::_httpcert_source,
+    source  => $osg::gums::_httpcert_source,
     require => File['/etc/grid-security/http'],
   }
 
@@ -22,7 +22,7 @@ class osg::gums::config {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0400',
-    source  => $::osg::gums::_httpkey_source,
+    source  => $osg::gums::_httpkey_source,
     require => File['/etc/grid-security/http'],
   }
 
@@ -35,7 +35,7 @@ class osg::gums::config {
     replace => false,
   }
 
-  if $::osg::gums::manage_tomcat {
+  if $osg::gums::manage_tomcat {
     file { '/etc/tomcat6/server.xml':
       ensure  => 'file',
       content => template('osg/gums/server.xml.erb'),
@@ -73,7 +73,7 @@ class osg::gums::config {
     }
   }
 
-  if $::osg::gums::manage_mysql {
+  if $osg::gums::manage_mysql {
     include ::mysql::server
 
     file { '/usr/lib/gums/sql/setupDatabase-puppet.mysql':
@@ -82,13 +82,13 @@ class osg::gums::config {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      before  => Mysql::Db[$::osg::gums::db_name],
+      before  => Mysql::Db[$osg::gums::db_name],
     }
 
-    mysql::db { $::osg::gums::db_name:
-      user     => $::osg::gums::db_username,
-      password => $::osg::gums::db_password,
-      host     => $::osg::gums::db_hostname,
+    mysql::db { $osg::gums::db_name:
+      user     => $osg::gums::db_username,
+      password => $osg::gums::db_password,
+      host     => $osg::gums::db_hostname,
       grant    => ['ALL'],
       sql      => '/usr/lib/gums/sql/setupDatabase-puppet.mysql',
     }

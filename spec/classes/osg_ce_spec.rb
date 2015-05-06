@@ -123,6 +123,26 @@ describe 'osg::ce' do
             :require  => 'File[/etc/grid-security/http]',
           })
         end
+
+        {
+          'Gateway/gram_gateway_enabled' => 'true',
+          'Gateway/htcondor_gateway_enabled' => 'true',
+          'Site Information/group' => 'OSG',
+          'Site Information/host_name' => facts[:fqdn],
+          'Site Information/resource' => 'UNAVAILABLE',
+          'Site Information/resource_group' => 'UNAVAILABLE',
+          'Site Information/sponsor' => 'UNAVAILABLE',
+          'Site Information/site_policy' => 'UNAVAILABLE',
+          'Site Information/contact' => 'UNAVAILABLE',
+          'Site Information/email' => 'UNAVAILABLE',
+          'Site Information/city' => 'UNAVAILABLE',
+          'Site Information/country' => 'UNAVAILABLE',
+          'Site Information/longitude' => 'UNAVAILABLE',
+          'Site Information/latitude' => 'UNAVAILABLE',
+        }.each_pair do |k,v|
+          it { should contain_osg_local_site_settings(k).with_value(v) }
+          it { should contain_osg_local_site_settings(k).that_notifies('Exec[osg-configure]') }
+        end
       end
 
       context 'osg::ce::service' do

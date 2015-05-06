@@ -1,8 +1,6 @@
 # Private class: See README.md.
 class osg::ce::service {
 
-  include osg::ce
-
   if $osg::ce::gram_gateway_enabled {
     service { 'globus-gatekeeper':
       ensure     => 'running',

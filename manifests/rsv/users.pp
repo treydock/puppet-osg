@@ -1,8 +1,6 @@
 # Private class: See README.md.
 class osg::rsv::users {
 
-  include osg::rsv
-
   if $osg::rsv::manage_users {
     user { 'rsv':
       ensure     => 'present',

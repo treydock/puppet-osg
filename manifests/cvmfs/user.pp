@@ -1,16 +1,14 @@
 # Private class: See README.md.
 class osg::cvmfs::user {
 
-  include ::osg::cvmfs
-
-  $user_uid = $::osg::cvmfs::user_uid ? {
+  $user_uid = $osg::cvmfs::user_uid ? {
     /UNSET|undef/ => undef,
-    default       => $::osg::cvmfs::user_uid,
+    default       => $osg::cvmfs::user_uid,
   }
 
-  $group_gid = $::osg::cvmfs::group_gid ? {
+  $group_gid = $osg::cvmfs::group_gid ? {
     /UNSET|undef/ => undef,
-    default       => $::osg::cvmfs::group_gid,
+    default       => $osg::cvmfs::group_gid,
   }
 
   if $osg::cvmfs::manage_fuse_group {
@@ -28,27 +26,27 @@ class osg::cvmfs::user {
     }
   }
 
-  if $::osg::cvmfs::manage_user {
+  if $osg::cvmfs::manage_user {
     user { 'cvmfs':
       ensure     => 'present',
-      name       => $::osg::cvmfs::user_name,
+      name       => $osg::cvmfs::user_name,
       uid        => $user_uid,
-      gid        => $::osg::cvmfs::group_name,
+      gid        => $osg::cvmfs::group_name,
       groups     => ['fuse'],
-      home       => $::osg::cvmfs::user_home,
-      shell      => $::osg::cvmfs::user_shell,
-      system     => $::osg::cvmfs::user_system,
-      comment    => $::osg::cvmfs::user_comment,
-      managehome => $::osg::cvmfs::user_managehome,
+      home       => $osg::cvmfs::user_home,
+      shell      => $osg::cvmfs::user_shell,
+      system     => $osg::cvmfs::user_system,
+      comment    => $osg::cvmfs::user_comment,
+      managehome => $osg::cvmfs::user_managehome,
     }
   }
 
-  if $::osg::cvmfs::manage_group {
+  if $osg::cvmfs::manage_group {
     group { 'cvmfs':
       ensure => 'present',
-      name   => $::osg::cvmfs::group_name,
+      name   => $osg::cvmfs::group_name,
       gid    => $group_gid,
-      system => $::osg::cvmfs::group_system,
+      system => $osg::cvmfs::group_system,
     }
   }
 

@@ -1,9 +1,6 @@
 # Private class: See README.md.
 class osg::client::config {
 
-  include osg
-  include osg::client
-
   $globus_tcp_port_range_min    = $osg::globus_tcp_port_range_min
   $globus_tcp_port_range_max    = $osg::globus_tcp_port_range_max
   $globus_tcp_source_range_min  = $osg::globus_tcp_source_range_min
