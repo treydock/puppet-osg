@@ -20,9 +20,6 @@ fixtures:
     sudo:
       repo: git://github.com/saz/puppet-sudo.git
       ref: v3.0.1
-    gpg_key:
-      repo: git://github.com/treydock/puppet-gpg_key.git
-      ref: 0.0.3
     cron: git://github.com/treydock/puppet-cron.git
   symlinks:
     osg: "#{source_dir}"

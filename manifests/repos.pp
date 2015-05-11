@@ -4,11 +4,6 @@ class osg::repos {
   include osg
   include osg::params
 
-  $repo_baseurl_bit       = $osg::repo_baseurl_bit
-  $osg_release            = $osg::osg_release
-  $os_releasever          = $osg::params::os_releasever
-  $yum_priorities_package = $osg::params::yum_priorities_package
-
   if $osg::repo_use_mirrors {
     $baseurls   = {
       'osg'                       => 'absent',
@@ -22,25 +17,25 @@ class osg::repos {
     }
 
     $mirrorlists = {
-      'osg'                       => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/release/${::architecture}",
-      'osg-empty'                 => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/empty/${::architecture}",
-      'osg-contrib'               => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/contrib/${::architecture}",
-      'osg-development'           => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
-      'osg-testing'               => "http://repo.grid.iu.edu/mirror/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
-      'osg-upcoming'              => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${os_releasever}/release/${::architecture}",
-      'osg-upcoming-development'  => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${os_releasever}/development/${::architecture}",
-      'osg-upcoming-testing'      => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${os_releasever}/testing/${::architecture}",
+      'osg'                       => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-empty'                 => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/empty/${::architecture}",
+      'osg-contrib'               => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/contrib/${::architecture}",
+      'osg-development'           => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-testing'               => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/testing/${::architecture}",
+      'osg-upcoming'              => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-upcoming-development'  => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-upcoming-testing'      => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/testing/${::architecture}",
     }
   } else {
     $baseurls   = {
-      'osg'                       => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/release/${::architecture}",
-      'osg-empty'                 => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/empty/${::architecture}",
-      'osg-contrib'               => "${repo_baseurl_bit}/osg/${osg_release}/el${os_releasever}/contrib/${::architecture}",
-      'osg-development'           => "${osg::repo_development_baseurl_bit_real}/osg/${osg_release}/el${os_releasever}/development/${::architecture}",
-      'osg-testing'               => "${osg::repo_testing_baseurl_bit_real}/osg/${osg_release}/el${os_releasever}/testing/${::architecture}",
-      'osg-upcoming'              => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/release/${::architecture}",
-      'osg-upcoming-development'  => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/development/${::architecture}",
-      'osg-upcoming-testing'      => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${os_releasever}/testing/${::architecture}",
+      'osg'                       => "${osg::repo_baseurl_bit}/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-empty'                 => "${osg::repo_baseurl_bit}/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/empty/${::architecture}",
+      'osg-contrib'               => "${osg::repo_baseurl_bit}/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/contrib/${::architecture}",
+      'osg-development'           => "${osg::repo_development_baseurl_bit_real}/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-testing'               => "${osg::repo_testing_baseurl_bit_real}/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/testing/${::architecture}",
+      'osg-upcoming'              => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-upcoming-development'  => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-upcoming-testing'      => "${osg::repo_upcoming_baseurl_bit_real}/osg/upcoming/el${::operatingsystemmajrelease}/testing/${::architecture}",
     }
 
     $mirrorlists = {
@@ -55,41 +50,36 @@ class osg::repos {
     }
   }
 
-  ensure_packages([$yum_priorities_package])
+  ensure_packages([$osg::params::yum_priorities_package])
 
-  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG':
-    ensure => 'file',
-    source => 'puppet:///modules/osg/RPM-GPG-KEY-OSG',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-  }
-
-  gpg_key { 'osg':
-    path    => '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+  #TODO Once the RPM GPG keys are at a known URL switch to setting gpgkey to the URL by default.
+  exec { 'RPM-GPG-KEY-OSG':
+    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
+    command => "wget -qO- http://repo.grid.iu.edu/osg/${osg::osg_release}/osg-${osg::osg_release}-el${::operatingsystemmajrelease}-release-latest.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-OSG > /etc/pki/rpm-gpg/RPM-GPG-KEY-OSG",
+    creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
   }
 
   Yumrepo {
     failovermethod  => 'priority',
     gpgcheck        => '1',
-    gpgkey          => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+    gpgkey          => $osg::repo_gpgkey,
     priority        => '98',
-    require         => [Yumrepo['epel'], Gpg_key['osg']],
+    require         => [Yumrepo['epel'], Exec['RPM-GPG-KEY-OSG']],
   }
 
   #TODO : Need consider_as_osg=yes
   yumrepo { 'osg':
     baseurl    => $baseurls['osg'],
     mirrorlist => $mirrorlists['osg'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - ${::architecture}",
     enabled    => '1',
   }
 
-  if versioncmp($osg_release, '3.2') >= 0 {
+  if versioncmp($osg::osg_release, '3.2') >= 0 {
     yumrepo { 'osg-empty':
       baseurl    => $baseurls['osg-empty'],
       mirrorlist => $mirrorlists['osg-empty'],
-      descr      => "OSG Software for Enterprise Linux ${os_releasever} - Empty Packages - ${::architecture}",
+      descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
       enabled    => '1',
     }
   }
@@ -97,42 +87,42 @@ class osg::repos {
   yumrepo { 'osg-contrib':
     baseurl    => $baseurls['osg-contrib'],
     mirrorlist => $mirrorlists['osg-contrib'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Contributed - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Contributed - ${::architecture}",
     enabled    => bool2num($osg::enable_osg_contrib),
   }
 
   yumrepo { 'osg-development':
     baseurl    => $baseurls['osg-development'],
     mirrorlist => $mirrorlists['osg-development'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Development - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Development - ${::architecture}",
     enabled    => '0',
   }
 
   yumrepo { 'osg-testing':
     baseurl    => $baseurls['osg-testing'],
     mirrorlist => $mirrorlists['osg-testing'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Testing - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Testing - ${::architecture}",
     enabled    => '0',
   }
 
   yumrepo { 'osg-upcoming':
     baseurl    => $baseurls['osg-upcoming'],
     mirrorlist => $mirrorlists['osg-upcoming'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Upcoming - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Upcoming - ${::architecture}",
     enabled    => '0',
   }
 
   yumrepo { 'osg-upcoming-development':
     baseurl    => $baseurls['osg-upcoming-development'],
     mirrorlist => $mirrorlists['osg-upcoming-development'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Upcoming Development - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Upcoming Development - ${::architecture}",
     enabled    => '0',
   }
 
   yumrepo { 'osg-upcoming-testing':
     baseurl    => $baseurls['osg-upcoming-testing'],
     mirrorlist => $mirrorlists['osg-upcoming-testing'],
-    descr      => "OSG Software for Enterprise Linux ${os_releasever} - Upcoming Testing - ${::architecture}",
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Upcoming Testing - ${::architecture}",
     enabled    => '0',
   }
 

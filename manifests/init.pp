@@ -6,6 +6,7 @@ class osg (
   $repo_testing_baseurl_bit       = undef,
   $repo_upcoming_baseurl_bit      = undef,
   $repo_use_mirrors               = true,
+  $repo_gpgkey                    = 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
   $enable_osg_contrib             = false,
   $gums_host                      = undef,
   $cacerts_package_name           = 'osg-ca-certs',

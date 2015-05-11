@@ -1,6 +1,6 @@
 {
   "name": "treydock-osg",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "author": "treydock",
   "summary": "OSG Puppet module",
   "license": "Apache-2.0",
@@ -29,7 +29,6 @@
     { "name": "puppetlabs/firewall", "version_requirement": ">=1.0.0 <2.0.0" },
     { "name": "puppetlabs/apache", "version_requirement": ">=1.0.0 <2.0.0" },
     { "name": "stahnma/epel", "version_requirement": ">=0.0.6 <2.0.0" },
-    { "name": "saz/sudo", "version_requirement": ">=2.0.0 <4.0.0" },
-    { "name": "treydock/gpg_key", "version_requirement": ">=0.0.1 <1.0.0" }
+    { "name": "saz/sudo", "version_requirement": ">=2.0.0 <4.0.0" }
   ]
 }
