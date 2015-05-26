@@ -52,17 +52,10 @@ class osg::repos {
 
   ensure_packages([$osg::params::yum_priorities_package])
 
-  #TODO Once the RPM GPG keys are at a known URL switch to setting gpgkey to the URL by default.
-  exec { 'RPM-GPG-KEY-OSG':
-    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command => "wget -qO- http://repo.grid.iu.edu/osg/${osg::osg_release}/osg-${osg::osg_release}-el${::operatingsystemmajrelease}-release-latest.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-OSG > /etc/pki/rpm-gpg/RPM-GPG-KEY-OSG",
-    creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
-  }
-
   Yumrepo {
     failovermethod  => 'priority',
     gpgcheck        => '1',
-    gpgkey          => $osg::repo_gpgkey,
+    gpgkey          => $osg::_repo_gpgkey,
     priority        => '98',
     require         => [Yumrepo['epel'], Exec['RPM-GPG-KEY-OSG']],
   }

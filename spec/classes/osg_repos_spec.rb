@@ -15,14 +15,6 @@ describe 'osg::repos' do
 
       it { should contain_package('yum-plugin-priorities').with_ensure('present') }
 
-      it do
-        should contain_exec('RPM-GPG-KEY-OSG').with({
-          :path     => '/usr/bin:/bin:/usr/sbin:/sbin',
-          :command  => 'wget -qO- http://repo.grid.iu.edu/osg/3.2/osg-3.2-el6-release-latest.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-OSG > /etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
-          :creates  => '/etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
-        })
-      end
-
       [
         {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
         {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
@@ -39,7 +31,7 @@ describe 'osg::repos' do
             :enabled        => h[:enabled],
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+            :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
             :priority       => '98',
             :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
           })
@@ -60,7 +52,7 @@ describe 'osg::repos' do
             :enabled        => '0',
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+            :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
             :priority       => '98',
             :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
           })
@@ -86,7 +78,7 @@ describe 'osg::repos' do
               :enabled        => h[:enabled],
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+              :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
               :priority       => '98',
               :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
             })
@@ -107,7 +99,7 @@ describe 'osg::repos' do
               :enabled        => '0',
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+              :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
               :priority       => '98',
               :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
             })
@@ -133,7 +125,7 @@ describe 'osg::repos' do
                 :enabled        => h[:enabled],
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+                :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
                 :priority       => '98',
                 :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
               })
@@ -154,7 +146,7 @@ describe 'osg::repos' do
                 :enabled        => '0',
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+                :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
                 :priority       => '98',
                 :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
               })

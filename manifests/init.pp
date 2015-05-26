@@ -6,7 +6,7 @@ class osg (
   $repo_testing_baseurl_bit       = undef,
   $repo_upcoming_baseurl_bit      = undef,
   $repo_use_mirrors               = true,
-  $repo_gpgkey                    = 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OSG',
+  $repo_gpgkey                    = undef,
   $enable_osg_contrib             = false,
   $gums_host                      = undef,
   $cacerts_package_name           = 'osg-ca-certs',
@@ -33,6 +33,7 @@ class osg (
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
+  $_repo_gpgkey                       = pick($repo_gpgkey, "http://repo.grid.iu.edu/osg/${osg_release}/RPM-GPG-KEY-OSG")
   $_gums_host                         = pick($gums_host, "gums.${::domain}")
 
   anchor { 'osg::start': }
