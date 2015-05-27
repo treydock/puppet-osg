@@ -33,7 +33,7 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
             :priority       => '98',
-            :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+            :require        => 'Yumrepo[epel]',
           })
         end
       end
@@ -54,7 +54,7 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
             :priority       => '98',
-            :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+            :require        => 'Yumrepo[epel]',
           })
         end
       end
@@ -80,7 +80,7 @@ describe 'osg::repos' do
               :gpgcheck       => '1',
               :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
               :priority       => '98',
-              :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+              :require        => 'Yumrepo[epel]',
             })
           end
         end
@@ -101,7 +101,7 @@ describe 'osg::repos' do
               :gpgcheck       => '1',
               :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
               :priority       => '98',
-              :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+              :require        => 'Yumrepo[epel]',
             })
           end
         end
@@ -127,7 +127,7 @@ describe 'osg::repos' do
                 :gpgcheck       => '1',
                 :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
                 :priority       => '98',
-                :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+                :require        => 'Yumrepo[epel]',
               })
             end
           end
@@ -148,7 +148,7 @@ describe 'osg::repos' do
                 :gpgcheck       => '1',
                 :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
                 :priority       => '98',
-                :require        => ['Yumrepo[epel]','Exec[RPM-GPG-KEY-OSG]'],
+                :require        => 'Yumrepo[epel]',
               })
             end
           end
