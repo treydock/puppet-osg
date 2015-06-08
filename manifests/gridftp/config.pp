@@ -16,19 +16,21 @@ class osg::gridftp::config {
 
   if $osg::gridftp::manage_hostcert {
     file { '/etc/grid-security/hostcert.pem':
-      ensure => 'file',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0444',
-      source => $osg::gridftp::_hostcert_source,
+      ensure    => 'file',
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0444',
+      source    => $osg::gridftp::_hostcert_source,
+      show_diff => false,
     }
 
     file { '/etc/grid-security/hostkey.pem':
-      ensure => 'file',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0400',
-      source => $osg::gridftp::_hostkey_source,
+      ensure    => 'file',
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0400',
+      source    => $osg::gridftp::_hostkey_source,
+      show_diff => false,
     }
   }
 

@@ -9,21 +9,23 @@ class osg::gums::config {
   }
 
   file { '/etc/grid-security/http/httpcert.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0444',
-    source  => $osg::gums::_httpcert_source,
-    require => File['/etc/grid-security/http'],
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0444',
+    source    => $osg::gums::_httpcert_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/http'],
   }
 
   file { '/etc/grid-security/http/httpkey.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0400',
-    source  => $osg::gums::_httpkey_source,
-    require => File['/etc/grid-security/http'],
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0400',
+    source    => $osg::gums::_httpkey_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/http'],
   }
 
   file { '/etc/gums/gums.config':

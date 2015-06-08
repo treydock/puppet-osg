@@ -9,21 +9,23 @@ class osg::ce::config {
   }
 
   file { '/etc/grid-security/http/httpcert.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0444',
-    source  => $osg::ce::_httpcert_source,
-    require => File['/etc/grid-security/http'],
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0444',
+    source    => $osg::ce::_httpcert_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/http'],
   }
 
   file { '/etc/grid-security/http/httpkey.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0400',
-    source  => $osg::ce::_httpkey_source,
-    require => File['/etc/grid-security/http'],
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0400',
+    source    => $osg::ce::_httpkey_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/http'],
   }
 
   osg_local_site_settings { 'Gateway/gram_gateway_enabled':

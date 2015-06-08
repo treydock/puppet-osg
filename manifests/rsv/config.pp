@@ -19,21 +19,23 @@ class osg::rsv::config {
   }
 
   file { '/etc/grid-security/rsv/rsvcert.pem':
-    ensure  => 'file',
-    owner   => 'rsv',
-    group   => 'rsv',
-    mode    => '0444',
-    source  => $osg::rsv::_rsvcert_source,
-    require => File['/etc/grid-security/rsv'],
+    ensure    => 'file',
+    owner     => 'rsv',
+    group     => 'rsv',
+    mode      => '0444',
+    source    => $osg::rsv::_rsvcert_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/rsv'],
   }
 
   file { '/etc/grid-security/rsv/rsvkey.pem':
-    ensure  => 'file',
-    owner   => 'rsv',
-    group   => 'rsv',
-    mode    => '0400',
-    source  => $osg::rsv::_rsvkey_source,
-    require => File['/etc/grid-security/rsv'],
+    ensure    => 'file',
+    owner     => 'rsv',
+    group     => 'rsv',
+    mode      => '0400',
+    source    => $osg::rsv::_rsvkey_source,
+    show_diff => false,
+    require   => File['/etc/grid-security/rsv'],
   }
 
   file { '/var/spool/rsv':
