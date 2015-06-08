@@ -17,6 +17,7 @@ class osg::ce (
   $batch_system_package_name  = 'empty-torque',
   $ce_package_name            = 'osg-ce-pbs',
   $use_slurm                  = false,
+  $manage_hostcert            = true,
   $hostcert_source            = 'UNSET',
   $hostkey_source             = 'UNSET',
   $httpcert_source            = 'UNSET',
@@ -29,6 +30,7 @@ class osg::ce (
   validate_bool($gram_gateway_enabled)
   validate_bool($htcondor_gateway_enabled)
   validate_bool($use_slurm)
+  validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
 
   include osg
@@ -50,6 +52,7 @@ class osg::ce (
   }
 
   class { 'osg::gridftp':
+    manage_hostcert => $manage_hostcert,
     hostcert_source => $hostcert_source,
     hostkey_source  => $hostkey_source,
     manage_firewall => $manage_firewall,

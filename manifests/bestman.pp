@@ -1,6 +1,7 @@
 # Class: osg::bestman: See README.md for documentation.
 class osg::bestman (
   $host_dn                = 'UNSET',
+  $manage_hostcert        = true,
   $hostcert_source        = 'UNSET',
   $hostkey_source         = 'UNSET',
   $bestmancert_source     = 'UNSET',
@@ -20,6 +21,7 @@ class osg::bestman (
   $sudo_srm_runas         = $osg::params::sudo_srm_runas,
 ) inherits osg::params {
 
+  validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
   validate_bool($manage_sudo)
   validate_array($localPathListToBlock)

@@ -24,6 +24,16 @@ class osg::rsv (
   validate_bool($with_httpd)
   validate_bool($manage_firewall)
 
+  $_rsvcert_source = $rsvcert_source ? {
+    'UNSET' => undef,
+    default => $rsvcert_source,
+  }
+
+  $_rsvkey_source = $rsvkey_source ? {
+    'UNSET' => undef,
+    default => $rsvkey_source,
+  }
+
   include osg
   include osg::cacerts
   include osg::rsv::users

@@ -18,6 +18,7 @@ describe 'osg::ce' do
 
       it do
         should contain_class('osg::gridftp').with({
+          :manage_hostcert  => 'true',
           :hostcert_source  => 'UNSET',
           :hostkey_source   => 'UNSET',
           :manage_firewall  => 'true',
@@ -152,6 +153,10 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
+            :subscribe  => [
+              'File[/etc/grid-security/hostcert.pem]',
+              'File[/etc/grid-security/hostkey.pem]',
+            ],
             :before     => 'Service[osg-info-services]', 
           })
         end
@@ -162,6 +167,10 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
+            :subscribe  => [
+              'File[/etc/grid-security/http/httpcert.pem]',
+              'File[/etc/grid-security/http/httpkey.pem]',
+            ],
             :before     => ['Service[gratia-probes-cron]'],
           })
         end

@@ -171,6 +171,8 @@ Example of configuring RSV.
       cacerts_package_name  => 'empty-ca-certs',
     }
     class { 'osg::rsv':
+      rsvcert_source    => 'file:///home/admin/osg/certs/rsv/rsvcert.pem',
+      rsvkey_source     => 'file:///home/admin/osg/certs/rsv/rsvkey.pem',
       ce_hosts          => 'ce.example.tld',
       htcondor_ce_hosts => 'ce.example.tld',
       gridftp_hosts     => 'ce.example.tld,gridftp1.example.tld',

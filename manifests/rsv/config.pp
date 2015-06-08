@@ -1,16 +1,6 @@
 # Private class: See README.md.
 class osg::rsv::config {
 
-  $rsvcert_source = $osg::rsv::rsvcert_source ? {
-    'UNSET' => undef,
-    default => $osg::rsv::rsvcert_source,
-  }
-
-  $rsvkey_source = $osg::rsv::rsvkey_source ? {
-    'UNSET' => undef,
-    default => $osg::rsv::rsvkey_source,
-  }
-
   osg_local_site_settings { 'RSV/ce_hosts':            value => $osg::rsv::ce_hosts }
   osg_local_site_settings { 'RSV/gram_ce_hosts':       value => $osg::rsv::gram_ce_hosts }
   osg_local_site_settings { 'RSV/htcondor_ce_hosts':   value => $osg::rsv::htcondor_ce_hosts }
@@ -33,7 +23,7 @@ class osg::rsv::config {
     owner   => 'rsv',
     group   => 'rsv',
     mode    => '0444',
-    source  => $rsvcert_source,
+    source  => $osg::rsv::_rsvcert_source,
     require => File['/etc/grid-security/rsv'],
   }
 
@@ -42,7 +32,7 @@ class osg::rsv::config {
     owner   => 'rsv',
     group   => 'rsv',
     mode    => '0400',
-    source  => $rsvkey_source,
+    source  => $osg::rsv::_rsvkey_source,
     require => File['/etc/grid-security/rsv'],
   }
 
