@@ -426,7 +426,6 @@ If you have Vagrant >= 1.2.0 installed you can run system tests.  **NOTE: The ac
 * Remove osg::lcmaps
 * Move osg::gums to osg::gums::server
 * Find a way to remove hard coded GUMS schema from this module
-* Remove management of OSG RPM GPG key
 
 ## Further Information
 
