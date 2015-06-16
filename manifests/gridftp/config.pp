@@ -16,21 +16,25 @@ class osg::gridftp::config {
 
   if $osg::gridftp::manage_hostcert {
     file { '/etc/grid-security/hostcert.pem':
-      ensure    => 'file',
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0444',
-      source    => $osg::gridftp::_hostcert_source,
-      show_diff => false,
+      ensure => 'file',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0444',
+      source => $osg::gridftp::_hostcert_source,
     }
 
     file { '/etc/grid-security/hostkey.pem':
-      ensure    => 'file',
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0400',
-      source    => $osg::gridftp::_hostkey_source,
-      show_diff => false,
+      ensure => 'file',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0400',
+      source => $osg::gridftp::_hostkey_source,
+    }
+
+    # File show_diff only in Puppet >= 3.2.0
+    if versioncmp($::puppetversion, '3.2.0') >= 0 {
+      File <| title == '/etc/grid-security/hostcert.pem' |> { show_diff => false }
+      File <| title == '/etc/grid-security/hostkey.pem' |> { show_diff => false }
     }
   }
 

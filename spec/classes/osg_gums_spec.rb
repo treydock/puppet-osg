@@ -85,6 +85,14 @@ describe 'osg::gums' do
           })
         end
 
+        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
+          it { should contain_file('/etc/grid-security/http/httpcert.pem').with_show_diff('false') }
+          it { should contain_file('/etc/grid-security/http/httpkey.pem').with_show_diff('false') }
+        else
+          it { should contain_file('/etc/grid-security/http/httpcert.pem').without_show_diff }
+          it { should contain_file('/etc/grid-security/http/httpkey.pem').without_show_diff }
+        end
+
         it do
           should contain_file('/etc/gums/gums.config').with({
             :ensure   => 'file',

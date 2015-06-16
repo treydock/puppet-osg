@@ -19,23 +19,27 @@ class osg::rsv::config {
   }
 
   file { '/etc/grid-security/rsv/rsvcert.pem':
-    ensure    => 'file',
-    owner     => 'rsv',
-    group     => 'rsv',
-    mode      => '0444',
-    source    => $osg::rsv::_rsvcert_source,
-    show_diff => false,
-    require   => File['/etc/grid-security/rsv'],
+    ensure  => 'file',
+    owner   => 'rsv',
+    group   => 'rsv',
+    mode    => '0444',
+    source  => $osg::rsv::_rsvcert_source,
+    require => File['/etc/grid-security/rsv'],
   }
 
   file { '/etc/grid-security/rsv/rsvkey.pem':
-    ensure    => 'file',
-    owner     => 'rsv',
-    group     => 'rsv',
-    mode      => '0400',
-    source    => $osg::rsv::_rsvkey_source,
-    show_diff => false,
-    require   => File['/etc/grid-security/rsv'],
+    ensure  => 'file',
+    owner   => 'rsv',
+    group   => 'rsv',
+    mode    => '0400',
+    source  => $osg::rsv::_rsvkey_source,
+    require => File['/etc/grid-security/rsv'],
+  }
+
+  # File show_diff only in Puppet >= 3.2.0
+  if versioncmp($::puppetversion, '3.2.0') >= 0 {
+    File <| title == '/etc/grid-security/rsv/rsvcert.pem' |> { show_diff => false }
+    File <| title == '/etc/grid-security/rsv/rsvkey.pem' |> { show_diff => false }
   }
 
   file { '/var/spool/rsv':

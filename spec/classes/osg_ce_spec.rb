@@ -125,6 +125,14 @@ describe 'osg::ce' do
           })
         end
 
+        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
+          it { should contain_file('/etc/grid-security/http/httpcert.pem').with_show_diff('false') }
+          it { should contain_file('/etc/grid-security/http/httpkey.pem').with_show_diff('false') }
+        else
+          it { should contain_file('/etc/grid-security/http/httpcert.pem').without_show_diff }
+          it { should contain_file('/etc/grid-security/http/httpkey.pem').without_show_diff }
+        end
+
         {
           'Gateway/gram_gateway_enabled' => 'true',
           'Gateway/htcondor_gateway_enabled' => 'true',

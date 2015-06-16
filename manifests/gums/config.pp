@@ -9,23 +9,27 @@ class osg::gums::config {
   }
 
   file { '/etc/grid-security/http/httpcert.pem':
-    ensure    => 'file',
-    owner     => 'tomcat',
-    group     => 'tomcat',
-    mode      => '0444',
-    source    => $osg::gums::_httpcert_source,
-    show_diff => false,
-    require   => File['/etc/grid-security/http'],
+    ensure  => 'file',
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    mode    => '0444',
+    source  => $osg::gums::_httpcert_source,
+    require => File['/etc/grid-security/http'],
   }
 
   file { '/etc/grid-security/http/httpkey.pem':
-    ensure    => 'file',
-    owner     => 'tomcat',
-    group     => 'tomcat',
-    mode      => '0400',
-    source    => $osg::gums::_httpkey_source,
-    show_diff => false,
-    require   => File['/etc/grid-security/http'],
+    ensure  => 'file',
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    mode    => '0400',
+    source  => $osg::gums::_httpkey_source,
+    require => File['/etc/grid-security/http'],
+  }
+
+  # File show_diff only in Puppet >= 3.2.0
+  if versioncmp($::puppetversion, '3.2.0') >= 0 {
+    File <| title == '/etc/grid-security/http/httpcert.pem' |> { show_diff => false }
+    File <| title == '/etc/grid-security/http/httpkey.pem' |> { show_diff => false }
   }
 
   file { '/etc/gums/gums.config':

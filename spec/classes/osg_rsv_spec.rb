@@ -162,6 +162,14 @@ describe 'osg::rsv' do
           })
         end
 
+        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
+          it { should contain_file('/etc/grid-security/rsv/rsvcert.pem').with_show_diff('false') }
+          it { should contain_file('/etc/grid-security/rsv/rsvkey.pem').with_show_diff('false') }
+        else
+          it { should contain_file('/etc/grid-security/rsv/rsvcert.pem').without_show_diff }
+          it { should contain_file('/etc/grid-security/rsv/rsvkey.pem').without_show_diff }
+        end
+
         it do
           should contain_file('/var/spool/rsv').with({
             :ensure => 'directory',
