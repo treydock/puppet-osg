@@ -16,6 +16,7 @@ class osg::cvmfs (
   $fuse_group_name        = 'fuse',
   $fuse_group_gid         = undef,
   $fuse_group_system      = true,
+  $package_ensure         = 'installed',
   $repositories           = ['UNSET'],
   $strict_mount           = false,
   $cache_base             = '/var/cache/cvmfs',

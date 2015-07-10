@@ -94,6 +94,12 @@ describe 'osg::cvmfs' do
             :name     => 'osg-oasis',
           })
         end
+
+        context "when package_ensure => 'latest'" do
+          let(:params) {{ :package_ensure => 'latest' }}
+
+          it { should contain_package('cvmfs').with_ensure('latest') }
+        end
       end
 
       context 'osg::cvmfs::config' do
@@ -208,6 +214,12 @@ describe 'osg::cvmfs' do
           it "should export CMS_LOCAL_SITE" do
             verify_contents(catalogue, '/etc/cvmfs/config.d/cms.cern.ch.local', ['export CMS_LOCAL_SITE=T3_FOO'])
           end
+        end
+
+        context "when server_urls => []" do
+          let(:params) {{ :server_urls => [] }}
+
+          it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
         end
       end
 

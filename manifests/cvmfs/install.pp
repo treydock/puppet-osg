@@ -2,7 +2,7 @@
 class osg::cvmfs::install {
 
   package { 'cvmfs':
-    ensure => 'installed',
+    ensure => $osg::cvmfs::package_ensure,
     name   => 'osg-oasis',
   }
 
