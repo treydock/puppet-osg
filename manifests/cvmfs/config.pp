@@ -30,8 +30,8 @@ class osg::cvmfs::config {
 
   if empty($osg::cvmfs::server_urls) {
     file { '/etc/cvmfs/domain.d/cern.ch.local':
-      ensure  => 'absent',
-      path    => '/etc/cvmfs/domain.d/cern.ch.local',
+      ensure => 'absent',
+      path   => '/etc/cvmfs/domain.d/cern.ch.local',
     }
   } else {
     file { '/etc/cvmfs/domain.d/cern.ch.local':

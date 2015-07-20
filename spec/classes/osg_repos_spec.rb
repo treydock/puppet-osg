@@ -6,6 +6,7 @@ describe 'osg::repos' do
       let(:facts) do
         facts.merge({
           :concat_basedir => '/dne',
+          :puppetversion => Puppet.version,
         })
       end
 
