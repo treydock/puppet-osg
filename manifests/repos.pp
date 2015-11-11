@@ -68,13 +68,11 @@ class osg::repos {
     enabled    => '1',
   }
 
-  if versioncmp($osg::osg_release, '3.2') >= 0 {
-    yumrepo { 'osg-empty':
-      baseurl    => $baseurls['osg-empty'],
-      mirrorlist => $mirrorlists['osg-empty'],
-      descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
-      enabled    => '1',
-    }
+  yumrepo { 'osg-empty':
+    baseurl    => $baseurls['osg-empty'],
+    mirrorlist => $mirrorlists['osg-empty'],
+    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
+    enabled    => '1',
   }
 
   yumrepo { 'osg-contrib':

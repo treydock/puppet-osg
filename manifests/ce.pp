@@ -36,10 +36,7 @@ class osg::ce (
   include osg
   include osg::cacerts
 
-  $cemon_service_name = $osg::osg_release ? {
-    /3.1/ => 'tomcat6',
-    /3.2/ => 'osg-info-services',
-  }
+  $cemon_service_name = 'osg-info-services'
 
   $_httpcert_source = $httpcert_source ? {
     'UNSET' => undef,

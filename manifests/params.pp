@@ -17,13 +17,13 @@ class osg::params {
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {
-        '6': {
+        /6|7/: {
           $yum_priorities_package = 'yum-plugin-priorities'
           $tomcat_packages        = ['tomcat6']
           $crond_package_name     = 'cronie'
         }
         default: {
-          fail("Unsupported operating system: EL${::operatingsystemmajrelease}, module ${module_name} only support EL6")
+          fail("Unsupported operating system: EL${::operatingsystemmajrelease}, module ${module_name} only support EL6 and EL7")
         }
       }
     }

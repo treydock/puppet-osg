@@ -161,12 +161,6 @@ describe 'osg::repos' do
 
         it { should contain_yumrepo('osg-contrib').with_enabled('1') }
       end
-
-      context "when osg_release => '3.1'" do
-        let(:pre_condition) { "class { 'osg': osg_release => '3.1' }" }
-
-        it { should_not contain_yumrepo('osg-empty') }
-      end
     end
   end
 end

@@ -14,9 +14,9 @@ describe 'osg_version fact' do
     Facter.fact(:osfamily).stubs(:value).returns("RedHat")
   end
 
-  it "should return correct version 3.1.19" do
-    Facter::Util::FileRead.expects(:read).with('/etc/osg-version').returns(my_fixture_read('osg-version-3.1.19'))
-    Facter.fact(:osg_version).value.should == '3.1.19'
+  it "should return correct version 3.2.30" do
+    Facter::Util::FileRead.expects(:read).with('/etc/osg-version').returns(my_fixture_read('osg-version-3.2.30'))
+    Facter.fact(:osg_version).value.should == '3.2.30'
   end
 
   it "should return nothing if /etc/osg-version is not present" do

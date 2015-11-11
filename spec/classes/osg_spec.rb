@@ -23,7 +23,7 @@ describe 'osg' do
       # Test validate_re parameters
       context "with osg_release => 'foo'" do
         let(:params) {{ :osg_release => 'foo' }}
-        it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /The osg_release parameter only supports 3.1 and 3.2/) }
+        it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /The osg_release parameter only supports 3.2 and 3.3/) }
       end
 
 

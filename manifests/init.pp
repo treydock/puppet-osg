@@ -24,7 +24,7 @@ class osg (
   $condor_collector_host          = 'UNSET',
 ) inherits osg::params {
 
-  validate_re($osg_release, '^(3.1|3.2)$', 'The osg_release parameter only supports 3.1 and 3.2')
+  validate_re($osg_release, '^(3.2|3.3)$', 'The osg_release parameter only supports 3.2 and 3.3')
   validate_re($cacerts_package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
