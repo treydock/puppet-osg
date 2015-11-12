@@ -72,6 +72,7 @@ describe 'osg::rsv' do
             :ensure      => 'present',
             :name        => 'rsv',
             :uid         => nil,
+            :gid         => 'rsv',
             :home        => '/var/rsv',
             :shell       => '/bin/sh',
             :system      => 'true',
@@ -94,6 +95,7 @@ describe 'osg::rsv' do
             :ensure      => 'present',
             :name        => 'cndrcron',
             :uid         => '93',
+            :gid         => 'cndrcron',
             :home        => '/var/lib/condor-cron',
             :shell       => '/sbin/nologin',
             :system      => 'true',
@@ -109,6 +111,22 @@ describe 'osg::rsv' do
             :gid     => '93',
             :system  => 'true',
           })
+        end
+
+        context 'when UID / GID defined for RSV' do
+          let(:params) {{ :rsv_uid => '999', :rsv_gid => '999' }}
+
+          it { should contain_user('rsv').with_uid('999') }
+          it { should contain_group('rsv').with_gid('999') }
+        end
+
+        context 'when manages_users => false' do
+          let(:params) {{ :manage_users => false }}
+
+          it { should_not contain_user('rsv') }
+          it { should_not contain_group('rsv') }
+          it { should_not contain_user('cndrcron') }
+          it { should_not contain_group('cndrcron') }
         end
       end
 

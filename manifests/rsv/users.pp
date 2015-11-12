@@ -5,7 +5,8 @@ class osg::rsv::users {
     user { 'rsv':
       ensure     => 'present',
       name       => 'rsv',
-      uid        => undef,
+      uid        => $osg::rsv::rsv_uid,
+      gid        => 'rsv',
       home       => '/var/rsv',
       shell      => '/bin/sh',
       system     => true,
@@ -16,7 +17,7 @@ class osg::rsv::users {
     group { 'rsv':
       ensure => present,
       name   => 'rsv',
-      gid    => undef,
+      gid    => $osg::rsv::rsv_gid,
       system => true,
     }
 
@@ -24,6 +25,7 @@ class osg::rsv::users {
       ensure     => 'present',
       name       => 'cndrcron',
       uid        => $osg::rsv::cndrcron_uid,
+      gid        => 'cndrcron',
       home       => '/var/lib/condor-cron',
       shell      => '/sbin/nologin',
       system     => true,

@@ -7,6 +7,8 @@ class osg::rsv (
   $manage_firewall        = true,
   $firewall_ensure        = 'present',
   $http_port              = '80',
+  $rsv_uid                = undef,
+  $rsv_gid                = undef,
   $cndrcron_uid           = '93',
   $cndrcron_gid           = '93',
   $gram_ce_hosts          = 'UNAVAILABLE',
