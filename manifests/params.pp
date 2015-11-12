@@ -17,7 +17,14 @@ class osg::params {
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {
-        /6|7/: {
+        '7': {
+          $osg_release            = '3.3'
+          $yum_priorities_package = 'yum-plugin-priorities'
+          $tomcat_packages        = ['tomcat6']
+          $crond_package_name     = 'cronie'
+        }
+        '6': {
+          $osg_release            = '3.2'
           $yum_priorities_package = 'yum-plugin-priorities'
           $tomcat_packages        = ['tomcat6']
           $crond_package_name     = 'cronie'

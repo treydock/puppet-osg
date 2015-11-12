@@ -1,6 +1,6 @@
 # Class: osg: See README.md for documentation.
 class osg (
-  $osg_release                    = '3.2',
+  $osg_release                    = $osg::params::osg_release,
   $repo_baseurl_bit               = 'http://repo.grid.iu.edu',
   $repo_development_baseurl_bit   = undef,
   $repo_testing_baseurl_bit       = undef,
@@ -29,6 +29,10 @@ class osg (
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
   validate_bool($cacerts_install_other_packages)
+
+  if $::operatingsystemmajrelease == '7' and $osg_release != '3.3' {
+    fail("Module ${module_name}: EL7 is only supported with osg_release 3.3")
+  }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
