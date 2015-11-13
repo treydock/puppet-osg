@@ -1,13 +1,26 @@
 require 'spec_helper'
 
 describe 'osg::repos' do
-  on_supported_os.each do |os, facts|
+  on_supported_os({
+    :supported_os => [
+      {
+        "operatingsystem" => "CentOS",
+        "operatingsystemrelease" => ["6", "7"],
+      }
+    ]
+  }).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge({
           :concat_basedir => '/dne',
           :puppetversion => Puppet.version,
         })
+      end
+
+      if facts[:operatingsystemmajrelease] == '7'
+        osg_release = '3.3'
+      else
+        osg_release = '3.2'
       end
 
       it { should create_class('osg::repos') }
@@ -27,12 +40,12 @@ describe 'osg::repos' do
           should contain_yumrepo(h[:name]).only_with({
             :name           => h[:name],
             :baseurl        => 'absent',
-            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/3.2/el6/#{h[:path]}/x86_64",
-            :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
+            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+            :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
             :enabled        => h[:enabled],
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+            :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
             :require        => 'Yumrepo[epel]',
           })
@@ -48,12 +61,12 @@ describe 'osg::repos' do
           should contain_yumrepo(h[:name]).only_with({
             :name           => h[:name],
             :baseurl        => 'absent',
-            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/upcoming/el6/#{h[:path]}/x86_64",
-            :descr          => "OSG Software for Enterprise Linux 6 - #{h[:desc]} - x86_64",
+            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+            :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
             :enabled        => '0',
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+            :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
             :require        => 'Yumrepo[epel]',
           })
@@ -73,13 +86,13 @@ describe 'osg::repos' do
           it do
             should contain_yumrepo(h[:name]).only_with({
               :name           => h[:name],
-              :baseurl        => "http://repo.grid.iu.edu/osg/3.2/el6/#{h[:path]}/x86_64",
+              :baseurl        => "http://repo.grid.iu.edu/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
               :mirrorlist     => 'absent',
-              :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
+              :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
               :enabled        => h[:enabled],
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+              :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
               :require        => 'Yumrepo[epel]',
             })
@@ -94,13 +107,13 @@ describe 'osg::repos' do
           it do
             should contain_yumrepo(h[:name]).only_with({
               :name           => h[:name],
-              :baseurl        => "http://repo.grid.iu.edu/osg/upcoming/el6/#{h[:path]}/x86_64",
+              :baseurl        => "http://repo.grid.iu.edu/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
               :mirrorlist     => 'absent',
-              :descr          => "OSG Software for Enterprise Linux 6 - #{h[:desc]} - x86_64",
+              :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
               :enabled        => '0',
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+              :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
               :require        => 'Yumrepo[epel]',
             })
@@ -120,13 +133,13 @@ describe 'osg::repos' do
             it do
               should contain_yumrepo(h[:name]).only_with({
                 :name           => h[:name],
-                :baseurl        => "http://foo.example.com/osg/3.2/el6/#{h[:path]}/x86_64",
+                :baseurl        => "http://foo.example.com/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                 :mirrorlist     => 'absent',
-                :descr          => "OSG Software for Enterprise Linux 6#{h[:desc]} - x86_64",
+                :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
                 :enabled        => h[:enabled],
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+                :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
                 :require        => 'Yumrepo[epel]',
               })
@@ -141,13 +154,13 @@ describe 'osg::repos' do
             it do
               should contain_yumrepo(h[:name]).only_with({
                 :name           => h[:name],
-                :baseurl        => "http://foo.example.com/osg/upcoming/el6/#{h[:path]}/x86_64",
+                :baseurl        => "http://foo.example.com/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                 :mirrorlist     => 'absent',
-                :descr          => "OSG Software for Enterprise Linux 6 - #{h[:desc]} - x86_64",
+                :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
                 :enabled        => '0',
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => 'http://repo.grid.iu.edu/osg/3.2/RPM-GPG-KEY-OSG',
+                :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
                 :require        => 'Yumrepo[epel]',
               })
