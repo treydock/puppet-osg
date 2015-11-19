@@ -68,7 +68,7 @@ describe 'osg::lcmaps' do
 
       context "with no parameters defined" do
         let(:params){{ }}
-        it { expect { should create_class('osg::lcmaps') }.to raise_error(Puppet::Error, /Must pass gums_hostname/) }
+        it { expect { should create_class('osg::lcmaps') }.to raise_error(Puppet::Error, /gums_hostname/) }
       end
 
       context "when lcmaps_package_ensure => 'absent'" do
