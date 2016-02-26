@@ -19,6 +19,7 @@ class osg::bestman (
   $manage_sudo            = true,
   $sudo_srm_commands      = $osg::params::sudo_srm_commands,
   $sudo_srm_runas         = $osg::params::sudo_srm_runas,
+  $max_java_heap          = 1024,
 ) inherits osg::params {
 
   validate_bool($manage_hostcert)
