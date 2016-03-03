@@ -87,4 +87,47 @@ class osg::bestman (
     }
   }
 
+  if $osg::enable_exported_resources {
+    @@osg_local_site_settings { 'Storage/se_available':
+      value => true,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    $_default_se = pick($osg::storage_default_se, $::fqdn)
+    @@osg_local_site_settings { 'Storage/default_se':
+      value => $_default_se,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/grid_dir':
+      value => $osg::storage_grid_dir,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/app_dir':
+      value => $osg::storage_app_dir,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/data_dir':
+      value => $osg::storage_data_dir,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/worker_node_temp':
+      value => $osg::storage_worker_node_temp,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/site_read':
+      value => $osg::storage_site_read,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    @@osg_local_site_settings { 'Storage/site_write':
+      value => $osg::storage_site_write,
+      tag   => $osg::exported_resources_export_tag,
+    }
+  }
+
 }

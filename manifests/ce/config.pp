@@ -53,4 +53,13 @@ class osg::ce::config {
   osg_local_site_settings { 'Site Information/longitude': value => $osg::ce::site_info_longitude }
   osg_local_site_settings { 'Site Information/latitude': value => $osg::ce::site_info_latitude }
 
+  osg_local_site_settings { 'Network/port_range': value => "${osg::globus_tcp_source_range_min},${osg::globus_tcp_source_range_max}"}
+
+  create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)
+  create_resources(osg_gip_config, $osg::ce::osg_gip_configs)
+
+  if $osg::enable_exported_resources {
+    Osg_local_site_settings <<| tag == $osg::exported_resource_collect_tag |>>
+  }
+
 }
