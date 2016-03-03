@@ -63,4 +63,17 @@ class osg::squid (
     subscribe  => File['/etc/squid/customize.sh'],
   }
 
+  if $osg::enable_exported_resources {
+    @@osg_local_site_settings { 'Squid/enabled':
+      value => true,
+      tag   => $osg::exported_resources_export_tag,
+    }
+
+    $_squid_location = pick($osg::squid_location, $::fqdn)
+    @@osg_local_site_settings { 'Squid/location':
+      value => $_squid_location,
+      tag   => $osg::exported_resources_export_tag,
+    }
+  }
+
 }

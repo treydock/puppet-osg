@@ -156,9 +156,42 @@ describe 'osg::ce' do
           'Site Information/country' => 'UNAVAILABLE',
           'Site Information/longitude' => 'UNAVAILABLE',
           'Site Information/latitude' => 'UNAVAILABLE',
+          'Network/port_range' => '40000,41999',
         }.each_pair do |k,v|
           it { should contain_osg_local_site_settings(k).with_value(v) }
           it { should contain_osg_local_site_settings(k).that_notifies('Exec[osg-configure]') }
+        end
+
+        context 'when osg_local_site_settings defined' do
+          let(:params) do
+            {
+              :osg_local_site_settings => {
+                'SLURM/enabled' => {'value' => true},
+                'Gratia/enabled' => {'value' => true},
+              }
+            }
+          end
+
+          it { should contain_osg_local_site_settings('SLURM/enabled').with_value('true') }
+          it { should contain_osg_local_site_settings('SLURM/enabled').that_notifies('Exec[osg-configure]') }
+          it { should contain_osg_local_site_settings('Gratia/enabled').with_value('true') }
+          it { should contain_osg_local_site_settings('Gratia/enabled').that_notifies('Exec[osg-configure]') }
+        end
+
+        context 'when osg_gip_configs defined' do
+          let(:params) do
+            {
+              :osg_gip_configs => {
+                'GIP/batch' => {'value' => 'slurm'},
+                'GIP/advertise_gums' => {'value' => false},
+              }
+            }
+          end
+
+          it { should contain_osg_gip_config('GIP/batch').with_value('slurm') }
+          it { should contain_osg_gip_config('GIP/batch').that_notifies('Exec[osg-configure]') }
+          it { should contain_osg_gip_config('GIP/advertise_gums').with_value('false') }
+          it { should contain_osg_gip_config('GIP/advertise_gums').that_notifies('Exec[osg-configure]') }
         end
       end
 

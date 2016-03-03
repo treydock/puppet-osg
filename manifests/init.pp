@@ -22,6 +22,18 @@ class osg (
   $condor_highport                = '41999',
   $condor_schedd_host             = 'UNSET',
   $condor_collector_host          = 'UNSET',
+  $enable_exported_resources      = false,
+  $exported_resources_export_tag  = $::domain,
+  $exported_resource_collect_tag  = $::domain,
+  # INI config values
+  $squid_location                 = undef,
+  $storage_default_se             = undef,
+  $storage_grid_dir               = '/etc/osg/wn-client/',
+  $storage_app_dir                = 'UNAVAILABLE',
+  $storage_data_dir               = 'UNAVAILABLE',
+  $storage_worker_node_temp       = 'UNAVAILABLE',
+  $storage_site_read              = 'UNAVAILABLE',
+  $storage_site_write             = 'UNAVAILABLE',
 ) inherits osg::params {
 
   validate_re($osg_release, '^(3.2|3.3)$', 'The osg_release parameter only supports 3.2 and 3.3')
@@ -29,6 +41,7 @@ class osg (
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
   validate_bool($cacerts_install_other_packages)
+  validate_bool($enable_exported_resources)
 
   if $::operatingsystemmajrelease == '7' and $osg_release != '3.3' {
     fail("Module ${module_name}: EL7 is only supported with osg_release 3.3")
@@ -54,5 +67,6 @@ class osg (
   include osg::configure
 
   Osg_local_site_settings<| |> ~> Exec['osg-configure']
+  Osg_gip_config <| |> ~> Exec['osg-configure']
 
 }

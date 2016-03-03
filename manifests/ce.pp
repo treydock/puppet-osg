@@ -25,6 +25,8 @@ class osg::ce (
   $htcondor_ce_port           = '9619',
   $htcondor_ce_shared_port    = '9620',
   $manage_firewall            = true,
+  $osg_local_site_settings    = {},
+  $osg_gip_configs            = {},
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
@@ -32,6 +34,8 @@ class osg::ce (
   validate_bool($use_slurm)
   validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
+  validate_hash($osg_local_site_settings)
+  validate_hash($osg_gip_configs)
 
   include osg
   include osg::cacerts
@@ -90,5 +94,4 @@ class osg::ce (
       }
     }
   }
-
 }
