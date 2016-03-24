@@ -66,7 +66,8 @@ class osg (
 
   include osg::configure
 
-  Osg_local_site_settings<| |> ~> Exec['osg-configure']
+  # Avoid collecting resources intended for export
+  Osg_local_site_settings<| tag != $exported_resources_export_tag |> ~> Exec['osg-configure']
   Osg_gip_config <| |> ~> Exec['osg-configure']
 
 }
