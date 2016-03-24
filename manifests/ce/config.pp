@@ -59,7 +59,9 @@ class osg::ce::config {
   create_resources(osg_gip_config, $osg::ce::osg_gip_configs)
 
   if $osg::enable_exported_resources {
-    Osg_local_site_settings <<| tag == $osg::exported_resource_collect_tag |>>
+    Osg_local_site_settings <<| tag == $osg::exported_resource_collect_tag |>> {
+      notify => Exec['osg-configure'],
+    }
   }
 
 }
