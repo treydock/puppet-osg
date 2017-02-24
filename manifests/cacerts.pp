@@ -19,12 +19,13 @@ class osg::cacerts inherits osg::params {
     }
   }
 
-  file { '/etc/grid-security':
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    before => File['/etc/grid-security/certificates'],
+  if ! defined(File['/etc/grid-security']) {
+    file { '/etc/grid-security':
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
   }
 
   if $package_name == 'empty-ca-certs' {
