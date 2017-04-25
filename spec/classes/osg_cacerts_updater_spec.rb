@@ -20,7 +20,7 @@ describe 'osg::cacerts::updater' do
       it { should create_class('osg::cacerts::updater') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg::cacerts') }
-      it { should contain_class('cron') }
+      #it { should contain_class('cron') }
 
       it do 
         should contain_package('osg-ca-certs-updater').with({

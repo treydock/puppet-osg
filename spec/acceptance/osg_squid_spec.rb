@@ -7,7 +7,9 @@ describe 'osg::squid class:' do
     it 'should run successfully' do
       pp =<<-EOS
         class { 'osg': }
-        class { 'osg::squid': }
+        class { 'osg::squid':
+          manage_firewall => false,
+        }
       EOS
 
       apply_manifest_on(node, pp, :catch_failures => true)

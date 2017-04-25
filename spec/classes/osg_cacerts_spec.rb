@@ -37,7 +37,6 @@ describe 'osg::cacerts' do
           :owner  => 'root',
           :group  => 'root',
           :mode   => '0755',
-          :before => 'File[/etc/grid-security/certificates]',
         })
       end
 
@@ -102,7 +101,6 @@ describe 'osg::cacerts' do
             :owner  => 'root',
             :group  => 'root',
             :mode   => '0755',
-            :before => 'File[/etc/grid-security/certificates]',
           })
         end
 

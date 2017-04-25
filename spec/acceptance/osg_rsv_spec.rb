@@ -8,6 +8,7 @@ describe 'osg::rsv class:' do
       pp =<<-EOS
         class { 'osg': }
         class { 'osg::rsv':
+          manage_firewall => false,
           rsvcert_source => 'file:///tmp/rsvcert.pem',
           rsvkey_source  => 'file:///tmp/rsvkey.pem',
         }

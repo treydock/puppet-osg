@@ -1,60 +1,45 @@
 require 'beaker-rspec'
-
-module SystemHelper
-  def proj_root
-    File.expand_path(File.join(File.dirname(__FILE__), '..'))
-  end
-
-  def modulefile_dependencies
-    dependencies = []
-
-    modulefile = File.join(proj_root, "metadata.json")
-    
-    return false unless File.exists?(modulefile)
-
-    file = File.read(modulefile)
-    data = JSON.parse(file)
-    dependencies = data["dependencies"]
-    dependencies
-  end
-end
-
-include SystemHelper
+require 'beaker/puppet_install_helper'
+require 'beaker/module_install_helper'
 
 dir = File.expand_path(File.dirname(__FILE__))
-Dir["#{dir}/acceptance/support/*.rb"].sort.each {|f| require f}
+Dir["#{dir}/acceptance/shared_examples/**/*.rb"].sort.each {|f| require f}
 
-hosts.each do |host|
-  #install_puppet
-  if host['platform'] =~ /el-(5|6)/
-    relver = $1
-    on host, "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-#{relver}.noarch.rpm", { :acceptable_exit_codes => [0,1] }
-    on host, 'yum install -y puppet', { :acceptable_exit_codes => [0,1] }
-  end
-end
+run_puppet_install_helper
+install_module_on(hosts)
+install_module_dependencies_on(hosts)
 
 RSpec.configure do |c|
   # Readable test descriptions
   c.formatter = :documentation
 
-  c.include SystemHelper
+  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-  # Configure all nodes in nodeset
   c.before :suite do
-    # Install module
-    puppet_module_install(:source => proj_root, :module_name => 'osg')
+    hosts.each do |h|
+      on h, 'yum -y install git'
+      on h, '[ -d "/etc/puppet/modules/cron" ] || git clone git://github.com/treydock/puppet-cron.git /etc/puppet/modules/cron'
+      scp_to h, File.join(proj_root, 'spec/fixtures/make-dummy-cert'), '/tmp/make-dummy-cert'
+      on h, '/tmp/make-dummy-cert /tmp/host /tmp/bestman /tmp/rsv /tmp/http'
 
-    hosts.each do |host|
-      # Install module dependencies
-      modulefile_dependencies.each do |mod|
-        on host, puppet("module", "install", "#{mod['name']}", "--version",  "'#{mod['version_requirement']}'"), { :acceptable_exit_codes => [0,1] }
-      end
-
-      on host, 'yum -y install git'
-      on host, '[ -d "/etc/puppet/modules/cron" ] || git clone git://github.com/treydock/puppet-cron.git /etc/puppet/modules/cron'
-
-      scp_to host, File.join(proj_root, 'spec/fixtures/make-dummy-cert'), '/tmp/make-dummy-cert'
-      on host, '/tmp/make-dummy-cert /tmp/host /tmp/bestman /tmp/rsv /tmp/http'
+      install_puppet_module_via_pmt_on(h, :module_name => 'puppetlabs-inifile')
+      puppet_pp = <<-EOF
+      ini_setting { 'puppet.conf/main/show_diff':
+        ensure  => 'present',
+        section => 'main',
+        path    => '/etc/puppet/puppet.conf',
+        setting => 'show_diff',
+        value   => 'true',
+      }
+      ini_setting { 'puppet.conf/main/parser':
+        ensure  => 'present',
+        section => 'main',
+        path    => '/etc/puppet/puppet.conf',
+        setting => 'parser',
+        value   => 'future',
+      }
+      EOF
+      apply_manifest_on(h, puppet_pp, :catch_failures => true)
     end
   end
 end

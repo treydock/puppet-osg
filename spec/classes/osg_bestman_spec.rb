@@ -247,17 +247,17 @@ describe 'osg::bestman' do
       end
 
       context "with localPathListAllowed => ['/tmp','/home']" do
-        let(:params) {{ :localPathListAllowed => ['/tmp', '/home'] }}
+        let(:params) {{ :local_path_list_allowed => ['/tmp', '/home'] }}
         it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['localPathListAllowed=/tmp;/home']) }
       end
 
       context "with localPathListToBlock => ['/etc','/root']" do
-        let(:params) {{ :localPathListToBlock => ['/etc', '/root'] }}
+        let(:params) {{ :local_path_list_to_block => ['/etc', '/root'] }}
         it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['localPathListToBlock=/etc;/root']) }
       end
 
       context "with supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com']" do
-        let(:params) {{ :supportedProtocolList => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com'] }}
+        let(:params) {{ :supported_protocol_list => ['gsiftp://gridftp1.example.com','gsiftp://gridftp2.example.com'] }}
         it { verify_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', ['supportedProtocolList=gsiftp://gridftp1.example.com;gsiftp://gridftp2.example.com']) }
       end
 
@@ -343,9 +343,9 @@ describe 'osg::bestman' do
 
       # Test validate_array parameters
       [
-        'localPathListToBlock',
-        'localPathListAllowed',
-        'supportedProtocolList',
+        'local_path_list_to_block',
+        'local_path_list_allowed',
+        'supported_protocol_list',
       ].each do |param|
         context "with #{param} => 'foo'" do
           let(:params) {{ param.to_sym => 'foo' }}

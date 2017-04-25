@@ -8,6 +8,7 @@ describe 'osg::gums class:' do
       pp =<<-EOS
         class { 'osg': }
         class { 'osg::gums':
+          manage_firewall => false,
           httpcert_source => 'file:///tmp/httpcert.pem',
           httpkey_source  => 'file:///tmp/httpkey.pem',
         }

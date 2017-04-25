@@ -10,6 +10,7 @@ describe 'osg::bestman class:' do
         class { 'sudo': purge => false, config_file_replace => false }
         class { 'osg': }
         class { 'osg::bestman':
+          manage_firewall    => false,
           bestmancert_source => 'file:///tmp/bestmancert.pem',
           bestmankey_source  => 'file:///tmp/bestmankey.pem',
         }

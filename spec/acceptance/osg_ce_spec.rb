@@ -9,6 +9,7 @@ describe 'osg::ce class:' do
         class { 'osg': }
         class { 'osg::cacerts::updater': }
         class { 'osg::ce':
+          manage_firewall => false,
           hostcert_source => 'file:///tmp/hostcert.pem',
           hostkey_source  => 'file:///tmp/hostkey.pem',
           httpcert_source => 'file:///tmp/httpcert.pem',
