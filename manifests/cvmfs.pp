@@ -46,12 +46,12 @@ class osg::cvmfs (
 
   include osg
 
-  anchor { 'osg::cvmfs::start': }->
-  Class['osg']->
-  class { 'osg::cvmfs::user': }->
-  class { 'osg::cvmfs::install': }->
-  class { 'osg::cvmfs::config': }->
-  class { 'osg::cvmfs::service': }->
-  anchor { 'osg::cvmfs::end': }
+  anchor { 'osg::cvmfs::start': }
+  -> Class['osg']
+  -> class { 'osg::cvmfs::user': }
+  -> class { 'osg::cvmfs::install': }
+  -> class { 'osg::cvmfs::config': }
+  -> class { 'osg::cvmfs::service': }
+  -> anchor { 'osg::cvmfs::end': }
 
 }

@@ -10,12 +10,12 @@ class osg::bestman (
   $event_log_count        = 10,
   $event_log_size         = 20971520,
   $manage_firewall        = true,
-  $securePort             = '8443',
-  $localPathListToBlock   = [],
-  $localPathListAllowed   = [],
-  $supportedProtocolList  = [],
-  $noSudoOnLs             = true,
-  $accessFileSysViaGsiftp = false,
+  $secure_port             = '8443',
+  $local_path_list_to_block   = [],
+  $local_path_list_allowed   = [],
+  $supported_protocol_list  = [],
+  $no_sudo_on_ls             = true,
+  $access_file_sys_via_gsiftp = false,
   $manage_sudo            = true,
   $sudo_srm_commands      = $osg::params::sudo_srm_commands,
   $sudo_srm_runas         = $osg::params::sudo_srm_runas,
@@ -25,9 +25,9 @@ class osg::bestman (
   validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
   validate_bool($manage_sudo)
-  validate_array($localPathListToBlock)
-  validate_array($localPathListAllowed)
-  validate_array($supportedProtocolList)
+  validate_array($local_path_list_to_block)
+  validate_array($local_path_list_allowed)
+  validate_array($supported_protocol_list)
 
   include osg
   include osg::cacerts
@@ -70,18 +70,18 @@ class osg::bestman (
     default => $host_dn,
   }
 
-  anchor { 'osg::bestman::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::bestman::install': }->
-  Class['osg::gums::client']->
-  class { 'osg::bestman::config': }~>
-  class { 'osg::bestman::service': }->
-  anchor { 'osg::bestman::end': }
+  anchor { 'osg::bestman::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::bestman::install': }
+  -> Class['osg::gums::client']
+  -> class { 'osg::bestman::config': }
+  ~> class { 'osg::bestman::service': }
+  -> anchor { 'osg::bestman::end': }
 
   if $manage_firewall {
     firewall { '100 allow SRMv2 access':
-      port   => $securePort,
+      port   => $secure_port,
       proto  => 'tcp',
       action => 'accept',
     }

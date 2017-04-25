@@ -39,14 +39,14 @@ class osg::ce::service {
     hasstatus  => true,
     hasrestart => true,
     subscribe  => $_info_service_subscribe,
-  }->
-  service { 'gratia-probes-cron':
+  }
+  -> service { 'gratia-probes-cron':
     ensure     => 'running',
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-  }->
-  service { 'osg-cleanup-cron':
+  }
+  -> service { 'osg-cleanup-cron':
     ensure     => 'running',
     enable     => true,
     hasstatus  => true,

@@ -33,13 +33,13 @@ class osg::client (
   $condor_configs    = merge($condor_configs_default, $condor_configs_override)
   $condor_ce_configs = merge($condor_ce_configs_default, $condor_ce_configs_override)
 
-  anchor { 'osg::client::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::client::install': }->
-  class { 'osg::client::config': }->
-  class { 'osg::client::service': }->
-  anchor { 'osg::client::end': }
+  anchor { 'osg::client::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::client::install': }
+  -> class { 'osg::client::config': }
+  -> class { 'osg::client::service': }
+  -> anchor { 'osg::client::end': }
 
   if $manage_firewall {
     firewall { '100 allow GLOBUS_TCP_PORT_RANGE':

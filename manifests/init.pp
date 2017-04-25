@@ -59,10 +59,10 @@ class osg (
   include epel
   include osg::repos
 
-  Anchor['osg::start']->
-  Class['epel']->
-  Class['osg::repos']->
-  Anchor['osg::end']
+  Anchor['osg::start']
+  -> Class['epel']
+  -> Class['osg::repos']
+  -> Anchor['osg::end']
 
   include osg::configure
 

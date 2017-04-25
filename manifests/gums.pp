@@ -31,13 +31,13 @@ class osg::gums (
     default => $httpkey_source,
   }
 
-  anchor { 'osg::gums::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::gums::install': }->
-  class { 'osg::gums::config': }~>
-  class { 'osg::gums::service': }->
-  anchor { 'osg::gums::end': }
+  anchor { 'osg::gums::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::gums::install': }
+  -> class { 'osg::gums::config': }
+  ~> class { 'osg::gums::service': }
+  -> anchor { 'osg::gums::end': }
 
   if $manage_firewall {
     firewall { '100 allow GUMS access':

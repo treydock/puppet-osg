@@ -36,8 +36,8 @@ eventLogLevel=INFO
 ## All definitions will include the default blocked list
 ## e.g. localPathListToBlock=/;/etc;/var 
 ### localPathListToBlock=BLOCKEDPATHS
-<% unless scope.lookupvar('osg::bestman::localPathListToBlock').empty? -%>
-localPathListToBlock=<%= scope.lookupvar('osg::bestman::localPathListToBlock').join(';') %>
+<% unless scope.lookupvar('osg::bestman::local_path_list_to_block').empty? -%>
+localPathListToBlock=<%= scope.lookupvar('osg::bestman::local_path_list_to_block').join(';') %>
 <% end -%>
 ###########################################################
 # Provide permission for user access to the list of the local directories
@@ -46,10 +46,10 @@ localPathListToBlock=<%= scope.lookupvar('osg::bestman::localPathListToBlock').j
 ## e.g. localPathListAllowed=/home;/project 
 ###########################################################
 ### localPathListAllowed=
-<% unless scope.lookupvar('osg::bestman::localPathListAllowed').empty? -%>
-localPathListAllowed=<%= scope.lookupvar('osg::bestman::localPathListAllowed').join(';') %>
+<% unless scope.lookupvar('osg::bestman::local_path_list_allowed').empty? -%>
+localPathListAllowed=<%= scope.lookupvar('osg::bestman::local_path_list_allowed').join(';') %>
 <% end -%>
-securePort=<%= scope.lookupvar('osg::bestman::securePort') %>
+securePort=<%= scope.lookupvar('osg::bestman::secure_port') %>
 CertFileName=/etc/grid-security/bestman/bestmancert.pem
 KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ### ProxyFileName=PROXY_FILE_PATH
@@ -59,8 +59,8 @@ KeyFileName=/etc/grid-security/bestman/bestmankey.pem
 ##      Or, multiple transfer servers are supported
 ## supportedProtocolList=gsiftp://host1.domain.tld;gsiftp://host2.domain.tld
 ### supportedProtocolList=
-<% unless scope.lookupvar('osg::bestman::supportedProtocolList').empty? -%>
-supportedProtocolList=<%= scope.lookupvar('osg::bestman::supportedProtocolList').join(';') %>
+<% unless scope.lookupvar('osg::bestman::supported_protocol_list').empty? -%>
+supportedProtocolList=<%= scope.lookupvar('osg::bestman::supported_protocol_list').join(';') %>
 <% end -%>
 ############################################################ 
 # NOTE: Each plugin entry must define the class name, jar file name, 
@@ -93,8 +93,8 @@ checkSizeWithGsiftp=false
 #    daemon   ALL=(SRM_USR) NOPASSWD: SRM_CMD
 # 
 accessFileSysViaSudo=true
-noSudoOnLs=<%= scope.lookupvar('osg::bestman::noSudoOnLs') %>
-accessFileSysViaGsiftp=<%= scope.lookupvar('osg::bestman::accessFileSysViaGsiftp') %>
+noSudoOnLs=<%= scope.lookupvar('osg::bestman::no_sudo_on_ls') %>
+accessFileSysViaGsiftp=<%= scope.lookupvar('osg::bestman::access_file_sys_via_gsiftp') %>
 ### accessFileSysViaGsiftp=false
 ###########################################################
 ### showChecksumWhenListingFile to return checksum in srmLs

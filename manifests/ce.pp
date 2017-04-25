@@ -60,14 +60,14 @@ class osg::ce (
     standalone      => false,
   }
 
-  anchor { 'osg::ce::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::ce::install': }->
-  Class['osg::gridftp']->
-  class { 'osg::ce::config': }->
-  class { 'osg::ce::service': }->
-  anchor { 'osg::ce::end': }
+  anchor { 'osg::ce::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::ce::install': }
+  -> Class['osg::gridftp']
+  -> class { 'osg::ce::config': }
+  -> class { 'osg::ce::service': }
+  -> anchor { 'osg::ce::end': }
 
   if $manage_firewall {
     if $gram_gateway_enabled {
