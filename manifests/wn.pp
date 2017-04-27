@@ -4,7 +4,7 @@ class osg::wn inherits osg::params {
   include osg
   include osg::cacerts
 
-  $xrootd_client_package_name = 'xrootd4-client'
+  $xrootd_client_package_name = 'xrootd-client'
 
   package { 'osg-wn-client':
     ensure  => 'present',

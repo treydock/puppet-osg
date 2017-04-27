@@ -57,7 +57,6 @@ class osg::repos {
     gpgcheck        => '1',
     gpgkey          => $osg::_repo_gpgkey,
     priority        => '98',
-    require         => Yumrepo['epel'],
   }
 
   #TODO : Need consider_as_osg=yes

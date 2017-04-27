@@ -25,6 +25,7 @@ describe 'osg::bestman' do
         ]
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::bestman') }
       it { should contain_class('osg::params') }
 

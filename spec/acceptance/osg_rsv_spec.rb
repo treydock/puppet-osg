@@ -18,7 +18,6 @@ describe 'osg::rsv class:' do
       apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
     it_behaves_like "osg::rsv", node
 
   end

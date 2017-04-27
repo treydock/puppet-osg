@@ -19,6 +19,7 @@ describe 'osg::wn' do
 
       let(:params) {{ }}
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::wn') }
       it { should contain_class('osg::params') }
 

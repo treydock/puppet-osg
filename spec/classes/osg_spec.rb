@@ -17,6 +17,7 @@ describe 'osg' do
         })
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg') }
       it { should contain_class('osg::params') }
       it { should contain_class('epel') }

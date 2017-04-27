@@ -19,6 +19,7 @@ describe 'osg::squid' do
 
       let(:params) {{ }}
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::squid') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg') }

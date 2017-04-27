@@ -16,7 +16,5 @@ describe 'osg::squid class:' do
       apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
-
   end
 end
