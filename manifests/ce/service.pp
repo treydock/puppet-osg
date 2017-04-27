@@ -47,8 +47,11 @@ class osg::ce::service {
     hasrestart => true,
   }
   -> service { 'osg-cleanup-cron':
-    ensure     => 'running',
-    enable     => true,
+    ensure     => $osg::ce::enable_cleanup ? { #lint:ignore:selector_inside_resource
+      true  => 'running',
+      false => 'stopped',
+    },
+    enable     => $osg::ce::enable_cleanup,
     hasstatus  => true,
     hasrestart => true,
   }

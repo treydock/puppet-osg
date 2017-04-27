@@ -55,6 +55,14 @@ class osg::ce::config {
 
   osg_local_site_settings { 'Network/port_range': value => "${osg::globus_tcp_source_range_min},${osg::globus_tcp_source_range_max}"}
 
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/enabled": value => true }
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/${osg::ce::location_name}": value => $osg::ce::batch_system_prefix }
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/job_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::job_contact}" }
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/util_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::util_contact}" }
+  create_resources(osg_local_site_settings, $osg::ce::batch_settings)
+
+  osg_local_site_settings { 'Misc Services/enable_cleanup': value => $osg::ce::enable_cleanup }
+
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)
   create_resources(osg_gip_config, $osg::ce::osg_gip_configs)
 

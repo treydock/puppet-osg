@@ -19,6 +19,7 @@ describe 'osg::ce' do
 
       let(:params) {{ }}
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::ce') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg') }
@@ -43,11 +44,20 @@ describe 'osg::ce' do
       it { should contain_class('osg::ce::service').that_comes_before('Anchor[osg::ce::end]') }
       it { should contain_anchor('osg::ce::end') }
 
-      it "should create Firewall[100 allow GRAM]" do
-        should contain_firewall('100 allow GRAM').with({
+      it "should create Firewall[100 allow HTCondorCE]" do
+        should contain_firewall('100 allow HTCondorCE').with({
           :ensure => 'present',
           :action => 'accept',
-          :dport  => '2119',
+          :dport  => '9619',
+          :proto  => 'tcp',
+        })
+      end
+
+      it "should create Firewall[100 allow HTCondorCE shared_port]" do
+        should contain_firewall('100 allow HTCondorCE shared_port').with({
+          :ensure => 'present',
+          :action => 'accept',
+          :dport  => '9620',
           :proto  => 'tcp',
         })
       end
@@ -61,41 +71,29 @@ describe 'osg::ce' do
         it do
           should contain_package('empty-torque').with({
             :ensure => 'present',
-            :before => 'Package[condor]',
+            :before => 'Package[osg-ce-pbs]',
           })
         end
 
         it do
-          should contain_package('condor').with({
+          should contain_package('osg-ce-pbs').with({
             :ensure => 'present',
-            :before => 'Package[osg-ce]',
           })
         end
 
-        it do
-          should contain_package('osg-ce').with({
-            :ensure => 'present',
-            :name   => 'osg-ce-pbs',
-          })
-        end
-
-        it { should_not contain_package('osg-configure-slurm') }
-        it { should_not contain_package('gratia-probe-slurm') }
-
-        context 'when use_slurm => true' do
-          let(:params) {{ :use_slurm => true }}
+        context 'when batch_system => slurm' do
+          let(:params) {{ :batch_system => 'slurm' }}
 
           it do
-            should contain_package('osg-configure-slurm').with({
-              :ensure   => 'present',
-              :require  => 'Package[osg-ce]',
+            should contain_package('empty-slurm').with({
+              :ensure => 'present',
+              :before => 'Package[osg-ce-slurm]',
             })
           end
 
           it do
-            should contain_package('gratia-probe-slurm').with({
-              :ensure   => 'present',
-              :require  => 'Package[osg-ce]',
+            should contain_package('osg-ce-slurm').with({
+              :ensure => 'present',
             })
           end
         end
@@ -142,7 +140,7 @@ describe 'osg::ce' do
         end
 
         {
-          'Gateway/gram_gateway_enabled' => 'true',
+          'Gateway/gram_gateway_enabled' => 'false',
           'Gateway/htcondor_gateway_enabled' => 'true',
           'Site Information/group' => 'OSG',
           'Site Information/host_name' => facts[:fqdn],
@@ -197,7 +195,7 @@ describe 'osg::ce' do
 
       context 'osg::ce::service' do
         it do
-          should contain_service('globus-gatekeeper').with({
+          should contain_service('condor-ce').with({
             :ensure     => 'running',
             :enable     => 'true',
             :hasstatus  => 'true',
@@ -247,7 +245,6 @@ describe 'osg::ce' do
 
       # Test validate_bool parameters
       [
-        'use_slurm',
         'manage_firewall',
       ].each do |param|
         context "with #{param} => 'foo'" do

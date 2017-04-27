@@ -17,11 +17,10 @@ describe 'osg::ce class:' do
         }
       EOS
 
-      apply_manifest_on(node, pp, :catch_failures => false) #TODO services fail to start because not everything is configured
-      apply_manifest_on(node, pp, :catch_changes => false) #TODO services fail to start because not everything is configured
+      apply_manifest_on(node, pp, :catch_failures => true)
+      apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
     it_behaves_like "osg::cacerts", node
     it_behaves_like "osg::cacerts::updater", node
 

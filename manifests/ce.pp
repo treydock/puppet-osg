@@ -1,6 +1,6 @@
 # Class: osg::ce: See README.md for documentation.
 class osg::ce (
-  $gram_gateway_enabled       = true,
+  $gram_gateway_enabled       = false,
   $htcondor_gateway_enabled   = true,
   $site_info_group            = 'OSG',
   $site_info_host_name        = $::fqdn,
@@ -14,9 +14,10 @@ class osg::ce (
   $site_info_country          = 'UNAVAILABLE',
   $site_info_longitude        = 'UNAVAILABLE',
   $site_info_latitude         = 'UNAVAILABLE',
-  $batch_system_package_name  = 'empty-torque',
-  $ce_package_name            = 'osg-ce-pbs',
-  $use_slurm                  = false,
+  $batch_system               = 'torque',
+  $batch_system_prefix        = '/usr',
+  $pbs_server                 = 'UNAVAILABLE',
+  $enable_cleanup             = true,
   $manage_hostcert            = true,
   $hostcert_source            = 'UNSET',
   $hostkey_source             = 'UNSET',
@@ -27,11 +28,11 @@ class osg::ce (
   $manage_firewall            = true,
   $osg_local_site_settings    = {},
   $osg_gip_configs            = {},
+  $tomcat_package             = $osg::params::tomcat_package,
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
   validate_bool($htcondor_gateway_enabled)
-  validate_bool($use_slurm)
   validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
   validate_hash($osg_local_site_settings)
@@ -39,8 +40,35 @@ class osg::ce (
 
   include osg
   include osg::cacerts
+  include osg::tomcat::user
 
   $cemon_service_name = 'osg-info-services'
+
+  case $batch_system {
+    /torque|pbs/: {
+      $batch_system_package_name  = 'empty-torque'
+      $ce_package_name            = 'osg-ce-pbs'
+      $batch_ini_section          = 'PBS'
+      $location_name              = 'pbs_location'
+      $job_contact                = 'jobmanager-pbs'
+      $util_contact               = 'jobmanager'
+      $batch_settings             = {
+        'PBS/pbs_server' => { 'value' => $pbs_server }
+      }
+    }
+    'slurm': {
+      $batch_system_package_name  = 'empty-slurm'
+      $ce_package_name            = 'osg-ce-slurm'
+      $batch_ini_section          = 'SLURM'
+      $location_name              = 'slurm_location'
+      $job_contact                = 'jobmanager-pbs'
+      $util_contact               = 'jobmanager'
+      $batch_settings             = {}
+    }
+    default: {
+      fail('osg::ce: batch_system must be either torque, pbs or slurm')
+    }
+  }
 
   $_httpcert_source = $httpcert_source ? {
     'UNSET' => undef,
@@ -63,6 +91,7 @@ class osg::ce (
   anchor { 'osg::ce::start': }
   -> Class['osg']
   -> Class['osg::cacerts']
+  -> Class['osg::tomcat::user']
   -> class { 'osg::ce::install': }
   -> Class['osg::gridftp']
   -> class { 'osg::ce::config': }
