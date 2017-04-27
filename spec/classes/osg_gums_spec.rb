@@ -23,6 +23,13 @@ describe 'osg::gums' do
         ]
       end
 
+      case facts[:operatingsystemrelease]
+      when /^6/
+        tomcat_service = 'tomcat6'
+      when /^7/
+        tomcat_service = 'tomcat'
+      end
+
       it { should create_class('osg::gums') }
       it { should contain_class('osg::params') }
 
@@ -57,6 +64,13 @@ describe 'osg::gums' do
         it do 
           should contain_package('osg-gums').with({
             :ensure   => 'installed',
+          })
+        end
+
+        it do
+          is_expected.to contain_exec('/var/lib/trustmanager-tomcat/configure.sh').with({
+            :refreshonly => true,
+            :logoutput   => true,
           })
         end
       end
@@ -112,39 +126,7 @@ describe 'osg::gums' do
           })
         end
 
-        it do 
-          should contain_file('/etc/tomcat6/server.xml').with({
-            :ensure   => 'file',
-            :owner    => 'tomcat',
-            :group    => 'root',
-            :mode     => '0664',
-          }) \
-            .with_content(/^\s+<Connector\sport="8443"\sSSLEnabled="true"$/)
-        end
-
-        it do 
-          should contain_file('/etc/tomcat6/log4j-trustmanager.properties').with({
-            :ensure   => 'file',
-            :source   => 'file:///var/lib/trustmanager-tomcat/log4j-trustmanager.properties',
-            :owner    => 'root',
-            :group    => 'root',
-            :mode     => '0644',
-          })
-        end
-
-        [
-          'bcprov.jar',
-          'trustmanager.jar',
-          'trustmanager-tomcat.jar',
-          'commons-logging.jar',
-        ].each do |jar|
-          it do
-            should contain_file("/usr/share/tomcat6/lib/#{jar}").with({
-              :ensure   => 'link',
-              :target   => "/usr/share/java/#{jar}",
-            })
-          end
-        end
+        
 
         it { should contain_class('mysql::server') }
 
@@ -200,7 +182,7 @@ describe 'osg::gums' do
 
       context 'osg::gums::service' do
         it do
-          should contain_service('tomcat6').with({
+          should contain_service(tomcat_service).with({
             :ensure       => 'running',
             :enable       => 'true',
             :hasstatus    => 'true',
@@ -210,7 +192,7 @@ describe 'osg::gums' do
 
         context 'when manage_tomcat => false' do
           let(:params) {{ :manage_tomcat => false }}
-          it { should_not contain_service('tomcat6') }
+          it { should_not contain_service(tomcat_service) }
         end
       end
 

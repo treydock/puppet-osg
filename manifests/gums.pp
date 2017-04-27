@@ -11,7 +11,12 @@ class osg::gums (
   $manage_firewall    = true,
   $firewall_interface = 'eth0',
   $manage_tomcat      = true,
-  $manage_mysql       = true
+  $tomcat_conf_dir    = $osg::params::tomcat_conf_dir,
+  $tomcat_base_dir    = $osg::params::tomcat_base_dir,
+  $tomcat_log_dir     = $osg::params::tomcat_log_dir,
+  $tomcat_service     = $osg::params::tomcat_service,
+  $manage_mysql       = true,
+  $manage_logrotate   = true,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)
@@ -30,6 +35,8 @@ class osg::gums (
     'UNSET' => undef,
     default => $httpkey_source,
   }
+
+  $db_url = "jdbc:mysql://${osg::gums::db_hostname}:${osg::gums::db_port}/${osg::gums::db_name}"
 
   anchor { 'osg::gums::start': }
   -> Class['osg']
