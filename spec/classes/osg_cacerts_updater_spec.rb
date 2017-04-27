@@ -17,6 +17,7 @@ describe 'osg::cacerts::updater' do
         })
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::cacerts::updater') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg::cacerts') }
@@ -49,7 +50,6 @@ describe 'osg::cacerts::updater' do
           :owner    => 'root',
           :group    => 'root',
           :mode     => '0644',
-          :require  => 'Package[cronie]',
         })
       end
 
@@ -137,7 +137,6 @@ describe 'osg::cacerts::updater' do
       end
 
       [
-        'include_cron',
         'config_replace',
       ].each do |bool_param|
         context "with #{bool_param} => 'foo'" do

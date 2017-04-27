@@ -11,7 +11,6 @@ class osg::cacerts::updater (
   $service_name             = 'osg-ca-certs-updater-cron',
   $service_ensure           = 'UNSET',
   $service_enable           = 'UNSET',
-  $include_cron             = true,
   $config_replace           = true,
   $crl_package_name         = 'fetch-crl',
   $crl_package_ensure       = 'UNSET',
@@ -25,7 +24,6 @@ class osg::cacerts::updater (
 
   require 'osg::cacerts'
 
-  validate_bool($include_cron)
   validate_bool($config_replace)
 
   case $ensure {
@@ -114,8 +112,6 @@ class osg::cacerts::updater (
   $args_array = [ $min_age_arg, $max_age_arg, $random_wait_arg, $quiet_arg, $logfile_arg ]
   $args = join(reject($args_array, 'UNSET'), ' ')
 
-  if $include_cron { include cron }
-
   package { 'osg-ca-certs-updater':
     ensure  => $package_ensure_real,
     name    => $package_name,
@@ -139,7 +135,6 @@ class osg::cacerts::updater (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => Package[$osg::params::crond_package_name],
   }
 
   package { 'fetch-crl':

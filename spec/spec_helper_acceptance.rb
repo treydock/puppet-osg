@@ -17,8 +17,6 @@ RSpec.configure do |c|
 
   c.before :suite do
     hosts.each do |h|
-      on h, 'yum -y install git'
-      on h, '[ -d "/etc/puppet/modules/cron" ] || git clone git://github.com/treydock/puppet-cron.git /etc/puppet/modules/cron'
       scp_to h, File.join(proj_root, 'spec/fixtures/make-dummy-cert'), '/tmp/make-dummy-cert'
       on h, '/tmp/make-dummy-cert /tmp/host /tmp/bestman /tmp/rsv /tmp/http'
 

@@ -20,6 +20,7 @@ fixtures:
     sudo:
       repo: git://github.com/saz/puppet-sudo.git
       ref: v3.1.0
-    cron: git://github.com/treydock/puppet-cron.git
+    logrotate:
+      repo: https://github.com/yo61/puppet-logrotate
   symlinks:
     osg: "#{source_dir}"
