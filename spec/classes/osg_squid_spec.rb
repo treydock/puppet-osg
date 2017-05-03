@@ -74,8 +74,7 @@ describe 'osg::squid' do
       end
 
       it do
-        content = catalogue.resource('file', '/etc/squid/customize.sh').send(:parameters)[:content]
-        content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        verify_exact_contents(catalogue, '/etc/squid/customize.sh', [
           'awk --file `dirname $0`/customhelps.awk --source \'{',
           'setoption("acl NET_LOCAL src", "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16")',
           'setoption("acl localnet src", "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16")',
@@ -83,7 +82,7 @@ describe 'osg::squid' do
           'setoptionparameter("cache_dir", 3, "10000")',
           'print',
           '}\'',
-        ]
+        ])
       end
 
       it do

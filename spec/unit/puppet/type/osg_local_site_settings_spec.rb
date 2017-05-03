@@ -36,29 +36,29 @@ describe 'Puppet::Type.type(:osg_local_site_settings)' do
 
   it 'should accept a valid value' do
     @osg_local_site_settings[:value] = 'bar'
-    @osg_local_site_settings[:value].should == 'bar'
+    expect(@osg_local_site_settings[:value]).to eq('bar')
   end
 
   it 'should not accept a value with whitespace' do
     @osg_local_site_settings[:value] = 'b ar'
-    @osg_local_site_settings[:value].should == 'b ar'
+    expect(@osg_local_site_settings[:value]).to eq('b ar')
   end
 
   it 'should accept valid ensure values' do
     @osg_local_site_settings[:ensure] = :present
-    @osg_local_site_settings[:ensure].should == :present
+    expect(@osg_local_site_settings[:ensure]).to eq(:present)
     @osg_local_site_settings[:ensure] = :absent
-    @osg_local_site_settings[:ensure].should == :absent
+    expect(@osg_local_site_settings[:ensure]).to eq(:absent)
   end
 
   it 'should change true to True' do
     @osg_local_site_settings[:value] = true
-    @osg_local_site_settings[:value].should == 'True'
+    expect(@osg_local_site_settings[:value]).to eq('True')
   end
 
   it 'should change false to False' do
     @osg_local_site_settings[:value] = false
-    @osg_local_site_settings[:value].should == 'False'
+    expect(@osg_local_site_settings[:value]).to eq('False')
   end
 
   it 'should not accept invalid ensure values' do

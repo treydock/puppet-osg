@@ -36,29 +36,29 @@ describe 'Puppet::Type.type(:osg_gip_config)' do
 
   it 'should accept a valid value' do
     @osg_gip_config[:value] = 'bar'
-    @osg_gip_config[:value].should == 'bar'
+    expect(@osg_gip_config[:value]).to eq('bar')
   end
 
   it 'should not accept a value with whitespace' do
     @osg_gip_config[:value] = 'b ar'
-    @osg_gip_config[:value].should == 'b ar'
+    expect(@osg_gip_config[:value]).to eq('b ar')
   end
 
   it 'should accept valid ensure values' do
     @osg_gip_config[:ensure] = :present
-    @osg_gip_config[:ensure].should == :present
+    expect(@osg_gip_config[:ensure]).to eq(:present)
     @osg_gip_config[:ensure] = :absent
-    @osg_gip_config[:ensure].should == :absent
+    expect(@osg_gip_config[:ensure]).to eq(:absent)
   end
 
   it 'should change true to True' do
     @osg_gip_config[:value] = true
-    @osg_gip_config[:value].should == 'True'
+    expect(@osg_gip_config[:value]).to eq('True')
   end
 
   it 'should change false to False' do
     @osg_gip_config[:value] = false
-    @osg_gip_config[:value].should == 'False'
+    expect(@osg_gip_config[:value]).to eq('False')
   end
 
   it 'should not accept invalid ensure values' do

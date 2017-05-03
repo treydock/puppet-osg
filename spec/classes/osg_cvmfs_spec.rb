@@ -146,15 +146,14 @@ describe 'osg::cvmfs' do
         end  
 
         it do
-          content = catalogue.resource('file', '/etc/cvmfs/default.local').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '/etc/cvmfs/default.local', [
             'CVMFS_REPOSITORIES="`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`"',
             'CVMFS_STRICT_MOUNT=no',
             'CVMFS_CACHE_BASE=/var/cache/cvmfs',
             'CVMFS_QUOTA_LIMIT=20000',
             "CVMFS_HTTP_PROXY=\"http://squid.#{facts[:domain]}:3128\"",
             'GLITE_VERSION=',
-          ]
+          ])
         end
 
         it do
@@ -168,10 +167,9 @@ describe 'osg::cvmfs' do
         end
 
         it do
-          content = catalogue.resource('file', '/etc/cvmfs/domain.d/cern.ch.local').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '/etc/cvmfs/domain.d/cern.ch.local', [
             'CVMFS_SERVER_URL="http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs.racf.bnl.gov:8000/opt/@org@"',
-          ]
+          ])
         end
 
         it do

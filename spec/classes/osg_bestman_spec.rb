@@ -19,12 +19,6 @@ describe 'osg::bestman' do
 
       let(:params) {{ }}
 
-      let :pre_condition do
-        [
-          "class { 'osg::lcmaps': gums_hostname => 'gums.foo' }",
-        ]
-      end
-
       it { should compile.with_all_deps }
       it { should create_class('osg::bestman') }
       it { should contain_class('osg::params') }
@@ -59,13 +53,12 @@ describe 'osg::bestman' do
         it { should contain_sudo__conf('bestman').with_priority('10') }
 
         it do
-          content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '10_bestman', [
             'Defaults:bestman !requiretty',
             'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
             'Runas_Alias SRM_USR = ALL,!root',
             'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
-          ]
+          ])
         end
 
         it do
@@ -141,8 +134,7 @@ describe 'osg::bestman' do
         end
 
         it do
-          content = catalogue.resource('file', '/etc/sysconfig/bestman2').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '/etc/sysconfig/bestman2', [
             'SRM_HOME=/etc/bestman2',
             'BESTMAN_SYSCONF=/etc/sysconfig/bestman2',
             'BESTMAN_SYSCONF_LIB=/etc/sysconfig/bestman2lib',
@@ -166,7 +158,7 @@ describe 'osg::bestman' do
             'BESTMAN_FULLMODE_ENABLED=no',
             'JAVA_CLIENT_MAX_HEAP=512',
             'JAVA_CLIENT_MIN_HEAP=32',
-          ]
+          ])
         end
 
         it do
@@ -179,8 +171,7 @@ describe 'osg::bestman' do
         end
 
         it do
-          content = catalogue.resource('file', '/etc/bestman2/conf/bestman2.rc').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '/etc/bestman2/conf/bestman2.rc', [
             'EventLogLocation=/var/log/bestman2',
             'eventLogLevel=INFO',
             'securePort=8443',
@@ -204,7 +195,7 @@ describe 'osg::bestman' do
             'Concurrency=40',
             'FactoryID=srm/v2/server',
             'noEventLog=false',
-          ]
+          ])
         end
 
 
@@ -275,39 +266,36 @@ describe 'osg::bestman' do
       context 'with sudo_srm_commands => ["/foo/bar"]' do
         let(:params){{ :sudo_srm_commands => ['/foo/bar'] }}
         it do
-          content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '10_bestman', [
             'Defaults:bestman !requiretty',
             'Cmnd_Alias SRM_CMD = /foo/bar',
             'Runas_Alias SRM_USR = ALL,!root',
             'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
-          ]
+          ])
         end
       end
 
       context 'with sudo_srm_commands => "/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls"' do
         let(:params){{ :sudo_srm_commands => '/bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls' }}
         it do
-          content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '10_bestman', [
             'Defaults:bestman !requiretty',
             'Cmnd_Alias SRM_CMD = /bin/rm, /bin/mkdir, /bin/rmdir, /bin/mv, /bin/cp, /bin/ls',
             'Runas_Alias SRM_USR = ALL,!root',
             'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
-          ]
+          ])
         end
       end
 
       context 'with sudo_srm_runas => "ALL, !root"' do
         let(:params){{ :sudo_srm_runas => 'ALL, !root' }}
         it do
-          content = catalogue.resource('file', '10_bestman').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '10_bestman', [
             'Defaults:bestman !requiretty',
             'Cmnd_Alias SRM_CMD = /bin/rm,/bin/mkdir,/bin/rmdir,/bin/mv,/bin/cp,/bin/ls',
             'Runas_Alias SRM_USR = ALL, !root',
             'bestman ALL=(SRM_USR) NOPASSWD: SRM_CMD'
-          ]
+          ])
         end
       end
 
