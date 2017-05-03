@@ -1,10 +1,6 @@
 # osg_version.rb
 
-begin
-  require 'facter/util/file_read'
-rescue LoadError => e
-  require 'facter/util/file_read_ext'
-end
+require 'facter/util/file_read'
 
 Facter.add(:osg_version) do
   confine :osfamily => "RedHat"
