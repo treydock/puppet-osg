@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::client class:' do
-  before { skip("Package missing?") }
   context "when default parameters" do
     node = only_host_with_role(hosts, 'client')
 

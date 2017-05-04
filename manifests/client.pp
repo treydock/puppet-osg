@@ -15,6 +15,7 @@ class osg::client (
 
   include osg
   include osg::cacerts
+  include osg::wn
 
   $condor_configs_default = {
     'SCHEDD_HOST'       => $osg::condor_schedd_host,
@@ -40,6 +41,8 @@ class osg::client (
   -> class { 'osg::client::config': }
   -> class { 'osg::client::service': }
   -> anchor { 'osg::client::end': }
+
+  Class['osg::wn'] -> Class['osg::client::install']
 
   if $manage_firewall {
     firewall { '100 allow GLOBUS_TCP_PORT_RANGE':
