@@ -20,7 +20,7 @@ describe 'osg::repos' do
       if facts[:operatingsystemmajrelease] == '7'
         osg_release = '3.3'
       else
-        osg_release = '3.2'
+        osg_release = '3.3'
       end
 
       it { should compile.with_all_deps }
