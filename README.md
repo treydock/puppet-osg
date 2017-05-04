@@ -54,13 +54,13 @@ Use the `osg::bestman` class to configure a Bestman SE.  This example will confi
       cacerts_package_name  => 'empty-ca-certs',
     }
     class { 'osg::bestman':
-      hostcert_source       => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      hostkey_source        => 'file:///home/admin/osg/certs/bestman/key.pem',
-      bestmancert_source    => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      bestmankey_source     => 'file:///home/admin/osg/certs/bestman/key.pem',
-      host_dn               => '/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=srm.example.tld',
-      localPathListAllowed  => ['/home', '/data'],
-      supportedProtocolList => ['gsiftp://gridftp1.example.tld'],
+      hostcert_source          => 'file:///home/admin/osg/certs/bestman/cert.pem',
+      hostkey_source           => 'file:///home/admin/osg/certs/bestman/key.pem',
+      bestmancert_source       => 'file:///home/admin/osg/certs/bestman/cert.pem',
+      bestmankey_source        => 'file:///home/admin/osg/certs/bestman/key.pem',
+      host_dn                  => '/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=srm.example.tld',
+      local_path_list_allowed  => ['/home', '/data'],
+      supported_protocol_list  => ['gsiftp://gridftp1.example.tld'],
     }
 
 #### osg::cacerts::updater
@@ -76,7 +76,7 @@ The `osg::cacerts::updater` class by default will perform the following actions
 Example usage:
 
     class { 'osg':
-      cacerts_package_name    => 'osg-ca-certs',
+      cacerts_package_name => 'osg-ca-certs',
     }
     class { 'osg::cacerts::updater': }
 
@@ -94,9 +94,7 @@ This class by default configures a GRAM CE.  The following example is to configu
     class { 'osg::ce':
       gram_gateway_enabled      => false,
       htcondor_gateway_enabled  => true,
-      batch_system_package_name => 'empty-torque',
-      ca_package_name           => 'osg-ca-pbs',
-      use_slurm                 => true,
+      batch_system              => 'slurm',
       hostcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
       hostkey_source            => 'file:///home/admin/osg/certs/ce/hostkey.pem',
       httpcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
@@ -213,7 +211,7 @@ The `osg::wn` class will configure a worker node to work with the OSG software. 
 * Ensures the osg class is included (repo)
 * Ensures the osg::cacerts class is included
 * Installs osg-wn-client package
-* Installs xrootd4-client (OSG 3.2) or xrootd-client (OSG 3.1) package
+* Installs xrootd-client
 
 Example:
 
@@ -271,6 +269,7 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 
 * `osg` - Sets global values and configures the OSG repos
 * `osg::bestman` - Configures a Bestman SE.
+* `osg::cacerts` - Installs and configures OSG CA certs
 * `osg::cacerts::updater` - Configures the OSG CA certs updater.
 * `osg::ce` - Configures a CE.
 * `osg::client` - Configures an OSG client.
@@ -283,7 +282,6 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 
 #### Private classes
 
-* `osg::cacerts` - Installs and configures OSG CA certs
 * `osg::configure` - Manages osg-configure
 * `osg::params` -  Defines module default values
 * `osg::repos` - Configure OSG Yumrepo resources
@@ -311,6 +309,7 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::rsv::install` - Installs RSV
 * `osg::rsv::config` - Configures RSV
 * `osg::rsv::service` - Manages RSV services
+* `osg::tomcat::user` - Manage tomcat user/group
 
 ### Parameters
 
@@ -397,6 +396,7 @@ Returns the installed OSG version as found in `/etc/osg-version`.
 Tested operating systems:
 
 * CentOS 6
+* CentOS 7
 
 This module has only been thoroughly tested using OSG 3.2.
 
