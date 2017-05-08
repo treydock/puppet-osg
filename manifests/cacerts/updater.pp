@@ -12,14 +12,6 @@ class osg::cacerts::updater (
   $service_ensure           = 'UNSET',
   $service_enable           = 'UNSET',
   $config_replace           = true,
-  $crl_package_name         = 'fetch-crl',
-  $crl_package_ensure       = 'UNSET',
-  $crl_boot_service_name    = 'fetch-crl-boot',
-  $crl_boot_service_ensure  = 'stopped',
-  $crl_boot_service_enable  = false,
-  $crl_cron_service_name    = 'fetch-crl-cron',
-  $crl_cron_service_ensure  = 'UNSET',
-  $crl_cron_service_enable  = 'UNSET',
 ) inherits osg::params {
 
   require 'osg::cacerts'
@@ -52,11 +44,6 @@ class osg::cacerts::updater (
     default => $package_ensure,
   }
 
-  $crl_package_ensure_real = $crl_package_ensure ? {
-    'UNSET' => $package_ensure_default,
-    default => $crl_package_ensure,
-  }
-
   $service_ensure_real = $service_ensure ? {
     'UNSET' => $service_ensure_default,
     default => $service_ensure,
@@ -65,26 +52,6 @@ class osg::cacerts::updater (
   $service_enable_real = $service_enable ? {
     'UNSET' => $service_enable_default,
     default => $service_enable,
-  }
-
-  $crl_boot_service_ensure_real = $crl_boot_service_ensure ? {
-    'UNSET' => $service_ensure_default,
-    default => $crl_boot_service_ensure,
-  }
-
-  $crl_boot_service_enable_real = $crl_boot_service_enable ? {
-    'UNSET' => $service_enable_default,
-    default => $crl_boot_service_enable,
-  }
-
-  $crl_cron_service_ensure_real = $crl_cron_service_ensure ? {
-    'UNSET' => $service_ensure_default,
-    default => $crl_cron_service_ensure,
-  }
-
-  $crl_cron_service_enable_real = $crl_cron_service_enable ? {
-    'UNSET' => $service_enable_default,
-    default => $crl_cron_service_enable,
   }
 
   $min_age_arg = $min_age ? {
@@ -135,29 +102,5 @@ class osg::cacerts::updater (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-  }
-
-  package { 'fetch-crl':
-    ensure  => $crl_package_ensure_real,
-    name    => $crl_package_name,
-    require => Yumrepo['osg'],
-  }
-
-  service { 'fetch-crl-boot':
-    ensure     => $crl_boot_service_ensure_real,
-    enable     => $crl_boot_service_enable_real,
-    name       => $crl_boot_service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Package['fetch-crl'],
-  }
-
-  service { 'fetch-crl-cron':
-    ensure     => $crl_cron_service_ensure_real,
-    enable     => $crl_cron_service_enable_real,
-    name       => $crl_cron_service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Package['fetch-crl'],
   }
 }
