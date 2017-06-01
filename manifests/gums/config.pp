@@ -42,13 +42,14 @@ class osg::gums::config {
   }
 
   augeas { 'gums.config-persistenceFactories':
-    lens    => 'Xml.lns',
-    incl    => '/etc/gums/gums.config',
-    changes => [
+    lens      => 'Xml.lns',
+    incl      => '/etc/gums/gums.config',
+    changes   => [
       "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.username \"${osg::gums::db_username}\"",
       "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.url \"${osg::gums::db_url}\"",
       "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.password \"${osg::gums::db_password}\"",
     ],
+    show_diff => false,
   }
 
   if $osg::gums::manage_tomcat {
