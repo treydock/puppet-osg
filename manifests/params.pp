@@ -14,6 +14,11 @@ class osg::params {
     '!root',
   ]
 
+  $utils_packages = [
+    'globus-proxy-utils',
+    'osg-pki-tools',
+  ]
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {

@@ -204,6 +204,14 @@ The `customize_template` can be used to pass a site-specific template used to cu
       customize_template  => 'site_osg/squid/customize.sh.erb',
     }
 
+#### osg::utils
+
+The `osg::utils` class will install utility packages from OSG.
+
+Example:
+
+    class { 'osg::utils':}
+
 #### osg::wn
 
 The `osg::wn` class will configure a worker node to work with the OSG software.   This class currently has no parameters and performs the following actions:
@@ -278,6 +286,7 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::gums` - Configures an OSG GUMS server.
 * `osg::rsv` - Configures the RSV service.
 * `osg::squid` - Configures an OSG Frontier Squid server.
+* `osg::utils` - Install OSG utility packages
 * `osg::wn` - Configures an OSG worker node.
 
 #### Private classes
@@ -341,6 +350,9 @@ TODO
 TODO
 
 #### osg::squid
+TODO
+
+#### osg::utils
 TODO
 
 ### Types
