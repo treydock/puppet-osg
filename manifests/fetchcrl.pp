@@ -9,6 +9,7 @@ class osg::fetchcrl (
   $crl_cron_service_name    = 'fetch-crl-cron',
   $crl_cron_service_ensure  = 'UNSET',
   $crl_cron_service_enable  = 'UNSET',
+  $use_syslog               = true,
 ) inherits osg::params {
 
   require 'osg'
@@ -16,16 +17,25 @@ class osg::fetchcrl (
   case $ensure {
     'present': {
       $package_ensure_default = 'installed'
+      $syslog_conf_ensure     = $use_syslog ? {
+        true  => 'file',
+        false => 'absent',
+      }
       $service_ensure_default = 'running'
       $service_enable_default = true
     }
     'absent': {
       $package_ensure_default = 'absent'
+      $syslog_conf_ensure     = 'absent'
       $service_ensure_default = 'stopped'
       $service_enable_default = false
     }
     'disabled': {
       $package_ensure_default = 'installed'
+      $syslog_conf_ensure     = $use_syslog ? {
+        true  => 'file',
+        false => 'absent',
+      }
       $service_ensure_default = 'stopped'
       $service_enable_default = false
     }
@@ -63,6 +73,15 @@ class osg::fetchcrl (
     ensure  => $crl_package_ensure_real,
     name    => $crl_package_name,
     require => Yumrepo['osg'],
+  }
+
+  file { '/etc/fetch-crl.d/syslog.conf':
+    ensure  => $syslog_conf_ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('osg/fetchcrl/syslog.conf.erb'),
+    require => Package['fetch-crl'],
   }
 
   service { 'fetch-crl-boot':

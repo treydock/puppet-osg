@@ -32,6 +32,15 @@ describe 'osg::fetchcrl' do
       end
 
       it do
+        should contain_file('/etc/fetch-crl.d/syslog.conf').with({
+          :ensure => 'file',
+          :owner  => 'root',
+          :group  => 'root',
+          :mode   => '0644',
+        })
+      end
+
+      it do
         should contain_service('fetch-crl-boot').with({
           :ensure       => 'stopped',
           :enable       => 'false',
@@ -56,6 +65,7 @@ describe 'osg::fetchcrl' do
       context "with ensure => 'absent'" do
         let(:params) {{ :ensure => 'absent' }}
         it { should contain_package('fetch-crl').with_ensure('absent') }
+        it { should contain_file('/etc/fetch-crl.d/syslog.conf').with_ensure('absent') }
         it { should contain_service('fetch-crl-boot').with_ensure('stopped') }
         it { should contain_service('fetch-crl-boot').with_enable('false') }
         it { should contain_service('fetch-crl-cron').with_ensure('stopped') }
@@ -65,6 +75,7 @@ describe 'osg::fetchcrl' do
       context "with ensure => 'disabled'" do
         let(:params) {{ :ensure => 'disabled' }}
         it { should contain_package('fetch-crl').with_ensure('installed') }
+        it { should contain_file('/etc/fetch-crl.d/syslog.conf').with_ensure('file') }
         it { should contain_service('fetch-crl-boot').with_ensure('stopped') }
         it { should contain_service('fetch-crl-boot').with_enable('false') }
         it { should contain_service('fetch-crl-cron').with_ensure('stopped') }
