@@ -29,6 +29,11 @@ class osg::ce (
   $osg_local_site_settings    = {},
   $osg_gip_configs            = {},
   $tomcat_package             = $osg::params::tomcat_package,
+  $manage_users               = true,
+  $condor_uid                 = undef,
+  $condor_gid                 = undef,
+  $gratia_uid                 = undef,
+  $gratia_gid                 = undef,
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
@@ -92,6 +97,7 @@ class osg::ce (
   -> Class['osg']
   -> Class['osg::cacerts']
   -> Class['osg::tomcat::user']
+  -> class { 'osg::ce::users': }
   -> class { 'osg::ce::install': }
   -> Class['osg::gridftp']
   -> class { 'osg::ce::config': }
