@@ -35,8 +35,8 @@ describe 'osg::squid' do
       end
 
       it do
-        should contain_firewall('100 allow squid monitoring').only_with({
-          :name     => '100 allow squid monitoring',
+        should contain_firewall('101 allow squid monitoring from 128.142.0.0/16').only_with({
+          :name     => '101 allow squid monitoring from 128.142.0.0/16',
           :ensure   => 'present',
           :port     => '3401',
           :proto    => 'udp',
@@ -46,12 +46,23 @@ describe 'osg::squid' do
       end
 
       it do
-        should contain_firewall('101 allow squid monitoring').only_with({
-          :name     => '101 allow squid monitoring',
+        should contain_firewall('101 allow squid monitoring from 188.184.128.0/17').only_with({
+          :name     => '101 allow squid monitoring from 188.184.128.0/17',
           :ensure   => 'present',
           :port     => '3401',
           :proto    => 'udp',
-          :source   => '188.185.0.0/17',
+          :source   => '188.184.128.0/17',
+          :action   => 'accept',
+        })
+      end
+
+      it do
+        should contain_firewall('101 allow squid monitoring from 188.185.128.0/17').only_with({
+          :name     => '101 allow squid monitoring from 188.185.128.0/17',
+          :ensure   => 'present',
+          :port     => '3401',
+          :proto    => 'udp',
+          :source   => '188.185.128.0/17',
           :action   => 'accept',
         })
       end
@@ -80,6 +91,9 @@ describe 'osg::squid' do
           'setoption("acl localnet src", "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16")',
           'setoption("cache_mem", "128 MB")',
           'setoptionparameter("cache_dir", 3, "10000")',
+          'uncomment("acl MAJOR_CVMFS")',
+          'insertline("^# http_access deny !RESTRICT_DEST", "http_access allow MAJOR_CVMFS")',
+          'insertline("^# max_filedescriptors 0", "max_filedescriptors 0")',
           'print',
           '}\'',
         ])
@@ -98,15 +112,17 @@ describe 'osg::squid' do
       context "when manage_firewall => false" do
         let(:params) {{ :manage_firewall => false }}
         it { should_not contain_firewall('100 allow squid access') }
-        it { should_not contain_firewall('100 allow squid monitoring') }
-        it { should_not contain_firewall('101 allow squid monitoring') }
+        it { should_not contain_firewall('101 allow squid monitoring from 128.142.0.0/16') }
+        it { should_not contain_firewall('101 allow squid monitoring from 188.184.128.0/17') }
+        it { should_not contain_firewall('101 allow squid monitoring from 188.185.128.0/17') }
       end
 
       context "when public_interface => 'eth1'" do
         let(:params) {{ :public_interface => 'eth1' }}
         it { should contain_firewall('100 allow squid access').without_iniface }
-        it { should contain_firewall('100 allow squid monitoring').with_iniface('eth1') }
-        it { should contain_firewall('101 allow squid monitoring').with_iniface('eth1') }
+        it { should contain_firewall('101 allow squid monitoring from 128.142.0.0/16').with_iniface('eth1') }
+        it { should contain_firewall('101 allow squid monitoring from 188.184.128.0/17').with_iniface('eth1') }
+        it { should contain_firewall('101 allow squid monitoring from 188.185.128.0/17').with_iniface('eth1') }
       end
 
       context "when net_local => '192.168.200.0/24'" do

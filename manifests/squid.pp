@@ -2,6 +2,9 @@
 class osg::squid (
   $customize_template         = 'osg/squid/customize.sh.erb',
   $net_local                  = '10.0.0.0/8 172.16.0.0/12 192.168.0.0/16',
+  $monitor_addresses          = ['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17'],
+  $allow_major_cvmfs          = true,
+  $max_filedescriptors        = '0',
   $manage_firewall            = true,
   $squid_firewall_ensure      = 'present',
   $monitoring_firewall_ensure = 'present',
@@ -13,6 +16,8 @@ class osg::squid (
 
   include osg
 
+  $squid_location = pick($osg::squid_location, $::fqdn)
+
   if $manage_firewall {
     firewall { '100 allow squid access':
       ensure  => $squid_firewall_ensure,
@@ -21,23 +26,15 @@ class osg::squid (
       iniface => $private_interface,
       action  => 'accept',
     }
-
-    firewall { '100 allow squid monitoring':
-      ensure  => $monitoring_firewall_ensure,
-      port    => '3401',
-      proto   => 'udp',
-      source  => '128.142.0.0/16',
-      iniface => $public_interface,
-      action  => 'accept',
-    }
-
-    firewall { '101 allow squid monitoring':
-      ensure  => $monitoring_firewall_ensure,
-      port    => '3401',
-      proto   => 'udp',
-      source  => '188.185.0.0/17',
-      iniface => $public_interface,
-      action  => 'accept',
+    $monitor_addresses.each |$monitor_address| {
+      firewall { "101 allow squid monitoring from ${monitor_address}":
+        ensure  => $monitoring_firewall_ensure,
+        port    => '3401',
+        proto   => 'udp',
+        source  => $monitor_address,
+        iniface => $public_interface,
+        action  => 'accept',
+      }
     }
   }
 
@@ -69,9 +66,8 @@ class osg::squid (
       tag   => $osg::exported_resources_export_tag,
     }
 
-    $_squid_location = pick($osg::squid_location, $::fqdn)
     @@osg_local_site_settings { 'Squid/location':
-      value => $_squid_location,
+      value => $squid_location,
       tag   => $osg::exported_resources_export_tag,
     }
   }
