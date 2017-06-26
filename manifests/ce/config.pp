@@ -32,6 +32,36 @@ class osg::ce::config {
     File <| title == '/etc/grid-security/http/httpkey.pem' |> { show_diff => false }
   }
 
+  file { '/etc/condor-ce/config.d/99-local.conf':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => $osg::ce::condor_ce_config_content,
+    source  => $osg::ce::condor_ce_config_source,
+    notify  => Service['condor-ce'],
+  }
+
+  if $osg::ce::batch_system != 'condor' {
+    file_line { 'blah_disable_wn_proxy_renewal':
+      path  => '/etc/blah.config',
+      line  => 'blah_disable_wn_proxy_renewal=yes',
+      match => '^blah_disable_wn_proxy_renewal=.*',
+    }
+
+    file_line { 'blah_delegate_renewed_proxies':
+      path  => '/etc/blah.config',
+      line  => 'blah_delegate_renewed_proxies=no',
+      match => '^blah_delegate_renewed_proxies=.*',
+    }
+
+    file_line { 'blah_disable_limited_proxy':
+      path  => '/etc/blah.config',
+      line  => 'blah_disable_limited_proxy=yes',
+      match => '^blah_disable_limited_proxy=.*',
+    }
+  }
+
   osg_local_site_settings { 'Gateway/gram_gateway_enabled':
     value => $osg::ce::gram_gateway_enabled
   }

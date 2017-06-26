@@ -34,6 +34,8 @@ class osg::ce (
   $condor_gid                 = undef,
   $gratia_uid                 = undef,
   $gratia_gid                 = undef,
+  $condor_ce_config_content   = undef,
+  $condor_ce_config_source    = undef,
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
