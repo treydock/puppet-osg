@@ -68,4 +68,13 @@ class osg::cvmfs::config {
     mode   => '0700',
   }
 
+  if $osg::cvmfs::cache_base != '/var/lib/cvmfs' {
+    file { $osg::cvmfs::cache_base:
+      ensure => 'directory',
+      owner  => $osg::cvmfs::user_name,
+      group  => $osg::cvmfs::group_name,
+      mode   => '0700',
+    }
+  }
+
 }
