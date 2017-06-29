@@ -45,7 +45,7 @@ class osg::ce::config {
   if $osg::ce::batch_system != 'condor' {
     file_line { 'blah_disable_wn_proxy_renewal':
       path  => '/etc/blah.config',
-      line  => 'blah_disable_wn_proxy_renewal=yes',
+      line  => 'blah_disable_wn_proxy_renewal="yes"',
       match => '^blah_disable_wn_proxy_renewal=.*',
     }
 
