@@ -21,7 +21,7 @@ class osg::squid (
   if $manage_firewall {
     firewall { '100 allow squid access':
       ensure  => $squid_firewall_ensure,
-      port    => '3128',
+      dport   => '3128',
       proto   => 'tcp',
       iniface => $private_interface,
       action  => 'accept',
@@ -29,7 +29,7 @@ class osg::squid (
     $monitor_addresses.each |$monitor_address| {
       firewall { "101 allow squid monitoring from ${monitor_address}":
         ensure  => $monitoring_firewall_ensure,
-        port    => '3401',
+        dport   => '3401',
         proto   => 'udp',
         source  => $monitor_address,
         iniface => $public_interface,

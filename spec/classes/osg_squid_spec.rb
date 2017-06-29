@@ -28,7 +28,7 @@ describe 'osg::squid' do
         should contain_firewall('100 allow squid access').only_with({
           :name   => '100 allow squid access',
           :ensure => 'present',
-          :port   => '3128',
+          :dport  => '3128',
           :proto  => 'tcp',
           :action => 'accept',
         })
@@ -38,7 +38,7 @@ describe 'osg::squid' do
         should contain_firewall('101 allow squid monitoring from 128.142.0.0/16').only_with({
           :name     => '101 allow squid monitoring from 128.142.0.0/16',
           :ensure   => 'present',
-          :port     => '3401',
+          :dport    => '3401',
           :proto    => 'udp',
           :source   => '128.142.0.0/16',
           :action   => 'accept',
@@ -49,7 +49,7 @@ describe 'osg::squid' do
         should contain_firewall('101 allow squid monitoring from 188.184.128.0/17').only_with({
           :name     => '101 allow squid monitoring from 188.184.128.0/17',
           :ensure   => 'present',
-          :port     => '3401',
+          :dport    => '3401',
           :proto    => 'udp',
           :source   => '188.184.128.0/17',
           :action   => 'accept',
@@ -60,7 +60,7 @@ describe 'osg::squid' do
         should contain_firewall('101 allow squid monitoring from 188.185.128.0/17').only_with({
           :name     => '101 allow squid monitoring from 188.185.128.0/17',
           :ensure   => 'present',
-          :port     => '3401',
+          :dport    => '3401',
           :proto    => 'udp',
           :source   => '188.185.128.0/17',
           :action   => 'accept',
