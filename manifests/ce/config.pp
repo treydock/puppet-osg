@@ -60,6 +60,15 @@ class osg::ce::config {
       line  => 'blah_disable_limited_proxy=yes',
       match => '^blah_disable_limited_proxy=.*',
     }
+
+    augeas { 'gratia-SuppressNoDNRecords':
+      lens    => 'Xml.lns',
+      incl    => $osg::ce::gratia_probe_config,
+      context => "/files${osg::ce::gratia_probe_config}",
+      changes => [
+        'set ProbeConfig/ProbeConfiguration/#attribute/SuppressNoDNRecords 1',
+      ],
+    }
   }
 
   osg_local_site_settings { 'Gateway/gram_gateway_enabled':

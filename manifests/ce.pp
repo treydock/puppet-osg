@@ -62,6 +62,7 @@ class osg::ce (
       $batch_settings             = {
         'PBS/pbs_server' => { 'value' => $pbs_server }
       }
+      $gratia_probe_config        = '/etc/gratia/pbs-lsf/ProbeConfig'
     }
     'slurm': {
       $batch_system_package_name  = 'empty-slurm'
@@ -71,6 +72,7 @@ class osg::ce (
       $job_contact                = 'jobmanager-pbs'
       $util_contact               = 'jobmanager'
       $batch_settings             = {}
+      $gratia_probe_config        = '/etc/gratia/slurm/ProbeConfig'
     }
     default: {
       fail('osg::ce: batch_system must be either torque, pbs or slurm')
