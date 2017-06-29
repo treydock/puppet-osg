@@ -44,6 +44,7 @@ class osg::cvmfs (
     default => join($repositories, ','),
   }
 
+  include ::autofs
   include osg
 
   anchor { 'osg::cvmfs::start': }

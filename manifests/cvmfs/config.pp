@@ -8,15 +8,13 @@ class osg::cvmfs::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['autofs'],
   }
 
-  file_line { 'auto.master cvmfs':
-    ensure => 'present',
-    path   => '/etc/auto.master',
-    line   => '/cvmfs /etc/auto.cvmfs',
-    match  => '^/cvmfs.*',
-    notify => Service['autofs'],
+  autofs::mount { 'cvmfs':
+    mount          => '/cvmfs',
+    mapfile        => '/etc/auto.cvmfs',
+    order          => 50,
+    mapfile_manage => false,
   }
 
   file { '/etc/cvmfs/default.local':

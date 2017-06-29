@@ -2,7 +2,6 @@ fixtures:
   repositories:
     stdlib:
       repo: git://github.com/puppetlabs/puppetlabs-stdlib.git
-      ref: 4.2.1
     inifile:
       repo: git://github.com/puppetlabs/puppetlabs-inifile.git
     mysql: 
@@ -22,5 +21,7 @@ fixtures:
       ref: v3.1.0
     logrotate:
       repo: https://github.com/yo61/puppet-logrotate
+    autofs:
+      repo: https://github.com/voxpupuli/puppet-autofs
   symlinks:
     osg: "#{source_dir}"

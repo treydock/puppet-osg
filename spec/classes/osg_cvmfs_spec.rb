@@ -120,18 +120,15 @@ describe 'osg::cvmfs' do
             :owner    => 'root',
             :group    => 'root',
             :mode     => '0644',
-            :notify   => 'Service[autofs]',
           })
         end
 
         it do
-          should contain_file_line('auto.master cvmfs').only_with({
-            :ensure => 'present',
-            :name   => 'auto.master cvmfs',
-            :path   => '/etc/auto.master',
-            :line   => '/cvmfs /etc/auto.cvmfs',
-            :match  => '^/cvmfs.*',
-            :notify => 'Service[autofs]',
+          should contain_autofs__mount('cvmfs').with({
+            :mount          => '/cvmfs',
+            :mapfile        => '/etc/auto.cvmfs',
+            :order          => '50',
+            :mapfile_manage => 'false',
           })
         end
 
@@ -231,16 +228,6 @@ describe 'osg::cvmfs' do
       end
 
       context 'osg::cvmfs::service' do
-        it do
-          should contain_service('autofs').only_with({
-            :ensure     => 'running',
-            :enable     => 'true',
-            :hasstatus  => 'true',
-            :hasrestart => 'true',
-            :name       => 'autofs',
-          })
-        end
-
         it do
           should contain_exec('cvmfs_config reload').only_with({
             :command      => 'cvmfs_config reload',
