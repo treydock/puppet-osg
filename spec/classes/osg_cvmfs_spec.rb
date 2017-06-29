@@ -223,8 +223,8 @@ describe 'osg::cvmfs' do
           end
         end
 
-        context "when server_urls => []" do
-          let(:params) {{ :server_urls => [] }}
+        context "when cern_server_urls => []" do
+          let(:params) {{ :cern_server_urls => [] }}
 
           it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
         end
@@ -267,7 +267,7 @@ describe 'osg::cvmfs' do
       [
         'repositories',
         'http_proxies',
-        'server_urls',
+        'cern_server_urls',
       ].each do |bool_param|
         context "with #{bool_param} => 'foo'" do
           let(:params) {{ bool_param.to_sym => 'foo' }}

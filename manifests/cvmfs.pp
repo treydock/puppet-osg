@@ -22,7 +22,7 @@ class osg::cvmfs (
   $cache_base             = '/var/cache/cvmfs',
   $quota_limit            = '20000',
   $http_proxies           = ["http://squid.${::domain}:3128"],
-  $server_urls            = [
+  $cern_server_urls       = [
     'http://cvmfs-stratum-one.cern.ch:8000/opt/@org@',
     'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@',
     'http://cvmfs.racf.bnl.gov:8000/opt/@org@',
@@ -37,7 +37,7 @@ class osg::cvmfs (
   validate_bool($strict_mount)
   validate_array($repositories)
   validate_array($http_proxies)
-  validate_array($server_urls)
+  validate_array($cern_server_urls)
 
   $repositories_real = $repositories[0] ? {
     'UNSET' => '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`',
