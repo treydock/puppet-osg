@@ -98,7 +98,8 @@ class osg::ce::config {
 
   if $osg::enable_exported_resources {
     Osg_local_site_settings <<| tag == $osg::exported_resource_collect_tag |>> {
-      notify => Exec['osg-configure'],
+      notify  => Exec['osg-configure'],
+      require => Class['osg::ce::install'],
     }
   }
 
