@@ -64,9 +64,9 @@ class osg::ce::config {
     augeas { 'gratia-SuppressNoDNRecords':
       lens    => 'Xml.lns',
       incl    => $osg::ce::gratia_probe_config,
-      context => "/files${osg::ce::gratia_probe_config}",
+      context => "/files${osg::ce::gratia_probe_config}/ProbeConfiguration/#attribute",
       changes => [
-        'set ProbeConfig/ProbeConfiguration/#attribute/SuppressNoDNRecords 1',
+        'set SuppressNoDNRecords 1',
       ],
     }
   }
