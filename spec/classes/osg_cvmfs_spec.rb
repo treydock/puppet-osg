@@ -19,6 +19,12 @@ describe 'osg::cvmfs' do
 
       let(:params) {{ }}
 
+      if facts[:operatingsystemmajrelease].to_i >= 7
+        manage_fuse_group = false
+      else
+        manage_fuse_group = true
+      end
+
       it { should compile.with_all_deps }
       it { should create_class('osg::cvmfs') }
       it { should contain_class('osg::params') }
@@ -33,13 +39,17 @@ describe 'osg::cvmfs' do
 
       context 'osg::cvmfs::user' do
 
-        it do
-          should contain_group('fuse').only_with({
-            :ensure => 'present',
-            :name   => 'fuse',
-            :system => 'true',
-            :before => 'User[cvmfs]',
-          })
+        if manage_fuse_group
+          it do
+            should contain_group('fuse').only_with({
+              :ensure => 'present',
+              :name   => 'fuse',
+              :system => 'true',
+              :before => 'User[cvmfs]',
+            })
+          end
+        else
+          it { should_not contain_group('fuse') }
         end
 
         it do
@@ -76,12 +86,20 @@ describe 'osg::cvmfs' do
 
         context "with fuse_group_gid => 100" do
           let(:params) {{ :fuse_group_gid => 99 }}
-          it { should contain_group('fuse').with_gid('99') }
+          if manage_fuse_group
+            it { should contain_group('fuse').with_gid('99') }
+          else
+            it { should_not contain_group('fuse') }
+          end
         end
 
         context "with manage_user => false" do
           let(:params) {{ :manage_user => false }}
-          it { should contain_group('fuse').without_before }
+          if manage_fuse_group
+            it { should contain_group('fuse').without_before }
+          else
+            it { should_not contain_group('fuse') }
+          end
           it { should_not contain_user('cvmfs') }
         end
 

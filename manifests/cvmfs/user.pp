@@ -11,7 +11,7 @@ class osg::cvmfs::user {
     default       => $osg::cvmfs::group_gid,
   }
 
-  if $osg::cvmfs::manage_fuse_group {
+  if $osg::cvmfs::manage_fuse_group and versioncmp($::operatingsystemrelease, '7.0') < 0 {
     if $osg::cvmfs::manage_user {
       $_fuse_group_before = User['cvmfs']
     } else {
