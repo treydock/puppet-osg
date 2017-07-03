@@ -22,11 +22,7 @@ class osg::cvmfs (
   $cache_base             = '/var/cache/cvmfs',
   $quota_limit            = '20000',
   $http_proxies           = ["http://squid.${::domain}:3128"],
-  $cern_server_urls       = [
-    'http://cvmfs-stratum-one.cern.ch:8000/opt/@org@',
-    'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@',
-    'http://cvmfs.racf.bnl.gov:8000/opt/@org@',
-  ],
+  $cern_server_urls       = [],
   $glite_version          = '',
   $cms_local_site         = 'UNSET',
 ) inherits osg::params {

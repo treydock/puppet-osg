@@ -173,21 +173,7 @@ describe 'osg::cvmfs' do
           ])
         end
 
-        it do
-          should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with({
-            :ensure  => 'file',
-            :path    => '/etc/cvmfs/domain.d/cern.ch.local',
-            :owner   => 'root',
-            :group   => 'root',
-            :mode    => '0644',
-          })
-        end
-
-        it do
-          verify_exact_contents(catalogue, '/etc/cvmfs/domain.d/cern.ch.local', [
-            'CVMFS_SERVER_URL="http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs.racf.bnl.gov:8000/opt/@org@"',
-          ])
-        end
+        it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
 
         it do
           should contain_file('/etc/cvmfs/config.d/cms.cern.ch.local').only_with({
@@ -240,10 +226,24 @@ describe 'osg::cvmfs' do
           end
         end
 
-        context "when cern_server_urls => []" do
-          let(:params) {{ :cern_server_urls => [] }}
+        context "when cern_server_urls => ['someurl', 'anotherurl']" do
+          let(:params) {{ :cern_server_urls => ['someurl', 'anotherurl'] }}
 
-          it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
+          it do
+            should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with({
+              :ensure  => 'file',
+              :path    => '/etc/cvmfs/domain.d/cern.ch.local',
+              :owner   => 'root',
+              :group   => 'root',
+              :mode    => '0644',
+            })
+          end
+
+          it do
+            verify_exact_contents(catalogue, '/etc/cvmfs/domain.d/cern.ch.local', [
+              'CVMFS_SERVER_URL="someurl;anotherurl"',
+            ])
+          end
         end
       end
 
