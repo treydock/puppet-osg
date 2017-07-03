@@ -42,6 +42,15 @@ class osg::ce::config {
     notify  => Service['condor-ce'],
   }
 
+  file { $osg::ce::blahp_submit_attributes:
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => $osg::ce::blahp_local_submit_content,
+    source  => $osg::ce::blahp_local_submit_source,
+  }
+
   if $osg::ce::batch_system != 'condor' {
     file_line { 'blah_disable_wn_proxy_renewal':
       path  => '/etc/blah.config',

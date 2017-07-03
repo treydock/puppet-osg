@@ -36,6 +36,8 @@ class osg::ce (
   $gratia_gid                 = undef,
   $condor_ce_config_content   = undef,
   $condor_ce_config_source    = undef,
+  $blahp_local_submit_content = undef,
+  $blahp_local_submit_source  = undef,
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
@@ -63,6 +65,7 @@ class osg::ce (
         'PBS/pbs_server' => { 'value' => $pbs_server }
       }
       $gratia_probe_config        = '/etc/gratia/pbs-lsf/ProbeConfig'
+      $blahp_submit_attributes    = '/etc/blahp/pbs_local_submit_attributes.sh'
     }
     'slurm': {
       $batch_system_package_name  = 'empty-slurm'
@@ -73,6 +76,7 @@ class osg::ce (
       $util_contact               = 'jobmanager'
       $batch_settings             = {}
       $gratia_probe_config        = '/etc/gratia/slurm/ProbeConfig'
+      $blahp_submit_attributes    = '/etc/blahp/slurm_local_submit_attributes.sh'
     }
     default: {
       fail('osg::ce: batch_system must be either torque, pbs or slurm')
@@ -133,4 +137,10 @@ class osg::ce (
       }
     }
   }
+
+  exec { 'condor_ce_reconfig':
+    path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+    refreshonly => true,
+  }
+
 }
