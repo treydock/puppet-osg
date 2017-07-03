@@ -21,8 +21,10 @@ describe 'osg::cvmfs' do
 
       if facts[:operatingsystemmajrelease].to_i >= 7
         manage_fuse_group = false
+        cvmfs_groups      = nil
       else
         manage_fuse_group = true
+        cvmfs_groups      = ['fuse']
       end
 
       it { should compile.with_all_deps }
@@ -53,11 +55,11 @@ describe 'osg::cvmfs' do
         end
 
         it do
-          should contain_user('cvmfs').only_with({
+          should contain_user('cvmfs').with({
             :ensure      => 'present',
             :name        => 'cvmfs',
-            :uid         => nil,
             :gid         => 'cvmfs',
+            :groups      => cvmfs_groups,
             :home        => '/var/lib/cvmfs',
             :shell       => '/sbin/nologin',
             :system      => 'true',

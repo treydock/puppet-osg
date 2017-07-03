@@ -27,12 +27,18 @@ class osg::cvmfs::user {
   }
 
   if $osg::cvmfs::manage_user {
+    if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+      $cvmfs_groups = ['fuse']
+    } else {
+      $cvmfs_groups = undef
+    }
+
     user { 'cvmfs':
       ensure     => 'present',
       name       => $osg::cvmfs::user_name,
       uid        => $user_uid,
       gid        => $osg::cvmfs::group_name,
-      groups     => ['fuse'],
+      groups     => $cvmfs_groups,
       home       => $osg::cvmfs::user_home,
       shell      => $osg::cvmfs::user_shell,
       system     => $osg::cvmfs::user_system,
