@@ -87,7 +87,8 @@ class osg::ce::config {
       changes => [
         'set DAEMON_LIST "$(DAEMON_LIST), CEVIEW, GANGLIAD"',
         "set HTCONDORCE_VIEW_PORT ${osg::ce::view_port}",
-      ]
+      ],
+      notify  => Service['condor-ce'],
     }
   }
 
