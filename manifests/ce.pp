@@ -38,12 +38,15 @@ class osg::ce (
   $condor_ce_config_source    = undef,
   $blahp_local_submit_content = undef,
   $blahp_local_submit_source  = undef,
+  $include_view               = false,
+  $view_port                  = 8080,
 ) inherits osg::params {
 
   validate_bool($gram_gateway_enabled)
   validate_bool($htcondor_gateway_enabled)
   validate_bool($manage_hostcert)
   validate_bool($manage_firewall)
+  validate_bool($include_view)
   validate_hash($osg_local_site_settings)
   validate_hash($osg_gip_configs)
 
@@ -93,6 +96,12 @@ class osg::ce (
     default => $httpkey_source,
   }
 
+  if $include_view {
+    $view_ensure = 'present'
+  } else {
+    $view_ensure = 'absent'
+  }
+
   class { 'osg::gridftp':
     manage_hostcert => $manage_hostcert,
     hostcert_source => $hostcert_source,
@@ -135,6 +144,13 @@ class osg::ce (
         dport  => $htcondor_ce_shared_port,
         proto  => 'tcp',
       }
+    }
+
+    firewall { '100 allow HTCondorCE View':
+      ensure => $view_ensure,
+      action => 'accept',
+      dport  => $view_port,
+      proto  => 'tcp',
     }
   }
 

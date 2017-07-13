@@ -22,4 +22,8 @@ class osg::ce::install {
     }
   }
 
+  package { 'htcondor-ce-view':
+    ensure => $osg::ce::view_ensure,
+  }
+
 }

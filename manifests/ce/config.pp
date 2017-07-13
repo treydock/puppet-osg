@@ -80,6 +80,17 @@ class osg::ce::config {
     }
   }
 
+  if $osg::ce::include_view {
+    augeas { 'htcondor-ce-view HTCONDORCE_VIEW_PORT':
+      lens    => 'Simplevars.lns',
+      incl    => '/etc/condor-ce/config.d/05-ce-view.conf',
+      changes => [
+        'set DAEMON_LIST "$(DAEMON_LIST), CEVIEW, GANGLIAD"',
+        "set HTCONDORCE_VIEW_PORT ${osg::ce::view_port}",
+      ]
+    }
+  }
+
   osg_local_site_settings { 'Gateway/gram_gateway_enabled':
     value => $osg::ce::gram_gateway_enabled
   }
