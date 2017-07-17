@@ -18,11 +18,12 @@ class osg::cvmfs::user {
       $_fuse_group_before = undef
     }
     group { 'fuse':
-      ensure => 'present',
-      name   => $osg::cvmfs::fuse_group_name,
-      gid    => $osg::cvmfs::fuse_group_gid,
-      system => $osg::cvmfs::fuse_group_system,
-      before => $_fuse_group_before,
+      ensure     => 'present',
+      name       => $osg::cvmfs::fuse_group_name,
+      gid        => $osg::cvmfs::fuse_group_gid,
+      system     => $osg::cvmfs::fuse_group_system,
+      before     => $_fuse_group_before,
+      forcelocal => true,
     }
   }
 
@@ -44,15 +45,17 @@ class osg::cvmfs::user {
       system     => $osg::cvmfs::user_system,
       comment    => $osg::cvmfs::user_comment,
       managehome => $osg::cvmfs::user_managehome,
+      forcelocal => true,
     }
   }
 
   if $osg::cvmfs::manage_group {
     group { 'cvmfs':
-      ensure => 'present',
-      name   => $osg::cvmfs::group_name,
-      gid    => $group_gid,
-      system => $osg::cvmfs::group_system,
+      ensure     => 'present',
+      name       => $osg::cvmfs::group_name,
+      gid        => $group_gid,
+      system     => $osg::cvmfs::group_system,
+      forcelocal => true,
     }
   }
 

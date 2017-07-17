@@ -44,10 +44,11 @@ describe 'osg::cvmfs' do
         if manage_fuse_group
           it do
             should contain_group('fuse').only_with({
-              :ensure => 'present',
-              :name   => 'fuse',
-              :system => 'true',
-              :before => 'User[cvmfs]',
+              :ensure     => 'present',
+              :name       => 'fuse',
+              :system     => 'true',
+              :forcelocal => 'true',
+              :before     => 'User[cvmfs]',
             })
           end
         else
@@ -65,14 +66,16 @@ describe 'osg::cvmfs' do
             :system      => 'true',
             :comment     => 'CernVM-FS service account',
             :managehome  => 'false',
+            :forcelocal  => 'true',
           })
         end
 
         it do
           should contain_group('cvmfs').only_with({
-            :ensure  => 'present',
-            :name    => 'cvmfs',
-            :system  => 'true',
+            :ensure     => 'present',
+            :name       => 'cvmfs',
+            :system     => 'true',
+            :forcelocal => 'true',
           })
         end
 
