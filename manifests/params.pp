@@ -23,7 +23,6 @@ class osg::params {
     'RedHat': {
       case $::operatingsystemmajrelease {
         '7': {
-          $osg_release            = '3.3'
           $yum_priorities_package = 'yum-plugin-priorities'
           $tomcat_package         = 'tomcat'
           $tomcat_base_dir        = '/usr/share/tomcat'
@@ -33,7 +32,6 @@ class osg::params {
           $crond_package_name     = 'cronie'
         }
         '6': {
-          $osg_release            = '3.3'
           $yum_priorities_package = 'yum-plugin-priorities'
           $tomcat_package         = 'tomcat6'
           $tomcat_base_dir        = '/usr/share/tomcat6'

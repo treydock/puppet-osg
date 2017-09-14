@@ -33,6 +33,10 @@ class osg::bestman (
   include osg::cacerts
   include osg::auth
 
+  if $::osg::osg_release == '3.4' {
+    fail('OSG 3.4 does not support bestman')
+  }
+
   $sudo_srm_cmd = is_string($sudo_srm_commands) ? {
     true  => $sudo_srm_commands,
     false => join($sudo_srm_commands, ',')

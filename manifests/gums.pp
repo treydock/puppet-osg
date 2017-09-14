@@ -26,6 +26,10 @@ class osg::gums (
   include osg
   include osg::cacerts
 
+  if $::osg::osg_release == '3.4' {
+    fail('OSG 3.4 does not support GUMS')
+  }
+
   $_httpcert_source = $httpcert_source ? {
     'UNSET' => undef,
     default => $httpcert_source,
