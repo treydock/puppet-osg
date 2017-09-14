@@ -26,8 +26,8 @@ describe 'osg::bestman' do
       it { should contain_anchor('osg::bestman::start').that_comes_before('Class[osg]') }
       it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { should contain_class('osg::cacerts').that_comes_before('Class[osg::bestman::install]') }
-      it { should contain_class('osg::bestman::install').that_comes_before('Class[osg::gums::client]') }
-      it { should contain_class('osg::gums::client').that_comes_before('Class[osg::bestman::config]') }
+      it { should contain_class('osg::bestman::install').that_comes_before('Class[osg::auth]') }
+      it { should contain_class('osg::auth').that_comes_before('Class[osg::bestman::config]') }
       it { should contain_class('osg::bestman::config').that_notifies('Class[osg::bestman::service]') }
       it { should contain_class('osg::bestman::service').that_comes_before('Anchor[osg::bestman::end]') }
       it { should contain_anchor('osg::bestman::end') }

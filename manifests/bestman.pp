@@ -31,7 +31,7 @@ class osg::bestman (
 
   include osg
   include osg::cacerts
-  include osg::gums::client
+  include osg::auth
 
   $sudo_srm_cmd = is_string($sudo_srm_commands) ? {
     true  => $sudo_srm_commands,
@@ -74,7 +74,7 @@ class osg::bestman (
   -> Class['osg']
   -> Class['osg::cacerts']
   -> class { 'osg::bestman::install': }
-  -> Class['osg::gums::client']
+  -> Class['osg::auth']
   -> class { 'osg::bestman::config': }
   ~> class { 'osg::bestman::service': }
   -> anchor { 'osg::bestman::end': }

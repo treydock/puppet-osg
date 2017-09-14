@@ -21,6 +21,7 @@ fixtures:
       ref: v3.1.0
     logrotate:
       repo: https://github.com/yo61/puppet-logrotate
+      ref: v1.4.0
     autofs:
       repo: https://github.com/voxpupuli/puppet-autofs
   symlinks:

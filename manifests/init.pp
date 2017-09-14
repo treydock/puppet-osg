@@ -9,6 +9,7 @@ class osg (
   $repo_gpgkey                    = undef,
   $enable_osg_contrib             = false,
   $gums_host                      = undef,
+  Enum['gums', 'lcmaps_voms'] $auth_type = 'gums',
   $cacerts_package_name           = 'osg-ca-certs',
   $cacerts_install_other_packages = false,
   $cacerts_package_ensure         = 'installed',
