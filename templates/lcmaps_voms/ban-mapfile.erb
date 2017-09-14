@@ -1,0 +1,11 @@
+# File managed by Puppet - DO NOT EDIT
+# This file is for users to be banned from this site
+# Add shell-style (i.e. fnmatch(3)) patterns, in quotes, one per line, based on
+# user cert DNs.
+#
+# Example:
+# "/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=People/CN=Bad User"
+
+<%- scope['osg::lcmaps_voms::ban_users'].each do |user| -%>
+"<%= user %>"
+<%- end -%>
