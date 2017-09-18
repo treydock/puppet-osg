@@ -16,9 +16,6 @@ class osg::lcmaps_voms (
   -> class { '::osg::lcmaps_voms::config': }
   -> anchor { 'osg::lcmaps_voms::end': }
 
-  #Work around bug in osg-configure
-  Class['::osg::cacerts'] -> Exec['osg-configure']
-
   $vos.each |$vo, $dn| {
     if $dn =~ String or $dn =~ Array {
       osg::lcmaps_voms::vo { $vo: dn => $dn }
