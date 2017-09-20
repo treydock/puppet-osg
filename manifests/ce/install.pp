@@ -10,12 +10,14 @@ class osg::ce::install {
     ensure => 'present',
   }
 
-  package { 'osg-info-services':
-    ensure  => 'present',
-    require => Package[$osg::ce::ce_package_name],
+  if $osg::osg_release == '3.3' {
+    package { 'osg-info-services':
+      ensure  => 'present',
+      require => Package[$osg::ce::ce_package_name],
+    }
   }
 
-  if $osg::ce::enable_cleanup {
+  if $osg::osg_release == '3.3' and $osg::ce::enable_cleanup {
     package { 'osg-cleanup':
       ensure  => 'present',
       require => Package[$osg::ce::ce_package_name],

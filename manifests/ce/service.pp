@@ -18,7 +18,6 @@ class osg::ce::service {
       hasstatus  => true,
       hasrestart => true,
       subscribe  => $_ce_service_subscribe,
-      before     => Service[$osg::ce::cemon_service_name]
     }
   }
 
@@ -29,31 +28,35 @@ class osg::ce::service {
       hasstatus  => true,
       hasrestart => true,
       subscribe  => $_ce_service_subscribe,
-      before     => Service[$osg::ce::cemon_service_name]
     }
   }
 
-  service { $osg::ce::cemon_service_name:
+  if $osg::osg_release == '3.3' {
+    service { $osg::ce::cemon_service_name:
+      ensure     => 'running',
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      subscribe  => $_info_service_subscribe,
+    }
+  }
+  service { 'gratia-probes-cron':
     ensure     => 'running',
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    subscribe  => $_info_service_subscribe,
   }
-  -> service { 'gratia-probes-cron':
-    ensure     => 'running',
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-  }
-  -> service { 'osg-cleanup-cron':
-    ensure     => $osg::ce::enable_cleanup ? { #lint:ignore:selector_inside_resource
-      true  => 'running',
-      false => 'stopped',
-    },
-    enable     => $osg::ce::enable_cleanup,
-    hasstatus  => true,
-    hasrestart => true,
+
+  if $osg::osg_release == '3.3' {
+    service { 'osg-cleanup-cron':
+      ensure     => $osg::ce::enable_cleanup ? { #lint:ignore:selector_inside_resource
+        true  => 'running',
+        false => 'stopped',
+      },
+      enable     => $osg::ce::enable_cleanup,
+      hasstatus  => true,
+      hasrestart => true,
+    }
   }
 
 }

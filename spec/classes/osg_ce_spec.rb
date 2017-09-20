@@ -204,7 +204,6 @@ describe 'osg::ce' do
               'File[/etc/grid-security/hostcert.pem]',
               'File[/etc/grid-security/hostkey.pem]',
             ],
-            :before     => 'Service[osg-info-services]', 
           })
         end
 
@@ -218,7 +217,6 @@ describe 'osg::ce' do
               'File[/etc/grid-security/http/httpcert.pem]',
               'File[/etc/grid-security/http/httpkey.pem]',
             ],
-            :before     => ['Service[gratia-probes-cron]'],
           })
         end
 
@@ -228,7 +226,6 @@ describe 'osg::ce' do
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
-            :before     => ['Service[osg-cleanup-cron]'],
           })
         end
 
