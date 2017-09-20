@@ -10,11 +10,11 @@ class osg::lcmaps_voms (
   include ::osg::cacerts
 
   anchor { 'osg::lcmaps_voms::start': }
-  -> Class['::osg']
-  -> Class['::osg::cacerts']
   -> class { '::osg::lcmaps_voms::install': }
   -> class { '::osg::lcmaps_voms::config': }
   -> anchor { 'osg::lcmaps_voms::end': }
+
+  Yumrepo['osg'] -> Class['::osg::lcmaps_voms::install']
 
   $vos.each |$vo, $dn| {
     if $dn =~ String or $dn =~ Array {

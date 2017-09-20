@@ -38,11 +38,13 @@ class osg::gridftp::config {
     }
   }
 
-  file { '/etc/grid-security/grid-mapfile':
-    ensure => 'file',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
+  if $::osg::auth_type == 'gums' {
+    file { '/etc/grid-security/grid-mapfile':
+      ensure => 'file',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+    }
   }
 
 }
