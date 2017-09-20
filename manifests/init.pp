@@ -35,6 +35,8 @@ class osg (
   $storage_worker_node_temp       = 'UNAVAILABLE',
   $storage_site_read              = 'UNAVAILABLE',
   $storage_site_write             = 'UNAVAILABLE',
+  $purge_local_site_settings      = true,
+  $purge_gip_config               = true,
 ) inherits osg::params {
 
   validate_re($cacerts_package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
@@ -64,5 +66,13 @@ class osg (
   # Avoid collecting resources intended for export
   Osg_local_site_settings<| tag != $exported_resources_export_tag |> ~> Exec['osg-configure']
   Osg_gip_config <| |> ~> Exec['osg-configure']
+
+  resources { 'osg_local_site_settings':
+    purge => $purge_local_site_settings,
+  }
+
+  resources { 'osg_gip_config':
+    purge => $purge_gip_config,
+  }
 
 }
