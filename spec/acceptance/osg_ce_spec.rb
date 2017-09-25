@@ -25,6 +25,7 @@ describe 'osg::ce class:' do
           site_info_latitude  => '0',
           osg_gip_configs     => {
             'Subcluster TEST/name'           => { 'value' => 'TEST' },
+            'Subcluster TEST/allowed_vos'    => { 'value' => 'foo' },
             'Subcluster TEST/ram_mb'         => { 'value' => 1024 },
             'Subcluster TEST/cores_per_node' => { 'value' => 1 },
           }
