@@ -1,36 +1,35 @@
-require 'puppet'
-require 'puppet/type/osg_local_site_settings'
+require 'spec_helper'
 
-describe 'Puppet::Type.type(:osg_local_site_settings)' do
+describe Puppet::Type.type(:osg_local_site_settings) do
   before :each do
-    @osg_local_site_settings = Puppet::Type.type(:osg_local_site_settings).new(:name => 'vars/foo', :value => 'bar')
+    @osg_local_site_settings = described_class.new(:name => 'vars/foo', :value => 'bar')
   end
 
   it 'should require a name' do
     expect {
-      Puppet::Type.type(:osg_local_site_settings).new({})
+      described_class.new({})
     }.to raise_error(Puppet::Error, 'Title or name must be provided')
   end
 
   it 'should not expect a name with whitespace' do
     expect {
-      Puppet::Type.type(:osg_local_site_settings).new(:name => 'f oo')
+      described_class.new(:name => 'f oo')
     }.to raise_error(Puppet::Error, /Invalid osg_local_site_settings/)
   end
 
   it 'should fail when there is no section' do
     expect {
-      Puppet::Type.type(:osg_local_site_settings).new(:name => 'foo')
+      described_class.new(:name => 'foo')
     }.to raise_error(Puppet::Error, /Invalid osg_local_site_settings/)
   end
 
   it 'should not require a value when ensure is absent' do
-    Puppet::Type.type(:osg_local_site_settings).new(:name => 'vars/foo', :ensure => :absent)
+    described_class.new(:name => 'vars/foo', :ensure => :absent)
   end
 
   it 'should require a value when ensure is present' do
     expect {
-      Puppet::Type.type(:osg_local_site_settings).new(:name => 'vars/foo', :ensure => :present)
+      described_class.new(:name => 'vars/foo', :ensure => :present)
     }.to raise_error(Puppet::Error, /Property value must be set/)
   end
 
