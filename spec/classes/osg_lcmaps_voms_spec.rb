@@ -25,12 +25,12 @@ describe 'osg::lcmaps_voms' do
       it { should contain_class('osg') }
       it { should contain_class('osg::cacerts') }
 
-      it { should contain_anchor('osg::lcmaps_voms::start').that_comes_before('Class[osg]') }
-      it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
-      it { should contain_class('osg::cacerts').that_comes_before('Class[osg::lcmaps_voms::install]') }
+      it { should contain_anchor('osg::lcmaps_voms::start').that_comes_before('Class[osg::lcmaps_voms::install]') }
       it { should contain_class('osg::lcmaps_voms::install').that_comes_before('Class[osg::lcmaps_voms::config]') }
       it { should contain_class('osg::lcmaps_voms::config').that_comes_before('Anchor[osg::lcmaps_voms::end]') }
       it { should contain_anchor('osg::lcmaps_voms::end') }
+
+      it { should contain_yumrepo('osg').that_comes_before('Class[osg::lcmaps_voms::install]') }
 
       context 'osg::lcmaps_voms::install' do
         it do
