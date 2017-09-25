@@ -160,6 +160,43 @@ The following example will configure a GUMS server to use a shared grid-certific
       db_password => 'secret',
     }
 
+#### osg::lcmaps_voms
+
+The following example will setup LCMAPS VOMS to authenticate the GLOW VO and ban CMS production.  The `vo` parameter will create `osg::lcmaps_voms::vo` resources and the `users` parameter will create `osg::lcmaps_voms::user` resources.
+
+    class { 'osg':
+      shared_certs_path     => '/home/osg/grid-certificates',
+      cacerts_package_name  => 'empty-ca-certs',
+    }
+    class { 'osg::lcmaps_voms':
+      ban_voms => ['/cms/Role=production/*'],
+      ban_users => ['/foo/baz'],
+      vos       => {
+        'glow' => '/GLOW/*',
+        'glow1 => '['/GLOW/chtc/*', '/GLOW/Role=htpc/*'],
+      },
+      users     => {
+        'foo'   => '/fooDN',
+        'foobar => ['/foo', '/bar'],
+      }
+    }
+
+#### osg::lcmaps_voms::vo
+
+This defined type populates `/etc/grid-security/voms-mapfile`.  The `dn` value can be an Array or a String.
+
+    osg::lcmaps_voms::vo { 'nova':
+      dn => '/fermilab/nova/Role=pilot',
+    }
+
+#### osg::lcmaps_voms::user
+
+This defined type populates `/etc/grid-security/grid-mapfile`.  The `dn` value can be an Array or a String.
+
+    osg::lcmaps_voms::user { 'rsv':
+      dn => '/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=rsv/ce.example.com',
+    }
+
 #### osg::rsv
 
 Example of configuring RSV.
@@ -284,6 +321,7 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::cvmfs` - Configures CVMFS.
 * `osg::gridftp` - Configures an OSG GridFTP server.
 * `osg::gums` - Configures an OSG GUMS server.
+* `osg::lcmaps_voms` - Manage LCMAPS VOMS
 * `osg::rsv` - Configures the RSV service.
 * `osg::squid` - Configures an OSG Frontier Squid server.
 * `osg::utils` - Install OSG utility packages
@@ -314,6 +352,8 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::gums::install` - Installs GUMS server
 * `osg::gums::config` - Configures GUMS server
 * `osg::gums::service` - Manages GUMS service
+* `osg::lcmaps_voms::install` - Installs LCMAPS VOMS
+* `osg::lcmaps_voms::config` - Configure LCMAPS VOMS
 * `osg::rsv::users` - Manages RSV users/groups
 * `osg::rsv::install` - Installs RSV
 * `osg::rsv::config` - Configures RSV
@@ -344,6 +384,9 @@ TODO
 TODO
 
 #### osg::gums
+TODO
+
+#### osg::lcmaps_voms
 TODO
 
 #### osg::rsv
