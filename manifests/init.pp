@@ -1,6 +1,6 @@
 # Class: osg: See README.md for documentation.
 class osg (
-  Enum['3.3', '3.4'] $osg_release = '3.3',
+  Enum['3.3', '3.4'] $osg_release = '3.4',
   $repo_baseurl_bit               = 'http://repo.grid.iu.edu',
   $repo_development_baseurl_bit   = undef,
   $repo_testing_baseurl_bit       = undef,
@@ -9,7 +9,7 @@ class osg (
   $repo_gpgkey                    = undef,
   $enable_osg_contrib             = false,
   $gums_host                      = undef,
-  Enum['gums', 'lcmaps_voms'] $auth_type = 'gums',
+  Enum['gums', 'lcmaps_voms'] $auth_type = 'lcmaps_voms',
   $cacerts_package_name           = 'osg-ca-certs',
   $cacerts_install_other_packages = false,
   $cacerts_package_ensure         = 'installed',
