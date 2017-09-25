@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.0.0](https://github.com/treydock/puppet-osg/tree/2.0.0) (2017-09-22)
+## [2.0.0](https://github.com/treydock/puppet-osg/tree/2.0.0) (2017-09-25)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/1.0.0...2.0.0)
 
 Last release before only supporting OSG 3.4
@@ -36,8 +36,10 @@ Require Puppet >= 4 or Puppet 3 with future parser
 * Allow management of custom htcondor-ce config, 99-local.conf
 * Allow management of blahp local submit file
 * Allow management of htcondor-ce-view
+* osg::ce will set EnableProbe=1 for the appropriate batch system gratia probe
 * Add more configuration parameters to osg::squid
 * Add osg::utils class
+* No longer silently skip running osg-configure if errors are present
 
 ## [1.0.0](https://github.com/treydock/puppet-osg/tree/1.0.0) (2017-05-04)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/v0.0.3...1.0.0)
