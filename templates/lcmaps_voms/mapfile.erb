@@ -1,0 +1,7 @@
+<%- if @dn.is_a?(Array) -%>
+  <%- @dn.each do |dn| -%>
+"<%= dn %>" <%= @user %>
+  <%- end -%>
+<%- else -%>
+"<%= @dn %>" <%= @user %>
+<%- end -%>

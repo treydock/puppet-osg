@@ -20,9 +20,10 @@ describe 'osg::repos' do
       if facts[:operatingsystemmajrelease] == '7'
         osg_release = '3.3'
       else
-        osg_release = '3.2'
+        osg_release = '3.3'
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::repos') }
       it { should contain_class('osg') }
       it { should contain_class('osg::params') }
@@ -47,7 +48,6 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
-            :require        => 'Yumrepo[epel]',
           })
         end
       end
@@ -68,7 +68,6 @@ describe 'osg::repos' do
             :gpgcheck       => '1',
             :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
-            :require        => 'Yumrepo[epel]',
           })
         end
       end
@@ -94,7 +93,6 @@ describe 'osg::repos' do
               :gpgcheck       => '1',
               :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
-              :require        => 'Yumrepo[epel]',
             })
           end
         end
@@ -115,7 +113,6 @@ describe 'osg::repos' do
               :gpgcheck       => '1',
               :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
-              :require        => 'Yumrepo[epel]',
             })
           end
         end
@@ -141,7 +138,6 @@ describe 'osg::repos' do
                 :gpgcheck       => '1',
                 :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
-                :require        => 'Yumrepo[epel]',
               })
             end
           end
@@ -162,7 +158,6 @@ describe 'osg::repos' do
                 :gpgcheck       => '1',
                 :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
-                :require        => 'Yumrepo[epel]',
               })
             end
           end

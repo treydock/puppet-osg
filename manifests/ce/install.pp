@@ -3,29 +3,29 @@ class osg::ce::install {
 
   package { $osg::ce::batch_system_package_name:
     ensure => 'present',
-    before => Package['condor'],
+    before => Package[$osg::ce::ce_package_name],
   }
 
-  package { 'condor':
+  package { $osg::ce::ce_package_name:
     ensure => 'present',
-    before => Package['osg-ce'],
   }
 
-  package { 'osg-ce':
-    ensure => 'present',
-    name   => $osg::ce::ce_package_name,
+  if $osg::osg_release == '3.3' {
+    package { 'osg-info-services':
+      ensure  => 'present',
+      require => Package[$osg::ce::ce_package_name],
+    }
   }
 
-  if $osg::ce::use_slurm {
-    package { 'osg-configure-slurm':
+  if $osg::osg_release == '3.3' and $osg::ce::enable_cleanup {
+    package { 'osg-cleanup':
       ensure  => 'present',
-      require => Package['osg-ce'],
+      require => Package[$osg::ce::ce_package_name],
     }
+  }
 
-    package { 'gratia-probe-slurm':
-      ensure  => 'present',
-      require => Package['osg-ce'],
-    }
+  package { 'htcondor-ce-view':
+    ensure => $osg::ce::view_ensure,
   }
 
 }

@@ -19,6 +19,7 @@ describe 'osg::client' do
 
       let(:params) {{ }}
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::client') }
       it { should contain_class('osg::params') }
 
@@ -29,6 +30,8 @@ describe 'osg::client' do
       it { should contain_class('osg::client::config').that_comes_before('Class[osg::client::service]') }
       it { should contain_class('osg::client::service').that_comes_before('Anchor[osg::client::end]') }
       it { should contain_anchor('osg::client::end') }
+
+      it { should contain_class('osg::wn').that_comes_before('Class[osg::client::install]') }
 
       it do
         should contain_firewall('100 allow GLOBUS_TCP_PORT_RANGE').with({
@@ -47,12 +50,6 @@ describe 'osg::client' do
       end
 
       context 'osg::client::install' do
-        it do
-          should contain_package('osg-client').with({
-            :ensure => 'present',
-          })
-        end
-
         it do
           should contain_package('condor').with({
             :ensure => 'present',

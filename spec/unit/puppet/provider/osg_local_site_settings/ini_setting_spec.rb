@@ -23,7 +23,7 @@ describe provider_class do
       {:name => 'vars/foo', :value => 'bar'}
     )
     provider = provider_class.new(resource)
-    provider.section.should == 'vars'
-    provider.setting.should == 'foo'
+    expect(provider.section).to eq('vars')
+    expect(provider.setting).to eq('foo')
   end
 end

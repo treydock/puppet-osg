@@ -17,6 +17,7 @@ describe 'osg::gums::client' do
         })
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::gums::client') }
       it { should contain_class('osg') }
 

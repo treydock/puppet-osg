@@ -8,6 +8,7 @@ describe 'osg::rsv class:' do
       pp =<<-EOS
         class { 'osg': }
         class { 'osg::rsv':
+          manage_firewall => false,
           rsvcert_source => 'file:///tmp/rsvcert.pem',
           rsvkey_source  => 'file:///tmp/rsvkey.pem',
         }
@@ -17,7 +18,6 @@ describe 'osg::rsv class:' do
       apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
     it_behaves_like "osg::rsv", node
 
   end

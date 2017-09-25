@@ -11,7 +11,12 @@ class osg::gums (
   $manage_firewall    = true,
   $firewall_interface = 'eth0',
   $manage_tomcat      = true,
-  $manage_mysql       = true
+  $tomcat_conf_dir    = $osg::params::tomcat_conf_dir,
+  $tomcat_base_dir    = $osg::params::tomcat_base_dir,
+  $tomcat_log_dir     = $osg::params::tomcat_log_dir,
+  $tomcat_service     = $osg::params::tomcat_service,
+  $manage_mysql       = true,
+  $manage_logrotate   = true,
 ) inherits osg::params {
 
   validate_bool($manage_firewall)
@@ -20,6 +25,10 @@ class osg::gums (
 
   include osg
   include osg::cacerts
+
+  if $::osg::osg_release == '3.4' {
+    fail('OSG 3.4 does not support GUMS')
+  }
 
   $_httpcert_source = $httpcert_source ? {
     'UNSET' => undef,
@@ -31,13 +40,15 @@ class osg::gums (
     default => $httpkey_source,
   }
 
-  anchor { 'osg::gums::start': }->
-  Class['osg']->
-  Class['osg::cacerts']->
-  class { 'osg::gums::install': }->
-  class { 'osg::gums::config': }~>
-  class { 'osg::gums::service': }->
-  anchor { 'osg::gums::end': }
+  $db_url = "jdbc:mysql://${osg::gums::db_hostname}:${osg::gums::db_port}/${osg::gums::db_name}"
+
+  anchor { 'osg::gums::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::gums::install': }
+  -> class { 'osg::gums::config': }
+  ~> class { 'osg::gums::service': }
+  -> anchor { 'osg::gums::end': }
 
   if $manage_firewall {
     firewall { '100 allow GUMS access':

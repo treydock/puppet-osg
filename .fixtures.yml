@@ -2,7 +2,6 @@ fixtures:
   repositories:
     stdlib:
       repo: git://github.com/puppetlabs/puppetlabs-stdlib.git
-      ref: 4.2.1
     inifile:
       repo: git://github.com/puppetlabs/puppetlabs-inifile.git
     mysql: 
@@ -13,13 +12,17 @@ fixtures:
       repo: git://github.com/puppetlabs/puppetlabs-apache.git
     concat:
       repo: git://github.com/puppetlabs/puppetlabs-concat.git
-      ref: 1.1.1
+      ref: 2.2.1
     epel:
       repo: git://github.com/stahnma/puppet-module-epel.git
-      ref: 0.0.6
+      ref: 1.0.0
     sudo:
       repo: git://github.com/saz/puppet-sudo.git
-      ref: v3.0.1
-    cron: git://github.com/treydock/puppet-cron.git
+      ref: v3.1.0
+    logrotate:
+      repo: https://github.com/yo61/puppet-logrotate
+      ref: v1.4.0
+    autofs:
+      repo: https://github.com/voxpupuli/puppet-autofs
   symlinks:
     osg: "#{source_dir}"

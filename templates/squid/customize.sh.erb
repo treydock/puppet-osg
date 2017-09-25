@@ -15,5 +15,10 @@ setoption("acl NET_LOCAL src", "<%= @net_local %>")
 setoption("acl localnet src", "<%= @net_local %>")
 setoption("cache_mem", "128 MB")
 setoptionparameter("cache_dir", 3, "10000")
+<%- if @allow_major_cvmfs -%>
+uncomment("acl MAJOR_CVMFS")
+insertline("^# http_access deny !RESTRICT_DEST", "http_access allow MAJOR_CVMFS")
+<%- end -%>
+insertline("^# max_filedescriptors 0", "max_filedescriptors <%= @max_filedescriptors %>")
 print
 }'

@@ -19,6 +19,15 @@ describe 'osg::cvmfs' do
 
       let(:params) {{ }}
 
+      if facts[:operatingsystemmajrelease].to_i >= 7
+        manage_fuse_group = false
+        cvmfs_groups      = nil
+      else
+        manage_fuse_group = true
+        cvmfs_groups      = ['fuse']
+      end
+
+      it { should compile.with_all_deps }
       it { should create_class('osg::cvmfs') }
       it { should contain_class('osg::params') }
 
@@ -32,34 +41,41 @@ describe 'osg::cvmfs' do
 
       context 'osg::cvmfs::user' do
 
-        it do
-          should contain_group('fuse').only_with({
-            :ensure => 'present',
-            :name   => 'fuse',
-            :system => 'true',
-            :before => 'User[cvmfs]',
-          })
+        if manage_fuse_group
+          it do
+            should contain_group('fuse').only_with({
+              :ensure     => 'present',
+              :name       => 'fuse',
+              :system     => 'true',
+              :forcelocal => 'true',
+              :before     => 'User[cvmfs]',
+            })
+          end
+        else
+          it { should_not contain_group('fuse') }
         end
 
         it do
-          should contain_user('cvmfs').only_with({
+          should contain_user('cvmfs').with({
             :ensure      => 'present',
             :name        => 'cvmfs',
-            :uid         => nil,
             :gid         => 'cvmfs',
+            :groups      => cvmfs_groups,
             :home        => '/var/lib/cvmfs',
             :shell       => '/sbin/nologin',
             :system      => 'true',
             :comment     => 'CernVM-FS service account',
             :managehome  => 'false',
+            :forcelocal  => 'true',
           })
         end
 
         it do
           should contain_group('cvmfs').only_with({
-            :ensure  => 'present',
-            :name    => 'cvmfs',
-            :system  => 'true',
+            :ensure     => 'present',
+            :name       => 'cvmfs',
+            :system     => 'true',
+            :forcelocal => 'true',
           })
         end
 
@@ -75,12 +91,20 @@ describe 'osg::cvmfs' do
 
         context "with fuse_group_gid => 100" do
           let(:params) {{ :fuse_group_gid => 99 }}
-          it { should contain_group('fuse').with_gid('99') }
+          if manage_fuse_group
+            it { should contain_group('fuse').with_gid('99') }
+          else
+            it { should_not contain_group('fuse') }
+          end
         end
 
         context "with manage_user => false" do
           let(:params) {{ :manage_user => false }}
-          it { should contain_group('fuse').without_before }
+          if manage_fuse_group
+            it { should contain_group('fuse').without_before }
+          else
+            it { should_not contain_group('fuse') }
+          end
           it { should_not contain_user('cvmfs') }
         end
 
@@ -119,18 +143,15 @@ describe 'osg::cvmfs' do
             :owner    => 'root',
             :group    => 'root',
             :mode     => '0644',
-            :notify   => 'Service[autofs]',
           })
         end
 
         it do
-          should contain_file_line('auto.master cvmfs').only_with({
-            :ensure => 'present',
-            :name   => 'auto.master cvmfs',
-            :path   => '/etc/auto.master',
-            :line   => '/cvmfs /etc/auto.cvmfs',
-            :match  => '^/cvmfs.*',
-            :notify => 'Service[autofs]',
+          should contain_autofs__mount('cvmfs').with({
+            :mount          => '/cvmfs',
+            :mapfile        => '/etc/auto.cvmfs',
+            :order          => '50',
+            :mapfile_manage => 'false',
           })
         end
 
@@ -145,33 +166,17 @@ describe 'osg::cvmfs' do
         end  
 
         it do
-          content = catalogue.resource('file', '/etc/cvmfs/default.local').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+          verify_exact_contents(catalogue, '/etc/cvmfs/default.local', [
             'CVMFS_REPOSITORIES="`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`"',
             'CVMFS_STRICT_MOUNT=no',
             'CVMFS_CACHE_BASE=/var/cache/cvmfs',
             'CVMFS_QUOTA_LIMIT=20000',
             "CVMFS_HTTP_PROXY=\"http://squid.#{facts[:domain]}:3128\"",
             'GLITE_VERSION=',
-          ]
+          ])
         end
 
-        it do
-          should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with({
-            :ensure  => 'file',
-            :path    => '/etc/cvmfs/domain.d/cern.ch.local',
-            :owner   => 'root',
-            :group   => 'root',
-            :mode    => '0644',
-          })
-        end
-
-        it do
-          content = catalogue.resource('file', '/etc/cvmfs/domain.d/cern.ch.local').send(:parameters)[:content]
-          content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
-            'CVMFS_SERVER_URL="http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs.racf.bnl.gov:8000/opt/@org@"',
-          ]
-        end
+        it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
 
         it do
           should contain_file('/etc/cvmfs/config.d/cms.cern.ch.local').only_with({
@@ -224,24 +229,28 @@ describe 'osg::cvmfs' do
           end
         end
 
-        context "when server_urls => []" do
-          let(:params) {{ :server_urls => [] }}
+        context "when cern_server_urls => ['someurl', 'anotherurl']" do
+          let(:params) {{ :cern_server_urls => ['someurl', 'anotherurl'] }}
 
-          it { should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with_ensure('absent') }
+          it do
+            should contain_file('/etc/cvmfs/domain.d/cern.ch.local').with({
+              :ensure  => 'file',
+              :path    => '/etc/cvmfs/domain.d/cern.ch.local',
+              :owner   => 'root',
+              :group   => 'root',
+              :mode    => '0644',
+            })
+          end
+
+          it do
+            verify_exact_contents(catalogue, '/etc/cvmfs/domain.d/cern.ch.local', [
+              'CVMFS_SERVER_URL="someurl;anotherurl"',
+            ])
+          end
         end
       end
 
       context 'osg::cvmfs::service' do
-        it do
-          should contain_service('autofs').only_with({
-            :ensure     => 'running',
-            :enable     => 'true',
-            :hasstatus  => 'true',
-            :hasrestart => 'true',
-            :name       => 'autofs',
-          })
-        end
-
         it do
           should contain_exec('cvmfs_config reload').only_with({
             :command      => 'cvmfs_config reload',
@@ -268,7 +277,7 @@ describe 'osg::cvmfs' do
       [
         'repositories',
         'http_proxies',
-        'server_urls',
+        'cern_server_urls',
       ].each do |bool_param|
         context "with #{bool_param} => 'foo'" do
           let(:params) {{ bool_param.to_sym => 'foo' }}

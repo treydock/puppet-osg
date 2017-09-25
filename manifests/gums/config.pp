@@ -41,41 +41,28 @@ class osg::gums::config {
     replace => false,
   }
 
+  augeas { 'gums.config-persistenceFactories':
+    lens      => 'Xml.lns',
+    incl      => '/etc/gums/gums.config',
+    changes   => [
+      "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.username \"${osg::gums::db_username}\"",
+      "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.url \"${osg::gums::db_url}\"",
+      "set gums/persistenceFactories/hibernatePersistenceFactory/#attribute/hibernate.connection.password \"${osg::gums::db_password}\"",
+    ],
+    show_diff => false,
+  }
+
   if $osg::gums::manage_tomcat {
-    file { '/etc/tomcat6/server.xml':
-      ensure  => 'file',
-      content => template('osg/gums/server.xml.erb'),
-      owner   => 'tomcat',
-      group   => 'root',
-      mode    => '0664',
+    file_line { 'catalina-prefix':
+      path  => "${osg::gums::tomcat_conf_dir}/logging.properties",
+      line  => '1catalina.org.apache.juli.FileHandler.prefix = catalina',
+      match => '^1catalina.org.apache.juli.FileHandler.prefix.*',
     }
-
-    file { '/etc/tomcat6/log4j-trustmanager.properties':
-      ensure => 'file',
-      source => 'file:///var/lib/trustmanager-tomcat/log4j-trustmanager.properties',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
-    }
-
-    file { '/usr/share/tomcat6/lib/bcprov.jar':
-      ensure => 'link',
-      target => '/usr/share/java/bcprov.jar',
-    }
-
-    file { '/usr/share/tomcat6/lib/trustmanager.jar':
-      ensure => 'link',
-      target => '/usr/share/java/trustmanager.jar',
-    }
-
-    file { '/usr/share/tomcat6/lib/trustmanager-tomcat.jar':
-      ensure => 'link',
-      target => '/usr/share/java/trustmanager-tomcat.jar',
-    }
-
-    file { '/usr/share/tomcat6/lib/commons-logging.jar':
-      ensure => 'link',
-      target => '/usr/share/java/commons-logging.jar',
+    file_line { 'catalina-rotatable':
+      path  => "${osg::gums::tomcat_conf_dir}/logging.properties",
+      line  => '1catalina.org.apache.juli.FileHandler.rotatable = false',
+      match => '^1catalina.org.apache.juli.FileHandler.rotatable.*',
+      after => '^1catalina.org.apache.juli.FileHandler.prefix.*',
     }
   }
 
@@ -97,6 +84,21 @@ class osg::gums::config {
       host     => $osg::gums::db_hostname,
       grant    => ['ALL'],
       sql      => '/usr/lib/gums/sql/setupDatabase-puppet.mysql',
+    }
+  }
+
+  if $osg::gums::manage_logrotate {
+    logrotate::rule { 'tomcat-catalina-logs':
+      path         => "${osg::gums::tomcat_log_dir}/catalina.log",
+      copytruncate => true,
+      rotate_every => 'week',
+      rotate       => '52',
+      compress     => true,
+      missingok    => true,
+      create       => true,
+      create_mode  => '0644',
+      create_owner => 'tomcat',
+      create_group => 'tomcat',
     }
   }
 

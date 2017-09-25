@@ -17,9 +17,11 @@ describe 'osg::cacerts' do
         })
       end
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::cacerts') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg') }
+      it { should contain_class('osg::fetchcrl') }
 
       it do 
         should contain_package('osg-ca-certs').with({
@@ -37,7 +39,6 @@ describe 'osg::cacerts' do
           :owner  => 'root',
           :group  => 'root',
           :mode   => '0755',
-          :before => 'File[/etc/grid-security/certificates]',
         })
       end
 
@@ -56,7 +57,9 @@ describe 'osg::cacerts' do
       context 'when osg::cacerts_package_name => "empty-ca-certs"' do
         let(:pre_condition) { "class { 'osg': cacerts_package_name => 'empty-ca-certs' }" }
 
-        it do 
+        it { is_expected.not_to contain_class('osg::fetchcrl') }
+
+        it do
           should contain_package('osg-ca-certs').with({
             :ensure   => 'installed',
             :name     => 'empty-ca-certs',
@@ -102,7 +105,6 @@ describe 'osg::cacerts' do
             :owner  => 'root',
             :group  => 'root',
             :mode   => '0755',
-            :before => 'File[/etc/grid-security/certificates]',
           })
         end
 

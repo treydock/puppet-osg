@@ -22,11 +22,7 @@ class osg::cvmfs (
   $cache_base             = '/var/cache/cvmfs',
   $quota_limit            = '20000',
   $http_proxies           = ["http://squid.${::domain}:3128"],
-  $server_urls            = [
-    'http://cvmfs-stratum-one.cern.ch:8000/opt/@org@',
-    'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@',
-    'http://cvmfs.racf.bnl.gov:8000/opt/@org@',
-  ],
+  $cern_server_urls       = [],
   $glite_version          = '',
   $cms_local_site         = 'UNSET',
 ) inherits osg::params {
@@ -37,21 +33,22 @@ class osg::cvmfs (
   validate_bool($strict_mount)
   validate_array($repositories)
   validate_array($http_proxies)
-  validate_array($server_urls)
+  validate_array($cern_server_urls)
 
   $repositories_real = $repositories[0] ? {
     'UNSET' => '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`',
     default => join($repositories, ','),
   }
 
+  include ::autofs
   include osg
 
-  anchor { 'osg::cvmfs::start': }->
-  Class['osg']->
-  class { 'osg::cvmfs::user': }->
-  class { 'osg::cvmfs::install': }->
-  class { 'osg::cvmfs::config': }->
-  class { 'osg::cvmfs::service': }->
-  anchor { 'osg::cvmfs::end': }
+  anchor { 'osg::cvmfs::start': }
+  -> Class['osg']
+  -> class { 'osg::cvmfs::user': }
+  -> class { 'osg::cvmfs::install': }
+  -> class { 'osg::cvmfs::config': }
+  -> class { 'osg::cvmfs::service': }
+  -> anchor { 'osg::cvmfs::end': }
 
 }

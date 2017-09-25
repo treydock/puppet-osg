@@ -12,13 +12,15 @@ class osg::rsv::users {
       system     => true,
       comment    => 'RSV monitoring',
       managehome => false,
+      forcelocal => true,
     }
 
     group { 'rsv':
-      ensure => present,
-      name   => 'rsv',
-      gid    => $osg::rsv::rsv_gid,
-      system => true,
+      ensure     => present,
+      name       => 'rsv',
+      gid        => $osg::rsv::rsv_gid,
+      system     => true,
+      forcelocal => true,
     }
 
     user { 'cndrcron':
@@ -31,13 +33,15 @@ class osg::rsv::users {
       system     => true,
       comment    => 'Condor-cron service',
       managehome => false,
+      forcelocal => true,
     }
 
     group { 'cndrcron':
-      ensure => present,
-      name   => 'cndrcron',
-      gid    => $osg::rsv::cndrcron_gid,
-      system => true,
+      ensure     => present,
+      name       => 'cndrcron',
+      gid        => $osg::rsv::cndrcron_gid,
+      system     => true,
+      forcelocal => true,
     }
   }
 }

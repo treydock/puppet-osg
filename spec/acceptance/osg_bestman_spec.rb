@@ -10,6 +10,7 @@ describe 'osg::bestman class:' do
         class { 'sudo': purge => false, config_file_replace => false }
         class { 'osg': }
         class { 'osg::bestman':
+          manage_firewall    => false,
           bestmancert_source => 'file:///tmp/bestmancert.pem',
           bestmankey_source  => 'file:///tmp/bestmankey.pem',
         }
@@ -19,7 +20,6 @@ describe 'osg::bestman class:' do
       apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
     it_behaves_like "osg::bestman", node
 
   end

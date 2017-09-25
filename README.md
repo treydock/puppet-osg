@@ -54,13 +54,13 @@ Use the `osg::bestman` class to configure a Bestman SE.  This example will confi
       cacerts_package_name  => 'empty-ca-certs',
     }
     class { 'osg::bestman':
-      hostcert_source       => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      hostkey_source        => 'file:///home/admin/osg/certs/bestman/key.pem',
-      bestmancert_source    => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      bestmankey_source     => 'file:///home/admin/osg/certs/bestman/key.pem',
-      host_dn               => '/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=srm.example.tld',
-      localPathListAllowed  => ['/home', '/data'],
-      supportedProtocolList => ['gsiftp://gridftp1.example.tld'],
+      hostcert_source          => 'file:///home/admin/osg/certs/bestman/cert.pem',
+      hostkey_source           => 'file:///home/admin/osg/certs/bestman/key.pem',
+      bestmancert_source       => 'file:///home/admin/osg/certs/bestman/cert.pem',
+      bestmankey_source        => 'file:///home/admin/osg/certs/bestman/key.pem',
+      host_dn                  => '/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=srm.example.tld',
+      local_path_list_allowed  => ['/home', '/data'],
+      supported_protocol_list  => ['gsiftp://gridftp1.example.tld'],
     }
 
 #### osg::cacerts::updater
@@ -76,7 +76,7 @@ The `osg::cacerts::updater` class by default will perform the following actions
 Example usage:
 
     class { 'osg':
-      cacerts_package_name    => 'osg-ca-certs',
+      cacerts_package_name => 'osg-ca-certs',
     }
     class { 'osg::cacerts::updater': }
 
@@ -94,9 +94,7 @@ This class by default configures a GRAM CE.  The following example is to configu
     class { 'osg::ce':
       gram_gateway_enabled      => false,
       htcondor_gateway_enabled  => true,
-      batch_system_package_name => 'empty-torque',
-      ca_package_name           => 'osg-ca-pbs',
-      use_slurm                 => true,
+      batch_system              => 'slurm',
       hostcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
       hostkey_source            => 'file:///home/admin/osg/certs/ce/hostkey.pem',
       httpcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
@@ -162,6 +160,43 @@ The following example will configure a GUMS server to use a shared grid-certific
       db_password => 'secret',
     }
 
+#### osg::lcmaps_voms
+
+The following example will setup LCMAPS VOMS to authenticate the GLOW VO and ban CMS production.  The `vo` parameter will create `osg::lcmaps_voms::vo` resources and the `users` parameter will create `osg::lcmaps_voms::user` resources.
+
+    class { 'osg':
+      shared_certs_path     => '/home/osg/grid-certificates',
+      cacerts_package_name  => 'empty-ca-certs',
+    }
+    class { 'osg::lcmaps_voms':
+      ban_voms => ['/cms/Role=production/*'],
+      ban_users => ['/foo/baz'],
+      vos       => {
+        'glow' => '/GLOW/*',
+        'glow1 => '['/GLOW/chtc/*', '/GLOW/Role=htpc/*'],
+      },
+      users     => {
+        'foo'   => '/fooDN',
+        'foobar => ['/foo', '/bar'],
+      }
+    }
+
+#### osg::lcmaps_voms::vo
+
+This defined type populates `/etc/grid-security/voms-mapfile`.  The `dn` value can be an Array or a String.
+
+    osg::lcmaps_voms::vo { 'nova':
+      dn => '/fermilab/nova/Role=pilot',
+    }
+
+#### osg::lcmaps_voms::user
+
+This defined type populates `/etc/grid-security/grid-mapfile`.  The `dn` value can be an Array or a String.
+
+    osg::lcmaps_voms::user { 'rsv':
+      dn => '/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=rsv/ce.example.com',
+    }
+
 #### osg::rsv
 
 Example of configuring RSV.
@@ -206,6 +241,14 @@ The `customize_template` can be used to pass a site-specific template used to cu
       customize_template  => 'site_osg/squid/customize.sh.erb',
     }
 
+#### osg::utils
+
+The `osg::utils` class will install utility packages from OSG.
+
+Example:
+
+    class { 'osg::utils':}
+
 #### osg::wn
 
 The `osg::wn` class will configure a worker node to work with the OSG software.   This class currently has no parameters and performs the following actions:
@@ -213,7 +256,7 @@ The `osg::wn` class will configure a worker node to work with the OSG software. 
 * Ensures the osg class is included (repo)
 * Ensures the osg::cacerts class is included
 * Installs osg-wn-client package
-* Installs xrootd4-client (OSG 3.2) or xrootd-client (OSG 3.1) package
+* Installs xrootd-client
 
 Example:
 
@@ -271,19 +314,21 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 
 * `osg` - Sets global values and configures the OSG repos
 * `osg::bestman` - Configures a Bestman SE.
+* `osg::cacerts` - Installs and configures OSG CA certs
 * `osg::cacerts::updater` - Configures the OSG CA certs updater.
 * `osg::ce` - Configures a CE.
 * `osg::client` - Configures an OSG client.
 * `osg::cvmfs` - Configures CVMFS.
 * `osg::gridftp` - Configures an OSG GridFTP server.
 * `osg::gums` - Configures an OSG GUMS server.
+* `osg::lcmaps_voms` - Manage LCMAPS VOMS
 * `osg::rsv` - Configures the RSV service.
 * `osg::squid` - Configures an OSG Frontier Squid server.
+* `osg::utils` - Install OSG utility packages
 * `osg::wn` - Configures an OSG worker node.
 
 #### Private classes
 
-* `osg::cacerts` - Installs and configures OSG CA certs
 * `osg::configure` - Manages osg-configure
 * `osg::params` -  Defines module default values
 * `osg::repos` - Configure OSG Yumrepo resources
@@ -307,10 +352,13 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::gums::install` - Installs GUMS server
 * `osg::gums::config` - Configures GUMS server
 * `osg::gums::service` - Manages GUMS service
+* `osg::lcmaps_voms::install` - Installs LCMAPS VOMS
+* `osg::lcmaps_voms::config` - Configure LCMAPS VOMS
 * `osg::rsv::users` - Manages RSV users/groups
 * `osg::rsv::install` - Installs RSV
 * `osg::rsv::config` - Configures RSV
 * `osg::rsv::service` - Manages RSV services
+* `osg::tomcat::user` - Manage tomcat user/group
 
 ### Parameters
 
@@ -338,10 +386,16 @@ TODO
 #### osg::gums
 TODO
 
+#### osg::lcmaps_voms
+TODO
+
 #### osg::rsv
 TODO
 
 #### osg::squid
+TODO
+
+#### osg::utils
 TODO
 
 ### Types
@@ -397,6 +451,7 @@ Returns the installed OSG version as found in `/etc/osg-version`.
 Tested operating systems:
 
 * CentOS 6
+* CentOS 7
 
 This module has only been thoroughly tested using OSG 3.2.
 

@@ -7,14 +7,15 @@ describe 'osg::client class:' do
     it 'should run successfully' do
       pp =<<-EOS
         class { 'osg': }
-        class { 'osg::client': }
+        class { 'osg::client':
+          manage_firewall => false,
+        }
       EOS
 
       apply_manifest_on(node, pp, :catch_failures => true)
       apply_manifest_on(node, pp, :catch_changes => true)
     end
 
-    it_behaves_like "osg::repos", node
     it_behaves_like "osg::client", node
 
   end

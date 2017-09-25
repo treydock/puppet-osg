@@ -38,6 +38,9 @@ class osg::rsv (
 
   include osg
   include osg::cacerts
+
+  $gums_hosts = pick($osg::gums_host, 'UNAVAILABLE')
+
   include osg::rsv::users
   include osg::rsv::install
   include osg::rsv::config
@@ -46,14 +49,14 @@ class osg::rsv (
   anchor { 'osg::rsv::start': }
   anchor { 'osg::rsv::end': }
 
-  Anchor['osg::rsv::start']->
-  Class['osg']->
-  Class['osg::cacerts']->
-  Class['osg::rsv::users']->
-  Class['osg::rsv::install']->
-  Class['osg::rsv::config']~>
-  Class['osg::rsv::service']->
-  Anchor['osg::rsv::end']
+  Anchor['osg::rsv::start']
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> Class['osg::rsv::users']
+  -> Class['osg::rsv::install']
+  -> Class['osg::rsv::config']
+  ~> Class['osg::rsv::service']
+  -> Anchor['osg::rsv::end']
 
   if $with_httpd {
     if $manage_firewall {

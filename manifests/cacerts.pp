@@ -6,6 +6,10 @@ class osg::cacerts inherits osg::params {
   $package_name   = $osg::cacerts_package_name
   $package_ensure = $osg::cacerts_package_ensure
 
+  if $package_name != 'empty-ca-certs' {
+    contain osg::fetchcrl
+  }
+
   package { 'osg-ca-certs':
     ensure  => $package_ensure,
     name    => $package_name,

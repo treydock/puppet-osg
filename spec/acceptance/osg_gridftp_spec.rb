@@ -8,6 +8,7 @@ describe 'osg::gridftp class:' do
       pp =<<-EOS
         class { 'osg': }
         class { 'osg::gridftp':
+          manage_firewall => false,
           hostcert_source => 'file:///tmp/hostcert.pem',
           hostkey_source  => 'file:///tmp/hostkey.pem',
         }
@@ -16,8 +17,6 @@ describe 'osg::gridftp class:' do
       apply_manifest_on(node, pp, :catch_failures => true)
       apply_manifest_on(node, pp, :catch_changes => true)
     end
-
-    it_behaves_like "osg::repos", node
 
   end
 end

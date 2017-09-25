@@ -1,4 +1,3 @@
-require 'facter/osg_version'
 require 'spec_helper'
 
 describe 'osg_version fact' do
@@ -11,17 +10,17 @@ describe 'osg_version fact' do
   end
   
   before :each do
-    Facter.fact(:osfamily).stubs(:value).returns("RedHat")
+    allow(Facter.fact(:osfamily)).to receive(:value).and_return("RedHat")
   end
 
   it "should return correct version 3.2.30" do
-    Facter::Util::FileRead.expects(:read).with('/etc/osg-version').returns(my_fixture_read('osg-version-3.2.30'))
-    Facter.fact(:osg_version).value.should == '3.2.30'
+    allow(File).to receive(:exists?).with('/etc/osg-version').and_return(true)
+    Facter::Core::Execution.expects(:execute).with('cat /etc/osg-version 2>/dev/null').returns(my_fixture_read('osg-version-3.2.30'))
+    expect(Facter.fact(:osg_version).value).to eq('3.2.30')
   end
 
   it "should return nothing if /etc/osg-version is not present" do
-    Facter::Util::Resolution.any_instance.stubs(:warn)
-    Facter::Util::FileRead.stubs(:read).with('/etc/osg-version').raises(Errno::ENOENT)
-    Facter.fact(:osg_version).value.should == nil
+    allow(File).to receive(:exists?).with('/etc/osg-version').and_return(false)
+    expect(Facter.fact(:osg_version).value).to be_nil
   end
 end

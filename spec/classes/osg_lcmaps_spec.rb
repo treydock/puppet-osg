@@ -19,6 +19,7 @@ describe 'osg::lcmaps' do
 
       let(:params) {{ :gums_hostname => 'gums.foo' }}
 
+      it { should compile.with_all_deps }
       it { should create_class('osg::lcmaps') }
       it { should contain_class('osg::params') }
       it { should contain_class('osg') }
@@ -60,10 +61,10 @@ describe 'osg::lcmaps' do
 
       it do
         content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
-        content.split("\n").should == [
+        expect(content.split("\n")).to eq([
           '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
           'globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
-        ]
+        ])
       end
 
       context "with no parameters defined" do
@@ -114,15 +115,15 @@ describe 'osg::lcmaps' do
           let(:params) {{ :gums_hostname => 'gums.foo', :globus_mapping => v }}
           it do
             content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
-            content.should match '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout'
+            expect(content).to match('# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout')
           end
 
           it do
             content = catalogue.resource('file', '/etc/grid-security/gsi-authz.conf').send(:parameters)[:content]
-            content.split("\n").should_not == [
+            expect(content.split("\n")).not_to eq([
               '# globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
               'globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout',
-            ]
+            ])
           end
         end
       end

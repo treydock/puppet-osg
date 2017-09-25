@@ -1,0 +1,12 @@
+# File managed by Puppet - DO NOT EDIT
+# This file is for VOs to be banned from this site
+# Add shell-style (i.e. fnmatch(3)) patterns, in quotes, one per line, based on
+# proxy FQANs.
+#
+# Examples:
+# "/fermilab/*"
+# "/cms/Role=cmsuser/*"
+
+<%- scope['osg::lcmaps_voms::ban_voms'].each do |voms| -%>
+"<%= voms %>"
+<%- end -%>

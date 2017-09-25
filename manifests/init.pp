@@ -1,6 +1,6 @@
 # Class: osg: See README.md for documentation.
 class osg (
-  $osg_release                    = $osg::params::osg_release,
+  Enum['3.3', '3.4'] $osg_release = '3.3',
   $repo_baseurl_bit               = 'http://repo.grid.iu.edu',
   $repo_development_baseurl_bit   = undef,
   $repo_testing_baseurl_bit       = undef,
@@ -9,6 +9,7 @@ class osg (
   $repo_gpgkey                    = undef,
   $enable_osg_contrib             = false,
   $gums_host                      = undef,
+  Enum['gums', 'lcmaps_voms'] $auth_type = 'gums',
   $cacerts_package_name           = 'osg-ca-certs',
   $cacerts_install_other_packages = false,
   $cacerts_package_ensure         = 'installed',
@@ -34,18 +35,15 @@ class osg (
   $storage_worker_node_temp       = 'UNAVAILABLE',
   $storage_site_read              = 'UNAVAILABLE',
   $storage_site_write             = 'UNAVAILABLE',
+  $purge_local_site_settings      = true,
+  $purge_gip_config               = true,
 ) inherits osg::params {
 
-  validate_re($osg_release, '^(3.2|3.3)$', 'The osg_release parameter only supports 3.2 and 3.3')
   validate_re($cacerts_package_name, '^(osg-ca-certs|igtf-ca-certs|empty-ca-certs)$')
   validate_bool($repo_use_mirrors)
   validate_bool($enable_osg_contrib)
   validate_bool($cacerts_install_other_packages)
   validate_bool($enable_exported_resources)
-
-  if $::operatingsystemmajrelease == '7' and $osg_release != '3.3' {
-    fail("Module ${module_name}: EL7 is only supported with osg_release 3.3")
-  }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
@@ -56,18 +54,25 @@ class osg (
   anchor { 'osg::start': }
   anchor { 'osg::end': }
 
-  include epel
-  include osg::repos
+  contain ::epel
+  contain osg::repos
 
-  Anchor['osg::start']->
-  Class['epel']->
-  Class['osg::repos']->
-  Anchor['osg::end']
+  Anchor['osg::start']
+  -> Class['osg::repos']
+  -> Anchor['osg::end']
 
   include osg::configure
 
   # Avoid collecting resources intended for export
   Osg_local_site_settings<| tag != $exported_resources_export_tag |> ~> Exec['osg-configure']
   Osg_gip_config <| |> ~> Exec['osg-configure']
+
+  resources { 'osg_local_site_settings':
+    purge => $purge_local_site_settings,
+  }
+
+  resources { 'osg_gip_config':
+    purge => $purge_gip_config,
+  }
 
 }
