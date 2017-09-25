@@ -75,6 +75,7 @@ class osg::ce::config {
       incl    => $osg::ce::gratia_probe_config,
       context => "/files${osg::ce::gratia_probe_config}/ProbeConfiguration/#attribute",
       changes => [
+        'set EnableProbe 1',
         'set SuppressNoDNRecords 1',
       ],
     }
