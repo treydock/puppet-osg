@@ -1,12 +1,14 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::lcmaps_voms class:' do
+  node = only_host_with_role(hosts, 'ce')
   context "with parameters defined" do
-    node = only_host_with_role(hosts, 'ce')
 
     it 'should run successfully' do
       pp =<<-EOS
-        class { 'osg': }
+        class { 'osg':
+          auth_type => 'lcmaps_voms',
+        }
         class { 'osg::lcmaps_voms':
           ban_voms => ['/cms/Role=production/*'],
           ban_users => ['/foo/baz'],
@@ -44,5 +46,13 @@ describe 'osg::lcmaps_voms class:' do
       its(:content) { should match /\/foo\/baz/ }
     end
 
+  end
+
+  context 'osg-configure cleanup' do
+    it 'deletes osg-configure packages to pass other tests' do
+      # Cleanup the so osg-configure
+      on node, 'yum remove -y osg-configure\*'
+      on node, 'rm -f /etc/osg/config.d/99-local-site-settings.ini'
+    end
   end
 end

@@ -6,7 +6,9 @@ describe 'osg::gums class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
-        class { 'osg': }
+        class { 'osg':
+          auth_type => 'lcmaps_voms',
+        }
         class { 'osg::gums':
           manage_firewall => false,
           httpcert_source => 'file:///tmp/httpcert.pem',

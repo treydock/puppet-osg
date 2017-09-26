@@ -8,7 +8,9 @@ describe 'osg::bestman class:' do
       pp =<<-EOS
         # Prevent sudo module from breaking Vagrant
         class { 'sudo': purge => false, config_file_replace => false }
-        class { 'osg': }
+        class { 'osg':
+          auth_type => 'lcmaps_voms',
+        }
         class { 'osg::bestman':
           manage_firewall    => false,
           bestmancert_source => 'file:///tmp/bestmancert.pem',

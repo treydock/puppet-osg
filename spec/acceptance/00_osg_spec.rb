@@ -6,7 +6,9 @@ describe 'osg class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
-        class { 'osg': }
+      class { 'osg':
+        auth_type => 'lcmaps_voms',
+      }
       EOS
 
       apply_manifest_on(node, pp, :catch_failures => true)

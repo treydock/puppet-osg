@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::ce class:' do
+  node = only_host_with_role(hosts, 'ce')
   context "when default parameters" do
-    node = only_host_with_role(hosts, 'ce')
 
     it 'should run successfully' do
       pp =<<-EOS
@@ -38,6 +38,13 @@ describe 'osg::ce class:' do
 
     it_behaves_like "osg::cacerts", node
     it_behaves_like "osg::cacerts::updater", node
+  end
 
+  context 'CE cleanup' do
+    it 'deletes CE packages to pass non-CE tests' do
+      # Cleanup the CE so osg-configure doesn't think CE is present for other tests
+      on node, 'yum remove -y osg-ce osg-htcondor-ce osg-configure\* gratia\*'
+      on node, 'rm -f /etc/osg/config.d/99-local-site-settings.ini'
+    end
   end
 end

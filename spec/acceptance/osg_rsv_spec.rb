@@ -6,7 +6,9 @@ describe 'osg::rsv class:' do
 
     it 'should run successfully' do
       pp =<<-EOS
-        class { 'osg': }
+        class { 'osg':
+          auth_type => 'lcmaps_voms',
+        }
         class { 'osg::rsv':
           manage_firewall => false,
           rsvcert_source => 'file:///tmp/rsvcert.pem',
