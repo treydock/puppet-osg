@@ -69,10 +69,7 @@ describe 'osg::ce' do
 
       context 'osg::ce::install' do
         it do
-          should contain_package('empty-torque').with({
-            :ensure => 'present',
-            :before => 'Package[osg-ce-pbs]',
-          })
+          should_not contain_package('empty-torque')
         end
 
         it do
