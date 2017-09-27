@@ -58,7 +58,7 @@ class osg::ce (
 
   case $batch_system {
     /torque|pbs/: {
-      $batch_system_package_name  = 'empty-torque'
+      $batch_system_package_name  = undef
       $ce_package_name            = 'osg-ce-pbs'
       $batch_ini_section          = 'PBS'
       $location_name              = 'pbs_location'
