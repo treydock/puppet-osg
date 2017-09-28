@@ -68,11 +68,13 @@ class osg (
   Osg_gip_config <| |> ~> Exec['osg-configure']
 
   resources { 'osg_local_site_settings':
-    purge => $purge_local_site_settings,
+    purge  => $purge_local_site_settings,
+    notify => Exec['osg-configure'],
   }
 
   resources { 'osg_gip_config':
-    purge => $purge_gip_config,
+    purge  => $purge_gip_config,
+    notify => Exec['osg-configure'],
   }
 
 }
