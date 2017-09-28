@@ -24,3 +24,5 @@ end
 
 add_custom_fact :sudoversion, '1.8.6p3'
 add_custom_fact :root_home, '/root'
+add_custom_fact :concat_basedir, '/dne'
+add_custom_fact :puppetversion, Puppet.version

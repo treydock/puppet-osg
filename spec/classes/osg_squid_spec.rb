@@ -10,12 +10,7 @@ describe 'osg::squid' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -126,21 +121,11 @@ describe 'osg::squid' do
       end
 
       context "when net_local => '192.168.200.0/24'" do
-        let(:params) {{ :net_local => '192.168.200.0/24' }}
+        let(:params) {{ :net_local => ['192.168.200.0/24'] }}
         it { verify_contents(catalogue, '/etc/squid/customize.sh', [
           'setoption("acl NET_LOCAL src", "192.168.200.0/24")',
           'setoption("acl localnet src", "192.168.200.0/24")'])
         }
-      end
-
-      # Test validate_bool parameters
-      [
-        'manage_firewall',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param => 'foo' }}
-          it { expect { should create_class('osg::squid') }.to raise_error(Puppet::Error, /is not a boolean/) }
-        end
       end
 
     end

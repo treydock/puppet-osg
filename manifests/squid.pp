@@ -1,18 +1,16 @@
 # Class: osg::squid: See README.md for documentation.
 class osg::squid (
-  $customize_template         = 'osg/squid/customize.sh.erb',
-  $net_local                  = '10.0.0.0/8 172.16.0.0/12 192.168.0.0/16',
-  $monitor_addresses          = ['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17'],
-  $allow_major_cvmfs          = true,
-  $max_filedescriptors        = '0',
-  $manage_firewall            = true,
-  $squid_firewall_ensure      = 'present',
-  $monitoring_firewall_ensure = 'present',
-  $private_interface          = undef,
-  $public_interface           = undef,
+  String $customize_template = 'osg/squid/customize.sh.erb',
+  Array $net_local = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
+  Array $monitor_addresses = ['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17'],
+  Boolean $allow_major_cvmfs = true,
+  Integer $max_filedescriptors = 0,
+  Boolean $manage_firewall = true,
+  Enum['present', 'absent'] $squid_firewall_ensure = 'present',
+  Enum['present', 'absent'] $monitoring_firewall_ensure = 'present',
+  Optional[String] $private_interface = undef,
+  Optional[String] $public_interface = undef,
 ) inherits osg::params {
-
-  validate_bool($manage_firewall)
 
   include osg
 

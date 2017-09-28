@@ -42,12 +42,7 @@ class osg::cvmfs::config {
     }
   }
 
-  if $osg::cvmfs::cms_local_site == 'UNSET' or ! $osg::cvmfs::cms_local_site {
-    file { '/etc/cvmfs/config.d/cms.cern.ch.local':
-      ensure => 'absent',
-      path   => '/etc/cvmfs/config.d/cms.cern.ch.local',
-    }
-  } else {
+  if $osg::cvmfs::cms_local_site {
     file { '/etc/cvmfs/config.d/cms.cern.ch.local':
       ensure  => 'file',
       path    => '/etc/cvmfs/config.d/cms.cern.ch.local',
@@ -56,6 +51,11 @@ class osg::cvmfs::config {
       group   => 'root',
       mode    => '0644',
       notify  => Exec['cvmfs_config reload'],
+    }
+  } else {
+    file { '/etc/cvmfs/config.d/cms.cern.ch.local':
+      ensure => 'absent',
+      path   => '/etc/cvmfs/config.d/cms.cern.ch.local',
     }
   }
 

@@ -14,7 +14,7 @@ class osg::ce::config {
       owner     => 'tomcat',
       group     => 'tomcat',
       mode      => '0444',
-      source    => $osg::ce::_httpcert_source,
+      source    => $osg::ce::httpcert_source,
       show_diff => false
     }
 
@@ -23,7 +23,7 @@ class osg::ce::config {
       owner     => 'tomcat',
       group     => 'tomcat',
       mode      => '0400',
-      source    => $osg::ce::_httpkey_source,
+      source    => $osg::ce::httpkey_source,
       show_diff => false
     }
   }

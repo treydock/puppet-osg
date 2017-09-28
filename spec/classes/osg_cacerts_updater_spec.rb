@@ -10,12 +10,7 @@ describe 'osg::cacerts::updater' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       it { should compile.with_all_deps }
       it { should create_class('osg::cacerts::updater') }
@@ -93,15 +88,6 @@ describe 'osg::cacerts::updater' do
           verify_contents(catalogue, '/etc/cron.d/osg-ca-certs-updater', [
             '0 */6 * * * root [ ! -f /var/lock/subsys/osg-ca-certs-updater-cron ] || /usr/sbin/osg-ca-certs-updater -a 23 -x 72 -r 30 -l /var/log/osg-ca-certs-updater.log',
           ])
-        end
-      end
-
-      [
-        'config_replace',
-      ].each do |bool_param|
-        context "with #{bool_param} => 'foo'" do
-          let(:params) {{ bool_param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::cacerts::updater') }.to raise_error(Puppet::Error, /is not a boolean/) }
         end
       end
 

@@ -10,12 +10,7 @@ describe 'osg::gridftp' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -138,16 +133,6 @@ describe 'osg::gridftp' do
         it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
         it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
         it { should contain_anchor('osg::gridftp::end') }
-      end
-
-      # Test validate_bool parameters
-      [
-        'manage_firewall',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::gridftp') }.to raise_error(Puppet::Error, /is not a boolean/) }
-        end
       end
 
     end

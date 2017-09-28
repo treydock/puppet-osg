@@ -24,7 +24,7 @@ class osg::rsv::config {
     owner     => 'rsv',
     group     => 'rsv',
     mode      => '0444',
-    source    => $osg::rsv::_rsvcert_source,
+    source    => $osg::rsv::rsvcert_source,
     show_diff => false,
   }
 
@@ -33,7 +33,7 @@ class osg::rsv::config {
     owner     => 'rsv',
     group     => 'rsv',
     mode      => '0400',
-    source    => $osg::rsv::_rsvkey_source,
+    source    => $osg::rsv::rsvkey_source,
     show_diff => false,
   }
 

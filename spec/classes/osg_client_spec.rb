@@ -10,12 +10,7 @@ describe 'osg::client' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -197,17 +192,6 @@ describe 'osg::client' do
           let(:params) {{ :with_condor => false }}
           it { should_not contain_service('condor') }
           it { should_not contain_service('condor-ce') }
-        end
-      end
-
-      # Test validate_bool parameters
-      [
-        'with_condor',
-        'manage_firewall',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::client') }.to raise_error(Puppet::Error, /is not a boolean/) }
         end
       end
 

@@ -10,12 +10,7 @@ describe 'osg::ce' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -28,8 +23,8 @@ describe 'osg::ce' do
       it do
         should contain_class('osg::gridftp').with({
           :manage_hostcert  => 'true',
-          :hostcert_source  => 'UNSET',
-          :hostkey_source   => 'UNSET',
+          :hostcert_source  => nil,
+          :hostkey_source   => nil,
           :manage_firewall  => 'true',
           :standalone       => 'false'
         })
@@ -173,16 +168,6 @@ describe 'osg::ce' do
             :hasstatus  => 'true',
             :hasrestart => 'true',
           })
-        end
-      end
-
-      # Test validate_bool parameters
-      [
-        'manage_firewall',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::ce') }.to raise_error(Puppet::Error, /is not a boolean/) }
         end
       end
 

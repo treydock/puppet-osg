@@ -1,15 +1,15 @@
 # Class: osg::fetchcrl: See README.md for documentation.
 class osg::fetchcrl (
-  $ensure                   = 'present',
-  $crl_package_name         = 'fetch-crl',
-  $crl_package_ensure       = 'UNSET',
-  $crl_boot_service_name    = 'fetch-crl-boot',
-  $crl_boot_service_ensure  = 'stopped',
-  $crl_boot_service_enable  = false,
-  $crl_cron_service_name    = 'fetch-crl-cron',
-  $crl_cron_service_ensure  = 'UNSET',
-  $crl_cron_service_enable  = 'UNSET',
-  $use_syslog               = true,
+  Enum['present', 'absent', 'disabled'] $ensure = 'present',
+  String $crl_package_name = 'fetch-crl',
+  String $crl_package_ensure = 'UNSET',
+  String $crl_boot_service_name = 'fetch-crl-boot',
+  String $crl_boot_service_ensure = 'stopped',
+  Boolean $crl_boot_service_enable = false,
+  String $crl_cron_service_name = 'fetch-crl-cron',
+  String $crl_cron_service_ensure = 'UNSET',
+  String $crl_cron_service_enable = 'UNSET',
+  Boolean $use_syslog = true,
 ) inherits osg::params {
 
   require 'osg'
