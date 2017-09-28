@@ -37,7 +37,8 @@ describe 'osg::ce' do
 
       it { should contain_anchor('osg::ce::start').that_comes_before('Class[osg]') }
       it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
-      it { should contain_class('osg::cacerts').that_comes_before('Class[osg::ce::install]') }
+      it { should contain_class('osg::cacerts').that_comes_before('Class[osg::ce::users]') }
+      it { should contain_class('osg::ce::users').that_comes_before('Class[osg::ce::install]') }
       it { should contain_class('osg::ce::install').that_comes_before('Class[osg::gridftp]') }
       it { should contain_class('osg::gridftp').that_comes_before('Class[osg::ce::config]') }
       it { should contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }
