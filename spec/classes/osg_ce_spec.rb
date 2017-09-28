@@ -205,34 +205,11 @@ describe 'osg::ce' do
         end
 
         it do
-          should contain_service('osg-info-services').with({
-            :ensure     => 'running',
-            :enable     => 'true',
-            :hasstatus  => 'true',
-            :hasrestart => 'true',
-            :subscribe  => [
-              'File[/etc/grid-security/http/httpcert.pem]',
-              'File[/etc/grid-security/http/httpkey.pem]',
-            ],
-          })
-        end
-
-        it do
           should contain_service('gratia-probes-cron').with({
             :ensure     => 'running',
             :enable     => 'true',
             :hasstatus  => 'true',
             :hasrestart => 'true',
-          })
-        end
-
-        it do
-          should contain_service('osg-cleanup-cron').with({
-            :ensure     => 'running',
-            :enable     => 'true',
-            :hasstatus  => 'true',
-            :hasrestart => 'true',
-            :before     => nil, 
           })
         end
       end

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'osg::bestman' do
+  before { skip("Not supported by OSG 3.4") }
   on_supported_os({
     :supported_os => [
       {

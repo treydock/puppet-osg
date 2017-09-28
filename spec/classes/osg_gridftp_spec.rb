@@ -116,17 +116,6 @@ describe 'osg::gridftp' do
           it { should contain_file('/etc/grid-security/hostkey.pem').without_show_diff }
         end
 
-        it do
-          should contain_file('/etc/grid-security/grid-mapfile').with({
-            :ensure   => 'file',
-            :owner    => 'root',
-            :group    => 'root',
-            :mode     => '0644',
-            :source   => nil,
-            :content  => nil,
-          })
-        end
-
         context 'when hostcert_source and hostkey_source defined' do
           let(:params) {{ :hostcert_source => 'file:///foo/hostcert.pem', :hostkey_source => 'file:///foo/hostkey.pem' }}
 

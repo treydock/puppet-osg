@@ -17,11 +17,7 @@ describe 'osg::repos' do
         })
       end
 
-      if facts[:operatingsystemmajrelease] == '7'
-        osg_release = '3.3'
-      else
-        osg_release = '3.3'
-      end
+      osg_release = '3.4'
 
       it { should compile.with_all_deps }
       it { should create_class('osg::repos') }

@@ -1,6 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::gums class:' do
+  before { skip("Not supported by OSG 3.4") }
   context "when default parameters" do
     node = only_host_with_role(hosts, 'gums')
 
