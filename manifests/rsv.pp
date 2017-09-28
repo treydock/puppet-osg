@@ -25,8 +25,6 @@ class osg::rsv (
   include osg
   include osg::cacerts
 
-  $gums_hosts = pick($osg::gums_host, 'UNAVAILABLE')
-
   include osg::rsv::users
   include osg::rsv::install
   include osg::rsv::config

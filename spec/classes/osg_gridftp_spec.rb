@@ -21,8 +21,8 @@ describe 'osg::gridftp' do
       it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg]') }
       it { should contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { should contain_class('osg::cacerts').that_comes_before('Class[osg::gridftp::install]') }
-      it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::auth]') }
-      it { should contain_class('osg::auth').that_comes_before('Class[osg::gridftp::config]') }
+      it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::lcmaps_voms]') }
+      it { should contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::gridftp::config]') }
       it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
       it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
       it { should contain_anchor('osg::gridftp::end') }
@@ -128,8 +128,8 @@ describe 'osg::gridftp' do
         let(:params) {{ :standalone => false }}
 
         it { should contain_anchor('osg::gridftp::start').that_comes_before('Class[osg::gridftp::install]') }
-        it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::auth]') }
-        it { should contain_class('osg::auth').that_comes_before('Class[osg::gridftp::config]') }
+        it { should contain_class('osg::gridftp::install').that_comes_before('Class[osg::lcmaps_voms]') }
+        it { should contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::gridftp::config]') }
         it { should contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
         it { should contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
         it { should contain_anchor('osg::gridftp::end') }

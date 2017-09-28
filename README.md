@@ -54,24 +54,6 @@ The `cacerts_package_ensure` and `cacerts_other_packages_ensure` parameters can 
       cacerts_other_packages_ensure => 'latest',
     }
 
-#### osg::bestman
-
-Use the `osg::bestman` class to configure a Bestman SE.  This example will configure a Bestman SE that allows access to `/home` and `/data` using the GridFTP server of `gftp1.example.tld`.  This example also shows how to set the paths to host certificates which must be generated before using this module.
-
-    class { 'osg':
-      shared_certs_path     => '/home/osg/grid-certificates',
-      cacerts_package_name  => 'empty-ca-certs',
-    }
-    class { 'osg::bestman':
-      hostcert_source          => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      hostkey_source           => 'file:///home/admin/osg/certs/bestman/key.pem',
-      bestmancert_source       => 'file:///home/admin/osg/certs/bestman/cert.pem',
-      bestmankey_source        => 'file:///home/admin/osg/certs/bestman/key.pem',
-      host_dn                  => '/DC=com/DC=DigiCert-Grid/O=Open Science Grid/OU=Services/CN=srm.example.tld',
-      local_path_list_allowed  => ['/home', '/data'],
-      supported_protocol_list  => ['gsiftp://gridftp1.example.tld'],
-    }
-
 #### osg::cacerts::updater
 
 The `osg::cacerts::updater` class by default will perform the following actions
@@ -104,8 +86,6 @@ This class by default configures a GRAM CE.  The following example is to configu
       batch_system              => 'slurm',
       hostcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
       hostkey_source            => 'file:///home/admin/osg/certs/ce/hostkey.pem',
-      httpcert_source           => 'file:///home/admin/osg/certs/ce/httpcert.pem',
-      httpkey_source            => 'file:///home/admin/osg/certs/ce/httpkey.pem',
     }
 
 
@@ -153,18 +133,6 @@ The `osg::gridftp` class by default will configure a system as a standalone OSG 
     class { 'osg::gridftp':
       hostcert_source       => 'file:///home/admin/osg/certs/gridftp/hostcert.pem',
       hostkey_source        => 'file:///home/admin/osg/certs/gridftp/hostkey.pem',
-    }
-
-#### osg::gums
-
-The following example will configure a GUMS server to use a shared grid-certificates store and manage the GUMS installation.  This module attempts to mimic the behavior of `/var/lib/trustmanager-tomcat/configure.sh` and `gums-setup-mysql-database` commands.
-
-    class { 'osg':
-      shared_certs_path     => '/home/osg/grid-certificates',
-      cacerts_package_name  => 'empty-ca-certs',
-    }
-    class { 'osg::gums':
-      db_password => 'secret',
     }
 
 #### osg::lcmaps_voms
@@ -309,14 +277,12 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 #### Public classes
 
 * `osg` - Sets global values and configures the OSG repos
-* `osg::bestman` - Configures a Bestman SE.
 * `osg::cacerts` - Installs and configures OSG CA certs
 * `osg::cacerts::updater` - Configures the OSG CA certs updater.
 * `osg::ce` - Configures a CE.
 * `osg::client` - Configures an OSG client.
 * `osg::cvmfs` - Configures CVMFS.
 * `osg::gridftp` - Configures an OSG GridFTP server.
-* `osg::gums` - Configures an OSG GUMS server.
 * `osg::lcmaps_voms` - Manage LCMAPS VOMS
 * `osg::rsv` - Configures the RSV service.
 * `osg::squid` - Configures an OSG Frontier Squid server.
@@ -328,9 +294,6 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::configure` - Manages osg-configure
 * `osg::params` -  Defines module default values
 * `osg::repos` - Configure OSG Yumrepo resources
-* `osg::bestman::install` - Installs Bestman packages
-* `osg::bestman::config` - Configures Bestman
-* `osg::bestman::service` - Manages Bestman service
 * `osg::ce::install` - Installs CE packages
 * `osg::ce::config` - Configures CE
 * `osg::ce::service` - Manages CE services
@@ -344,24 +307,16 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::gridftp::install` - Installs GridFTP
 * `osg::gridftp::config` - Configures GridFTP
 * `osg::gridftp::service` - Manages GridFTP service
-* `osg::gums::client` - Configures GUMS client
-* `osg::gums::install` - Installs GUMS server
-* `osg::gums::config` - Configures GUMS server
-* `osg::gums::service` - Manages GUMS service
 * `osg::lcmaps_voms::install` - Installs LCMAPS VOMS
 * `osg::lcmaps_voms::config` - Configure LCMAPS VOMS
 * `osg::rsv::users` - Manages RSV users/groups
 * `osg::rsv::install` - Installs RSV
 * `osg::rsv::config` - Configures RSV
 * `osg::rsv::service` - Manages RSV services
-* `osg::tomcat::user` - Manage tomcat user/group
 
 ### Parameters
 
 #### osg
-TODO
-
-#### osg::bestman
 TODO
 
 #### osg::cacerts::updater
@@ -377,9 +332,6 @@ TODO
 TODO
 
 #### osg::gridftp
-TODO
-
-#### osg::gums
 TODO
 
 #### osg::lcmaps_voms
@@ -473,10 +425,6 @@ If you have Vagrant >= 1.2.0 installed you can run system tests.  **NOTE: The ac
     bundle exec rake beaker
 
 ## TODO
-
-* Remove osg::lcmaps
-* Move osg::gums to osg::gums::server
-* Find a way to remove hard coded GUMS schema from this module
 
 ## Further Information
 
