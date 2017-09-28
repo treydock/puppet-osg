@@ -98,37 +98,6 @@ describe 'osg::ce' do
       end
 
       context 'osg::ce::config' do
-        it do
-          should contain_file('/etc/grid-security/http').with({
-            :ensure => 'directory',
-            :owner  => 'tomcat',
-            :group  => 'tomcat',
-            :mode   => '0755',
-          })
-        end
-
-        it do
-          should contain_file('/etc/grid-security/http/httpcert.pem').with({
-            :ensure    => 'file',
-            :owner     => 'tomcat',
-            :group     => 'tomcat',
-            :mode      => '0444',
-            :source    => nil,
-            :show_diff => 'false',
-          })
-        end
-
-        it do
-          should contain_file('/etc/grid-security/http/httpkey.pem').with({
-            :ensure    => 'file',
-            :owner     => 'tomcat',
-            :group     => 'tomcat',
-            :mode      => '0400',
-            :source    => nil,
-            :show_diff => 'false',
-          })
-        end
-
         {
           'Gateway/gram_gateway_enabled' => 'false',
           'Gateway/htcondor_gateway_enabled' => 'true',
