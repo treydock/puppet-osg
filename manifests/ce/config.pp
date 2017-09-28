@@ -9,27 +9,21 @@ class osg::ce::config {
   }
 
   file { '/etc/grid-security/http/httpcert.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0444',
-    source  => $osg::ce::_httpcert_source,
-    require => File['/etc/grid-security/http'],
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0444',
+    source    => $osg::ce::_httpcert_source,
+    show_diff => false
   }
 
   file { '/etc/grid-security/http/httpkey.pem':
-    ensure  => 'file',
-    owner   => 'tomcat',
-    group   => 'tomcat',
-    mode    => '0400',
-    source  => $osg::ce::_httpkey_source,
-    require => File['/etc/grid-security/http'],
-  }
-
-  # File show_diff only in Puppet >= 3.2.0
-  if versioncmp($::puppetversion, '3.2.0') >= 0 {
-    File <| title == '/etc/grid-security/http/httpcert.pem' |> { show_diff => false }
-    File <| title == '/etc/grid-security/http/httpkey.pem' |> { show_diff => false }
+    ensure    => 'file',
+    owner     => 'tomcat',
+    group     => 'tomcat',
+    mode      => '0400',
+    source    => $osg::ce::_httpkey_source,
+    show_diff => false
   }
 
   file { '/etc/condor-ce/config.d/99-local.conf':

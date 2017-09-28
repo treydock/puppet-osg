@@ -108,32 +108,24 @@ describe 'osg::ce' do
 
         it do
           should contain_file('/etc/grid-security/http/httpcert.pem').with({
-            :ensure   => 'file',
-            :owner    => 'tomcat',
-            :group    => 'tomcat',
-            :mode     => '0444',
-            :source   => nil,
-            :require  => 'File[/etc/grid-security/http]',
+            :ensure    => 'file',
+            :owner     => 'tomcat',
+            :group     => 'tomcat',
+            :mode      => '0444',
+            :source    => nil,
+            :show_diff => 'false',
           })
         end
 
         it do
           should contain_file('/etc/grid-security/http/httpkey.pem').with({
-            :ensure   => 'file',
-            :owner    => 'tomcat',
-            :group    => 'tomcat',
-            :mode     => '0400',
-            :source   => nil,
-            :require  => 'File[/etc/grid-security/http]',
+            :ensure    => 'file',
+            :owner     => 'tomcat',
+            :group     => 'tomcat',
+            :mode      => '0400',
+            :source    => nil,
+            :show_diff => 'false',
           })
-        end
-
-        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
-          it { should contain_file('/etc/grid-security/http/httpcert.pem').with_show_diff('false') }
-          it { should contain_file('/etc/grid-security/http/httpkey.pem').with_show_diff('false') }
-        else
-          it { should contain_file('/etc/grid-security/http/httpcert.pem').without_show_diff }
-          it { should contain_file('/etc/grid-security/http/httpkey.pem').without_show_diff }
         end
 
         {
