@@ -266,17 +266,6 @@ Example:
     }
     class { 'osg::wn': }
 
-#### osg::lcmaps
-
-** DEPRECATED: This class is no longer maintained and not recommended to be used.  The functionality of this class is handled by installing role packages and osg-configure **
-
-The minimal parameters necessary to use the osg::lcmaps class.
-
-    class { 'osg::lcmaps':
-      gums_hostname => 'gums.yourdomain.tld',
-    }
-
-
 ### Types
 
 #### osg\_local\_site_settings
