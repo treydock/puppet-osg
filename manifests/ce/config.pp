@@ -1,29 +1,31 @@
 # Private class: See README.md.
 class osg::ce::config {
 
-  file { '/etc/grid-security/http':
-    ensure => 'directory',
-    owner  => 'tomcat',
-    group  => 'tomcat',
-    mode   => '0755',
-  }
+  if $osg::osg_release == '3.3' {
+    file { '/etc/grid-security/http':
+      ensure => 'directory',
+      owner  => 'tomcat',
+      group  => 'tomcat',
+      mode   => '0755',
+    }
 
-  file { '/etc/grid-security/http/httpcert.pem':
-    ensure    => 'file',
-    owner     => 'tomcat',
-    group     => 'tomcat',
-    mode      => '0444',
-    source    => $osg::ce::_httpcert_source,
-    show_diff => false
-  }
+    file { '/etc/grid-security/http/httpcert.pem':
+      ensure    => 'file',
+      owner     => 'tomcat',
+      group     => 'tomcat',
+      mode      => '0444',
+      source    => $osg::ce::_httpcert_source,
+      show_diff => false
+    }
 
-  file { '/etc/grid-security/http/httpkey.pem':
-    ensure    => 'file',
-    owner     => 'tomcat',
-    group     => 'tomcat',
-    mode      => '0400',
-    source    => $osg::ce::_httpkey_source,
-    show_diff => false
+    file { '/etc/grid-security/http/httpkey.pem':
+      ensure    => 'file',
+      owner     => 'tomcat',
+      group     => 'tomcat',
+      mode      => '0400',
+      source    => $osg::ce::_httpkey_source,
+      show_diff => false
+    }
   }
 
   file { '/etc/condor-ce/config.d/99-local.conf':
