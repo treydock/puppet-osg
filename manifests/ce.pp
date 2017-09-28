@@ -52,7 +52,6 @@ class osg::ce (
 
   include osg
   include osg::cacerts
-  include osg::tomcat::user
 
   $cemon_service_name = 'osg-info-services'
 
@@ -110,16 +109,30 @@ class osg::ce (
     standalone      => false,
   }
 
-  anchor { 'osg::ce::start': }
-  -> Class['osg']
-  -> Class['osg::cacerts']
-  -> Class['osg::tomcat::user']
-  -> class { 'osg::ce::users': }
-  -> class { 'osg::ce::install': }
-  -> Class['osg::gridftp']
-  -> class { 'osg::ce::config': }
-  -> class { 'osg::ce::service': }
-  -> anchor { 'osg::ce::end': }
+  if $osg::osg_release == '3.3' {
+    include osg::tomcat::user
+
+    anchor { 'osg::ce::start': }
+    -> Class['osg']
+    -> Class['osg::cacerts']
+    -> Class['osg::tomcat::user']
+    -> class { 'osg::ce::users': }
+    -> class { 'osg::ce::install': }
+    -> Class['osg::gridftp']
+    -> class { 'osg::ce::config': }
+    -> class { 'osg::ce::service': }
+    -> anchor { 'osg::ce::end': }
+  } else {
+    anchor { 'osg::ce::start': }
+    -> Class['osg']
+    -> Class['osg::cacerts']
+    -> class { 'osg::ce::users': }
+    -> class { 'osg::ce::install': }
+    -> Class['osg::gridftp']
+    -> class { 'osg::ce::config': }
+    -> class { 'osg::ce::service': }
+    -> anchor { 'osg::ce::end': }
+  }
 
   if $manage_firewall {
     if $gram_gateway_enabled {
