@@ -16,6 +16,7 @@ describe 'osg::ce class:' do
           hostkey_source      => 'file:///tmp/hostkey.pem',
           httpcert_source     => 'file:///tmp/httpcert.pem',
           httpkey_source      => 'file:///tmp/httpkey.pem',
+          site_info_host_name => 'localhost',
           site_info_sponsor   => 'foo',
           site_info_contact   => 'Foo Bar',
           site_info_email     => 'foo@example.com',
