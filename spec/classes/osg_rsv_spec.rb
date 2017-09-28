@@ -170,32 +170,24 @@ describe 'osg::rsv' do
 
         it do
           should contain_file('/etc/grid-security/rsv/rsvcert.pem').with({
-            :ensure   => 'file',
-            :owner    => 'rsv',
-            :group    => 'rsv',
-            :mode     => '0444',
-            :source   => nil,
-            :require  => 'File[/etc/grid-security/rsv]',
+            :ensure    => 'file',
+            :owner     => 'rsv',
+            :group     => 'rsv',
+            :mode      => '0444',
+            :source    => nil,
+            :show_diff => 'false',
           })
         end
 
         it do
           should contain_file('/etc/grid-security/rsv/rsvkey.pem').with({
-            :ensure   => 'file',
-            :owner    => 'rsv',
-            :group    => 'rsv',
-            :mode     => '0400',
-            :source   => nil,
-            :require  => 'File[/etc/grid-security/rsv]',
+            :ensure    => 'file',
+            :owner     => 'rsv',
+            :group     => 'rsv',
+            :mode      => '0400',
+            :source    => nil,
+            :show_diff => 'false',
           })
-        end
-
-        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
-          it { should contain_file('/etc/grid-security/rsv/rsvcert.pem').with_show_diff('false') }
-          it { should contain_file('/etc/grid-security/rsv/rsvkey.pem').with_show_diff('false') }
-        else
-          it { should contain_file('/etc/grid-security/rsv/rsvcert.pem').without_show_diff }
-          it { should contain_file('/etc/grid-security/rsv/rsvkey.pem').without_show_diff }
         end
 
         it do

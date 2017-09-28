@@ -90,30 +90,24 @@ describe 'osg::gridftp' do
 
         it do
           should contain_file('/etc/grid-security/hostcert.pem').with({
-            :ensure => 'file',
-            :owner  => 'root',
-            :group  => 'root',
-            :mode   => '0444',
-            :source => nil,
+            :ensure    => 'file',
+            :owner     => 'root',
+            :group     => 'root',
+            :mode      => '0444',
+            :source    => nil,
+            :show_diff => 'false',
           })
         end
 
         it do
           should contain_file('/etc/grid-security/hostkey.pem').with({
-            :ensure => 'file',
-            :owner  => 'root',
-            :group  => 'root',
-            :mode   => '0400',
-            :source => nil,
+            :ensure    => 'file',
+            :owner     => 'root',
+            :group     => 'root',
+            :mode      => '0400',
+            :source    => nil,
+            :show_diff => 'false',
           })
-        end
-
-        if Gem::Version.new(Gem.loaded_specs['puppet'].version.to_s) >= Gem::Version.new('3.2.0')
-          it { should contain_file('/etc/grid-security/hostcert.pem').with_show_diff('false') }
-          it { should contain_file('/etc/grid-security/hostkey.pem').with_show_diff('false') }
-        else
-          it { should contain_file('/etc/grid-security/hostcert.pem').without_show_diff }
-          it { should contain_file('/etc/grid-security/hostkey.pem').without_show_diff }
         end
 
         context 'when hostcert_source and hostkey_source defined' do
