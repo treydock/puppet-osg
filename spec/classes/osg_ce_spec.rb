@@ -94,7 +94,6 @@ describe 'osg::ce' do
 
       context 'osg::ce::config' do
         {
-          'Gateway/gram_gateway_enabled' => 'false',
           'Gateway/htcondor_gateway_enabled' => 'true',
           'Site Information/group' => 'OSG',
           'Site Information/host_name' => facts[:fqdn],

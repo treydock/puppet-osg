@@ -11,24 +11,12 @@ class osg::ce::service {
     File['/etc/grid-security/http/httpkey.pem'],
   ]
 
-  if $osg::ce::gram_gateway_enabled {
-    service { 'globus-gatekeeper':
-      ensure     => 'running',
-      enable     => true,
-      hasstatus  => true,
-      hasrestart => true,
-      subscribe  => $_ce_service_subscribe,
-    }
-  }
-
-  if $osg::ce::htcondor_gateway_enabled {
-    service { 'condor-ce':
-      ensure     => 'running',
-      enable     => true,
-      hasstatus  => true,
-      hasrestart => true,
-      subscribe  => $_ce_service_subscribe,
-    }
+  service { 'condor-ce':
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    subscribe  => $_ce_service_subscribe,
   }
 
   if $osg::osg_release == '3.3' {
