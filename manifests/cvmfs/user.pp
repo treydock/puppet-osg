@@ -1,16 +1,6 @@
 # Private class: See README.md.
 class osg::cvmfs::user {
 
-  $user_uid = $osg::cvmfs::user_uid ? {
-    /UNSET|undef/ => undef,
-    default       => $osg::cvmfs::user_uid,
-  }
-
-  $group_gid = $osg::cvmfs::group_gid ? {
-    /UNSET|undef/ => undef,
-    default       => $osg::cvmfs::group_gid,
-  }
-
   if $osg::cvmfs::manage_fuse_group and versioncmp($::operatingsystemrelease, '7.0') < 0 {
     if $osg::cvmfs::manage_user {
       $_fuse_group_before = User['cvmfs']
@@ -37,7 +27,7 @@ class osg::cvmfs::user {
     user { 'cvmfs':
       ensure     => 'present',
       name       => $osg::cvmfs::user_name,
-      uid        => $user_uid,
+      uid        => $osg::cvmfs::user_uid,
       gid        => $osg::cvmfs::group_name,
       groups     => $cvmfs_groups,
       home       => $osg::cvmfs::user_home,
@@ -53,7 +43,7 @@ class osg::cvmfs::user {
     group { 'cvmfs':
       ensure     => 'present',
       name       => $osg::cvmfs::group_name,
-      gid        => $group_gid,
+      gid        => $osg::cvmfs::group_gid,
       system     => $osg::cvmfs::group_system,
       forcelocal => true,
     }

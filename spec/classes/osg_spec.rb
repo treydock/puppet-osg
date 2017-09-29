@@ -10,12 +10,7 @@ describe 'osg' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       it { should compile.with_all_deps }
       it { should create_class('osg') }
@@ -26,23 +21,6 @@ describe 'osg' do
       it { should contain_anchor('osg::start').that_comes_before('Class[osg::repos]') }
       it { should contain_class('osg::repos').that_comes_before('Anchor[osg::end]') }
       it { should contain_anchor('osg::end') }
-
-      context 'when cacerts_package_name => "foo"' do
-        let(:params) {{ :cacerts_package_name => 'foo' }}
-        it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /does not match "\^\(osg-ca-certs\|igtf-ca-certs\|empty-ca-certs\)\$"/) }
-      end
-
-      # Test validate_bool parameters
-      [
-        'repo_use_mirrors',
-        'enable_osg_contrib',
-        'cacerts_install_other_packages',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param.to_sym => 'foo' }}
-          it { expect { should create_class('osg') }.to raise_error(Puppet::Error, /is not a boolean/) }
-        end
-      end
 
     end
   end

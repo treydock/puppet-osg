@@ -10,12 +10,7 @@ describe 'osg::cvmfs' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -258,30 +253,6 @@ describe 'osg::cvmfs' do
             :path         => '/usr/bin:/usr/sbin:/bin:/sbin',
             :subscribe    => ['File[/etc/cvmfs/default.local]', 'File[/etc/cvmfs/domain.d/cern.ch.local]'],
           })
-        end
-      end
-
-      # Verify validate_bool parameters
-      [
-        'manage_user',
-        'manage_group',
-        'strict_mount',
-      ].each do |bool_param|
-        context "with #{bool_param} => 'foo'" do
-          let(:params) {{ bool_param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::cvmfs') }.to raise_error(Puppet::Error, /is not a boolean/) }
-        end
-      end
-
-      # Verify validate_array parameters
-      [
-        'repositories',
-        'http_proxies',
-        'cern_server_urls',
-      ].each do |bool_param|
-        context "with #{bool_param} => 'foo'" do
-          let(:params) {{ bool_param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::cvmfs') }.to raise_error(Puppet::Error, /is not an Array/) }
         end
       end
 

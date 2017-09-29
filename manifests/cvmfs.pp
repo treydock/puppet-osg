@@ -1,43 +1,36 @@
 # Class: osg::cvmfs: See README.md for documentation.
 class osg::cvmfs (
-  $manage_user            = true,
-  $user_name              = 'cvmfs',
-  $user_uid               = 'UNSET',
-  $user_home              = '/var/lib/cvmfs',
-  $user_shell             = '/sbin/nologin',
-  $user_system            = true,
-  $user_comment           = 'CernVM-FS service account',
-  $user_managehome        = false,
-  $manage_group           = true,
-  $group_name             = 'cvmfs',
-  $group_gid              = 'UNSET',
-  $group_system           = true,
-  $manage_fuse_group      = true,
-  $fuse_group_name        = 'fuse',
-  $fuse_group_gid         = undef,
-  $fuse_group_system      = true,
-  $package_ensure         = 'installed',
-  $repositories           = ['UNSET'],
-  $strict_mount           = false,
-  $cache_base             = '/var/cache/cvmfs',
-  $quota_limit            = '20000',
-  $http_proxies           = ["http://squid.${::domain}:3128"],
-  $cern_server_urls       = [],
-  $glite_version          = '',
-  $cms_local_site         = 'UNSET',
+  Boolean $manage_user = true,
+  String $user_name = 'cvmfs',
+  Optional[Integer] $user_uid = undef,
+  String $user_home = '/var/lib/cvmfs',
+  String $user_shell = '/sbin/nologin',
+  Boolean $user_system = true,
+  String $user_comment = 'CernVM-FS service account',
+  Boolean $user_managehome = false,
+  Boolean $manage_group = true,
+  String $group_name = 'cvmfs',
+  Optional[Integer] $group_gid = undef,
+  Boolean $group_system = true,
+  Boolean $manage_fuse_group = true,
+  String $fuse_group_name = 'fuse',
+  Optional[Integer] $fuse_group_gid = undef,
+  Boolean $fuse_group_system = true,
+  String $package_ensure = 'installed',
+  Optional[Array] $repositories = undef,
+  Boolean $strict_mount = false,
+  String $cache_base = '/var/cache/cvmfs',
+  Integer $quota_limit = 20000,
+  Array $http_proxies = ["http://squid.${::domain}:3128"],
+  Array $cern_server_urls = [],
+  String $glite_version = '',
+  Optional[String] $cms_local_site = undef,
 ) inherits osg::params {
 
-  validate_bool($manage_user)
-  validate_bool($manage_group)
-  validate_bool($manage_fuse_group)
-  validate_bool($strict_mount)
-  validate_array($repositories)
-  validate_array($http_proxies)
-  validate_array($cern_server_urls)
-
-  $repositories_real = $repositories[0] ? {
-    'UNSET' => '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`',
-    default => join($repositories, ','),
+  if $repositories {
+    $repositories_real = join($repositories, ',')
+  } else {
+    $repositories_real = '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`'
   }
 
   include ::autofs

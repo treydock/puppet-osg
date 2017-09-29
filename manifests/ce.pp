@@ -1,54 +1,46 @@
 # Class: osg::ce: See README.md for documentation.
 class osg::ce (
-  $gram_gateway_enabled       = false,
-  $htcondor_gateway_enabled   = true,
-  $site_info_group            = 'OSG',
-  $site_info_host_name        = $::fqdn,
-  $site_info_resource         = 'UNAVAILABLE',
-  $site_info_resource_group   = 'UNAVAILABLE',
-  $site_info_sponsor          = 'UNAVAILABLE',
-  $site_info_site_policy      = 'UNAVAILABLE',
-  $site_info_contact          = 'UNAVAILABLE',
-  $site_info_email            = 'UNAVAILABLE',
-  $site_info_city             = 'UNAVAILABLE',
-  $site_info_country          = 'UNAVAILABLE',
-  $site_info_longitude        = 'UNAVAILABLE',
-  $site_info_latitude         = 'UNAVAILABLE',
-  $batch_system               = 'torque',
-  $batch_system_prefix        = '/usr',
-  $pbs_server                 = 'UNAVAILABLE',
-  $enable_cleanup             = true,
-  $manage_hostcert            = true,
-  $hostcert_source            = 'UNSET',
-  $hostkey_source             = 'UNSET',
-  $httpcert_source            = 'UNSET',
-  $httpkey_source             = 'UNSET',
-  $htcondor_ce_port           = '9619',
-  $htcondor_ce_shared_port    = '9620',
-  $manage_firewall            = true,
-  $osg_local_site_settings    = {},
-  $osg_gip_configs            = {},
-  $tomcat_package             = $osg::params::tomcat_package,
-  $manage_users               = true,
-  $condor_uid                 = undef,
-  $condor_gid                 = undef,
-  $gratia_uid                 = undef,
-  $gratia_gid                 = undef,
-  $condor_ce_config_content   = undef,
-  $condor_ce_config_source    = undef,
-  $blahp_local_submit_content = undef,
-  $blahp_local_submit_source  = undef,
-  $include_view               = false,
-  $view_port                  = 8080,
+  Boolean $gram_gateway_enabled = false,
+  Boolean $htcondor_gateway_enabled = true,
+  String $site_info_group = 'OSG',
+  String $site_info_host_name = $::fqdn,
+  String $site_info_resource = 'UNAVAILABLE',
+  String $site_info_resource_group = 'UNAVAILABLE',
+  String $site_info_sponsor = 'UNAVAILABLE',
+  String $site_info_site_policy = 'UNAVAILABLE',
+  String $site_info_contact = 'UNAVAILABLE',
+  String $site_info_email = 'UNAVAILABLE',
+  String $site_info_city = 'UNAVAILABLE',
+  String $site_info_country = 'UNAVAILABLE',
+  String $site_info_longitude = 'UNAVAILABLE',
+  String $site_info_latitude = 'UNAVAILABLE',
+  Enum['torque', 'pbs', 'slurm'] $batch_system = 'torque',
+  String $batch_system_prefix = '/usr',
+  String $pbs_server = 'UNAVAILABLE',
+  Boolean $enable_cleanup = true,
+  Boolean $manage_hostcert = true,
+  Optional[String] $hostcert_source = undef,
+  Optional[String] $hostkey_source = undef,
+  Optional[String] $httpcert_source = undef,
+  Optional[String] $httpkey_source = undef,
+  Integer[0, 65535] $htcondor_ce_port = 9619,
+  Integer[0, 65535] $htcondor_ce_shared_port = 9620,
+  Boolean $manage_firewall = true,
+  Hash $osg_local_site_settings = {},
+  Hash $osg_gip_configs = {},
+  String $tomcat_package = $osg::params::tomcat_package,
+  Boolean $manage_users = true,
+  Optional[Integer] $condor_uid = undef,
+  Optional[Integer] $condor_gid = undef,
+  Optional[Integer] $gratia_uid = undef,
+  Optional[Integer] $gratia_gid = undef,
+  Optional[String] $condor_ce_config_content = undef,
+  Optional[String] $condor_ce_config_source = undef,
+  Optional[String] $blahp_local_submit_content = undef,
+  Optional[String] $blahp_local_submit_source = undef,
+  Boolean $include_view = false,
+  Integer[0, 65535] $view_port = 8080,
 ) inherits osg::params {
-
-  validate_bool($gram_gateway_enabled)
-  validate_bool($htcondor_gateway_enabled)
-  validate_bool($manage_hostcert)
-  validate_bool($manage_firewall)
-  validate_bool($include_view)
-  validate_hash($osg_local_site_settings)
-  validate_hash($osg_gip_configs)
 
   include osg
   include osg::cacerts
@@ -83,16 +75,6 @@ class osg::ce (
     default: {
       fail('osg::ce: batch_system must be either torque, pbs or slurm')
     }
-  }
-
-  $_httpcert_source = $httpcert_source ? {
-    'UNSET' => undef,
-    default => $httpcert_source,
-  }
-
-  $_httpkey_source = $httpkey_source ? {
-    'UNSET' => undef,
-    default => $httpkey_source,
   }
 
   if $include_view {

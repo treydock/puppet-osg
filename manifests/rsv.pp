@@ -1,40 +1,26 @@
 # Class: osg::rsv: See README.md for documentation.
 class osg::rsv (
-  $rsvcert_source         = 'UNSET',
-  $rsvkey_source          = 'UNSET',
-  $manage_users           = true,
-  $with_httpd             = true,
-  $manage_firewall        = true,
-  $firewall_ensure        = 'present',
-  $http_port              = '80',
-  $rsv_uid                = undef,
-  $rsv_gid                = undef,
-  $cndrcron_uid           = '93',
-  $cndrcron_gid           = '93',
-  $gram_ce_hosts          = 'UNAVAILABLE',
-  $htcondor_ce_hosts      = 'UNAVAILABLE',
-  $ce_hosts               = 'UNAVAILABLE',
-  $gridftp_hosts          = 'UNAVAILABLE',
-  $gridftp_dir            = 'DEFAULT',
-  $gratia_probes          = 'DEFAULT',
-  $srm_hosts              = 'UNAVAILABLE',
-  $srm_dir                = 'DEFAULT',
-  $srm_webservice_path    = 'DEFAULT',
+  Optional[String] $rsvcert_source = undef,
+  Optional[String] $rsvkey_source = undef,
+  Boolean $manage_users = true,
+  Boolean $with_httpd = true,
+  Boolean $manage_firewall = true,
+  Enum['present', 'absent'] $firewall_ensure = 'present',
+  Integer[0, 65535] $http_port = 80,
+  Optional[Integer] $rsv_uid = undef,
+  Optional[Integer] $rsv_gid = undef,
+  Integer $cndrcron_uid = 93,
+  Integer $cndrcron_gid = 93,
+  String $gram_ce_hosts = 'UNAVAILABLE',
+  String $htcondor_ce_hosts = 'UNAVAILABLE',
+  String $ce_hosts = 'UNAVAILABLE',
+  String $gridftp_hosts = 'UNAVAILABLE',
+  String $gridftp_dir = 'DEFAULT',
+  String $gratia_probes = 'DEFAULT',
+  String $srm_hosts = 'UNAVAILABLE',
+  String $srm_dir = 'DEFAULT',
+  String $srm_webservice_path = 'DEFAULT',
 ) inherits osg::params {
-
-  validate_bool($manage_users)
-  validate_bool($with_httpd)
-  validate_bool($manage_firewall)
-
-  $_rsvcert_source = $rsvcert_source ? {
-    'UNSET' => undef,
-    default => $rsvcert_source,
-  }
-
-  $_rsvkey_source = $rsvkey_source ? {
-    'UNSET' => undef,
-    default => $rsvkey_source,
-  }
 
   include osg
   include osg::cacerts

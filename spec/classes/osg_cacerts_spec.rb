@@ -10,12 +10,7 @@ describe 'osg::cacerts' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       it { should compile.with_all_deps }
       it { should create_class('osg::cacerts') }

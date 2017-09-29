@@ -20,7 +20,7 @@ class osg::gridftp::config {
       owner     => 'root',
       group     => 'root',
       mode      => '0444',
-      source    => $osg::gridftp::_hostcert_source,
+      source    => $osg::gridftp::hostcert_source,
       show_diff => false
     }
 
@@ -29,7 +29,7 @@ class osg::gridftp::config {
       owner     => 'root',
       group     => 'root',
       mode      => '0400',
-      source    => $osg::gridftp::_hostkey_source,
+      source    => $osg::gridftp::hostkey_source,
       show_diff => false
     }
   }

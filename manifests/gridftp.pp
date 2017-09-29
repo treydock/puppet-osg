@@ -1,24 +1,11 @@
 # Class: osg::gridftp: See README.md for documentation.
 class osg::gridftp (
-  $manage_hostcert  = true,
-  $hostcert_source  = 'UNSET',
-  $hostkey_source   = 'UNSET',
-  $manage_firewall  = true,
-  $standalone       = true,
+  Boolean $manage_hostcert = true,
+  Optional[String] $hostcert_source = undef,
+  Optional[String] $hostkey_source = undef,
+  Boolean $manage_firewall = true,
+  Boolean $standalone = true,
 ) inherits osg::params {
-
-  validate_bool($manage_hostcert)
-  validate_bool($manage_firewall)
-
-  $_hostcert_source = $hostcert_source ? {
-    'UNSET' => undef,
-    default => $hostcert_source,
-  }
-
-  $_hostkey_source = $hostkey_source ? {
-    'UNSET' => undef,
-    default => $hostkey_source,
-  }
 
   include osg
   include osg::cacerts

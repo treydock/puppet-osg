@@ -1,17 +1,17 @@
 # Class: osg::cacerts::updater: See README.md for documentation.
 class osg::cacerts::updater (
-  $ensure                   = 'present',
-  $min_age                  = '23',
-  $max_age                  = '72',
-  $random_wait              = '30',
-  $quiet                    = true,
-  $logfile                  = false,
-  $package_name             = 'osg-ca-certs-updater',
-  $package_ensure           = 'UNSET',
-  $service_name             = 'osg-ca-certs-updater-cron',
-  $service_ensure           = 'UNSET',
-  $service_enable           = 'UNSET',
-  $config_replace           = true,
+  Enum['present', 'absent', 'disabled'] $ensure = 'present',
+  Integer $min_age = 23,
+  Integer $max_age = 72,
+  Integer $random_wait = 30,
+  Boolean $quiet = true,
+  Variant[Boolean,Undef,String] $logfile = false,
+  String $package_name = 'osg-ca-certs-updater',
+  String $package_ensure = 'UNSET',
+  String $service_name = 'osg-ca-certs-updater-cron',
+  String $service_ensure = 'UNSET',
+  String $service_enable = 'UNSET',
+  Boolean $config_replace = true,
 ) inherits osg::params {
 
   require 'osg::cacerts'

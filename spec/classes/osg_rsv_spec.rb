@@ -10,12 +10,7 @@ describe 'osg::rsv' do
     ]
   }).each do |os, facts|
     context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :concat_basedir => '/dne',
-          :puppetversion => Puppet.version,
-        })
-      end
+      let(:facts) { facts }
 
       let(:params) {{ }}
 
@@ -122,7 +117,7 @@ describe 'osg::rsv' do
         end
 
         context 'when UID / GID defined for RSV' do
-          let(:params) {{ :rsv_uid => '999', :rsv_gid => '999' }}
+          let(:params) {{ :rsv_uid => 999, :rsv_gid => 999 }}
 
           it { should contain_user('rsv').with_uid('999') }
           it { should contain_group('rsv').with_gid('999') }
@@ -325,18 +320,6 @@ describe 'osg::rsv' do
       context 'with manage_firewall => false' do
         let(:params) {{ :manage_firewall => false }}
         it { should_not contain_firewall('100 allow RSV http access') }
-      end
-
-      # Test validate_bool parameters
-      [
-        'manage_users',
-        'with_httpd',
-        'manage_firewall',
-      ].each do |param|
-        context "with #{param} => 'foo'" do
-          let(:params) {{ param.to_sym => 'foo' }}
-          it { expect { should create_class('osg::rsv') }.to raise_error(Puppet::Error, /is not a boolean/) }
-        end
       end
 
     end

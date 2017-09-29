@@ -1,17 +1,13 @@
 # Class: osg::client: See README.md for documentation.
 class osg::client (
-  $with_condor                = true,
-  $with_condor_ce             = true,
-  $manage_firewall            = true,
-  $enable_condor_service      = false,
-  $enable_condor_ce_service   = false,
-  $condor_configs_override    = {},
-  $condor_ce_configs_override = {},
+  Boolean $with_condor = true,
+  Boolean $with_condor_ce = true,
+  Boolean $manage_firewall = true,
+  Boolean $enable_condor_service = false,
+  Boolean $enable_condor_ce_service = false,
+  Hash $condor_configs_override = {},
+  Hash $condor_ce_configs_override = {},
 ) inherits osg::params {
-
-  validate_bool($with_condor, $with_condor_ce, $manage_firewall)
-  validate_bool($enable_condor_service, $enable_condor_ce_service)
-  validate_hash($condor_configs_override, $condor_ce_configs_override)
 
   include osg
   include osg::cacerts
