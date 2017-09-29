@@ -89,12 +89,8 @@ class osg::ce::config {
     }
   }
 
-  osg_local_site_settings { 'Gateway/gram_gateway_enabled':
-    value => $osg::ce::gram_gateway_enabled
-  }
-
   osg_local_site_settings { 'Gateway/htcondor_gateway_enabled':
-    value => $osg::ce::htcondor_gateway_enabled
+    value => true
   }
 
   osg_local_site_settings { 'Site Information/group': value => $osg::ce::site_info_group }

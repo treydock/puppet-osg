@@ -100,13 +100,11 @@ This class by default configures a GRAM CE.  The following example is to configu
     }
     class { 'osg::cacerts::updater': }
     class { 'osg::ce':
-      gram_gateway_enabled      => false,
-      htcondor_gateway_enabled  => true,
       batch_system              => 'slurm',
       hostcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
       hostkey_source            => 'file:///home/admin/osg/certs/ce/hostkey.pem',
-      httpcert_source           => 'file:///home/admin/osg/certs/ce/hostcert.pem',
-      httpkey_source            => 'file:///home/admin/osg/certs/ce/hostkey.pem',
+      httpcert_source           => 'file:///home/admin/osg/certs/ce/httpcert.pem',
+      httpkey_source            => 'file:///home/admin/osg/certs/ce/httpkey.pem',
     }
 
 

@@ -1,7 +1,5 @@
 # Class: osg::ce: See README.md for documentation.
 class osg::ce (
-  Boolean $gram_gateway_enabled = false,
-  Boolean $htcondor_gateway_enabled = true,
   String $site_info_group = 'OSG',
   String $site_info_host_name = $::fqdn,
   String $site_info_resource = 'UNAVAILABLE',
@@ -117,30 +115,18 @@ class osg::ce (
   }
 
   if $manage_firewall {
-    if $gram_gateway_enabled {
-      firewall { '100 allow GRAM':
-        ensure => 'present',
-        action => 'accept',
-        dport  => '2119',
-        proto  => 'tcp',
-      }
+    firewall { '100 allow HTCondorCE':
+      ensure => 'present',
+      action => 'accept',
+      dport  => $htcondor_ce_port,
+      proto  => 'tcp',
     }
-
-    if $htcondor_gateway_enabled {
-      firewall { '100 allow HTCondorCE':
-        ensure => 'present',
-        action => 'accept',
-        dport  => $htcondor_ce_port,
-        proto  => 'tcp',
-      }
-      firewall { '100 allow HTCondorCE shared_port':
-        ensure => 'present',
-        action => 'accept',
-        dport  => $htcondor_ce_shared_port,
-        proto  => 'tcp',
-      }
+    firewall { '100 allow HTCondorCE shared_port':
+      ensure => 'present',
+      action => 'accept',
+      dport  => $htcondor_ce_shared_port,
+      proto  => 'tcp',
     }
-
     firewall { '100 allow HTCondorCE View':
       ensure => $view_ensure,
       action => 'accept',
