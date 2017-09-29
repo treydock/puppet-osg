@@ -14,9 +14,17 @@
 
 ## Overview
 
-**This module is still under development.  Use at your own risk!**
+The OSG module manages the various components that make up the Open Science Grid software stack.
 
-This module is a work-in-progress intended to Puppet-ize the installation and management of the OSG software stack.  Knowing if this module is being used at other sites and how it's used would greatly help me improve this module.
+## OSG Compatibility
+
+The current version support matrix is as follows:
+
+OSG Versions       |  3.3 |  3.4 |
+:-------------------------|:----:|
+**puppet-osg 1.x** | yes  | no   |
+**puppet-osg 2.x** | yes  | yes  |
+**puppet-osg 3.x** | yes  | yes  |
 
 ## Usage
 
