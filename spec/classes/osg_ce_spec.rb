@@ -107,6 +107,12 @@ describe 'osg::ce' do
           'Site Information/country' => 'UNAVAILABLE',
           'Site Information/longitude' => 'UNAVAILABLE',
           'Site Information/latitude' => 'UNAVAILABLE',
+          'Storage/grid_dir' => '/etc/osg/wn-client/',
+          'Storage/app_dir' => 'UNAVAILABLE',
+          'Storage/data_dir' => 'UNAVAILABLE',
+          'Storage/worker_node_temp' => 'UNAVAILABLE',
+          'Storage/site_read' => 'UNAVAILABLE',
+          'Storage/site_write' => 'UNAVAILABLE',
           'Network/port_range' => '40000,41999',
         }.each_pair do |k,v|
           it { should contain_osg_local_site_settings(k).with_value(v) }
