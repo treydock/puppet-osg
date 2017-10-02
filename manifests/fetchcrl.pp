@@ -8,7 +8,7 @@ class osg::fetchcrl (
   Boolean $crl_boot_service_enable = false,
   String $crl_cron_service_name = 'fetch-crl-cron',
   String $crl_cron_service_ensure = 'UNSET',
-  String $crl_cron_service_enable = 'UNSET',
+  Variant[Boolean, Enum['UNSET']] $crl_cron_service_enable = 'UNSET',
   Boolean $use_syslog = true,
 ) inherits osg::params {
 
