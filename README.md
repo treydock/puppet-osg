@@ -21,7 +21,7 @@ The OSG module manages the various components that make up the Open Science Grid
 The current version support matrix is as follows:
 
 OSG Versions       |  3.3 |  3.4 |
-:-------------------------|:----:|
+:------------------|:----:|:----:|
 **puppet-osg 1.x** | yes  | no   |
 **puppet-osg 2.x** | yes  | yes  |
 **puppet-osg 3.x** | yes  | yes  |
