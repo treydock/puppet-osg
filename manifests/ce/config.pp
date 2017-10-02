@@ -106,6 +106,13 @@ class osg::ce::config {
   osg_local_site_settings { 'Site Information/longitude': value => $osg::ce::site_info_longitude }
   osg_local_site_settings { 'Site Information/latitude': value => $osg::ce::site_info_latitude }
 
+  osg_local_site_settings { 'Storage/grid_dir': value => $osg::ce::storage_grid_dir }
+  osg_local_site_settings { 'Storage/app_dir': value => $osg::ce::storage_app_dir }
+  osg_local_site_settings { 'Storage/data_dir': value => $osg::ce::storage_data_dir }
+  osg_local_site_settings { 'Storage/worker_node_temp': value => $osg::ce::storage_worker_node_temp }
+  osg_local_site_settings { 'Storage/site_read': value => $osg::ce::storage_site_read }
+  osg_local_site_settings { 'Storage/site_write': value => $osg::ce::storage_site_write }
+
   osg_local_site_settings { 'Network/port_range': value => "${osg::globus_tcp_source_range_min},${osg::globus_tcp_source_range_max}"}
 
   osg_local_site_settings { "${osg::ce::batch_ini_section}/enabled": value => true }

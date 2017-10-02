@@ -28,13 +28,6 @@ class osg (
   String $exported_resource_collect_tag = $::domain,
   # INI config values
   Optional[String] $squid_location = undef,
-  Optional[String] $storage_default_se = undef,
-  String $storage_grid_dir = '/etc/osg/wn-client/',
-  String $storage_app_dir = 'UNAVAILABLE',
-  String $storage_data_dir = 'UNAVAILABLE',
-  String $storage_worker_node_temp = 'UNAVAILABLE',
-  String $storage_site_read = 'UNAVAILABLE',
-  String $storage_site_write = 'UNAVAILABLE',
   Boolean $purge_local_site_settings = true,
   Boolean $purge_gip_config = true,
 ) inherits osg::params {
