@@ -142,7 +142,6 @@ describe 'osg::rsv' do
           {:name => 'RSV/gridftp_hosts', :value => 'UNAVAILABLE'},
           {:name => 'RSV/gridftp_dir', :value => 'DEFAULT'},
           {:name => 'RSV/gratia_probes', :value => 'DEFAULT'},
-          {:name => 'RSV/gums_hosts', :value => 'UNAVAILABLE'},
           {:name => 'RSV/srm_hosts', :value => 'UNAVAILABLE'},
           {:name => 'RSV/srm_dir', :value => 'DEFAULT'},
           {:name => 'RSV/srm_webservice_path', :value => 'DEFAULT'},

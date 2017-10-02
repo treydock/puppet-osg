@@ -21,18 +21,14 @@ class osg::ce (
   Enum['torque', 'pbs', 'slurm'] $batch_system = 'torque',
   String $batch_system_prefix = '/usr',
   String $pbs_server = 'UNAVAILABLE',
-  Boolean $enable_cleanup = true,
   Boolean $manage_hostcert = true,
   Optional[String] $hostcert_source = undef,
   Optional[String] $hostkey_source = undef,
-  Optional[String] $httpcert_source = undef,
-  Optional[String] $httpkey_source = undef,
   Integer[0, 65535] $htcondor_ce_port = 9619,
   Integer[0, 65535] $htcondor_ce_shared_port = 9620,
   Boolean $manage_firewall = true,
   Hash $osg_local_site_settings = {},
   Hash $osg_gip_configs = {},
-  String $tomcat_package = $osg::params::tomcat_package,
   Boolean $manage_users = true,
   Optional[Integer] $condor_uid = undef,
   Optional[Integer] $condor_gid = undef,
@@ -48,8 +44,6 @@ class osg::ce (
 
   include osg
   include osg::cacerts
-
-  $cemon_service_name = 'osg-info-services'
 
   case $batch_system {
     /torque|pbs/: {
@@ -95,30 +89,15 @@ class osg::ce (
     standalone      => false,
   }
 
-  if $osg::osg_release == '3.3' {
-    include osg::tomcat::user
-
-    anchor { 'osg::ce::start': }
-    -> Class['osg']
-    -> Class['osg::cacerts']
-    -> Class['osg::tomcat::user']
-    -> class { 'osg::ce::users': }
-    -> class { 'osg::ce::install': }
-    -> Class['osg::gridftp']
-    -> class { 'osg::ce::config': }
-    -> class { 'osg::ce::service': }
-    -> anchor { 'osg::ce::end': }
-  } else {
-    anchor { 'osg::ce::start': }
-    -> Class['osg']
-    -> Class['osg::cacerts']
-    -> class { 'osg::ce::users': }
-    -> class { 'osg::ce::install': }
-    -> Class['osg::gridftp']
-    -> class { 'osg::ce::config': }
-    -> class { 'osg::ce::service': }
-    -> anchor { 'osg::ce::end': }
-  }
+  anchor { 'osg::ce::start': }
+  -> Class['osg']
+  -> Class['osg::cacerts']
+  -> class { 'osg::ce::users': }
+  -> class { 'osg::ce::install': }
+  -> Class['osg::gridftp']
+  -> class { 'osg::ce::config': }
+  -> class { 'osg::ce::service': }
+  -> anchor { 'osg::ce::end': }
 
   if $manage_firewall {
     firewall { '100 allow HTCondorCE':

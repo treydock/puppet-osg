@@ -1,33 +1,6 @@
 # Private class: See README.md.
 class osg::ce::config {
 
-  if $osg::osg_release == '3.3' {
-    file { '/etc/grid-security/http':
-      ensure => 'directory',
-      owner  => 'tomcat',
-      group  => 'tomcat',
-      mode   => '0755',
-    }
-
-    file { '/etc/grid-security/http/httpcert.pem':
-      ensure    => 'file',
-      owner     => 'tomcat',
-      group     => 'tomcat',
-      mode      => '0444',
-      source    => $osg::ce::httpcert_source,
-      show_diff => false
-    }
-
-    file { '/etc/grid-security/http/httpkey.pem':
-      ensure    => 'file',
-      owner     => 'tomcat',
-      group     => 'tomcat',
-      mode      => '0400',
-      source    => $osg::ce::httpkey_source,
-      show_diff => false
-    }
-  }
-
   file { '/etc/condor-ce/config.d/99-local.conf':
     ensure  => 'file',
     owner   => 'root',
@@ -120,8 +93,6 @@ class osg::ce::config {
   osg_local_site_settings { "${osg::ce::batch_ini_section}/job_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::job_contact}" }
   osg_local_site_settings { "${osg::ce::batch_ini_section}/util_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::util_contact}" }
   create_resources(osg_local_site_settings, $osg::ce::batch_settings)
-
-  osg_local_site_settings { 'Misc Services/enable_cleanup': value => $osg::ce::enable_cleanup }
 
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)
   create_resources(osg_gip_config, $osg::ce::osg_gip_configs)
