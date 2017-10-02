@@ -25,6 +25,7 @@ OSG Versions       |  3.3 |  3.4 |
 **puppet-osg 1.x** | yes  | no   |
 **puppet-osg 2.x** | yes  | yes  |
 **puppet-osg 3.x** | yes  | yes  |
+**puppet-osg 4.x** | no   | yes  |
 
 ## Usage
 
