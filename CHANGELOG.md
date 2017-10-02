@@ -1,5 +1,26 @@
 # Change Log
 
+## [3.0.0](https://github.com/treydock/puppet-osg/tree/3.0.0) (2017-10-02)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/2.0.0...3.0.0)
+
+**Implemented enhancements:**
+
+- Switch all parameters to use proper data types [\#9](https://github.com/treydock/puppet-osg/pull/9) ([treydock](https://github.com/treydock))
+- Set defaults for osg::osg\_release to 3.4 and osg::auth\_type to lcmaps\_voms [\#3](https://github.com/treydock/puppet-osg/pull/3) ([treydock](https://github.com/treydock))
+
+**Fixed bugs:**
+
+- Only manage osg::ce http cert/key on OSG 3.3 [\#8](https://github.com/treydock/puppet-osg/pull/8) ([treydock](https://github.com/treydock))
+- Do not manage tomcat user/group for OSG 3.4 for osg::ce [\#7](https://github.com/treydock/puppet-osg/pull/7) ([treydock](https://github.com/treydock))
+- Do not install empty-torque, no longer needed. [\#2](https://github.com/treydock/puppet-osg/pull/2) ([treydock](https://github.com/treydock))
+
+**Merged pull requests:**
+
+- Remove GRAM resources and only support HTCondor-CE gateway [\#10](https://github.com/treydock/puppet-osg/pull/10) ([treydock](https://github.com/treydock))
+- Puppet syntax cleanup [\#6](https://github.com/treydock/puppet-osg/pull/6) ([treydock](https://github.com/treydock))
+- Remove deprecated osg::lcmaps class [\#5](https://github.com/treydock/puppet-osg/pull/5) ([treydock](https://github.com/treydock))
+- Add notify to resources that purge configs [\#4](https://github.com/treydock/puppet-osg/pull/4) ([treydock](https://github.com/treydock))
+
 ## [2.0.0](https://github.com/treydock/puppet-osg/tree/2.0.0) (2017-09-25)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/1.0.0...2.0.0)
 
