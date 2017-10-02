@@ -480,4 +480,4 @@ If you have Vagrant >= 1.2.0 installed you can run system tests.  **NOTE: The ac
 
 ## Further Information
 
-* [OSG 3](https://twiki.grid.iu.edu/bin/view/Documentation/Release3/WebHome)
+* [OSG](http://opensciencegrid.github.io/docs/)
