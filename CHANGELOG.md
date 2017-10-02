@@ -1,5 +1,13 @@
 # Change Log
 
+## [4.0.0](https://github.com/treydock/puppet-osg/tree/4.0.0) (2017-10-02)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/3.0.0...4.0.0)
+
+**Merged pull requests:**
+
+- Remove support for OSG 3.3 components [\#12](https://github.com/treydock/puppet-osg/pull/12) ([treydock](https://github.com/treydock))
+- Move storage INI configurations to osg::ce [\#11](https://github.com/treydock/puppet-osg/pull/11) ([treydock](https://github.com/treydock))
+
 ## [3.0.0](https://github.com/treydock/puppet-osg/tree/3.0.0) (2017-10-02)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/2.0.0...3.0.0)
 
