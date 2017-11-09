@@ -10,6 +10,8 @@ class osg::rsv::config {
   osg_local_site_settings { 'RSV/srm_hosts':           value => $osg::rsv::srm_hosts }
   osg_local_site_settings { 'RSV/srm_dir':             value => $osg::rsv::srm_dir }
   osg_local_site_settings { 'RSV/srm_webservice_path': value => $osg::rsv::srm_webservice_path }
+  osg_local_site_settings { 'RSV/service_cert':        value => '/etc/grid-security/rsv/rsvcert.pem'}
+  osg_local_site_settings { 'RSV/service_key':        value => '/etc/grid-security/rsv/rsvkey.pem'}
 
   file { '/etc/grid-security/rsv':
     ensure => 'directory',
@@ -25,6 +27,7 @@ class osg::rsv::config {
     mode      => '0444',
     source    => $osg::rsv::rsvcert_source,
     show_diff => false,
+    before    => Osg_local_site_settings['RSV/service_cert'],
   }
 
   file { '/etc/grid-security/rsv/rsvkey.pem':
@@ -34,6 +37,7 @@ class osg::rsv::config {
     mode      => '0400',
     source    => $osg::rsv::rsvkey_source,
     show_diff => false,
+    before    => Osg_local_site_settings['RSV/service_key'],
   }
 
   file { '/var/spool/rsv':
