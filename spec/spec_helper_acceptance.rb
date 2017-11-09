@@ -13,31 +13,10 @@ RSpec.configure do |c|
   # Readable test descriptions
   c.formatter = :documentation
 
-  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-
   c.before :suite do
     hosts.each do |h|
       scp_to h, File.join(proj_root, 'spec/fixtures/make-dummy-cert'), '/tmp/make-dummy-cert'
       on h, '/tmp/make-dummy-cert /tmp/host /tmp/bestman /tmp/rsv /tmp/http'
-
-      install_puppet_module_via_pmt_on(h, :module_name => 'puppetlabs-inifile')
-      puppet_pp = <<-EOF
-      ini_setting { 'puppet.conf/main/show_diff':
-        ensure  => 'present',
-        section => 'main',
-        path    => '/etc/puppet/puppet.conf',
-        setting => 'show_diff',
-        value   => 'true',
-      }
-      ini_setting { 'puppet.conf/main/parser':
-        ensure  => 'present',
-        section => 'main',
-        path    => '/etc/puppet/puppet.conf',
-        setting => 'parser',
-        value   => 'future',
-      }
-      EOF
-      apply_manifest_on(h, puppet_pp, :catch_failures => true)
     end
   end
 end
