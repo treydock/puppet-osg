@@ -299,9 +299,8 @@ describe 'osg::rsv' do
           should contain_service('rsv').with({
             :ensure     => 'running',
             :enable     => 'true',
-            :hasstatus  => 'false',
+            :hasstatus  => 'true',
             :hasrestart => 'true',
-            :status     => 'test -f /var/lock/subsys/rsv',
           })
         end
 

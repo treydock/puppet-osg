@@ -4,9 +4,8 @@ class osg::rsv::service {
   service { 'rsv':
     ensure     => 'running',
     enable     => true,
-    hasstatus  => false,
+    hasstatus  => true,
     hasrestart => true,
-    status     => 'test -f /var/lock/subsys/rsv',
   }
 
   service { 'condor-cron':
