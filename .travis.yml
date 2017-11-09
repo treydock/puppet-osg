@@ -2,7 +2,7 @@
 language: ruby
 bundler_args: --without system_tests
 before_install: rm Gemfile.lock || true
-script: bundle exec rake test
+script: bundle exec rake release_checks
 matrix:
   fast_finish: true
   include:
