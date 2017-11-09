@@ -1,5 +1,23 @@
 # Change Log
 
+## [4.1.0](https://github.com/treydock/puppet-osg/tree/4.1.0) (2017-11-09)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.0.0...4.1.0)
+
+**Implemented enhancements:**
+
+- Set RSV cert and key path for osg-configure and ensure the files exist before the values are set [\#17](https://github.com/treydock/puppet-osg/pull/17) ([treydock](https://github.com/treydock))
+- Fully drop support for Puppet 3 [\#16](https://github.com/treydock/puppet-osg/pull/16) ([treydock](https://github.com/treydock))
+
+**Fixed bugs:**
+
+- Fix rsv service resource to check status instead of presence of file [\#18](https://github.com/treydock/puppet-osg/pull/18) ([treydock](https://github.com/treydock))
+
+**Merged pull requests:**
+
+- Use release\_checks rake task for travis-ci tests [\#15](https://github.com/treydock/puppet-osg/pull/15) ([treydock](https://github.com/treydock))
+- Remove unused variables [\#14](https://github.com/treydock/puppet-osg/pull/14) ([treydock](https://github.com/treydock))
+- Remove sudo and logrotate dependencies, these modules are not used by this module [\#13](https://github.com/treydock/puppet-osg/pull/13) ([treydock](https://github.com/treydock))
+
 ## [4.0.0](https://github.com/treydock/puppet-osg/tree/4.0.0) (2017-10-02)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/3.0.0...4.0.0)
 

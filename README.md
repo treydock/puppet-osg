@@ -1,5 +1,6 @@
 # puppet-osg
 
+[![Puppet Forge](http://img.shields.io/puppetforge/v/treydock/osg.svg)](https://forge.puppetlabs.com/treydock/osg)
 [![Build Status](https://travis-ci.org/treydock/puppet-osg.svg?branch=master)](https://travis-ci.org/treydock/puppet-osg)
 
 #### Table of Contents
