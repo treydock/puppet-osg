@@ -1,5 +1,12 @@
 # Change Log
 
+## [4.1.1](https://github.com/treydock/puppet-osg/tree/4.1.1) (2018-01-09)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.1.0...4.1.1)
+
+**Fixed bugs:**
+
+- Allow autofs 4.x, apache 2.x and concat 4.x dependencies [\#19](https://github.com/treydock/puppet-osg/pull/19) ([treydock](https://github.com/treydock))
+
 ## [4.1.0](https://github.com/treydock/puppet-osg/tree/4.1.0) (2017-11-09)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.0.0...4.1.0)
 
