@@ -32,12 +32,12 @@ describe 'osg::repos' do
           should contain_yumrepo(h[:name]).only_with({
             :name           => h[:name],
             :baseurl        => 'absent',
-            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+            :mirrorlist     => "https://repo.opensciencegrid.org/mirror/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
             :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
             :enabled        => h[:enabled],
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+            :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
           })
         end
@@ -52,12 +52,12 @@ describe 'osg::repos' do
           should contain_yumrepo(h[:name]).only_with({
             :name           => h[:name],
             :baseurl        => 'absent',
-            :mirrorlist     => "http://repo.grid.iu.edu/mirror/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+            :mirrorlist     => "https://repo.opensciencegrid.org/mirror/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
             :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
             :enabled        => '0',
             :failovermethod => 'priority',
             :gpgcheck       => '1',
-            :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+            :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
             :priority       => '98',
           })
         end
@@ -76,13 +76,13 @@ describe 'osg::repos' do
           it do
             should contain_yumrepo(h[:name]).only_with({
               :name           => h[:name],
-              :baseurl        => "http://repo.grid.iu.edu/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+              :baseurl        => "https://repo.opensciencegrid.org/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
               :mirrorlist     => 'absent',
               :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
               :enabled        => h[:enabled],
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+              :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
             })
           end
@@ -96,20 +96,20 @@ describe 'osg::repos' do
           it do
             should contain_yumrepo(h[:name]).only_with({
               :name           => h[:name],
-              :baseurl        => "http://repo.grid.iu.edu/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+              :baseurl        => "https://repo.opensciencegrid.org/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
               :mirrorlist     => 'absent',
               :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
               :enabled        => '0',
               :failovermethod => 'priority',
               :gpgcheck       => '1',
-              :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+              :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
               :priority       => '98',
             })
           end
         end
 
-        context 'when repo_urlbit => "http://foo.example.com"' do
-          let(:pre_condition) { "class { 'osg': repo_use_mirrors => false, repo_baseurl_bit => 'http://foo.example.com' }" }
+        context 'when repo_urlbit => "https://foo.example.com"' do
+          let(:pre_condition) { "class { 'osg': repo_use_mirrors => false, repo_baseurl_bit => 'https://foo.example.com' }" }
 
           [
             {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
@@ -121,13 +121,13 @@ describe 'osg::repos' do
             it do
               should contain_yumrepo(h[:name]).only_with({
                 :name           => h[:name],
-                :baseurl        => "http://foo.example.com/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+                :baseurl        => "https://foo.example.com/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                 :mirrorlist     => 'absent',
                 :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]}#{h[:desc]} - x86_64",
                 :enabled        => h[:enabled],
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
               })
             end
@@ -141,13 +141,13 @@ describe 'osg::repos' do
             it do
               should contain_yumrepo(h[:name]).only_with({
                 :name           => h[:name],
-                :baseurl        => "http://foo.example.com/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
+                :baseurl        => "https://foo.example.com/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                 :mirrorlist     => 'absent',
                 :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
                 :enabled        => '0',
                 :failovermethod => 'priority',
                 :gpgcheck       => '1',
-                :gpgkey         => "http://repo.grid.iu.edu/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
                 :priority       => '98',
               })
             end

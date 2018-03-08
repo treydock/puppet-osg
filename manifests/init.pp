@@ -1,7 +1,7 @@
 # Class: osg: See README.md for documentation.
 class osg (
   Enum['3.4'] $osg_release = '3.4',
-  Optional[String] $repo_baseurl_bit = 'http://repo.grid.iu.edu',
+  Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
   Optional[String] $repo_testing_baseurl_bit = undef,
   Optional[String] $repo_upcoming_baseurl_bit = undef,
@@ -34,7 +34,7 @@ class osg (
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
-  $_repo_gpgkey                       = pick($repo_gpgkey, "http://repo.grid.iu.edu/osg/${osg_release}/RPM-GPG-KEY-OSG")
+  $_repo_gpgkey                       = pick($repo_gpgkey, "https://repo.opensciencegrid.org/osg/${osg_release}/RPM-GPG-KEY-OSG")
 
   anchor { 'osg::start': }
   anchor { 'osg::end': }
