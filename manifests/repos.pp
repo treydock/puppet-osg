@@ -17,14 +17,14 @@ class osg::repos {
     }
 
     $mirrorlists = {
-      'osg'                       => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/release/${::architecture}",
-      'osg-empty'                 => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/empty/${::architecture}",
-      'osg-contrib'               => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/contrib/${::architecture}",
-      'osg-development'           => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/development/${::architecture}",
-      'osg-testing'               => "http://repo.grid.iu.edu/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/testing/${::architecture}",
-      'osg-upcoming'              => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/release/${::architecture}",
-      'osg-upcoming-development'  => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/development/${::architecture}",
-      'osg-upcoming-testing'      => "http://repo.grid.iu.edu/mirror/osg/upcoming/el${::operatingsystemmajrelease}/testing/${::architecture}",
+      'osg'                       => "https://repo.opensciencegrid.org/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-empty'                 => "https://repo.opensciencegrid.org/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/empty/${::architecture}",
+      'osg-contrib'               => "https://repo.opensciencegrid.org/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/contrib/${::architecture}",
+      'osg-development'           => "https://repo.opensciencegrid.org/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-testing'               => "https://repo.opensciencegrid.org/mirror/osg/${osg::osg_release}/el${::operatingsystemmajrelease}/testing/${::architecture}",
+      'osg-upcoming'              => "https://repo.opensciencegrid.org/mirror/osg/upcoming/el${::operatingsystemmajrelease}/release/${::architecture}",
+      'osg-upcoming-development'  => "https://repo.opensciencegrid.org/mirror/osg/upcoming/el${::operatingsystemmajrelease}/development/${::architecture}",
+      'osg-upcoming-testing'      => "https://repo.opensciencegrid.org/mirror/osg/upcoming/el${::operatingsystemmajrelease}/testing/${::architecture}",
     }
   } else {
     $baseurls   = {
