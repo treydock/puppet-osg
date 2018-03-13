@@ -21,9 +21,23 @@ describe 'osg::repos' do
 
       it { should contain_package('yum-plugin-priorities').with_ensure('present') }
 
+      it do
+        should contain_yumrepo('osg-empty').only_with({
+          :name           => 'osg-empty',
+          :baseurl        => 'absent',
+          :mirrorlist     => "https://repo.opensciencegrid.org/mirror/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/empty/x86_64",
+          :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - Empty Packages - x86_64",
+          :enabled        => '1',
+          :failovermethod => 'priority',
+          :gpgcheck       => '1',
+          :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+          :priority       => '98',
+          :includepkgs    => 'empty-ca-certs empty-slurm empty-torque',
+        })
+      end
+
       [
         {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
-        {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
         {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
         {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
         {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -66,9 +80,23 @@ describe 'osg::repos' do
       context 'when repo_use_mirrors => false' do
         let(:pre_condition) { "class { 'osg': repo_use_mirrors => false }"}
 
+        it do
+          should contain_yumrepo('osg-empty').only_with({
+            :name           => 'osg-empty',
+            :baseurl        => "https://repo.opensciencegrid.org/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/empty/x86_64",
+            :mirrorlist     => 'absent',
+            :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - Empty Packages - x86_64",
+            :enabled        => '1',
+            :failovermethod => 'priority',
+            :gpgcheck       => '1',
+            :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+            :priority       => '98',
+            :includepkgs    => 'empty-ca-certs empty-slurm empty-torque',
+          })
+        end
+
         [
           {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
-          {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
           {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
           {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
           {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},
@@ -111,9 +139,23 @@ describe 'osg::repos' do
         context 'when repo_urlbit => "https://foo.example.com"' do
           let(:pre_condition) { "class { 'osg': repo_use_mirrors => false, repo_baseurl_bit => 'https://foo.example.com' }" }
 
+          it do
+            should contain_yumrepo('osg-empty').only_with({
+              :name           => 'osg-empty',
+              :baseurl        => "https://foo.example.com/osg/#{osg_release}/el#{facts[:operatingsystemmajrelease]}/empty/x86_64",
+              :mirrorlist     => 'absent',
+              :descr          => "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - Empty Packages - x86_64",
+              :enabled        => '1',
+              :failovermethod => 'priority',
+              :gpgcheck       => '1',
+              :gpgkey         => "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+              :priority       => '98',
+              :includepkgs    => 'empty-ca-certs empty-slurm empty-torque',
+            })
+          end
+
           [
             {:name => 'osg', :path => 'release', :desc => '', :enabled => '1'},
-            {:name => 'osg-empty', :path => 'empty', :desc => ' - Empty Packages', :enabled => '1'},
             {:name => 'osg-contrib', :path => 'contrib', :desc => ' - Contributed', :enabled => '0'},
             {:name => 'osg-development', :path => 'development', :desc => ' - Development', :enabled => '0'},
             {:name => 'osg-testing', :path => 'testing', :desc => ' - Testing', :enabled => '0'},

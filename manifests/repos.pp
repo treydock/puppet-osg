@@ -68,10 +68,11 @@ class osg::repos {
   }
 
   yumrepo { 'osg-empty':
-    baseurl    => $baseurls['osg-empty'],
-    mirrorlist => $mirrorlists['osg-empty'],
-    descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
-    enabled    => '1',
+    baseurl     => $baseurls['osg-empty'],
+    mirrorlist  => $mirrorlists['osg-empty'],
+    descr       => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
+    enabled     => '1',
+    includepkgs => 'empty-ca-certs empty-slurm empty-torque',
   }
 
   yumrepo { 'osg-contrib':
