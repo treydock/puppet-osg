@@ -16,8 +16,6 @@ class osg::cacerts::updater (
 
   require 'osg::cacerts'
 
-  validate_bool($config_replace)
-
   case $ensure {
     'present': {
       $package_ensure_default = 'installed'
