@@ -19,5 +19,6 @@ fixtures:
       ref: 1.0.0
     autofs:
       repo: https://github.com/voxpupuli/puppet-autofs
+      ref: v3.1.0
   symlinks:
     osg: "#{source_dir}"
