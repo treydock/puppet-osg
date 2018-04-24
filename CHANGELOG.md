@@ -1,5 +1,16 @@
 # Change Log
 
+## [4.2.0](https://github.com/treydock/puppet-osg/tree/4.2.0) (2018-04-24)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.1.1...4.2.0)
+
+**Implemented enhancements:**
+
+- Make repo URLs match what is defined in latest osg-release RPMs [\#20](https://github.com/treydock/puppet-osg/pull/20) ([treydock](https://github.com/treydock))
+
+**Fixed bugs:**
+
+- Limit osg-empty repo to packages installed [\#21](https://github.com/treydock/puppet-osg/pull/21) ([treydock](https://github.com/treydock))
+
 ## [4.1.1](https://github.com/treydock/puppet-osg/tree/4.1.1) (2018-01-09)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.1.0...4.1.1)
 
