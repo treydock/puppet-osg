@@ -1,5 +1,12 @@
 # Change Log
 
+## [4.2.1](https://github.com/treydock/puppet-osg/tree/4.2.1) (2018-05-02)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.0...4.2.1)
+
+**Fixed bugs:**
+
+- Fix permissions for /bin/fusermount on EL6 [\#22](https://github.com/treydock/puppet-osg/pull/22) ([treydock](https://github.com/treydock))
+
 ## [4.2.0](https://github.com/treydock/puppet-osg/tree/4.2.0) (2018-04-24)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.1.1...4.2.0)
 
