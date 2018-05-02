@@ -10,6 +10,12 @@ class osg::cvmfs::config {
     mode    => '0644',
   }
 
+  if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+    file { '/bin/fusermount':
+      mode => '4755',
+    }
+  }
+
   autofs::mount { 'cvmfs':
     mount          => '/cvmfs',
     mapfile        => '/etc/auto.cvmfs',

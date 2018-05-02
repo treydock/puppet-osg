@@ -141,6 +141,12 @@ describe 'osg::cvmfs' do
           })
         end
 
+        if facts[:operatingsystemmajrelease].to_i < 7
+          it { should contain_file('/bin/fusermount').with_mode('4755') }
+        else
+          it { should_not contain_file('/bin/fusermount') }
+        end
+
         it do
           should contain_autofs__mount('cvmfs').with({
             :mount          => '/cvmfs',
