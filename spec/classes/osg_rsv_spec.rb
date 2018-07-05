@@ -49,16 +49,29 @@ describe 'osg::rsv' do
         })
       end
 
-      it do
-        verify_contents(catalogue, '/etc/httpd/conf.d/rsv.conf', [
-          '<Directory "/usr/share/rsv/www">',
-          '    Options None',
-          '    AllowOverride None',
-          '    Order Allow,Deny',
-          '    Allow from all',
-          '</Directory>',
-          'Alias /rsv /usr/share/rsv/www',
-        ])
+      if facts[:operatingsystemmajrelease] == '7'
+        it do
+          verify_contents(catalogue, '/etc/httpd/conf.d/rsv.conf', [
+            '<Directory "/usr/share/rsv/www">',
+            '    Options None',
+            '    AllowOverride None',
+            '    Require all granted',
+            '</Directory>',
+            'Alias /rsv /usr/share/rsv/www',
+          ])
+        end
+      else
+        it do
+          verify_contents(catalogue, '/etc/httpd/conf.d/rsv.conf', [
+            '<Directory "/usr/share/rsv/www">',
+            '    Options None',
+            '    AllowOverride None',
+            '    Order Allow,Deny',
+            '    Allow from all',
+            '</Directory>',
+            'Alias /rsv /usr/share/rsv/www',
+          ])
+        end
       end
 
       context 'osg::rsv::install' do

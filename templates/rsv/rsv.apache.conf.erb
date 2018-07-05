@@ -2,8 +2,12 @@
 <Directory "/usr/share/rsv/www">
     Options None
     AllowOverride None
+<%- if @facts['os']['release']['full'] =~ /^7/ -%>
+    Require all granted
+<%- else -%>
     Order Allow,Deny
     Allow from all
+<%- end -%>
 </Directory>
 
 # Create alias for site directory
