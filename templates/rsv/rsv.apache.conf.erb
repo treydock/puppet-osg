@@ -2,7 +2,7 @@
 <Directory "/usr/share/rsv/www">
     Options None
     AllowOverride None
-<%- if @facts['kernel_version'] =~ /^2.4/ -%>
+<%- if @facts['os']['release']['full'] =~ /^7/ -%>
     Require all granted
 <%- else -%>
     Order Allow,Deny
