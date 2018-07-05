@@ -29,13 +29,13 @@ class osg::ce::config {
 
     file_line { 'blah_delegate_renewed_proxies':
       path  => '/etc/blah.config',
-      line  => 'blah_delegate_renewed_proxies=no',
+      line  => 'blah_delegate_renewed_proxies="no"',
       match => '^blah_delegate_renewed_proxies=.*',
     }
 
     file_line { 'blah_disable_limited_proxy':
       path  => '/etc/blah.config',
-      line  => 'blah_disable_limited_proxy=yes',
+      line  => 'blah_disable_limited_proxy="yes"',
       match => '^blah_disable_limited_proxy=.*',
     }
 
