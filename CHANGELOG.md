@@ -1,5 +1,12 @@
 # Change Log
 
+## [4.2.2](https://github.com/treydock/puppet-osg/tree/4.2.2) (2018-07-05)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.1...4.2.2)
+
+**Fixed bugs:**
+
+- Update rsv apache template to match upstream [\#23](https://github.com/treydock/puppet-osg/pull/23) ([treydock](https://github.com/treydock))
+
 ## [4.2.1](https://github.com/treydock/puppet-osg/tree/4.2.1) (2018-05-02)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.0...4.2.1)
 
