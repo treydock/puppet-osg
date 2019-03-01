@@ -8,6 +8,7 @@ class osg (
   Boolean $repo_use_mirrors = true,
   Optional[String] $repo_gpgkey = undef,
   Boolean $enable_osg_contrib = false,
+  Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
   Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs'] $cacerts_package_name = 'osg-ca-certs',
   Boolean $cacerts_install_other_packages = false,
@@ -39,7 +40,9 @@ class osg (
   anchor { 'osg::start': }
   anchor { 'osg::end': }
 
-  contain ::epel
+  if $manage_epel {
+    contain ::epel
+  }
   contain osg::repos
 
   Anchor['osg::start']
