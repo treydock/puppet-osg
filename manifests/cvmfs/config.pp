@@ -17,10 +17,9 @@ class osg::cvmfs::config {
   }
 
   autofs::mount { 'cvmfs':
-    mount          => '/cvmfs',
-    mapfile        => '/etc/auto.cvmfs',
-    order          => 50,
-    mapfile_manage => false,
+    mount   => '/cvmfs',
+    mapfile => '/etc/auto.cvmfs',
+    order   => 50,
   }
 
   file { '/etc/cvmfs/default.local':
