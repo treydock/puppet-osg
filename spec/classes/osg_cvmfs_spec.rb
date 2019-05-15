@@ -149,10 +149,9 @@ describe 'osg::cvmfs' do
 
         it do
           should contain_autofs__mount('cvmfs').with({
-            :mount          => '/cvmfs',
-            :mapfile        => '/etc/auto.cvmfs',
-            :order          => '50',
-            :mapfile_manage => 'false',
+            :mount   => '/cvmfs',
+            :mapfile => '/etc/auto.cvmfs',
+            :order   => '50',
           })
         end
 
