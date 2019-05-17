@@ -16,14 +16,14 @@ class osg::client (
   $condor_configs_default = {
     'SCHEDD_HOST'       => $osg::condor_schedd_host,
     'COLLECTOR_HOST'    => $osg::condor_collector_host,
-    'use_x509userproxy' => 'true',
+    'use_x509userproxy' => 'true', # lint:ignore:quoted_booleans
     'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
   }
 
   $condor_ce_configs_default = {
     'SCHEDD_HOST'       => $osg::condor_schedd_host,
     'COLLECTOR_HOST'    => $osg::condor_collector_host,
-    'use_x509userproxy' => 'true',
+    'use_x509userproxy' => 'true', # lint:ignore:quoted_booleans
     'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
   }
 
