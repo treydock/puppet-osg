@@ -89,6 +89,8 @@ describe 'osg::squid' do
           'uncomment("acl MAJOR_CVMFS")',
           'insertline("^# http_access deny !RESTRICT_DEST", "http_access allow MAJOR_CVMFS")',
           'insertline("^# max_filedescriptors 0", "max_filedescriptors 0")',
+          'insertline("# INSERT YOUR OWN RULE", "acl URN proto URN")',
+          'insertline("# INSERT YOUR OWN RULE", "http_access deny URN")',
           'print',
           '}\'',
         ])
