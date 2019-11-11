@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.19
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-puppet-osg">puppet-osg</h1>
+
+<p><a href="https://forge.puppetlabs.com/treydock/osg"><img
+src="http://img.shields.io/puppetforge/v/treydock/osg.svg"></a> <a
+href="https://travis-ci.org/treydock/puppet-osg"><img
+src="https://travis-ci.org/treydock/puppet-osg.svg?branch=master"></a></p>
+
+<h4 id="label-Table+of+Contents">Table of Contents</h4>
+<ol><li>
+<p><a href="#label-Overview">Overview</a></p>
+</li><li>
+<p><a href="#label-Usage">Usage - Configuration examples and options</a></p>
+</li><li>
+<p><a href="#label-Reference">Reference - Parameter and detailed reference to all
+options</a></p>
+</li><li>
+<p><a href="#label-Limitations">Limitations - OS compatibility, etc.</a></p>
+</li><li>
+<p><a href="#label-Development">Development - Guide for testing and contributing to
+the module</a></p>
+</li><li>
+<p><a href="#label-Todo">TODO</a></p>
+</li><li>
+<p><a href="#label-Additional+information">Additional Information</a></p>
+</li></ol>
+
+<h2 id="label-Overview">Overview</h2>
+
+<p>The OSG module manages the various components that make up the Open Science
+Grid software stack.</p>
+
+<h2 id="label-OSG+Compatibility">OSG Compatibility</h2>
+
+<p>The current version support matrix is as follows:</p>
+
+<p>OSG Versions | 3.3 | 3.4 | :——————|:—-:|:—-:| <strong>puppet-osg
+1.x</strong> | yes | no | <strong>puppet-osg 2.x</strong> | yes | yes |
+<strong>puppet-osg 3.x</strong> | yes | yes | <strong>puppet-osg
+4.x</strong> | no | yes |</p>
+
+<h2 id="label-Usage">Usage</h2>
+
+<h3 id="label-Classes">Classes</h3>
+
+<p>The public classes of this module are split into “roles”. For example a CE
+would use the class <code>osg::ce</code>.</p>
+
+<h4 id="label-osg">osg</h4>
+
+<p>The OSG class is required by all the other classes. This class sets
+parameters that are used by multiple “roles” and is the class responsible
+for configuring the OSG repos.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;: }
+</code></pre>
+
+<p>If all systems pull their grid-certificates from a shared filesystem then
+you instruct this module to install the <code>empty-ca-certs</code> package
+and symlink <code>/home/osg/grid-certificates</code> to
+<code>/etc/grid-security/certificates</code>. If this method is used some
+script must be executed on a regular basis to sync one system&#39;s
+certificates into the shared location. Such a script is currently outside
+the scope of this module.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+</code></pre>
+
+<p>The <code>cacerts_package_ensure</code> and
+<code>cacerts_other_packages_ensure</code> parameters can be used to ensure
+the latest CA certs package is installed. This is basically the same
+functionality as provided by the resources managed under the
+<code>osg::cacerts::updater</code> class.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  cacerts_package_name          =&gt; &#39;osg-ca-certs&#39;,
+  cacerts_package_ensure        =&gt; &#39;latest&#39;,
+  cacerts_other_packages_ensure =&gt; &#39;latest&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Acacerts-3A-3Aupdater">osg::cacerts::updater</h4>
+
+<p>The <code>osg::cacerts::updater</code> class by default will perform the
+following actions</p>
+<ul><li>
+<p>Install <code>osg-ca-certs-updater</code> and <code>fetch-crl</code>
+packages</p>
+</li><li>
+<p>Configure <code>/etc/cron.d/osg-ca-certs-updater</code></p>
+</li><li>
+<p>Start the <code>osg-ca-certs-updater-cron</code> service</p>
+</li><li>
+<p>Start the <code>fetch-crl-cron</code> service</p>
+</li><li>
+<p>Stop the <code>fetch-crl-boot</code> service</p>
+</li></ul>
+
+<p>Example usage:</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  cacerts_package_name =&gt; &#39;osg-ca-certs&#39;,
+}
+class { &#39;osg::cacerts::updater&#39;: }
+</code></pre>
+
+<p>This class essentially performs the same role as setting
+<code>osg::cacerts_package_ensure</code> and
+<code>osg::cacerts_other_packages_ensure</code> to <code>latest</code>.</p>
+
+<h4 id="label-osg-3A-3Ace">osg::ce</h4>
+
+<p>This class by default configures a GRAM CE. The following example is to
+configure using HTCondor-CE that uses the SLURM batch system. This example
+also shows how to setup a host as the system that keeps the shared
+grid-certificates up-to-date.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  cacerts_package_name  =&gt; &#39;osg-ca-certs&#39;,
+}
+class { &#39;osg::cacerts::updater&#39;: }
+class { &#39;osg::ce&#39;:
+  batch_system              =&gt; &#39;slurm&#39;,
+  hostcert_source           =&gt; &#39;file:///home/admin/osg/certs/ce/hostcert.pem&#39;,
+  hostkey_source            =&gt; &#39;file:///home/admin/osg/certs/ce/hostkey.pem&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Aclient">osg::client</h4>
+
+<p>The <code>osg::client</code> class is intended to configure client systems,
+such as login nodes, to interact with the OSG software. The example below
+is a rough idea of how one would configure a client system to send both
+condor and condor-ce requests to a remote HTCondor-CE instance.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::client&#39;
+  condor_configs_override     =&gt; {
+    &#39;SCHEDD_HOST&#39;     =&gt; &#39;ce.example.tld&#39;,
+    &#39;COLLECTOR_HOST&#39;  =&gt; &#39;ce.example.tld:9619&#39;,
+  }
+  condor_ce_configs_override  =&gt; {
+    &#39;SCHEDD_HOST&#39;     =&gt; &#39;ce.example.tld&#39;,
+    &#39;COLLECTOR_HOST&#39;  =&gt; &#39;ce.example.tld:9619&#39;,
+  }
+}
+</code></pre>
+
+<p>The default behavior is to ensure both condor and htcondor-ce are installed
+but the services for each are disabled.</p>
+
+<h4 id="label-osg-3A-3Acvmfs">osg::cvmfs</h4>
+
+<p>The <code>osg::cvmfs</code> class will install and configure a system to
+access the CVMFS wide-area filesystem. The default parameter values should
+be enough to allow access to the filesystem.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::cvmfs&#39;: }
+</code></pre>
+
+<p>Any host that needs to access /cvmfs should have this class assigned.</p>
+
+<h4 id="label-osg-3A-3Agridftp">osg::gridftp</h4>
+
+<p>The <code>osg::gridftp</code> class by default will configure a system as a
+standalone OSG GridFTP server. Note that the <code>osg::ce</code> classes
+declares this class with <code>standalone</code> set to <code>false</code>,
+so do not include this class if the <code>osg::ce</code> class is assigned.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::gridftp&#39;:
+  hostcert_source       =&gt; &#39;file:///home/admin/osg/certs/gridftp/hostcert.pem&#39;,
+  hostkey_source        =&gt; &#39;file:///home/admin/osg/certs/gridftp/hostkey.pem&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Alcmaps_voms">osg::lcmaps_voms</h4>
+
+<p>The following example will setup LCMAPS VOMS to authenticate the GLOW VO
+and ban CMS production. The <code>vo</code> parameter will create
+<code>osg::lcmaps_voms::vo</code> resources and the <code>users</code>
+parameter will create <code>osg::lcmaps_voms::user</code> resources.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::lcmaps_voms&#39;:
+  ban_voms =&gt; [&#39;/cms/Role=production/*&#39;],
+  ban_users =&gt; [&#39;/foo/baz&#39;],
+  vos       =&gt; {
+    &#39;glow&#39; =&gt; &#39;/GLOW/*&#39;,
+    &#39;glow1 =&gt; &#39;[&#39;/GLOW/chtc/*&#39;, &#39;/GLOW/Role=htpc/*&#39;],
+  },
+  users     =&gt; {
+    &#39;foo&#39;   =&gt; &#39;/fooDN&#39;,
+    &#39;foobar =&gt; [&#39;/foo&#39;, &#39;/bar&#39;],
+  }
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Alcmaps_voms-3A-3Avo">osg::lcmaps_voms::vo</h4>
+
+<p>This defined type populates <code>/etc/grid-security/voms-mapfile</code>.
+The <code>dn</code> value can be an Array or a String.</p>
+
+<pre class="code ruby"><code class="ruby">osg::lcmaps_voms::vo { &#39;nova&#39;:
+  dn =&gt; &#39;/fermilab/nova/Role=pilot&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Alcmaps_voms-3A-3Auser">osg::lcmaps_voms::user</h4>
+
+<p>This defined type populates <code>/etc/grid-security/grid-mapfile</code>.
+The <code>dn</code> value can be an Array or a String.</p>
+
+<pre class="code ruby"><code class="ruby">osg::lcmaps_voms::user { &#39;rsv&#39;:
+  dn =&gt; &#39;/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=rsv/ce.example.com&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Arsv">osg::rsv</h4>
+
+<p>Example of configuring RSV.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::rsv&#39;:
+  rsvcert_source    =&gt; &#39;file:///home/admin/osg/certs/rsv/rsvcert.pem&#39;,
+  rsvkey_source     =&gt; &#39;file:///home/admin/osg/certs/rsv/rsvkey.pem&#39;,
+  ce_hosts          =&gt; &#39;ce.example.tld&#39;,
+  htcondor_ce_hosts =&gt; &#39;ce.example.tld&#39;,
+  gridftp_hosts     =&gt; &#39;ce.example.tld,gridftp1.example.tld&#39;,
+  gridftp_dir       =&gt; &#39;/data/scratch/rsv&#39;,
+  srm_hosts         =&gt; &#39;srm.example.tld&#39;,
+  srm_dir           =&gt; &#39;/data/scratch/rsv&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Asquid">osg::squid</h4>
+
+<p>The <code>osg::squid</code> class will configure a system to run the
+Frontier Squid service. The example below installs squid and configures the
+firewall to allow access to squid on the host&#39;s <code>eth0</code>
+private interface and allows squid monitoring on the <code>eth1</code>
+public interface.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::squid&#39;:
+  private_interface =&gt; &#39;eth0&#39;,
+  public_interface  =&gt; &#39;eth1&#39;,
+}
+</code></pre>
+
+<p>The <code>customize_template</code> can be used to pass a site-specific
+template used to customize squid. The template provided by this module is
+very basic. The value in the example below will look in the
+<code>site_osg</code> Puppet module under <code>templates/squid</code> for
+the file <code>customize.sh.erb</code>. The value of
+<code>customize_template</code> is passed directly to the Puppet
+<code>template</code> function.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::squid&#39;:
+  private_interface   =&gt; &#39;eth0&#39;,
+  public_interface    =&gt; &#39;eth1&#39;,
+  customize_template  =&gt; &#39;site_osg/squid/customize.sh.erb&#39;,
+}
+</code></pre>
+
+<h4 id="label-osg-3A-3Autils">osg::utils</h4>
+
+<p>The <code>osg::utils</code> class will install utility packages from OSG.</p>
+
+<p>Example:</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg::utils&#39;:}
+</code></pre>
+
+<h4 id="label-osg-3A-3Awn">osg::wn</h4>
+
+<p>The <code>osg::wn</code> class will configure a worker node to work with
+the OSG software. This class currently has no parameters and performs the
+following actions:</p>
+<ul><li>
+<p>Ensures the osg class is included (repo)</p>
+</li><li>
+<p>Ensures the osg::cacerts class is included</p>
+</li><li>
+<p>Installs osg-wn-client package</p>
+</li><li>
+<p>Installs xrootd-client</p>
+</li></ul>
+
+<p>Example:</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;osg&#39;:
+  shared_certs_path     =&gt; &#39;/home/osg/grid-certificates&#39;,
+  cacerts_package_name  =&gt; &#39;empty-ca-certs&#39;,
+}
+class { &#39;osg::wn&#39;: }
+</code></pre>
+
+<h3 id="label-Types">Types</h3>
+
+<h4 id="label-osg_local_site_settings">osg_local_site_settings</h4>
+
+<p>The <code>osg_local_site_settings</code> custom type will configure values
+in <code>/etc/osg/config.d/99-local-site-settings.ini</code>. Some of the
+values are set in this module&#39;s classes. One example of a value not
+currently managed (though may be in the future):</p>
+
+<pre class="code ruby"><code class="ruby">osg_local_site_settings { &#39;Storage/se_available&#39;:
+  value   =&gt; true,
+}
+</code></pre>
+
+<p>Note that boolean values of <code>true</code> and <code>false</code> are
+converted to the Python bool values of <code>True</code> and
+<code>False</code>.</p>
+
+<h4 id="label-osg_gip_config">osg_gip_config</h4>
+
+<p>The <code>osg_gip_config</code> custom type will configure values in
+<code>/etc/osg/config.d/30-gip.ini</code>. Example of setting your batch
+system to SLURM.</p>
+
+<pre class="code ruby"><code class="ruby">osg_gip_config { &#39;GIP/batch&#39;:
+  value =&gt; &#39;slurm&#39;,
+}
+</code></pre>
+
+<p>You can also remove the settings defined in <code>30-gip.ini</code> and use
+the <code>osg_local_site_settings</code> type to define all configs in
+<code>/etc/osg/config.d/99-local-site-settings.ini</code></p>
+
+<pre class="code ruby"><code class="ruby">resources { &#39;osg_gip_config&#39;: purge =&gt; true }
+osg_local_site_settings { &#39;GIP/batch&#39;:
+  value =&gt; &#39;slurm&#39;,
+}
+</code></pre>
+
+<p>This can be useful as the <code>99-local-site-settings.ini</code> does not
+take precedence in GIP like it does with osg-configure (<a
+href="https://twiki.grid.iu.edu/bin/view/Documentation/Release3/IniConfigurationOptions#Layout">ref</a>).</p>
+
+<h2 id="label-Reference">Reference</h2>
+
+<h3 id="label-Classes">Classes</h3>
+
+<h4 id="label-Public+classes">Public classes</h4>
+<ul><li>
+<p><code>osg</code> - Sets global values and configures the OSG repos</p>
+</li><li>
+<p><code>osg::cacerts</code> - Installs and configures OSG CA certs</p>
+</li><li>
+<p><code>osg::cacerts::updater</code> - Configures the OSG CA certs updater.</p>
+</li><li>
+<p><code>osg::ce</code> - Configures a CE.</p>
+</li><li>
+<p><code>osg::client</code> - Configures an OSG client.</p>
+</li><li>
+<p><code>osg::cvmfs</code> - Configures CVMFS.</p>
+</li><li>
+<p><code>osg::gridftp</code> - Configures an OSG GridFTP server.</p>
+</li><li>
+<p><code>osg::lcmaps_voms</code> - Manage LCMAPS VOMS</p>
+</li><li>
+<p><code>osg::rsv</code> - Configures the RSV service.</p>
+</li><li>
+<p><code>osg::squid</code> - Configures an OSG Frontier Squid server.</p>
+</li><li>
+<p><code>osg::utils</code> - Install OSG utility packages</p>
+</li><li>
+<p><code>osg::wn</code> - Configures an OSG worker node.</p>
+</li></ul>
+
+<h4 id="label-Private+classes">Private classes</h4>
+<ul><li>
+<p><code>osg::configure</code> - Manages osg-configure</p>
+</li><li>
+<p><code>osg::params</code> - Defines module default values</p>
+</li><li>
+<p><code>osg::repos</code> - Configure OSG Yumrepo resources</p>
+</li><li>
+<p><code>osg::ce::install</code> - Installs CE packages</p>
+</li><li>
+<p><code>osg::ce::config</code> - Configures CE</p>
+</li><li>
+<p><code>osg::ce::service</code> - Manages CE services</p>
+</li><li>
+<p><code>osg::client::install</code> - Installs client packages</p>
+</li><li>
+<p><code>osg::client::config</code> - Configures client</p>
+</li><li>
+<p><code>osg::client:service</code> - Manages client services</p>
+</li><li>
+<p><code>osg::cvmfs::user</code> - Manages user/groups for CVMFS</p>
+</li><li>
+<p><code>osg::cvmfs::install</code> - Installs CVMFS</p>
+</li><li>
+<p><code>osg::cvmfs::config</code> - Configures CVMFS</p>
+</li><li>
+<p><code>osg::cvmfs::service</code> - Manages CVMFS service</p>
+</li><li>
+<p><code>osg::gridftp::install</code> - Installs GridFTP</p>
+</li><li>
+<p><code>osg::gridftp::config</code> - Configures GridFTP</p>
+</li><li>
+<p><code>osg::gridftp::service</code> - Manages GridFTP service</p>
+</li><li>
+<p><code>osg::lcmaps_voms::install</code> - Installs LCMAPS VOMS</p>
+</li><li>
+<p><code>osg::lcmaps_voms::config</code> - Configure LCMAPS VOMS</p>
+</li><li>
+<p><code>osg::rsv::users</code> - Manages RSV users/groups</p>
+</li><li>
+<p><code>osg::rsv::install</code> - Installs RSV</p>
+</li><li>
+<p><code>osg::rsv::config</code> - Configures RSV</p>
+</li><li>
+<p><code>osg::rsv::service</code> - Manages RSV services</p>
+</li></ul>
+
+<h3 id="label-Parameters">Parameters</h3>
+
+<h4 id="label-osg">osg</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Acacerts-3A-3Aupdater">osg::cacerts::updater</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Ace">osg::ce</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Aclient">osg::client</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Acvmfs">osg::cvmfs</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Agridftp">osg::gridftp</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Alcmaps_voms">osg::lcmaps_voms</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Arsv">osg::rsv</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Asquid">osg::squid</h4>
+
+<p>TODO</p>
+
+<h4 id="label-osg-3A-3Autils">osg::utils</h4>
+
+<p>TODO</p>
+
+<h3 id="label-Types">Types</h3>
+
+<h4 id="label-osg_gip_config">osg_gip_config</h4>
+
+<p>This type writes values to <code>/etc/osg/config.d/30-gip.ini</code>.</p>
+
+<h5 id="label-name"><code>name</code></h5>
+
+<p>The name must be in the format of <code>SECTION/SETTING</code></p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span><span class='const'>GIP</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_batch'>batch</span> <span class='op'>=</span> <span class='id identifier rubyid_slurm'>slurm</span>
+</code></pre>
+
+<p>The above would have the name <code>GIP/batch</code>.</p>
+
+<h5 id="label-value"><code>value</code></h5>
+
+<p>The value to assign. A value of <code>true</code> is converted to the
+string <code>True</code>. A value of <code>false</code> is converted to the
+string <code>False</code>. All other values are converted to a string.</p>
+
+<h4 id="label-osg_local_site_settings">osg_local_site_settings</h4>
+
+<p>This type writes values to
+<code>/etc/osg/config.d/99-local-site-settings.ini</code>.</p>
+
+<h5 id="label-name"><code>name</code></h5>
+
+<p>The name must be in the format of <code>SECTION/SETTING</code></p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span><span class='const'>Squid</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_squid'>squid</span><span class='period'>.</span><span class='id identifier rubyid_example'>example</span><span class='period'>.</span><span class='id identifier rubyid_tld'>tld</span>
+</code></pre>
+
+<p>The above would have the name <code>Squid/location</code>.</p>
+
+<h5 id="label-value"><code>value</code></h5>
+
+<p>The value to assign. A value of <code>true</code> is converted to the
+string <code>True</code>. A value of <code>false</code> is converted to the
+string <code>False</code>. All other values are converted to a string.</p>
+
+<h3 id="label-Facts">Facts</h3>
+
+<h4 id="label-osg_version"><code>osg_version</code></h4>
+
+<p>Returns the installed OSG version as found in
+<code>/etc/osg-version</code>.</p>
+
+<h2 id="label-Limitations">Limitations</h2>
+
+<p>Tested operating systems:</p>
+<ul><li>
+<p>CentOS 6</p>
+</li><li>
+<p>CentOS 7</p>
+</li></ul>
+
+<p>This module has only been thoroughly tested using OSG 3.2.</p>
+
+<h2 id="label-Development">Development</h2>
+
+<h3 id="label-Testing">Testing</h3>
+
+<p>Testing requires the following dependencies:</p>
+<ul><li>
+<p>rake</p>
+</li><li>
+<p>bundler</p>
+</li></ul>
+
+<p>Install gem dependencies</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+</code></pre>
+
+<p>Run unit tests</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_exec'>exec</span> <span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_test'>test</span>
+</code></pre>
+
+<p>If you have Vagrant &gt;= 1.2.0 installed you can run system tests.
+<strong>NOTE: The acceptance tests spawn numerous virtual machines</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_exec'>exec</span> <span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_beaker'>beaker</span>
+</code></pre>
+
+<h2 id="label-TODO">TODO</h2>
+
+<h2 id="label-Further+Information">Further Information</h2>
+<ul><li>
+<p><a href="http://opensciencegrid.github.io/docs/">OSG</a></p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>
