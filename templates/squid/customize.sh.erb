@@ -20,5 +20,7 @@ uncomment("acl MAJOR_CVMFS")
 insertline("^# http_access deny !RESTRICT_DEST", "http_access allow MAJOR_CVMFS")
 <%- end -%>
 insertline("^# max_filedescriptors 0", "max_filedescriptors <%= @max_filedescriptors %>")
+insertline("# INSERT YOUR OWN RULE", "acl URN proto URN")
+insertline("# INSERT YOUR OWN RULE", "http_access deny URN")
 print
 }'
