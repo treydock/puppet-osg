@@ -1,5 +1,17 @@
 # Change Log
 
+## [4.3.0](https://github.com/treydock/puppet-osg/tree/4.3.0) (2019-11-11)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.2...4.3.0)
+
+**Implemented enhancements:**
+
+- Support Puppet 5 & 6 and bump module dependencies [\#25](https://github.com/treydock/puppet-osg/pull/25) ([treydock](https://github.com/treydock))
+
+**Fixed bugs:**
+
+- Add work around for OSG-SEC-2019-11-11 [\#26](https://github.com/treydock/puppet-osg/pull/26) ([treydock](https://github.com/treydock))
+- Remove old autofs parameter mapfile\_manage [\#24](https://github.com/treydock/puppet-osg/pull/24) ([wmoore28](https://github.com/wmoore28))
+
 ## [4.2.2](https://github.com/treydock/puppet-osg/tree/4.2.2) (2018-07-05)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.1...4.2.2)
 
