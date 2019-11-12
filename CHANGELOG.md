@@ -1,5 +1,12 @@
 # Change Log
 
+## [4.3.1](https://github.com/treydock/puppet-osg/tree/4.3.1) (2019-11-12)
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/4.3.0...4.3.1)
+
+**Fixed bugs:**
+
+- Re-release 4.3.0 [\#27](https://github.com/treydock/puppet-osg/pull/27) ([treydock](https://github.com/treydock))
+
 ## [4.3.0](https://github.com/treydock/puppet-osg/tree/4.3.0) (2019-11-11)
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.2.2...4.3.0)
 
