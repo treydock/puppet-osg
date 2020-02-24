@@ -1,6 +1,5 @@
 # Class: osg: See README.md for documentation.
 class osg (
-  Boolean $enable_osg = true,
   Enum['3.4'] $osg_release = '3.4',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
@@ -8,6 +7,8 @@ class osg (
   Optional[String] $repo_upcoming_baseurl_bit = undef,
   Boolean $repo_use_mirrors = true,
   Optional[String] $repo_gpgkey = undef,
+  Boolean $enable_osg = true,
+  Boolean $enable_osg_empty = true,
   Boolean $enable_osg_contrib = false,
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',

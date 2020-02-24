@@ -71,7 +71,7 @@ class osg::repos {
     baseurl     => $baseurls['osg-empty'],
     mirrorlist  => $mirrorlists['osg-empty'],
     descr       => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}",
-    enabled     => '1',
+    enabled     => bool2num($osg::enable_osg_empty),
     includepkgs => 'empty-ca-certs empty-slurm empty-torque',
   }
 
