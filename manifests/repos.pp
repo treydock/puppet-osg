@@ -64,7 +64,7 @@ class osg::repos {
     baseurl    => $baseurls['osg'],
     mirrorlist => $mirrorlists['osg'],
     descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - ${::architecture}",
-    enabled    => '1',
+    enabled    => bool2num($osg::enable_osg),
   }
 
   yumrepo { 'osg-empty':

@@ -1,5 +1,6 @@
 # Class: osg: See README.md for documentation.
 class osg (
+  Boolean $enable_osg = true,
   Enum['3.4'] $osg_release = '3.4',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
