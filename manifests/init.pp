@@ -7,6 +7,8 @@ class osg (
   Optional[String] $repo_upcoming_baseurl_bit = undef,
   Boolean $repo_use_mirrors = true,
   Optional[String] $repo_gpgkey = undef,
+  Boolean $enable_osg = true,
+  Boolean $enable_osg_empty = true,
   Boolean $enable_osg_contrib = false,
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
