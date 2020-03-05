@@ -1,5 +1,7 @@
+# @summary Manage OSG utils
 #
-# Class: osg::utils: See README.md for documentation.
+# @param packages
+#
 class osg::utils (
   Array $packages = $osg::params::utils_packages,
 ) inherits osg::params {

@@ -1,4 +1,13 @@
-# Class: osg::client: See README.md for documentation.
+# @summary Manage OSG client
+#
+# @param with_condor
+# @param with_condor_ce
+# @param manage_firewall
+# @param enable_condor_service
+# @param enable_condor_ce_service
+# @param condor_configs_override
+# @param condor_ce_configs_override
+#
 class osg::client (
   Boolean $with_condor = true,
   Boolean $with_condor_ce = true,

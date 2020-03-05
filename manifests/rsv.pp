@@ -1,4 +1,26 @@
-# Class: osg::rsv: See README.md for documentation.
+# @summary Manage OSG RSV
+#
+# @param rsvcert_source
+# @param rsvkey_source
+# @param manage_users
+# @param with_httpd
+# @param manage_firewall
+# @param firewall_ensure
+# @param http_port
+# @param rsv_uid
+# @param rsv_gid
+# @param cndrcron_uid
+# @param cndrcron_gid
+# @param gram_ce_hosts
+# @param htcondor_ce_hosts
+# @param ce_hosts
+# @param gridftp_hosts
+# @param gridftp_dir
+# @param gratia_probes
+# @param srm_hosts
+# @param srm_dir
+# @param srm_webservice_path
+#
 class osg::rsv (
   Optional[String] $rsvcert_source = undef,
   Optional[String] $rsvkey_source = undef,

@@ -1,4 +1,16 @@
-# Class: osg::squid: See README.md for documentation.
+# @summary Manage OSG squid
+#
+# @param customize_template
+# @param net_local
+# @param monitor_addresses
+# @param allow_major_cvmfs
+# @param max_filedescriptors
+# @param manage_firewall
+# @param squid_firewall_ensure
+# @param monitoring_firewall_ensure
+# @param private_interface
+# @param public_interface
+#
 class osg::squid (
   String $customize_template = 'osg/squid/customize.sh.erb',
   Array $net_local = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],

@@ -1,4 +1,18 @@
-# Class: osg::cacerts::updater: See README.md for documentation.
+# @summary Manage OSG CA certs updater
+#
+# @param ensure
+# @param min_age
+# @param max_age
+# @param random_wait
+# @param quiet
+# @param logfile
+# @param package_name
+# @param package_ensure
+# @param service_name
+# @param service_ensure
+# @param service_enable
+# @param config_replace
+#
 class osg::cacerts::updater (
   Enum['present', 'absent', 'disabled'] $ensure = 'present',
   Integer $min_age = 23,

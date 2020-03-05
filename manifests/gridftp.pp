@@ -1,4 +1,11 @@
-# Class: osg::gridftp: See README.md for documentation.
+# @summary Manage OSG GridFTP
+#
+# @param manage_hostcert
+# @param hostcert_source
+# @param hostkey_source
+# @param manage_firewall
+# @param standalone
+#
 class osg::gridftp (
   Boolean $manage_hostcert = true,
   Optional[String] $hostcert_source = undef,
