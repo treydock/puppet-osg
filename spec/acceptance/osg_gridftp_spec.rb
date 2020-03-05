@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::gridftp class:' do
-  node = only_host_with_role(hosts, 'gridftp')
+  node = find_at_most_one_host_with_role(hosts, 'agent')
   context 'when default parameters' do
     it 'runs successfully' do
       pp = <<-EOS

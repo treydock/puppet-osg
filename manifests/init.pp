@@ -59,8 +59,8 @@ class osg (
   Optional[String] $condor_schedd_host = undef,
   Optional[String] $condor_collector_host = undef,
   Boolean $enable_exported_resources = false,
-  String $exported_resources_export_tag = $::domain,
-  String $exported_resource_collect_tag = $::domain,
+  String $exported_resources_export_tag = $facts['domain'],
+  String $exported_resource_collect_tag = $facts['domain'],
   # INI config values
   Optional[String] $squid_location = undef,
   Boolean $purge_local_site_settings = true,

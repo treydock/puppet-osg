@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'osg::rsv class:' do
   context 'when default parameters' do
-    node = only_host_with_role(hosts, 'rsv')
+    node = find_at_most_one_host_with_role(hosts, 'agent')
 
     it 'runs successfully' do
       pp = <<-EOS
