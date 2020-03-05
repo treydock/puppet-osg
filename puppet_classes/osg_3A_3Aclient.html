@@ -6,15 +6,15 @@
 <title>
   Puppet Class: osg::client
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::osg::client";
   relpath = '../';
 </script>
@@ -76,12 +76,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG client
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Class: osg::client: See README.md for documentation.</p>
-
   </div>
 </div>
 
@@ -184,6 +185,7 @@
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -191,15 +193,6 @@
         <pre class="lines">
 
 
-2
-3
-4
-5
-6
-7
-8
-9
-10
 11
 12
 13
@@ -246,10 +239,19 @@
 54
 55
 56
-57</pre>
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/client.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/client.pp', line 11</span>
 
 class osg::client (
   Boolean $with_condor = true,

@@ -6,15 +6,15 @@
 <title>
   Defined Type: osg::lcmaps_voms::vo
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_defined_types::osg::lcmaps_voms::vo";
   relpath = '../';
 </script>
@@ -69,6 +69,9 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage lcmaps VOMs VO entry
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
@@ -121,6 +124,7 @@
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -128,11 +132,6 @@
         <pre class="lines">
 
 
-2
-3
-4
-5
-6
 7
 8
 9
@@ -140,10 +139,15 @@
 11
 12
 13
-14</pre>
+14
+15
+16
+17
+18
+19</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms/vo.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms/vo.pp', line 7</span>
 
 define osg::lcmaps_voms::vo (
   Variant[Array, String] $dn,

@@ -6,15 +6,15 @@
 <title>
   Puppet Class: osg::cvmfs
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::osg::cvmfs";
   relpath = '../';
 </script>
@@ -76,12 +76,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG CVMFS
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Class: osg::cvmfs: See README.md for documentation.</p>
-
   </div>
 </div>
 
@@ -418,6 +419,7 @@
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -425,33 +427,6 @@
         <pre class="lines">
 
 
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
 29
 30
 31
@@ -470,10 +445,37 @@
 44
 45
 46
-47</pre>
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cvmfs.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/cvmfs.pp', line 29</span>
 
 class osg::cvmfs (
   Boolean $manage_user = true,

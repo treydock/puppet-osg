@@ -6,15 +6,15 @@
 <title>
   Puppet Class: osg::cacerts::updater
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::osg::cacerts::updater";
   relpath = '../';
 </script>
@@ -76,12 +76,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG CA certs updater
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Class: osg::cacerts::updater: See README.md for documentation.</p>
-
   </div>
 </div>
 
@@ -249,6 +250,7 @@
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -256,20 +258,6 @@
         <pre class="lines">
 
 
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
 16
 17
 18
@@ -358,10 +346,24 @@
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cacerts/updater.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/cacerts/updater.pp', line 16</span>
 
 class osg::cacerts::updater (
   Enum[&#39;present&#39;, &#39;absent&#39;, &#39;disabled&#39;] $ensure = &#39;present&#39;,

@@ -6,15 +6,15 @@
 <title>
   Puppet Class: osg::repos
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::osg::repos";
   relpath = '../';
 </script>
@@ -83,6 +83,7 @@
 
 <div class="tags">
   
+
 
 </div><div class="method_details_list">
   <table class="source_code">
@@ -279,14 +280,14 @@ class osg::repos {
     baseurl    =&gt; $baseurls[&#39;osg&#39;],
     mirrorlist =&gt; $mirrorlists[&#39;osg&#39;],
     descr      =&gt; &quot;OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - ${::architecture}&quot;,
-    enabled    =&gt; &#39;1&#39;,
+    enabled    =&gt; bool2num($osg::enable_osg),
   }
 
   yumrepo { &#39;osg-empty&#39;:
     baseurl     =&gt; $baseurls[&#39;osg-empty&#39;],
     mirrorlist  =&gt; $mirrorlists[&#39;osg-empty&#39;],
     descr       =&gt; &quot;OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Empty Packages - ${::architecture}&quot;,
-    enabled     =&gt; &#39;1&#39;,
+    enabled     =&gt; bool2num($osg::enable_osg_empty),
     includepkgs =&gt; &#39;empty-ca-certs empty-slurm empty-torque&#39;,
   }
 
