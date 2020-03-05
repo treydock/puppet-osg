@@ -1,11 +1,10 @@
 require 'spec_helper_acceptance'
 
 describe 'osg::lcmaps_voms class:' do
-  node = only_host_with_role(hosts, 'ce')
-  context "with parameters defined" do
-
-    it 'should run successfully' do
-      pp =<<-EOS
+  node = find_at_most_one_host_with_role(hosts, 'agent')
+  context 'with parameters defined' do
+    it 'runs successfully' do
+      pp = <<-EOS
         class { 'osg':
           auth_type => 'lcmaps_voms',
         }
@@ -23,29 +22,28 @@ describe 'osg::lcmaps_voms class:' do
         }
       EOS
 
-      apply_manifest_on(node, pp, :catch_failures => true)
-      apply_manifest_on(node, pp, :catch_changes => true)
+      apply_manifest_on(node, pp, catch_failures: true)
+      apply_manifest_on(node, pp, catch_changes: true)
     end
 
-    it_behaves_like "osg::osg_lcmaps_voms", node
+    it_behaves_like 'osg::osg_lcmaps_voms', node
 
-    describe file('/etc/grid-security/voms-mapfile'), :node => node do
-      its(:content) { should match /"\/GLOW\/\*" glow/ }
-      its(:content) { should match /"\/GLOW\/chtc\/\*" glow1/ }
-      its(:content) { should match /"\/GLOW\/Role=htpc\/\*" glow1/ }
+    describe file('/etc/grid-security/voms-mapfile'), node: node do
+      its(:content) { is_expected.to include '"/GLOW/*" glow' }
+      its(:content) { is_expected.to include '"/GLOW/chtc/*" glow1' }
+      its(:content) { is_expected.to include '"/GLOW/Role=htpc/*" glow1' }
     end
-    describe file('/etc/grid-security/grid-mapfile'), :node => node do
-      its(:content) { should match /"\/fooDN" foo/ }
-      its(:content) { should match /"\/foo" foobar/ }
-      its(:content) { should match /"\/bar" foobar/ }
+    describe file('/etc/grid-security/grid-mapfile'), node: node do
+      its(:content) { is_expected.to include '"/fooDN" foo' }
+      its(:content) { is_expected.to include '"/foo" foobar' }
+      its(:content) { is_expected.to include '"/bar" foobar' }
     end
-    describe file('/etc/grid-security/ban-voms-mapfile'), :node => node do
-      its(:content) { should match /"\/cms\/Role=production\/\*"/ }
+    describe file('/etc/grid-security/ban-voms-mapfile'), node: node do
+      its(:content) { is_expected.to include '"/cms/Role=production/*"' }
     end
-    describe file('/etc/grid-security/ban-mapfile'), :node => node do
-      its(:content) { should match /\/foo\/baz/ }
+    describe file('/etc/grid-security/ban-mapfile'), node: node do
+      its(:content) { is_expected.to include '/foo/baz' }
     end
-
   end
 
   context 'osg-configure cleanup' do

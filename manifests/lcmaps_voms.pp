@@ -1,3 +1,9 @@
+# @summary Manage lcmaps VOMs
+#
+# @param ban_voms
+# @param ban_users
+# @param vos
+# @param users
 #
 class osg::lcmaps_voms (
   Array $ban_voms = [],

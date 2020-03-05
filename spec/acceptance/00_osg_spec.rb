@@ -1,27 +1,28 @@
 require 'spec_helper_acceptance'
 
 describe 'osg class:' do
-  context "when default parameters" do
+  context 'when default parameters' do
     node = find_at_most_one_host_with_role(hosts, 'agent')
 
-    it 'should run successfully' do
-      pp =<<-EOS
+    it 'runs successfully' do
+      pp = <<-EOS
       class { 'osg':
         auth_type => 'lcmaps_voms',
       }
       EOS
 
-      apply_manifest_on(node, pp, :catch_failures => true)
-      apply_manifest_on(node, pp, :catch_changes => true)
+      apply_manifest_on(node, pp, catch_failures: true)
+      apply_manifest_on(node, pp, catch_changes: true)
+      on node, 'yum repolist'
     end
 
     [
       'osg',
       'osg-empty',
     ].each do |repo|
-      describe yumrepo(repo), :node => node do
-        it { should exist }
-        it { should be_enabled }
+      describe yumrepo(repo), node: node do
+        it { is_expected.to exist }
+        it { is_expected.to be_enabled }
       end
     end
 
@@ -33,11 +34,10 @@ describe 'osg class:' do
       'osg-upcoming-development',
       'osg-upcoming-testing',
     ].each do |repo|
-      describe yumrepo(repo), :node => node do
-        it { should exist }
-        it { should_not be_enabled }
+      describe yumrepo(repo), node: node do
+        it { is_expected.to exist }
+        it { is_expected.not_to be_enabled }
       end
     end
-
   end
 end

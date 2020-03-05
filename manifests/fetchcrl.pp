@@ -1,4 +1,16 @@
-# Class: osg::fetchcrl: See README.md for documentation.
+# @summary Manage OSG fetchcrl
+#
+# @param ensure
+# @param crl_package_name
+# @param crl_package_ensure
+# @param crl_boot_service_name
+# @param crl_boot_service_ensure
+# @param crl_boot_service_enable
+# @param crl_cron_service_name
+# @param crl_cron_service_ensure
+# @param crl_cron_service_enable
+# @param use_syslog
+#
 class osg::fetchcrl (
   Enum['present', 'absent', 'disabled'] $ensure = 'present',
   String $crl_package_name = 'fetch-crl',

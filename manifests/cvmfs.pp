@@ -1,4 +1,31 @@
-# Class: osg::cvmfs: See README.md for documentation.
+# @summary Manage OSG CVMFS
+#
+# @param manage_user
+# @param user_name
+# @param user_uid
+# @param user_home
+# @param user_shell
+# @param user_system
+# @param user_comment
+# @param user_managehome
+# @param manage_group
+# @param group_name
+# @param group_gid
+# @param group_system
+# @param manage_fuse_group
+# @param fuse_group_name
+# @param fuse_group_gid
+# @param fuse_group_system
+# @param package_ensure
+# @param repositories
+# @param strict_mount
+# @param cache_base
+# @param quota_limit
+# @param http_proxies
+# @param cern_server_urls
+# @param glite_version
+# @param cms_local_site
+# 
 class osg::cvmfs (
   Boolean $manage_user = true,
   String $user_name = 'cvmfs',

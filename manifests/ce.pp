@@ -1,4 +1,46 @@
-# Class: osg::ce: See README.md for documentation.
+# @summary Manage OSG CE
+#
+# @param site_info_group
+# @param site_info_host_name
+# @param site_info_resource
+# @param site_info_resource_group
+# @param site_info_sponsor
+# @param site_info_site_policy
+# @param site_info_contact
+# @param site_info_email
+# @param site_info_city
+# @param site_info_country
+# @param site_info_longitude
+# @param site_info_latitude
+# @param storage_grid_dir
+# @param storage_app_dir
+# @param storage_data_dir
+# @param storage_worker_node_temp
+# @param storage_site_read
+# @param storage_site_write
+# @param batch_system
+# @param batch_system_prefix
+# @param pbs_server
+# @param manage_hostcert
+# @param hostcert_source
+# @param hostkey_source
+# @param htcondor_ce_port
+# @param htcondor_ce_shared_port
+# @param manage_firewall
+# @param osg_local_site_settings
+# @param osg_gip_configs
+# @param manage_users
+# @param condor_uid
+# @param condor_gid
+# @param gratia_uid
+# @param gratia_gid
+# @param condor_ce_config_content
+# @param condor_ce_config_source
+# @param blahp_local_submit_content
+# @param blahp_local_submit_source
+# @param include_view
+# @param view_port
+#
 class osg::ce (
   String $site_info_group = 'OSG',
   String $site_info_host_name = $::fqdn,

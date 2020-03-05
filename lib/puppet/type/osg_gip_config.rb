@@ -1,13 +1,12 @@
 Puppet::Type.newtype(:osg_gip_config) do
-
   ensurable
 
-  newparam(:name, :namevar => true) do
+  newparam(:name, namevar: true) do
     desc 'Section/setting name to manage from /etc/osg/config.d/30-gip.ini'
     # namevar should be of the form section/setting
     validate do |value|
-      unless value =~ /\S+\/\S+/
-        fail("Invalid osg_gip_config #{value}, entries should be in the form of section/setting.")
+      unless value =~ %r{\S+/\S+}
+        raise("Invalid osg_gip_config #{value}, entries should be in the form of section/setting.")
       end
     end
   end

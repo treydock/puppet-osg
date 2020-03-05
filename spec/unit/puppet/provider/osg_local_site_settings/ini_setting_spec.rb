@@ -13,14 +13,15 @@ $LOAD_PATH.push(
     'fixtures',
     'modules',
     'inifile',
-    'lib')
+    'lib',
+  ),
 )
 require 'spec_helper'
 provider_class = Puppet::Type.type(:osg_local_site_settings).provider(:ini_setting)
 describe provider_class do
-  it 'should set section and setting' do
+  it 'sets section and setting' do
     resource = Puppet::Type::Osg_local_site_settings.new(
-      {:name => 'vars/foo', :value => 'bar'}
+      name: 'vars/foo', value: 'bar',
     )
     provider = provider_class.new(resource)
     expect(provider.section).to eq('vars')

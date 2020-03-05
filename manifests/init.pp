@@ -1,4 +1,37 @@
-# Class: osg: See README.md for documentation.
+# @summary Class for common OSG parameters and common resources
+#
+# @param osg_release
+# @param repo_baseurl_bit
+# @param repo_development_baseurl_bit
+# @param repo_testing_baseurl_bit
+# @param repo_upcoming_baseurl_bit
+# @param repo_use_mirrors
+# @param repo_gpgkey
+# @param enable_osg
+# @param enable_osg_empty
+# @param enable_osg_contrib
+# @param manage_epel
+# @param auth_type
+# @param cacerts_package_name
+# @param cacerts_install_other_packages
+# @param cacerts_package_ensure
+# @param cacerts_other_packages_ensure
+# @param shared_certs_path
+# @param globus_tcp_port_range_min
+# @param globus_tcp_port_range_max
+# @param globus_tcp_source_range_min
+# @param globus_tcp_source_range_max
+# @param condor_lowport
+# @param condor_highport
+# @param condor_schedd_host
+# @param condor_collector_host
+# @param enable_exported_resources
+# @param exported_resources_export_tag
+# @param exported_resource_collect_tag
+# @param squid_location
+# @param purge_local_site_settings
+# @param purge_gip_config
+#
 class osg (
   Enum['3.4'] $osg_release = '3.4',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
@@ -26,8 +59,8 @@ class osg (
   Optional[String] $condor_schedd_host = undef,
   Optional[String] $condor_collector_host = undef,
   Boolean $enable_exported_resources = false,
-  String $exported_resources_export_tag = $::domain,
-  String $exported_resource_collect_tag = $::domain,
+  String $exported_resources_export_tag = $facts['domain'],
+  String $exported_resource_collect_tag = $facts['domain'],
   # INI config values
   Optional[String] $squid_location = undef,
   Boolean $purge_local_site_settings = true,
