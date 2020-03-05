@@ -7,6 +7,8 @@
 # @param repo_upcoming_baseurl_bit
 # @param repo_use_mirrors
 # @param repo_gpgkey
+# @param enable_osg
+# @param enable_osg_empty
 # @param enable_osg_contrib
 # @param manage_epel
 # @param auth_type
