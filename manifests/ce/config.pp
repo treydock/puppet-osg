@@ -66,19 +66,6 @@ class osg::ce::config {
     value => true
   }
 
-  osg_local_site_settings { 'Site Information/group': value => $osg::ce::site_info_group }
-  osg_local_site_settings { 'Site Information/host_name': value => $osg::ce::site_info_host_name }
-  osg_local_site_settings { 'Site Information/resource': value => $osg::ce::site_info_resource }
-  osg_local_site_settings { 'Site Information/resource_group': value => $osg::ce::site_info_resource_group }
-  osg_local_site_settings { 'Site Information/sponsor': value => $osg::ce::site_info_sponsor }
-  osg_local_site_settings { 'Site Information/site_policy': value => $osg::ce::site_info_site_policy }
-  osg_local_site_settings { 'Site Information/contact': value => $osg::ce::site_info_contact }
-  osg_local_site_settings { 'Site Information/email': value => $osg::ce::site_info_email }
-  osg_local_site_settings { 'Site Information/city': value => $osg::ce::site_info_city }
-  osg_local_site_settings { 'Site Information/country': value => $osg::ce::site_info_country }
-  osg_local_site_settings { 'Site Information/longitude': value => $osg::ce::site_info_longitude }
-  osg_local_site_settings { 'Site Information/latitude': value => $osg::ce::site_info_latitude }
-
   osg_local_site_settings { 'Storage/grid_dir': value => $osg::ce::storage_grid_dir }
   osg_local_site_settings { 'Storage/app_dir': value => $osg::ce::storage_app_dir }
   osg_local_site_settings { 'Storage/data_dir': value => $osg::ce::storage_data_dir }
@@ -90,8 +77,8 @@ class osg::ce::config {
 
   osg_local_site_settings { "${osg::ce::batch_ini_section}/enabled": value => true }
   osg_local_site_settings { "${osg::ce::batch_ini_section}/${osg::ce::location_name}": value => $osg::ce::batch_system_prefix }
-  osg_local_site_settings { "${osg::ce::batch_ini_section}/job_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::job_contact}" }
-  osg_local_site_settings { "${osg::ce::batch_ini_section}/util_contact": value => "${osg::ce::site_info_host_name}/${osg::ce::util_contact}" }
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/job_contact": value => "${osg::site_info_host_name}/${osg::ce::job_contact}" }
+  osg_local_site_settings { "${osg::ce::batch_ini_section}/util_contact": value => "${osg::site_info_host_name}/${osg::ce::util_contact}" }
   create_resources(osg_local_site_settings, $osg::ce::batch_settings)
 
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)

@@ -10,7 +10,7 @@ describe 'osg::repos' do
     context "on #{os}" do
       let(:facts) { facts }
 
-      osg_release = '3.4'
+      osg_release = '3.5'
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::repos') }
@@ -27,7 +27,7 @@ describe 'osg::repos' do
                                                               enabled: '1',
                                                               failovermethod: 'priority',
                                                               gpgcheck: '1',
-                                                              gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                              gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                               priority: '98',
                                                               includepkgs: 'empty-ca-certs empty-slurm empty-torque')
       end
@@ -46,7 +46,7 @@ describe 'osg::repos' do
                                                              enabled: h[:enabled],
                                                              failovermethod: 'priority',
                                                              gpgcheck: '1',
-                                                             gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                             gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                              priority: '98')
         end
       end
@@ -64,7 +64,7 @@ describe 'osg::repos' do
                                                              enabled: '0',
                                                              failovermethod: 'priority',
                                                              gpgcheck: '1',
-                                                             gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                             gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                              priority: '98')
         end
       end
@@ -80,7 +80,7 @@ describe 'osg::repos' do
                                                                 enabled: '1',
                                                                 failovermethod: 'priority',
                                                                 gpgcheck: '1',
-                                                                gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                                gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                 priority: '98',
                                                                 includepkgs: 'empty-ca-certs empty-slurm empty-torque')
         end
@@ -99,7 +99,7 @@ describe 'osg::repos' do
                                                                enabled: h[:enabled],
                                                                failovermethod: 'priority',
                                                                gpgcheck: '1',
-                                                               gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                               gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                priority: '98')
           end
         end
@@ -117,7 +117,7 @@ describe 'osg::repos' do
                                                                enabled: '0',
                                                                failovermethod: 'priority',
                                                                gpgcheck: '1',
-                                                               gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                               gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                priority: '98')
           end
         end
@@ -133,7 +133,7 @@ describe 'osg::repos' do
                                                                   enabled: '1',
                                                                   failovermethod: 'priority',
                                                                   gpgcheck: '1',
-                                                                  gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                                  gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                   priority: '98',
                                                                   includepkgs: 'empty-ca-certs empty-slurm empty-torque')
           end
@@ -152,7 +152,7 @@ describe 'osg::repos' do
                                                                  enabled: h[:enabled],
                                                                  failovermethod: 'priority',
                                                                  gpgcheck: '1',
-                                                                 gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                                 gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                  priority: '98')
             end
           end
@@ -170,7 +170,7 @@ describe 'osg::repos' do
                                                                  enabled: '0',
                                                                  failovermethod: 'priority',
                                                                  gpgcheck: '1',
-                                                                 gpgkey: "https://repo.opensciencegrid.org/osg/#{osg_release}/RPM-GPG-KEY-OSG",
+                                                                 gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
                                                                  priority: '98')
             end
           end

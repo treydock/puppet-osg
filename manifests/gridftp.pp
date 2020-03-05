@@ -24,6 +24,7 @@ class osg::gridftp (
     -> Class['osg::cacerts']
     -> class { 'osg::gridftp::install': }
     -> Class['osg::lcmaps_voms']
+    -> class { 'osg::configure::site_info': }
     -> class { 'osg::gridftp::config': }
     ~> class { 'osg::gridftp::service': }
     -> anchor { 'osg::gridftp::end': }

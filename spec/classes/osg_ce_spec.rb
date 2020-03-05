@@ -4,7 +4,7 @@ describe 'osg::ce' do
   on_supported_os(supported_os: [
                     {
                       'operatingsystem' => 'CentOS',
-                      'operatingsystemrelease' => ['6', '7'],
+                      'operatingsystemrelease' => ['7'],
                     },
                   ]).each do |os, facts|
     context "on #{os}" do
@@ -31,7 +31,8 @@ describe 'osg::ce' do
       it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::ce::users]') }
       it { is_expected.to contain_class('osg::ce::users').that_comes_before('Class[osg::ce::install]') }
       it { is_expected.to contain_class('osg::ce::install').that_comes_before('Class[osg::gridftp]') }
-      it { is_expected.to contain_class('osg::gridftp').that_comes_before('Class[osg::ce::config]') }
+      it { is_expected.to contain_class('osg::gridftp').that_comes_before('Class[osg::configure::site_info]') }
+      it { is_expected.to contain_class('osg::configure::site_info').that_comes_before('Class[osg::ce::config]') }
       it { is_expected.to contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }
       it { is_expected.to contain_class('osg::ce::service').that_comes_before('Anchor[osg::ce::end]') }
       it { is_expected.to contain_anchor('osg::ce::end') }
