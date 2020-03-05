@@ -13,6 +13,7 @@ describe 'osg class:' do
 
       apply_manifest_on(node, pp, catch_failures: true)
       apply_manifest_on(node, pp, catch_changes: true)
+      on node, 'yum repolist'
     end
 
     [
