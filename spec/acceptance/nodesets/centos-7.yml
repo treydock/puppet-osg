@@ -1,16 +1,7 @@
 HOSTS:
-  centos-7-x64:
+  centos-7:
     roles:
       - agent
-      - gums
-      - ce
-      - gridftp
-      - squid
-      - wn
-      - bestman
-      - cvmfs
-      - client
-      - rsv
     platform: el-7-x86_64
     hypervisor: docker
     image: centos:7
@@ -18,8 +9,12 @@ HOSTS:
     docker_cmd:
       - '/usr/sbin/init'
     docker_image_commands:
-      - 'yum install -y tar wget cronie git iproute initscripts'
+      - 'yum install -y wget which cronie iproute initscripts'
     docker_container_name: 'osg-el7'
 CONFIG:
   log_level: debug
   type: foss
+ssh:
+  password: root
+  auth_methods: ["password"]
+
