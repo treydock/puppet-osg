@@ -1,6 +1,6 @@
 Puppet::Type.type(:osg_local_site_settings).provide(
   :ini_setting,
-  :parent => Puppet::Type.type(:ini_setting).provider(:ruby)
+  parent: Puppet::Type.type(:ini_setting).provider(:ruby),
 ) do
 
   def section

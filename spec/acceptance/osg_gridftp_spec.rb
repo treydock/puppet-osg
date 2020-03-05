@@ -2,10 +2,9 @@ require 'spec_helper_acceptance'
 
 describe 'osg::gridftp class:' do
   node = only_host_with_role(hosts, 'gridftp')
-  context "when default parameters" do
-
-    it 'should run successfully' do
-      pp =<<-EOS
+  context 'when default parameters' do
+    it 'runs successfully' do
+      pp = <<-EOS
         class { 'osg':
           auth_type => 'lcmaps_voms',
         }
@@ -16,10 +15,9 @@ describe 'osg::gridftp class:' do
         }
       EOS
 
-      apply_manifest_on(node, pp, :catch_failures => true)
-      apply_manifest_on(node, pp, :catch_changes => true)
+      apply_manifest_on(node, pp, catch_failures: true)
+      apply_manifest_on(node, pp, catch_changes: true)
     end
-
   end
 
   context 'GridFTP cleanup' do
