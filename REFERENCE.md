@@ -5,47 +5,47 @@
 
 **Classes**
 
-* [`osg`](#osg): Class: osg: See README.md for documentation.
+* [`osg`](#osg): Class for common OSG parameters and common resources
 * [`osg::cacerts`](#osgcacerts): Private class: See README.md.
-* [`osg::cacerts::updater`](#osgcacertsupdater): Class: osg::cacerts::updater: See README.md for documentation.
-* [`osg::ce`](#osgce): Class: osg::ce: See README.md for documentation.
+* [`osg::cacerts::updater`](#osgcacertsupdater): Manage OSG CA certs updater
+* [`osg::ce`](#osgce): Manage OSG CE
 * [`osg::ce::config`](#osgceconfig): Private class: See README.md.
 * [`osg::ce::install`](#osgceinstall): Private class: See README.md.
 * [`osg::ce::service`](#osgceservice): Private class: See README.md.
 * [`osg::ce::users`](#osgceusers): Private class: See README.md.
-* [`osg::client`](#osgclient): Class: osg::client: See README.md for documentation.
+* [`osg::client`](#osgclient): Manage OSG client
 * [`osg::client::config`](#osgclientconfig): Private class: See README.md.
 * [`osg::client::install`](#osgclientinstall): Private class: See README.md.
 * [`osg::client::service`](#osgclientservice): Private class: See README.md.
 * [`osg::configure`](#osgconfigure): Private class: See README.md.
-* [`osg::cvmfs`](#osgcvmfs): Class: osg::cvmfs: See README.md for documentation.
+* [`osg::cvmfs`](#osgcvmfs): Manage OSG CVMFS
 * [`osg::cvmfs::config`](#osgcvmfsconfig): Private class: See README.md.
 * [`osg::cvmfs::install`](#osgcvmfsinstall): Private class: See README.md.
 * [`osg::cvmfs::service`](#osgcvmfsservice): Private class: See README.md.
 * [`osg::cvmfs::user`](#osgcvmfsuser): Private class: See README.md.
-* [`osg::fetchcrl`](#osgfetchcrl): Class: osg::fetchcrl: See README.md for documentation.
-* [`osg::gridftp`](#osggridftp): Class: osg::gridftp: See README.md for documentation.
+* [`osg::fetchcrl`](#osgfetchcrl): Manage OSG fetchcrl
+* [`osg::gridftp`](#osggridftp): Manage OSG GridFTP
 * [`osg::gridftp::config`](#osggridftpconfig): Private class: See README.md.
 * [`osg::gridftp::install`](#osggridftpinstall): Private class: See README.md.
 * [`osg::gridftp::service`](#osggridftpservice): Private class: See README.md.
-* [`osg::lcmaps_voms`](#osglcmaps_voms): 
+* [`osg::lcmaps_voms`](#osglcmaps_voms): Manage lcmaps VOMs
 * [`osg::lcmaps_voms::config`](#osglcmaps_vomsconfig): 
 * [`osg::lcmaps_voms::install`](#osglcmaps_vomsinstall): 
 * [`osg::params`](#osgparams): Private class: See README.md.
 * [`osg::repos`](#osgrepos): Private class: See README.md.
-* [`osg::rsv`](#osgrsv): Class: osg::rsv: See README.md for documentation.
+* [`osg::rsv`](#osgrsv): Manage OSG RSV
 * [`osg::rsv::config`](#osgrsvconfig): Private class: See README.md.
 * [`osg::rsv::install`](#osgrsvinstall): Private class: See README.md.
 * [`osg::rsv::service`](#osgrsvservice): Private class: See README.md.
 * [`osg::rsv::users`](#osgrsvusers): Private class: See README.md.
-* [`osg::squid`](#osgsquid): Class: osg::squid: See README.md for documentation.
-* [`osg::utils`](#osgutils): Class: osg::utils: See README.md for documentation.
+* [`osg::squid`](#osgsquid): Manage OSG squid
+* [`osg::utils`](#osgutils): Manage OSG utils
 * [`osg::wn`](#osgwn): Class: osg::wn: See README.md for documentation.
 
 **Defined types**
 
-* [`osg::lcmaps_voms::user`](#osglcmaps_vomsuser): 
-* [`osg::lcmaps_voms::vo`](#osglcmaps_vomsvo): 
+* [`osg::lcmaps_voms::user`](#osglcmaps_vomsuser): Manage lcmaps VOMs user
+* [`osg::lcmaps_voms::vo`](#osglcmaps_vomsvo): Manage lcmaps VOMs VO entry
 
 **Resource types**
 
@@ -56,7 +56,7 @@
 
 ### osg
 
-Class: osg: See README.md for documentation.
+Class for common OSG parameters and common resources
 
 #### Parameters
 
@@ -117,6 +117,22 @@ Data type: `Optional[String]`
 
 
 Default value: `undef`
+
+##### `enable_osg`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### `enable_osg_empty`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
 
 ##### `enable_osg_contrib`
 
@@ -260,7 +276,7 @@ Data type: `String`
 
 
 
-Default value: $::domain
+Default value: $facts['domain']
 
 ##### `exported_resource_collect_tag`
 
@@ -268,7 +284,7 @@ Data type: `String`
 
 
 
-Default value: $::domain
+Default value: $facts['domain']
 
 ##### `squid_location`
 
@@ -300,7 +316,7 @@ Private class: See README.md.
 
 ### osg::cacerts::updater
 
-Class: osg::cacerts::updater: See README.md for documentation.
+Manage OSG CA certs updater
 
 #### Parameters
 
@@ -404,7 +420,7 @@ Default value: `true`
 
 ### osg::ce
 
-Class: osg::ce: See README.md for documentation.
+Manage OSG CE
 
 #### Parameters
 
@@ -748,7 +764,7 @@ Private class: See README.md.
 
 ### osg::client
 
-Class: osg::client: See README.md for documentation.
+Manage OSG client
 
 #### Parameters
 
@@ -828,7 +844,7 @@ Private class: See README.md.
 
 ### osg::cvmfs
 
-Class: osg::cvmfs: See README.md for documentation.
+Manage OSG CVMFS
 
 #### Parameters
 
@@ -1052,7 +1068,7 @@ Private class: See README.md.
 
 ### osg::fetchcrl
 
-Class: osg::fetchcrl: See README.md for documentation.
+Manage OSG fetchcrl
 
 #### Parameters
 
@@ -1140,7 +1156,7 @@ Default value: `true`
 
 ### osg::gridftp
 
-Class: osg::gridftp: See README.md for documentation.
+Manage OSG GridFTP
 
 #### Parameters
 
@@ -1200,7 +1216,7 @@ Private class: See README.md.
 
 ### osg::lcmaps_voms
 
-The osg::lcmaps_voms class.
+Manage lcmaps VOMs
 
 #### Parameters
 
@@ -1256,7 +1272,7 @@ Private class: See README.md.
 
 ### osg::rsv
 
-Class: osg::rsv: See README.md for documentation.
+Manage OSG RSV
 
 #### Parameters
 
@@ -1440,7 +1456,7 @@ Private class: See README.md.
 
 ### osg::squid
 
-Class: osg::squid: See README.md for documentation.
+Manage OSG squid
 
 #### Parameters
 
@@ -1528,7 +1544,7 @@ Default value: `undef`
 
 ### osg::utils
 
-Class: osg::utils: See README.md for documentation.
+Manage OSG utils
 
 #### Parameters
 
@@ -1550,7 +1566,7 @@ Class: osg::wn: See README.md for documentation.
 
 ### osg::lcmaps_voms::user
 
-The osg::lcmaps_voms::user class.
+Manage lcmaps VOMs user
 
 #### Parameters
 
@@ -1580,7 +1596,7 @@ Default value: 50
 
 ### osg::lcmaps_voms::vo
 
-The osg::lcmaps_voms::vo class.
+Manage lcmaps VOMs VO entry
 
 #### Parameters
 
