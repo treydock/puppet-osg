@@ -26,12 +26,8 @@
 #   Grid authentication type
 # @param cacerts_package_name
 #   Package name for osg-ca-certs
-# @param cacerts_install_other_packages
-#   TODO Remove
 # @param cacerts_package_ensure
 #   CA certs package ensure
-# @param cacerts_other_packages_ensure
-#   TODO Remove
 # @param shared_certs_path
 #   Path to location of shared certs, for example if storing certs on NFS
 # @param globus_tcp_port_range_min
@@ -101,9 +97,7 @@ class osg (
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
   Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs'] $cacerts_package_name = 'osg-ca-certs',
-  Boolean $cacerts_install_other_packages = false,
   String $cacerts_package_ensure = 'installed',
-  String $cacerts_other_packages_ensure = 'latest',
   String $shared_certs_path = '/opt/grid-certificates',
   Integer[0, 65535] $globus_tcp_port_range_min = 40000,
   Integer[0, 65535] $globus_tcp_port_range_max = 41999,

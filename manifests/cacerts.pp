@@ -17,13 +17,6 @@ class osg::cacerts {
     require => Yumrepo['osg'],
   }
 
-  if $::osg::cacerts_install_other_packages {
-    package { 'cilogon-ca-certs':
-      ensure  => $::osg::cacerts_other_packages_ensure,
-      require => Yumrepo['osg'],
-    }
-  }
-
   if ! defined(File['/etc/grid-security']) {
     file { '/etc/grid-security':
       ensure => 'directory',

@@ -21,8 +21,6 @@ describe 'osg::cacerts' do
                                                             require: 'Yumrepo[osg]')
       end
 
-      it { is_expected.not_to contain_package('cilogon-ca-certs') }
-
       it do
         is_expected.to contain_file('/etc/grid-security').with(ensure: 'directory',
                                                                owner: 'root',
@@ -90,26 +88,6 @@ describe 'osg::cacerts' do
         it do
           is_expected.to contain_file('/etc/grid-security/certificates').with(ensure: 'directory',
                                                                               before: 'Package[osg-ca-certs]')
-        end
-      end
-
-      context 'when osg::cacerts_install_other_packages => true' do
-        let(:pre_condition) { "class { 'osg': cacerts_install_other_packages => true }" }
-
-        it do
-          is_expected.to contain_package('cilogon-ca-certs').with(ensure: 'latest',
-                                                                  require: 'Yumrepo[osg]')
-        end
-
-        context 'when osg::cacerts_other_packages_ensure => "present"' do
-          let(:pre_condition) do
-            "class { 'osg': cacerts_install_other_packages => true, cacerts_other_packages_ensure => 'present' }"
-          end
-
-          it do
-            is_expected.to contain_package('cilogon-ca-certs').with(ensure: 'present',
-                                                                    require: 'Yumrepo[osg]')
-          end
         end
       end
     end
