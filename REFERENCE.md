@@ -5,42 +5,43 @@
 
 **Classes**
 
+_Public Classes_
+
 * [`osg`](#osg): Class for common OSG parameters and common resources
-* [`osg::cacerts`](#osgcacerts): Private class: See README.md.
 * [`osg::cacerts::updater`](#osgcacertsupdater): Manage OSG CA certs updater
 * [`osg::ce`](#osgce): Manage OSG CE
-* [`osg::ce::config`](#osgceconfig): Private class: See README.md.
-* [`osg::ce::install`](#osgceinstall): Private class: See README.md.
-* [`osg::ce::service`](#osgceservice): Private class: See README.md.
-* [`osg::ce::users`](#osgceusers): Private class: See README.md.
 * [`osg::client`](#osgclient): Manage OSG client
-* [`osg::client::config`](#osgclientconfig): Private class: See README.md.
-* [`osg::client::install`](#osgclientinstall): Private class: See README.md.
-* [`osg::client::service`](#osgclientservice): Private class: See README.md.
-* [`osg::configure`](#osgconfigure): Private class: See README.md.
 * [`osg::cvmfs`](#osgcvmfs): Manage OSG CVMFS
-* [`osg::cvmfs::config`](#osgcvmfsconfig): Private class: See README.md.
-* [`osg::cvmfs::install`](#osgcvmfsinstall): Private class: See README.md.
-* [`osg::cvmfs::service`](#osgcvmfsservice): Private class: See README.md.
-* [`osg::cvmfs::user`](#osgcvmfsuser): Private class: See README.md.
 * [`osg::fetchcrl`](#osgfetchcrl): Manage OSG fetchcrl
-* [`osg::gridftp`](#osggridftp): Manage OSG GridFTP
-* [`osg::gridftp::config`](#osggridftpconfig): Private class: See README.md.
-* [`osg::gridftp::install`](#osggridftpinstall): Private class: See README.md.
-* [`osg::gridftp::service`](#osggridftpservice): Private class: See README.md.
+* [`osg::gridftp`](#osggridftp): Manage OSG GridFTP.
 * [`osg::lcmaps_voms`](#osglcmaps_voms): Manage lcmaps VOMs
-* [`osg::lcmaps_voms::config`](#osglcmaps_vomsconfig): 
-* [`osg::lcmaps_voms::install`](#osglcmaps_vomsinstall): 
-* [`osg::params`](#osgparams): Private class: See README.md.
-* [`osg::repos`](#osgrepos): Private class: See README.md.
-* [`osg::rsv`](#osgrsv): Manage OSG RSV
-* [`osg::rsv::config`](#osgrsvconfig): Private class: See README.md.
-* [`osg::rsv::install`](#osgrsvinstall): Private class: See README.md.
-* [`osg::rsv::service`](#osgrsvservice): Private class: See README.md.
-* [`osg::rsv::users`](#osgrsvusers): Private class: See README.md.
 * [`osg::squid`](#osgsquid): Manage OSG squid
 * [`osg::utils`](#osgutils): Manage OSG utils
-* [`osg::wn`](#osgwn): Class: osg::wn: See README.md for documentation.
+* [`osg::wn`](#osgwn): Manage OSG worker node resources
+
+_Private Classes_
+
+* `osg::cacerts`: Manage OSG CA certs
+* `osg::ce::config`: Manage OSG CE configs
+* `osg::ce::install`: Install OSG CE
+* `osg::ce::service`: Manage OSG CE Services
+* `osg::ce::users`: Manage OSG CE Users
+* `osg::client::config`: Manage OSG client configs
+* `osg::client::install`: Install OSG client
+* `osg::client::service`: Manage OSG client services
+* `osg::configure`: Manage osg-configure
+* `osg::configure::misc`: Manage osg-configure-misc
+* `osg::configure::site_info`: Manage OSG configuration site info
+* `osg::cvmfs::config`: Manage OSG CVMFS configs
+* `osg::cvmfs::install`: Install CVMFS
+* `osg::cvmfs::service`: Manage CVMFS service
+* `osg::cvmfs::user`: Manage CVMFS users
+* `osg::gridftp::config`: Manage GridFTP configs
+* `osg::gridftp::install`: Install GridFTP
+* `osg::gridftp::service`: Manage GridFTP service
+* `osg::lcmaps_voms::config`: Manage lcmaps voms configs
+* `osg::lcmaps_voms::install`: Install lcmaps voms support
+* `osg::repos`: Manage OSG repos
 
 **Defined types**
 
@@ -49,8 +50,8 @@
 
 **Resource types**
 
-* [`osg_gip_config`](#osg_gip_config): Section/setting name to manage from /etc/osg/config.d/30-gip.ini
-* [`osg_local_site_settings`](#osg_local_site_settings): Section/setting name to manage from /etc/osg/config.d/99-local-site-settings.ini
+* [`osg_gip_config`](#osg_gip_config): This type writes values to `/etc/osg/config.d/30-gip.ini`
+* [`osg_local_site_settings`](#osg_local_site_settings): This type writes values to `/etc/osg/config.d/99-local-site-settings.ini`.
 
 ## Classes
 
@@ -64,17 +65,17 @@ The following parameters are available in the `osg` class.
 
 ##### `osg_release`
 
-Data type: `Enum['3.4']`
+Data type: `Enum['3.5']`
 
+OSG release
 
-
-Default value: '3.4'
+Default value: '3.5'
 
 ##### `repo_baseurl_bit`
 
 Data type: `Optional[String]`
 
-
+Base URL for osg repo, eg: `https://repo.opensciencegrid.org`
 
 Default value: 'https://repo.opensciencegrid.org'
 
@@ -82,7 +83,7 @@ Default value: 'https://repo.opensciencegrid.org'
 
 Data type: `Optional[String]`
 
-
+Base URL for osg-development repo, default: `https://repo.opensciencegrid.org`
 
 Default value: `undef`
 
@@ -90,7 +91,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Base URL for osg-testubg repo, default: `https://repo.opensciencegrid.org`
 
 Default value: `undef`
 
@@ -98,7 +99,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Base URL for osg-upcoming repo, default: `https://repo.opensciencegrid.org`
 
 Default value: `undef`
 
@@ -106,7 +107,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Sets if repos should use mirrors
 
 Default value: `true`
 
@@ -114,7 +115,7 @@ Default value: `true`
 
 Data type: `Optional[String]`
 
-
+Path to repo GPG key
 
 Default value: `undef`
 
@@ -122,7 +123,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Enable the osg repo
 
 Default value: `true`
 
@@ -130,7 +131,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Enable the osg-empty repo
 
 Default value: `true`
 
@@ -138,7 +139,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Enable the osg-contrib repo
 
 Default value: `false`
 
@@ -146,7 +147,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Manage the EPEL repo
 
 Default value: `true`
 
@@ -154,7 +155,7 @@ Default value: `true`
 
 Data type: `Enum['lcmaps_voms']`
 
-
+Grid authentication type
 
 Default value: 'lcmaps_voms'
 
@@ -162,39 +163,23 @@ Default value: 'lcmaps_voms'
 
 Data type: `Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs']`
 
-
+Package name for osg-ca-certs
 
 Default value: 'osg-ca-certs'
-
-##### `cacerts_install_other_packages`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
 
 ##### `cacerts_package_ensure`
 
 Data type: `String`
 
-
+CA certs package ensure
 
 Default value: 'installed'
-
-##### `cacerts_other_packages_ensure`
-
-Data type: `String`
-
-
-
-Default value: 'latest'
 
 ##### `shared_certs_path`
 
 Data type: `String`
 
-
+Path to location of shared certs, for example if storing certs on NFS
 
 Default value: '/opt/grid-certificates'
 
@@ -202,7 +187,7 @@ Default value: '/opt/grid-certificates'
 
 Data type: `Integer[0, 65535]`
 
-
+Min for GLOBUS_TCP_PORT_RANGE
 
 Default value: 40000
 
@@ -210,7 +195,7 @@ Default value: 40000
 
 Data type: `Integer[0, 65535]`
 
-
+Max for GLOBUS_TCP_PORT_RANGE
 
 Default value: 41999
 
@@ -218,7 +203,7 @@ Default value: 41999
 
 Data type: `Integer[0, 65535]`
 
-
+Min for GLOBUS_TCP_SOURCE_RANGE
 
 Default value: 40000
 
@@ -226,47 +211,15 @@ Default value: 40000
 
 Data type: `Integer[0, 65535]`
 
-
-
-Default value: 41999
-
-##### `condor_lowport`
-
-Data type: `Integer[0, 65535]`
-
-
-
-Default value: 40000
-
-##### `condor_highport`
-
-Data type: `Integer[0, 65535]`
-
-
+Max for GLOBUS_TCP_SOURCE_RANGE
 
 Default value: 41999
-
-##### `condor_schedd_host`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `condor_collector_host`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
 
 ##### `enable_exported_resources`
 
 Data type: `Boolean`
 
-
+Enable exported resources, useful when services like Squid and CE live on different hosts
 
 Default value: `false`
 
@@ -274,7 +227,7 @@ Default value: `false`
 
 Data type: `String`
 
-
+Exported resources export tag
 
 Default value: $facts['domain']
 
@@ -282,15 +235,111 @@ Default value: $facts['domain']
 
 Data type: `String`
 
-
+Exported resources collect tag
 
 Default value: $facts['domain']
+
+##### `site_info_group`
+
+Data type: `String`
+
+osg-configure Site Information/group
+
+Default value: 'OSG'
+
+##### `site_info_host_name`
+
+Data type: `String`
+
+osg-configure Site Information/host_name
+
+Default value: $::fqdn
+
+##### `site_info_resource`
+
+Data type: `String`
+
+osg-configure Site Information/resource
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_resource_group`
+
+Data type: `String`
+
+osg-configure Site Information/resource_group
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_sponsor`
+
+Data type: `String`
+
+osg-configure Site Information/sponsor
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_site_policy`
+
+Data type: `String`
+
+osg-configure Site Information/site_policy
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_contact`
+
+Data type: `String`
+
+osg-configure Site Information/contact
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_email`
+
+Data type: `String`
+
+osg-configure Site Information/email
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_city`
+
+Data type: `String`
+
+osg-configure Site Information/city
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_country`
+
+Data type: `String`
+
+osg-configure Site Information/country
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_longitude`
+
+Data type: `String`
+
+osg-configure Site Information/longitude
+
+Default value: 'UNAVAILABLE'
+
+##### `site_info_latitude`
+
+Data type: `String`
+
+osg-configure Site Information/latitude
+
+Default value: 'UNAVAILABLE'
 
 ##### `squid_location`
 
 Data type: `Optional[String]`
 
-
+osg-confgiure Squid/location
 
 Default value: `undef`
 
@@ -298,7 +347,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Purge unmanaged osg_local_site_settings resources
 
 Default value: `true`
 
@@ -306,13 +355,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Purge unmanaged osg_gip_config
 
 Default value: `true`
-
-### osg::cacerts
-
-Private class: See README.md.
 
 ### osg::cacerts::updater
 
@@ -326,7 +371,8 @@ The following parameters are available in the `osg::cacerts::updater` class.
 
 Data type: `Enum['present', 'absent', 'disabled']`
 
-
+State of the resources managed by this class
+`disabled` will install the necessary packages but disable the service
 
 Default value: 'present'
 
@@ -334,7 +380,7 @@ Default value: 'present'
 
 Data type: `Integer`
 
-
+Min time between running updater
 
 Default value: 23
 
@@ -342,7 +388,7 @@ Default value: 23
 
 Data type: `Integer`
 
-
+Max time between running updater
 
 Default value: 72
 
@@ -350,7 +396,7 @@ Default value: 72
 
 Data type: `Integer`
 
-
+Random wait time
 
 Default value: 30
 
@@ -358,7 +404,7 @@ Default value: 30
 
 Data type: `Boolean`
 
-
+Only display errors
 
 Default value: `true`
 
@@ -366,7 +412,7 @@ Default value: `true`
 
 Data type: `Variant[Boolean,Undef,String]`
 
-
+Path to logfile
 
 Default value: `false`
 
@@ -374,7 +420,7 @@ Default value: `false`
 
 Data type: `String`
 
-
+Package name
 
 Default value: 'osg-ca-certs-updater'
 
@@ -382,7 +428,7 @@ Default value: 'osg-ca-certs-updater'
 
 Data type: `String`
 
-
+Package ensure value
 
 Default value: 'UNSET'
 
@@ -390,7 +436,7 @@ Default value: 'UNSET'
 
 Data type: `String`
 
-
+Service name
 
 Default value: 'osg-ca-certs-updater-cron'
 
@@ -398,7 +444,7 @@ Default value: 'osg-ca-certs-updater-cron'
 
 Data type: `String`
 
-
+Service ensure value
 
 Default value: 'UNSET'
 
@@ -406,7 +452,7 @@ Default value: 'UNSET'
 
 Data type: `String`
 
-
+Service enable value
 
 Default value: 'UNSET'
 
@@ -414,7 +460,7 @@ Default value: 'UNSET'
 
 Data type: `Boolean`
 
-
+Should the cron config be replaced
 
 Default value: `true`
 
@@ -426,107 +472,11 @@ Manage OSG CE
 
 The following parameters are available in the `osg::ce` class.
 
-##### `site_info_group`
-
-Data type: `String`
-
-
-
-Default value: 'OSG'
-
-##### `site_info_host_name`
-
-Data type: `String`
-
-
-
-Default value: $::fqdn
-
-##### `site_info_resource`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_resource_group`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_sponsor`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_site_policy`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_contact`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_email`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_city`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_country`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_longitude`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `site_info_latitude`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
 ##### `storage_grid_dir`
 
 Data type: `String`
 
-
+osg-configure Storage/grid_dir
 
 Default value: '/etc/osg/wn-client/'
 
@@ -534,7 +484,7 @@ Default value: '/etc/osg/wn-client/'
 
 Data type: `String`
 
-
+osg-configure Storage/app_dir
 
 Default value: 'UNAVAILABLE'
 
@@ -542,7 +492,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `String`
 
-
+osg-configure Storage/data_dir
 
 Default value: 'UNAVAILABLE'
 
@@ -550,7 +500,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `String`
 
-
+osg-configure Storage/worker_node_temp
 
 Default value: 'UNAVAILABLE'
 
@@ -558,7 +508,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `String`
 
-
+osg-configure Storage/site_read
 
 Default value: 'UNAVAILABLE'
 
@@ -566,7 +516,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `String`
 
-
+osg-configure Storage/site_write
 
 Default value: 'UNAVAILABLE'
 
@@ -574,7 +524,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `Enum['torque', 'pbs', 'slurm']`
 
-
+Batch system used to submit jobs
 
 Default value: 'torque'
 
@@ -582,7 +532,7 @@ Default value: 'torque'
 
 Data type: `String`
 
-
+Prefix of where batch system commands are installed
 
 Default value: '/usr'
 
@@ -590,7 +540,7 @@ Default value: '/usr'
 
 Data type: `String`
 
-
+PBS server address when `batch_system` is `torque` or `pbs`
 
 Default value: 'UNAVAILABLE'
 
@@ -598,7 +548,7 @@ Default value: 'UNAVAILABLE'
 
 Data type: `Boolean`
 
-
+Boolean that determines if hostcert is managed
 
 Default value: `true`
 
@@ -606,7 +556,7 @@ Default value: `true`
 
 Data type: `Optional[String]`
 
-
+The source of the hostcert
 
 Default value: `undef`
 
@@ -614,7 +564,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The source of the hostkey
 
 Default value: `undef`
 
@@ -622,7 +572,7 @@ Default value: `undef`
 
 Data type: `Integer[0, 65535]`
 
-
+HTCondor CE port
 
 Default value: 9619
 
@@ -630,7 +580,7 @@ Default value: 9619
 
 Data type: `Integer[0, 65535]`
 
-
+HTCondor CE shared port
 
 Default value: 9620
 
@@ -638,7 +588,7 @@ Default value: 9620
 
 Data type: `Boolean`
 
-
+Boolean taht determines if firewall rules should be managed
 
 Default value: `true`
 
@@ -646,7 +596,8 @@ Default value: `true`
 
 Data type: `Hash`
 
-
+Extra configs for osg-configure local site settings
+Example: `{ 'Local Settings/PATH' => { 'value' => '/opt/singularity/bin:$PATH' } }`
 
 Default value: {}
 
@@ -654,7 +605,8 @@ Default value: {}
 
 Data type: `Hash`
 
-
+Extra configs for osg-configure GIP configs
+Example: `{ 'Subcluster owens/ram_mb' => { 'value' => 128000 } }`
 
 Default value: {}
 
@@ -662,7 +614,7 @@ Default value: {}
 
 Data type: `Boolean`
 
-
+Boolean of whether to manage users and groups
 
 Default value: `true`
 
@@ -670,7 +622,7 @@ Default value: `true`
 
 Data type: `Optional[Integer]`
 
-
+The UID of condor user
 
 Default value: `undef`
 
@@ -678,7 +630,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The GID of condor group
 
 Default value: `undef`
 
@@ -686,7 +638,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The UID of gratia user
 
 Default value: `undef`
 
@@ -694,7 +646,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The GID of gratia group
 
 Default value: `undef`
 
@@ -702,7 +654,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Content for /etc/condor-ce/config.d/99-local.conf
 
 Default value: `undef`
 
@@ -710,7 +662,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Source for /etc/condor-ce/config.d/99-local.conf
 
 Default value: `undef`
 
@@ -718,7 +670,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Content for blahp local submit attributes
 
 Default value: `undef`
 
@@ -726,7 +678,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Source for blahp local submit attributes
 
 Default value: `undef`
 
@@ -734,7 +686,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Boolean to determine if adding Condor CE View
 
 Default value: `false`
 
@@ -742,25 +694,9 @@ Default value: `false`
 
 Data type: `Integer[0, 65535]`
 
-
+Port for Condor CE View
 
 Default value: 8080
-
-### osg::ce::config
-
-Private class: See README.md.
-
-### osg::ce::install
-
-Private class: See README.md.
-
-### osg::ce::service
-
-Private class: See README.md.
-
-### osg::ce::users
-
-Private class: See README.md.
 
 ### osg::client
 
@@ -774,7 +710,7 @@ The following parameters are available in the `osg::client` class.
 
 Data type: `Boolean`
 
-
+Include Condor support
 
 Default value: `true`
 
@@ -782,15 +718,47 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Include Condor CE support
 
 Default value: `true`
+
+##### `condor_lowport`
+
+Data type: `Integer[0, 65535]`
+
+Condor lowport
+
+Default value: 40000
+
+##### `condor_highport`
+
+Data type: `Integer[0, 65535]`
+
+Condor highport
+
+Default value: 41999
+
+##### `condor_schedd_host`
+
+Data type: `Optional[String]`
+
+Condor schedd host
+
+Default value: `undef`
+
+##### `condor_collector_host`
+
+Data type: `Optional[String]`
+
+Condor collector host
+
+Default value: `undef`
 
 ##### `manage_firewall`
 
 Data type: `Boolean`
 
-
+Manage the firewall rules
 
 Default value: `true`
 
@@ -798,7 +766,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Enable Condor service
 
 Default value: `false`
 
@@ -806,7 +774,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Enable Condor CE service
 
 Default value: `false`
 
@@ -814,7 +782,7 @@ Default value: `false`
 
 Data type: `Hash`
 
-
+Config overrides for Condor
 
 Default value: {}
 
@@ -822,25 +790,9 @@ Default value: {}
 
 Data type: `Hash`
 
-
+Config overrides for Condor CE
 
 Default value: {}
-
-### osg::client::config
-
-Private class: See README.md.
-
-### osg::client::install
-
-Private class: See README.md.
-
-### osg::client::service
-
-Private class: See README.md.
-
-### osg::configure
-
-Private class: See README.md.
 
 ### osg::cvmfs
 
@@ -854,7 +806,7 @@ The following parameters are available in the `osg::cvmfs` class.
 
 Data type: `Boolean`
 
-
+Boolean to set if CVMFS user is managed
 
 Default value: `true`
 
@@ -862,7 +814,7 @@ Default value: `true`
 
 Data type: `String`
 
-
+CVMFS user name
 
 Default value: 'cvmfs'
 
@@ -870,7 +822,7 @@ Default value: 'cvmfs'
 
 Data type: `Optional[Integer]`
 
-
+CVMFS user UID
 
 Default value: `undef`
 
@@ -878,7 +830,7 @@ Default value: `undef`
 
 Data type: `String`
 
-
+CVMFS user home
 
 Default value: '/var/lib/cvmfs'
 
@@ -886,7 +838,7 @@ Default value: '/var/lib/cvmfs'
 
 Data type: `String`
 
-
+CVMFS user shell
 
 Default value: '/sbin/nologin'
 
@@ -894,7 +846,7 @@ Default value: '/sbin/nologin'
 
 Data type: `Boolean`
 
-
+Sets if CVMFS user is a system account
 
 Default value: `true`
 
@@ -902,7 +854,7 @@ Default value: `true`
 
 Data type: `String`
 
-
+CVMFS user comment
 
 Default value: 'CernVM-FS service account'
 
@@ -910,7 +862,7 @@ Default value: 'CernVM-FS service account'
 
 Data type: `Boolean`
 
-
+Sets if CVMFS user home is managed
 
 Default value: `false`
 
@@ -918,7 +870,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Boolean to set if CVMFS group is managed
 
 Default value: `true`
 
@@ -926,7 +878,7 @@ Default value: `true`
 
 Data type: `String`
 
-
+CVMFS group name
 
 Default value: 'cvmfs'
 
@@ -934,7 +886,7 @@ Default value: 'cvmfs'
 
 Data type: `Optional[Integer]`
 
-
+CVMFS group GID
 
 Default value: `undef`
 
@@ -942,7 +894,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Sets if CVMFS group is a system account
 
 Default value: `true`
 
@@ -950,7 +902,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Manage FUSE group
 
 Default value: `true`
 
@@ -958,7 +910,7 @@ Default value: `true`
 
 Data type: `String`
 
-
+FUSE group name
 
 Default value: 'fuse'
 
@@ -966,7 +918,7 @@ Default value: 'fuse'
 
 Data type: `Optional[Integer]`
 
-
+FUSE group GID
 
 Default value: `undef`
 
@@ -974,7 +926,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Sets if FUSE group is a system account
 
 Default value: `true`
 
@@ -982,7 +934,7 @@ Default value: `true`
 
 Data type: `String`
 
-
+Ensure property for CVMFS package
 
 Default value: 'installed'
 
@@ -990,7 +942,7 @@ Default value: 'installed'
 
 Data type: `Optional[Array]`
 
-
+CVMFS repositories to enable, eg: `grid.cern.ch`
 
 Default value: `undef`
 
@@ -998,7 +950,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Enable CVMFS strict mount, only allow mounting repositories from `repositories` parameter
 
 Default value: `false`
 
@@ -1006,7 +958,7 @@ Default value: `false`
 
 Data type: `String`
 
-
+Base directory for CVMFS cache
 
 Default value: '/var/cache/cvmfs'
 
@@ -1014,7 +966,7 @@ Default value: '/var/cache/cvmfs'
 
 Data type: `Integer`
 
-
+Quota limit for CVMFS cache
 
 Default value: 20000
 
@@ -1022,15 +974,15 @@ Default value: 20000
 
 Data type: `Array`
 
+Squid HTTP proxies for CVMFS
 
-
-Default value: ["http://squid.${::domain}:3128"]
+Default value: ["http://squid.${facts['networking']['domain']}:3128"]
 
 ##### `cern_server_urls`
 
 Data type: `Array`
 
-
+Value for `CVMFS_SERVER_URL`
 
 Default value: []
 
@@ -1038,7 +990,7 @@ Default value: []
 
 Data type: `String`
 
-
+glite version
 
 Default value: ''
 
@@ -1046,25 +998,9 @@ Default value: ''
 
 Data type: `Optional[String]`
 
-
+Value for `CMS_LOCAL_SITE`
 
 Default value: `undef`
-
-### osg::cvmfs::config
-
-Private class: See README.md.
-
-### osg::cvmfs::install
-
-Private class: See README.md.
-
-### osg::cvmfs::service
-
-Private class: See README.md.
-
-### osg::cvmfs::user
-
-Private class: See README.md.
 
 ### osg::fetchcrl
 
@@ -1078,7 +1014,8 @@ The following parameters are available in the `osg::fetchcrl` class.
 
 Data type: `Enum['present', 'absent', 'disabled']`
 
-
+State of OSG fetchcrl
+`disabled` will install but disable service
 
 Default value: 'present'
 
@@ -1086,7 +1023,7 @@ Default value: 'present'
 
 Data type: `String`
 
-
+fetch-crl package name
 
 Default value: 'fetch-crl'
 
@@ -1094,7 +1031,7 @@ Default value: 'fetch-crl'
 
 Data type: `String`
 
-
+Ensure property for fetch-crl package
 
 Default value: 'UNSET'
 
@@ -1102,7 +1039,7 @@ Default value: 'UNSET'
 
 Data type: `String`
 
-
+fetch-crl-boot package name
 
 Default value: 'fetch-crl-boot'
 
@@ -1110,7 +1047,7 @@ Default value: 'fetch-crl-boot'
 
 Data type: `String`
 
-
+fetch-crl-boot service ensure
 
 Default value: 'stopped'
 
@@ -1118,7 +1055,7 @@ Default value: 'stopped'
 
 Data type: `Boolean`
 
-
+fetch-crl-boot service enable
 
 Default value: `false`
 
@@ -1126,7 +1063,7 @@ Default value: `false`
 
 Data type: `String`
 
-
+fetch-crl-cron service name
 
 Default value: 'fetch-crl-cron'
 
@@ -1134,7 +1071,7 @@ Default value: 'fetch-crl-cron'
 
 Data type: `String`
 
-
+fetch-crl-cron service ensure
 
 Default value: 'UNSET'
 
@@ -1142,7 +1079,7 @@ Default value: 'UNSET'
 
 Data type: `Variant[Boolean, Enum['UNSET']]`
 
-
+fetch-crl-cron service enable
 
 Default value: 'UNSET'
 
@@ -1150,13 +1087,13 @@ Default value: 'UNSET'
 
 Data type: `Boolean`
 
-
+Boolean to set if syslog should be used
 
 Default value: `true`
 
 ### osg::gridftp
 
-Manage OSG GridFTP
+Manage OSG GridFTP.
 
 #### Parameters
 
@@ -1166,7 +1103,7 @@ The following parameters are available in the `osg::gridftp` class.
 
 Data type: `Boolean`
 
-
+Boolean to set if hostcert should be managed
 
 Default value: `true`
 
@@ -1174,7 +1111,7 @@ Default value: `true`
 
 Data type: `Optional[String]`
 
-
+Source for hostcert
 
 Default value: `undef`
 
@@ -1182,7 +1119,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Source for hostkey
 
 Default value: `undef`
 
@@ -1190,7 +1127,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Boolean to set if the firewall resources should be managed
 
 Default value: `true`
 
@@ -1198,21 +1135,11 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Sets if the GridFTP server is standalone.
+This parameter is considered private.
+This parameter is intended for when installing GridFTP on a CE and is handled by `osg::ce` class
 
 Default value: `true`
-
-### osg::gridftp::config
-
-Private class: See README.md.
-
-### osg::gridftp::install
-
-Private class: See README.md.
-
-### osg::gridftp::service
-
-Private class: See README.md.
 
 ### osg::lcmaps_voms
 
@@ -1226,7 +1153,7 @@ The following parameters are available in the `osg::lcmaps_voms` class.
 
 Data type: `Array`
 
-
+VOMs to ban
 
 Default value: []
 
@@ -1234,7 +1161,7 @@ Default value: []
 
 Data type: `Array`
 
-
+Users to ban
 
 Default value: []
 
@@ -1242,7 +1169,9 @@ Default value: []
 
 Data type: `Hash[String, Variant[String, Array, Hash]]`
 
-
+Define osg::lcmaps_voms::vo resources
+Example: `{ 'vo' => '/DN' }`
+Example: `{ 'vo' => { 'dn' => '/DN' } }`
 
 Default value: {}
 
@@ -1250,209 +1179,11 @@ Default value: {}
 
 Data type: `Hash[String, Variant[String, Array, Hash]]`
 
-
+Define osg::lcmaps_voms::user resources
+Example: `{ 'user' => '/DN' }`
+Example: `{ 'user' => { 'dn' => '/DN' } }`
 
 Default value: {}
-
-### osg::lcmaps_voms::config
-
-The osg::lcmaps_voms::config class.
-
-### osg::lcmaps_voms::install
-
-The osg::lcmaps_voms::install class.
-
-### osg::params
-
-Private class: See README.md.
-
-### osg::repos
-
-Private class: See README.md.
-
-### osg::rsv
-
-Manage OSG RSV
-
-#### Parameters
-
-The following parameters are available in the `osg::rsv` class.
-
-##### `rsvcert_source`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `rsvkey_source`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `manage_users`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### `with_httpd`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### `manage_firewall`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### `firewall_ensure`
-
-Data type: `Enum['present', 'absent']`
-
-
-
-Default value: 'present'
-
-##### `http_port`
-
-Data type: `Integer[0, 65535]`
-
-
-
-Default value: 80
-
-##### `rsv_uid`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `rsv_gid`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `cndrcron_uid`
-
-Data type: `Integer`
-
-
-
-Default value: 93
-
-##### `cndrcron_gid`
-
-Data type: `Integer`
-
-
-
-Default value: 93
-
-##### `gram_ce_hosts`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `htcondor_ce_hosts`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `ce_hosts`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `gridftp_hosts`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `gridftp_dir`
-
-Data type: `String`
-
-
-
-Default value: 'DEFAULT'
-
-##### `gratia_probes`
-
-Data type: `String`
-
-
-
-Default value: 'DEFAULT'
-
-##### `srm_hosts`
-
-Data type: `String`
-
-
-
-Default value: 'UNAVAILABLE'
-
-##### `srm_dir`
-
-Data type: `String`
-
-
-
-Default value: 'DEFAULT'
-
-##### `srm_webservice_path`
-
-Data type: `String`
-
-
-
-Default value: 'DEFAULT'
-
-### osg::rsv::config
-
-Private class: See README.md.
-
-### osg::rsv::install
-
-Private class: See README.md.
-
-### osg::rsv::service
-
-Private class: See README.md.
-
-### osg::rsv::users
-
-Private class: See README.md.
 
 ### osg::squid
 
@@ -1466,7 +1197,7 @@ The following parameters are available in the `osg::squid` class.
 
 Data type: `String`
 
-
+Path to template used to customize squid
 
 Default value: 'osg/squid/customize.sh.erb'
 
@@ -1474,7 +1205,7 @@ Default value: 'osg/squid/customize.sh.erb'
 
 Data type: `Array`
 
-
+Local networks
 
 Default value: ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16']
 
@@ -1482,7 +1213,7 @@ Default value: ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16']
 
 Data type: `Array`
 
-
+Monitor addresses
 
 Default value: ['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17']
 
@@ -1490,7 +1221,7 @@ Default value: ['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17']
 
 Data type: `Boolean`
 
-
+Enables and allows `MAJOR_CVMFS`
 
 Default value: `true`
 
@@ -1498,7 +1229,7 @@ Default value: `true`
 
 Data type: `Integer`
 
-
+Sets `max_filedescriptors`
 
 Default value: 0
 
@@ -1506,7 +1237,7 @@ Default value: 0
 
 Data type: `Boolean`
 
-
+Manage firewall resources
 
 Default value: `true`
 
@@ -1514,7 +1245,7 @@ Default value: `true`
 
 Data type: `Enum['present', 'absent']`
 
-
+Ensure property for squid firewall
 
 Default value: 'present'
 
@@ -1522,7 +1253,7 @@ Default value: 'present'
 
 Data type: `Enum['present', 'absent']`
 
-
+Ensure property for monitoring firewall
 
 Default value: 'present'
 
@@ -1530,7 +1261,7 @@ Default value: 'present'
 
 Data type: `Optional[String]`
 
-
+Private interface, used by firewall rules to allow squid access
 
 Default value: `undef`
 
@@ -1538,7 +1269,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Public interface, used by firewall rules to allow monitor addresses
 
 Default value: `undef`
 
@@ -1554,13 +1285,16 @@ The following parameters are available in the `osg::utils` class.
 
 Data type: `Array`
 
+Packages to install
 
-
-Default value: $osg::params::utils_packages
+Default value: [
+    'globus-proxy-utils',
+    'osg-pki-tools',
+  ]
 
 ### osg::wn
 
-Class: osg::wn: See README.md for documentation.
+Manage OSG worker node resources
 
 ## Defined types
 
@@ -1576,13 +1310,13 @@ The following parameters are available in the `osg::lcmaps_voms::user` defined t
 
 Data type: `Variant[Array, String]`
 
-
+DN of the user
 
 ##### `user`
 
 Data type: `String`
 
-
+Name of the user
 
 Default value: $name
 
@@ -1590,7 +1324,7 @@ Default value: $name
 
 Data type: `Integer`
 
-
+Order in the grid-mapfile
 
 Default value: 50
 
@@ -1606,13 +1340,13 @@ The following parameters are available in the `osg::lcmaps_voms::vo` defined typ
 
 Data type: `Variant[Array, String]`
 
-
+DN of the VO
 
 ##### `user`
 
 Data type: `String`
 
-
+User name
 
 Default value: $name
 
@@ -1620,7 +1354,7 @@ Default value: $name
 
 Data type: `Integer`
 
-
+Order in voms-mapfile
 
 Default value: 50
 
@@ -1628,7 +1362,7 @@ Default value: 50
 
 ### osg_gip_config
 
-Section/setting name to manage from /etc/osg/config.d/30-gip.ini
+This type writes values to `/etc/osg/config.d/30-gip.ini`
 
 #### Properties
 
@@ -1644,7 +1378,10 @@ Default value: present
 
 ##### `value`
 
-The value of the setting to be defined.
+The value to assign.
+A value of `true` is converted to the string `True`.
+A value of `false` is converted to the string `False`.
+All other values are converted to a string.
 
 #### Parameters
 
@@ -1654,11 +1391,16 @@ The following parameters are available in the `osg_gip_config` type.
 
 namevar
 
-Section/setting name to manage from /etc/osg/config.d/30-gip.ini
+The name must be in the format of `SECTION/SETTING`
+
+    [GIP]
+    batch = slurm
+
+The above would have the name `GIP/batch`.
 
 ### osg_local_site_settings
 
-Section/setting name to manage from /etc/osg/config.d/99-local-site-settings.ini
+This type writes values to `/etc/osg/config.d/99-local-site-settings.ini`.
 
 #### Properties
 
@@ -1674,7 +1416,10 @@ Default value: present
 
 ##### `value`
 
-The value of the setting to be defined.
+The value to assign.
+A value of `true` is converted to the string `True`.
+A value of `false` is converted to the string `False`.
+All other values are converted to a string.
 
 #### Parameters
 
@@ -1684,5 +1429,10 @@ The following parameters are available in the `osg_local_site_settings` type.
 
 namevar
 
-Section/setting name to manage from /etc/osg/config.d/99-local-site-settings.ini
+The name must be in the format of `SECTION/SETTING`
+
+    [Squid]
+    location = squid.example.tld
+
+The above would have the name `Squid/location`.
 

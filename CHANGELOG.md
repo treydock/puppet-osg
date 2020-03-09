@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.0.0](https://github.com/treydock/puppet-osg/tree/v5.0.0) (2020-03-09)
+
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/v4.4.0...v5.0.0)
+
+### Changed
+
+- BREAKING: Misc changes [\#31](https://github.com/treydock/puppet-osg/pull/31) ([treydock](https://github.com/treydock))
+- BREAKING: Switch to OSG 3.5 [\#30](https://github.com/treydock/puppet-osg/pull/30) ([treydock](https://github.com/treydock))
+
 ## [v4.4.0](https://github.com/treydock/puppet-osg/tree/v4.4.0) (2020-03-05)
 
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/4.3.1...v4.4.0)
