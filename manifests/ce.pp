@@ -1,33 +1,63 @@
 # @summary Manage OSG CE
 #
 # @param storage_grid_dir
+#   osg-configure Storage/grid_dir
 # @param storage_app_dir
+#   osg-configure Storage/app_dir
 # @param storage_data_dir
+#   osg-configure Storage/data_dir
 # @param storage_worker_node_temp
+#   osg-configure Storage/worker_node_temp
 # @param storage_site_read
+#   osg-configure Storage/site_read
 # @param storage_site_write
+#   osg-configure Storage/site_write
 # @param batch_system
+#   Batch system used to submit jobs
 # @param batch_system_prefix
+#   Prefix of where batch system commands are installed
 # @param pbs_server
+#   PBS server address when `batch_system` is `torque` or `pbs`
 # @param manage_hostcert
+#   Boolean that determines if hostcert is managed
 # @param hostcert_source
+#   The source of the hostcert
 # @param hostkey_source
+#   The source of the hostkey
 # @param htcondor_ce_port
+#   HTCondor CE port
 # @param htcondor_ce_shared_port
+#   HTCondor CE shared port
 # @param manage_firewall
+#   Boolean taht determines if firewall rules should be managed
 # @param osg_local_site_settings
+#   Extra configs for osg-configure local site settings
+#   Example: `{ 'Local Settings/PATH' => { 'value' => '/opt/singularity/bin:$PATH' } }`
 # @param osg_gip_configs
+#   Extra configs for osg-configure GIP configs
+#   Example: `{ 'Subcluster owens/ram_mb' => { 'value' => 128000 } }`
 # @param manage_users
+#   Boolean of whether to manage users and groups
 # @param condor_uid
+#   The UID of condor user
 # @param condor_gid
+#   The GID of condor group
 # @param gratia_uid
+#   The UID of gratia user
 # @param gratia_gid
+#   The GID of gratia group
 # @param condor_ce_config_content
+#   Content for /etc/condor-ce/config.d/99-local.conf
 # @param condor_ce_config_source
+#   Source for /etc/condor-ce/config.d/99-local.conf
 # @param blahp_local_submit_content
+#   Content for blahp local submit attributes
 # @param blahp_local_submit_source
+#   Source for blahp local submit attributes
 # @param include_view
+#   Boolean to determine if adding Condor CE View
 # @param view_port
+#   Port for Condor CE View
 #
 class osg::ce (
   String $storage_grid_dir = '/etc/osg/wn-client/',
@@ -58,7 +88,7 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts
@@ -107,16 +137,20 @@ class osg::ce (
     standalone      => false,
   }
 
-  anchor { 'osg::ce::start': }
-  -> Class['osg']
+  include osg::configure::site_info
+  contain osg::ce::users
+  contain osg::ce::install
+  contain osg::ce::config
+  contain osg::ce::service
+
+  Class['osg']
   -> Class['osg::cacerts']
-  -> class { 'osg::ce::users': }
-  -> class { 'osg::ce::install': }
+  -> Class['osg::ce::users']
+  -> Class['osg::ce::install']
   -> Class['osg::gridftp']
-  -> class { 'osg::configure::site_info': }
-  -> class { 'osg::ce::config': }
-  -> class { 'osg::ce::service': }
-  -> anchor { 'osg::ce::end': }
+  -> Class['osg::configure::site_info']
+  -> Class['osg::ce::config']
+  -> Class['osg::ce::service']
 
   if $manage_firewall {
     firewall { '100 allow HTCondorCE':

@@ -22,15 +22,12 @@ describe 'osg::cvmfs' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::cvmfs') }
-      it { is_expected.to contain_class('osg::params') }
 
-      it { is_expected.to contain_anchor('osg::cvmfs::start').that_comes_before('Class[osg]') }
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cvmfs::user]') }
       it { is_expected.to contain_class('osg::cvmfs::user').that_comes_before('Class[osg::cvmfs::install]') }
       it { is_expected.to contain_class('osg::cvmfs::install').that_comes_before('Class[osg::cvmfs::config]') }
       it { is_expected.to contain_class('osg::cvmfs::config').that_comes_before('Class[osg::cvmfs::service]') }
-      it { is_expected.to contain_class('osg::cvmfs::service').that_comes_before('Anchor[osg::cvmfs::end]') }
-      it { is_expected.to contain_anchor('osg::cvmfs::end') }
+      it { is_expected.to contain_class('osg::cvmfs::service') }
 
       context 'osg::cvmfs::user' do
         if manage_fuse_group
@@ -160,7 +157,7 @@ describe 'osg::cvmfs' do
                                   'CVMFS_STRICT_MOUNT=no',
                                   'CVMFS_CACHE_BASE=/var/cache/cvmfs',
                                   'CVMFS_QUOTA_LIMIT=20000',
-                                  "CVMFS_HTTP_PROXY=\"http://squid.#{facts[:domain]}:3128\"",
+                                  "CVMFS_HTTP_PROXY=\"http://squid.#{facts[:networking]['domain']}:3128\"",
                                   'GLITE_VERSION=',
                                 ])
         end

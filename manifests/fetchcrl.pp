@@ -1,15 +1,26 @@
 # @summary Manage OSG fetchcrl
 #
 # @param ensure
+#   State of OSG fetchcrl
+#   `disabled` will install but disable service
 # @param crl_package_name
+#   fetch-crl package name
 # @param crl_package_ensure
+#   Ensure property for fetch-crl package
 # @param crl_boot_service_name
+#   fetch-crl-boot package name
 # @param crl_boot_service_ensure
+#   fetch-crl-boot service ensure
 # @param crl_boot_service_enable
+#   fetch-crl-boot service enable
 # @param crl_cron_service_name
+#   fetch-crl-cron service name
 # @param crl_cron_service_ensure
+#   fetch-crl-cron service ensure
 # @param crl_cron_service_enable
+#   fetch-crl-cron service enable
 # @param use_syslog
+#   Boolean to set if syslog should be used
 #
 class osg::fetchcrl (
   Enum['present', 'absent', 'disabled'] $ensure = 'present',
@@ -22,7 +33,7 @@ class osg::fetchcrl (
   String $crl_cron_service_ensure = 'UNSET',
   Variant[Boolean, Enum['UNSET']] $crl_cron_service_enable = 'UNSET',
   Boolean $use_syslog = true,
-) inherits osg::params {
+) {
 
   require 'osg'
 

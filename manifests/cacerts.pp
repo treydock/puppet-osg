@@ -1,5 +1,6 @@
-# Private class: See README.md.
-class osg::cacerts inherits osg::params {
+# @summary Manage OSG CA certs
+# @api private
+class osg::cacerts {
 
   include osg
 
@@ -14,13 +15,6 @@ class osg::cacerts inherits osg::params {
     ensure  => $package_ensure,
     name    => $package_name,
     require => Yumrepo['osg'],
-  }
-
-  if $::osg::cacerts_install_other_packages {
-    package { 'cilogon-ca-certs':
-      ensure  => $::osg::cacerts_other_packages_ensure,
-      require => Yumrepo['osg'],
-    }
   }
 
   if ! defined(File['/etc/grid-security']) {

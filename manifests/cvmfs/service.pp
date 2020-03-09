@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage CVMFS service
+# @api private
 class osg::cvmfs::service {
 
   exec { 'cvmfs_config reload':

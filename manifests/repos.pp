@@ -1,8 +1,8 @@
-# Private class: See README.md.
+# @summary Manage OSG repos
+# @api private
 class osg::repos {
 
   include osg
-  include osg::params
 
   if $osg::repo_use_mirrors {
     $baseurls   = {
@@ -50,7 +50,7 @@ class osg::repos {
     }
   }
 
-  ensure_packages([$osg::params::yum_priorities_package])
+  ensure_packages(['yum-plugin-priorities'])
 
   Yumrepo {
     failovermethod  => 'priority',
@@ -59,7 +59,6 @@ class osg::repos {
     priority        => '98',
   }
 
-  #TODO : Need consider_as_osg=yes
   yumrepo { 'osg':
     baseurl    => $baseurls['osg'],
     mirrorlist => $mirrorlists['osg'],

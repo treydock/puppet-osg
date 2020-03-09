@@ -1,17 +1,30 @@
 # @summary Manage OSG CA certs updater
 #
 # @param ensure
+#   State of the resources managed by this class
+#   `disabled` will install the necessary packages but disable the service
 # @param min_age
+#   Min time between running updater
 # @param max_age
+#   Max time between running updater
 # @param random_wait
+#   Random wait time
 # @param quiet
+#   Only display errors
 # @param logfile
+#   Path to logfile
 # @param package_name
+#   Package name
 # @param package_ensure
+#   Package ensure value
 # @param service_name
+#   Service name
 # @param service_ensure
+#   Service ensure value
 # @param service_enable
+#   Service enable value
 # @param config_replace
+#   Should the cron config be replaced
 #
 class osg::cacerts::updater (
   Enum['present', 'absent', 'disabled'] $ensure = 'present',
@@ -26,7 +39,7 @@ class osg::cacerts::updater (
   String $service_ensure = 'UNSET',
   String $service_enable = 'UNSET',
   Boolean $config_replace = true,
-) inherits osg::params {
+) {
 
   require 'osg::cacerts'
 

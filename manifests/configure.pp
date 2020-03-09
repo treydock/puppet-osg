@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage osg-configure
+# @api private
 class osg::configure {
 
   exec { 'osg-configure':

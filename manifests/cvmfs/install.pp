@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Install CVMFS
+# @api private
 class osg::cvmfs::install {
 
   package { 'cvmfs':

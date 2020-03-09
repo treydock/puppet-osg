@@ -14,16 +14,12 @@ describe 'osg::lcmaps_voms' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::lcmaps_voms') }
-      it { is_expected.to contain_class('osg::params') }
-      it { is_expected.to contain_class('osg') }
-      it { is_expected.to contain_class('osg::cacerts') }
 
-      it { is_expected.to contain_anchor('osg::lcmaps_voms::start').that_comes_before('Class[osg::lcmaps_voms::install]') }
+      it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cacerts]') }
+      it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::configure::misc]') }
+      it { is_expected.to contain_class('osg::configure::misc').that_comes_before('Class[osg::lcmaps_voms::install]') }
       it { is_expected.to contain_class('osg::lcmaps_voms::install').that_comes_before('Class[osg::lcmaps_voms::config]') }
-      it { is_expected.to contain_class('osg::lcmaps_voms::config').that_comes_before('Anchor[osg::lcmaps_voms::end]') }
-      it { is_expected.to contain_anchor('osg::lcmaps_voms::end') }
-
-      it { is_expected.to contain_yumrepo('osg').that_comes_before('Class[osg::lcmaps_voms::install]') }
+      it { is_expected.to contain_class('osg::lcmaps_voms::config') }
 
       context 'osg::lcmaps_voms::install' do
         it do

@@ -12,7 +12,6 @@ describe 'osg::cacerts' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::cacerts') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg') }
       it { is_expected.to contain_class('osg::fetchcrl') }
 
@@ -21,8 +20,6 @@ describe 'osg::cacerts' do
                                                             name: 'osg-ca-certs',
                                                             require: 'Yumrepo[osg]')
       end
-
-      it { is_expected.not_to contain_package('cilogon-ca-certs') }
 
       it do
         is_expected.to contain_file('/etc/grid-security').with(ensure: 'directory',
@@ -91,26 +88,6 @@ describe 'osg::cacerts' do
         it do
           is_expected.to contain_file('/etc/grid-security/certificates').with(ensure: 'directory',
                                                                               before: 'Package[osg-ca-certs]')
-        end
-      end
-
-      context 'when osg::cacerts_install_other_packages => true' do
-        let(:pre_condition) { "class { 'osg': cacerts_install_other_packages => true }" }
-
-        it do
-          is_expected.to contain_package('cilogon-ca-certs').with(ensure: 'latest',
-                                                                  require: 'Yumrepo[osg]')
-        end
-
-        context 'when osg::cacerts_other_packages_ensure => "present"' do
-          let(:pre_condition) do
-            "class { 'osg': cacerts_install_other_packages => true, cacerts_other_packages_ensure => 'present' }"
-          end
-
-          it do
-            is_expected.to contain_package('cilogon-ca-certs').with(ensure: 'present',
-                                                                    require: 'Yumrepo[osg]')
-          end
         end
       end
     end

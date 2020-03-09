@@ -1,8 +1,11 @@
 # @summary Manage lcmaps VOMs VO entry
 #
 # @param dn
+#   DN of the VO
 # @param user
+#   User name
 # @param order
+#   Order in voms-mapfile
 #
 define osg::lcmaps_voms::vo (
   Variant[Array, String] $dn,

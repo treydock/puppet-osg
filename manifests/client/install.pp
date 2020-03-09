@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Install OSG client
+# @api private
 class osg::client::install {
 
   if $osg::client::with_condor {

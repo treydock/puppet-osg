@@ -14,7 +14,6 @@ describe 'osg::ce' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::ce') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg') }
       it { is_expected.to contain_class('osg::cacerts') }
 
@@ -26,7 +25,6 @@ describe 'osg::ce' do
                                                           standalone: 'false')
       end
 
-      it { is_expected.to contain_anchor('osg::ce::start').that_comes_before('Class[osg]') }
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::ce::users]') }
       it { is_expected.to contain_class('osg::ce::users').that_comes_before('Class[osg::ce::install]') }
@@ -34,8 +32,7 @@ describe 'osg::ce' do
       it { is_expected.to contain_class('osg::gridftp').that_comes_before('Class[osg::configure::site_info]') }
       it { is_expected.to contain_class('osg::configure::site_info').that_comes_before('Class[osg::ce::config]') }
       it { is_expected.to contain_class('osg::ce::config').that_comes_before('Class[osg::ce::service]') }
-      it { is_expected.to contain_class('osg::ce::service').that_comes_before('Anchor[osg::ce::end]') }
-      it { is_expected.to contain_anchor('osg::ce::end') }
+      it { is_expected.to contain_class('osg::ce::service') }
 
       it 'creates Firewall[100 allow HTCondorCE]' do
         is_expected.to contain_firewall('100 allow HTCondorCE').with(ensure: 'present',

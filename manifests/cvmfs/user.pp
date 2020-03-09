@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage CVMFS users
+# @api private
 class osg::cvmfs::user {
 
   if $osg::cvmfs::manage_fuse_group and versioncmp($::operatingsystemrelease, '7.0') < 0 {

@@ -14,17 +14,14 @@ describe 'osg::gridftp' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::gridftp') }
-      it { is_expected.to contain_class('osg::params') }
 
-      it { is_expected.to contain_anchor('osg::gridftp::start').that_comes_before('Class[osg]') }
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::gridftp::install]') }
       it { is_expected.to contain_class('osg::gridftp::install').that_comes_before('Class[osg::lcmaps_voms]') }
       it { is_expected.to contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::configure::site_info]') }
       it { is_expected.to contain_class('osg::configure::site_info').that_comes_before('Class[osg::gridftp::config]') }
       it { is_expected.to contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
-      it { is_expected.to contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
-      it { is_expected.to contain_anchor('osg::gridftp::end') }
+      it { is_expected.to contain_class('osg::gridftp::service') }
 
       it do
         is_expected.to contain_firewall('100 allow GridFTP').with(action: 'accept',
@@ -111,12 +108,10 @@ describe 'osg::gridftp' do
       context 'when standalone => false' do
         let(:params) { { standalone: false } }
 
-        it { is_expected.to contain_anchor('osg::gridftp::start').that_comes_before('Class[osg::gridftp::install]') }
         it { is_expected.to contain_class('osg::gridftp::install').that_comes_before('Class[osg::lcmaps_voms]') }
         it { is_expected.to contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::gridftp::config]') }
         it { is_expected.to contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
-        it { is_expected.to contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
-        it { is_expected.to contain_anchor('osg::gridftp::end') }
+        it { is_expected.to contain_class('osg::gridftp::service') }
       end
     end
   end

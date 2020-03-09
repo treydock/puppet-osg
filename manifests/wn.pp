@@ -1,5 +1,5 @@
-# Class: osg::wn: See README.md for documentation.
-class osg::wn inherits osg::params {
+# @summary Manage OSG worker node resources
+class osg::wn {
 
   include osg
   include osg::cacerts
@@ -15,11 +15,9 @@ class osg::wn inherits osg::params {
     name   => $xrootd_client_package_name,
   }
 
-  anchor { 'osg::wn::start': }
-  -> Class['osg']
+  Class['osg']
   -> Class['osg::cacerts']
   -> Package['osg-wn-client']
   -> Package['xrootd-client']
-  -> anchor { 'osg::wn::end': }
 
 }
