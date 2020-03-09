@@ -24,6 +24,7 @@ class osg::lcmaps_voms (
   include ::osg::cacerts
 
   anchor { 'osg::lcmaps_voms::start': }
+  -> class { '::osg::configure::misc': }
   -> class { '::osg::lcmaps_voms::install': }
   -> class { '::osg::lcmaps_voms::config': }
   -> anchor { 'osg::lcmaps_voms::end': }
