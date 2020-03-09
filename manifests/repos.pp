@@ -59,7 +59,6 @@ class osg::repos {
     priority        => '98',
   }
 
-  #TODO : Need consider_as_osg=yes
   yumrepo { 'osg':
     baseurl    => $baseurls['osg'],
     mirrorlist => $mirrorlists['osg'],
