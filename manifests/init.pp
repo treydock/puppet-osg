@@ -129,17 +129,10 @@ class osg (
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
   $_repo_gpgkey                       = pick($repo_gpgkey, 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG')
 
-  anchor { 'osg::start': }
-  anchor { 'osg::end': }
-
   if $manage_epel {
     contain ::epel
   }
   contain osg::repos
-
-  Anchor['osg::start']
-  -> Class['osg::repos']
-  -> Anchor['osg::end']
 
   include osg::configure
 

@@ -24,24 +24,24 @@ class osg::gridftp (
   include osg
   include osg::cacerts
   include osg::lcmaps_voms
+  include osg::configure::site_info
+  contain osg::gridftp::install
+  contain osg::gridftp::config
+  contain osg::gridftp::service
 
   if $standalone {
-    anchor { 'osg::gridftp::start': }
-    -> Class['osg']
+    Class['osg']
     -> Class['osg::cacerts']
-    -> class { 'osg::gridftp::install': }
+    -> Class['osg::gridftp::install']
     -> Class['osg::lcmaps_voms']
-    -> class { 'osg::configure::site_info': }
-    -> class { 'osg::gridftp::config': }
-    ~> class { 'osg::gridftp::service': }
-    -> anchor { 'osg::gridftp::end': }
+    -> Class['osg::configure::site_info']
+    -> Class['osg::gridftp::config']
+    ~> Class['osg::gridftp::service']
   } else {
-    anchor { 'osg::gridftp::start': }
-    -> class { 'osg::gridftp::install': }
+    Class['osg::gridftp::install']
     -> Class['osg::lcmaps_voms']
-    -> class { 'osg::gridftp::config': }
-    ~> class { 'osg::gridftp::service': }
-    -> anchor { 'osg::gridftp::end': }
+    -> Class['osg::gridftp::config']
+    ~> Class['osg::gridftp::service']
   }
 
   if $manage_firewall {

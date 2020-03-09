@@ -137,16 +137,20 @@ class osg::ce (
     standalone      => false,
   }
 
-  anchor { 'osg::ce::start': }
-  -> Class['osg']
+  include osg::configure::site_info
+  contain osg::ce::users
+  contain osg::ce::install
+  contain osg::ce::config
+  contain osg::ce::service
+
+  Class['osg']
   -> Class['osg::cacerts']
-  -> class { 'osg::ce::users': }
-  -> class { 'osg::ce::install': }
+  -> Class['osg::ce::users']
+  -> Class['osg::ce::install']
   -> Class['osg::gridftp']
-  -> class { 'osg::configure::site_info': }
-  -> class { 'osg::ce::config': }
-  -> class { 'osg::ce::service': }
-  -> anchor { 'osg::ce::end': }
+  -> Class['osg::configure::site_info']
+  -> Class['osg::ce::config']
+  -> Class['osg::ce::service']
 
   if $manage_firewall {
     firewall { '100 allow HTCondorCE':

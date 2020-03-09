@@ -73,7 +73,7 @@ class osg::cvmfs (
   Boolean $strict_mount = false,
   String $cache_base = '/var/cache/cvmfs',
   Integer $quota_limit = 20000,
-  Array $http_proxies = ["http://squid.${::domain}:3128"],
+  Array $http_proxies = ["http://squid.${facts['networking']['domain']}:3128"],
   Array $cern_server_urls = [],
   String $glite_version = '',
   Optional[String] $cms_local_site = undef,
@@ -87,13 +87,15 @@ class osg::cvmfs (
 
   include ::autofs
   include osg
+  contain osg::cvmfs::user
+  contain osg::cvmfs::install
+  contain osg::cvmfs::config
+  contain osg::cvmfs::service
 
-  anchor { 'osg::cvmfs::start': }
-  -> Class['osg']
-  -> class { 'osg::cvmfs::user': }
-  -> class { 'osg::cvmfs::install': }
-  -> class { 'osg::cvmfs::config': }
-  -> class { 'osg::cvmfs::service': }
-  -> anchor { 'osg::cvmfs::end': }
+  Class['osg']
+  -> Class['osg::cvmfs::user']
+  -> Class['osg::cvmfs::install']
+  -> Class['osg::cvmfs::config']
+  -> Class['osg::cvmfs::service']
 
 }

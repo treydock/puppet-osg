@@ -15,13 +15,11 @@ describe 'osg::client' do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::client') }
 
-      it { is_expected.to contain_anchor('osg::client::start').that_comes_before('Class[osg]') }
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::client::install]') }
       it { is_expected.to contain_class('osg::client::install').that_comes_before('Class[osg::client::config]') }
       it { is_expected.to contain_class('osg::client::config').that_comes_before('Class[osg::client::service]') }
-      it { is_expected.to contain_class('osg::client::service').that_comes_before('Anchor[osg::client::end]') }
-      it { is_expected.to contain_anchor('osg::client::end') }
+      it { is_expected.to contain_class('osg::client::service') }
 
       it { is_expected.to contain_class('osg::wn').that_comes_before('Class[osg::client::install]') }
 

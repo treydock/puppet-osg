@@ -20,16 +20,17 @@ class osg::lcmaps_voms (
   Hash[String, Variant[String, Array, Hash]] $users = {},
 ) {
 
-  include ::osg
-  include ::osg::cacerts
+  include osg
+  include osg::cacerts
+  include osg::configure::misc
+  contain osg::lcmaps_voms::install
+  contain osg::lcmaps_voms::config
 
-  anchor { 'osg::lcmaps_voms::start': }
-  -> class { '::osg::configure::misc': }
-  -> class { '::osg::lcmaps_voms::install': }
-  -> class { '::osg::lcmaps_voms::config': }
-  -> anchor { 'osg::lcmaps_voms::end': }
-
-  Yumrepo['osg'] -> Class['::osg::lcmaps_voms::install']
+  Class['osg']
+  -> Class['osg::cacerts']
+  -> Class['osg::configure::misc']
+  -> Class['osg::lcmaps_voms::install']
+  -> Class['osg::lcmaps_voms::config']
 
   $vos.each |$vo, $dn| {
     if $dn =~ String or $dn =~ Array {

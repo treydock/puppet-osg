@@ -13,7 +13,6 @@ describe 'osg::cacerts::updater' do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::cacerts::updater') }
       it { is_expected.to contain_class('osg::cacerts') }
-      # it { should contain_class('cron') }
 
       it do
         is_expected.to contain_package('osg-ca-certs-updater').with(ensure: 'installed',

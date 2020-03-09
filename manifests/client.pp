@@ -58,13 +58,15 @@ class osg::client (
   $condor_configs    = merge($condor_configs_default, $condor_configs_override)
   $condor_ce_configs = merge($condor_ce_configs_default, $condor_ce_configs_override)
 
-  anchor { 'osg::client::start': }
-  -> Class['osg']
+  contain osg::client::install
+  contain osg::client::config
+  contain osg::client::service
+
+  Class['osg']
   -> Class['osg::cacerts']
-  -> class { 'osg::client::install': }
-  -> class { 'osg::client::config': }
-  -> class { 'osg::client::service': }
-  -> anchor { 'osg::client::end': }
+  -> Class['osg::client::install']
+  -> Class['osg::client::config']
+  -> Class['osg::client::service']
 
   Class['osg::wn'] -> Class['osg::client::install']
 
