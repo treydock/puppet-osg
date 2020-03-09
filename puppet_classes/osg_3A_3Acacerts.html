@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::cacerts</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -76,12 +71,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG CA certs
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Private class: See README.md.</p>
-
   </div>
 </div>
 
@@ -97,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -137,18 +132,12 @@
 39
 40
 41
-42
-43
-44
-45
-46
-47
-48</pre>
+42</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cacerts.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/cacerts.pp', line 3</span>
 
-class osg::cacerts inherits osg::params {
+class osg::cacerts {
 
   include osg
 
@@ -163,13 +152,6 @@ class osg::cacerts inherits osg::params {
     ensure  =&gt; $package_ensure,
     name    =&gt; $package_name,
     require =&gt; Yumrepo[&#39;osg&#39;],
-  }
-
-  if $::osg::cacerts_install_other_packages {
-    package { &#39;cilogon-ca-certs&#39;:
-      ensure  =&gt; $::osg::cacerts_other_packages_ensure,
-      require =&gt; Yumrepo[&#39;osg&#39;],
-    }
   }
 
   if ! defined(File[&#39;/etc/grid-security&#39;]) {

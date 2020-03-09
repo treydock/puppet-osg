@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -96,11 +91,16 @@
         <span class='name'>osg_release</span>
       
       
-        <span class='type'>(<tt>Enum['3.4']</tt>)</span>
+        <span class='type'>(<tt>Enum['3.5']</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;3.4&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;3.5&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>OSG release</p>
+</div>
       
     </li>
   
@@ -115,6 +115,11 @@
         <em class="default">(defaults to: <tt>&#39;https://repo.opensciencegrid.org&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Base URL for osg repo, eg: <code>https://repo.opensciencegrid.org</code></p>
+</div>
+      
     </li>
   
     <li>
@@ -127,6 +132,12 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Base URL for osg-development repo, default:
+<code>https://repo.opensciencegrid.org</code></p>
+</div>
       
     </li>
   
@@ -141,6 +152,12 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Base URL for osg-testubg repo, default:
+<code>https://repo.opensciencegrid.org</code></p>
+</div>
+      
     </li>
   
     <li>
@@ -153,6 +170,12 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Base URL for osg-upcoming repo, default:
+<code>https://repo.opensciencegrid.org</code></p>
+</div>
       
     </li>
   
@@ -167,6 +190,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Sets if repos should use mirrors</p>
+</div>
+      
     </li>
   
     <li>
@@ -179,6 +207,11 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Path to repo GPG key</p>
+</div>
       
     </li>
   
@@ -193,6 +226,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Enable the osg repo</p>
+</div>
+      
     </li>
   
     <li>
@@ -205,6 +243,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Enable the osg-empty repo</p>
+</div>
       
     </li>
   
@@ -219,6 +262,11 @@
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Enable the osg-contrib repo</p>
+</div>
+      
     </li>
   
     <li>
@@ -231,6 +279,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Manage the EPEL repo</p>
+</div>
       
     </li>
   
@@ -245,6 +298,11 @@
         <em class="default">(defaults to: <tt>&#39;lcmaps_voms&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Grid authentication type</p>
+</div>
+      
     </li>
   
     <li>
@@ -258,18 +316,10 @@
         <em class="default">(defaults to: <tt>&#39;osg-ca-certs&#39;</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>cacerts_install_other_packages</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>false</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>Package name for osg-ca-certs</p>
+</div>
       
     </li>
   
@@ -284,18 +334,10 @@
         <em class="default">(defaults to: <tt>&#39;installed&#39;</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>cacerts_other_packages_ensure</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;latest&#39;</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>CA certs package ensure</p>
+</div>
       
     </li>
   
@@ -310,6 +352,11 @@
         <em class="default">(defaults to: <tt>&#39;/opt/grid-certificates&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Path to location of shared certs, for example if storing certs on NFS</p>
+</div>
+      
     </li>
   
     <li>
@@ -322,6 +369,11 @@
       
         <em class="default">(defaults to: <tt>40000</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Min for GLOBUS_TCP_PORT_RANGE</p>
+</div>
       
     </li>
   
@@ -336,6 +388,11 @@
         <em class="default">(defaults to: <tt>41999</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Max for GLOBUS_TCP_PORT_RANGE</p>
+</div>
+      
     </li>
   
     <li>
@@ -348,6 +405,11 @@
       
         <em class="default">(defaults to: <tt>40000</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Min for GLOBUS_TCP_SOURCE_RANGE</p>
+</div>
       
     </li>
   
@@ -362,57 +424,10 @@
         <em class="default">(defaults to: <tt>41999</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>condor_lowport</span>
-      
-      
-        <span class='type'>(<tt>Integer[0, 65535]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>40000</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>condor_highport</span>
-      
-      
-        <span class='type'>(<tt>Integer[0, 65535]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>41999</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>condor_schedd_host</span>
-      
-      
-        <span class='type'>(<tt>Optional[String]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>condor_collector_host</span>
-      
-      
-        <span class='type'>(<tt>Optional[String]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>Max for GLOBUS_TCP_SOURCE_RANGE</p>
+</div>
       
     </li>
   
@@ -427,6 +442,12 @@
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Enable exported resources, useful when services like Squid and CE live on
+different hosts</p>
+</div>
+      
     </li>
   
     <li>
@@ -439,6 +460,11 @@
       
         <em class="default">(defaults to: <tt>$facts[&#39;domain&#39;]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Exported resources export tag</p>
+</div>
       
     </li>
   
@@ -453,6 +479,227 @@
         <em class="default">(defaults to: <tt>$facts[&#39;domain&#39;]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Exported resources collect tag</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;OSG&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/group</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_host_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$::fqdn</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/host_name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_resource</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/resource</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_resource_group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/resource_group</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_sponsor</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/sponsor</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_site_policy</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/site_policy</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_contact</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/contact</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_email</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/email</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_city</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/city</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_country</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/country</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_longitude</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/longitude</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>site_info_latitude</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;UNAVAILABLE&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-configure Site Information/latitude</p>
+</div>
+      
     </li>
   
     <li>
@@ -465,6 +712,11 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>osg-confgiure Squid/location</p>
+</div>
       
     </li>
   
@@ -479,6 +731,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Purge unmanaged osg_local_site_settings resources</p>
+</div>
+      
     </li>
   
     <li>
@@ -491,6 +748,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Purge unmanaged osg_gip_config</p>
+</div>
       
     </li>
   
@@ -505,49 +767,6 @@
         <pre class="lines">
 
 
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
 78
 79
 80
@@ -573,13 +792,63 @@
 100
 101
 102
-103</pre>
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 35</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 78</span>
 
 class osg (
-  Enum[&#39;3.4&#39;] $osg_release = &#39;3.4&#39;,
+  Enum[&#39;3.5&#39;] $osg_release = &#39;3.5&#39;,
   Optional[String] $repo_baseurl_bit = &#39;https://repo.opensciencegrid.org&#39;,
   Optional[String] $repo_development_baseurl_bit = undef,
   Optional[String] $repo_testing_baseurl_bit = undef,
@@ -592,43 +861,50 @@ class osg (
   Boolean $manage_epel = true,
   Enum[&#39;lcmaps_voms&#39;] $auth_type = &#39;lcmaps_voms&#39;,
   Enum[&#39;osg-ca-certs&#39;, &#39;igtf-ca-certs&#39;, &#39;empty-ca-certs&#39;] $cacerts_package_name = &#39;osg-ca-certs&#39;,
-  Boolean $cacerts_install_other_packages = false,
   String $cacerts_package_ensure = &#39;installed&#39;,
-  String $cacerts_other_packages_ensure = &#39;latest&#39;,
   String $shared_certs_path = &#39;/opt/grid-certificates&#39;,
   Integer[0, 65535] $globus_tcp_port_range_min = 40000,
   Integer[0, 65535] $globus_tcp_port_range_max = 41999,
   Integer[0, 65535] $globus_tcp_source_range_min = 40000,
   Integer[0, 65535] $globus_tcp_source_range_max = 41999,
-  Integer[0, 65535] $condor_lowport = 40000,
-  Integer[0, 65535] $condor_highport = 41999,
-  Optional[String] $condor_schedd_host = undef,
-  Optional[String] $condor_collector_host = undef,
   Boolean $enable_exported_resources = false,
   String $exported_resources_export_tag = $facts[&#39;domain&#39;],
   String $exported_resource_collect_tag = $facts[&#39;domain&#39;],
   # INI config values
+  String $site_info_group = &#39;OSG&#39;,
+  String $site_info_host_name = $::fqdn,
+  String $site_info_resource = &#39;UNAVAILABLE&#39;,
+  String $site_info_resource_group = &#39;UNAVAILABLE&#39;,
+  String $site_info_sponsor = &#39;UNAVAILABLE&#39;,
+  String $site_info_site_policy = &#39;UNAVAILABLE&#39;,
+  String $site_info_contact = &#39;UNAVAILABLE&#39;,
+  String $site_info_email = &#39;UNAVAILABLE&#39;,
+  String $site_info_city = &#39;UNAVAILABLE&#39;,
+  String $site_info_country = &#39;UNAVAILABLE&#39;,
+  String $site_info_longitude = &#39;UNAVAILABLE&#39;,
+  String $site_info_latitude = &#39;UNAVAILABLE&#39;,
   Optional[String] $squid_location = undef,
   Boolean $purge_local_site_settings = true,
   Boolean $purge_gip_config = true,
-) inherits osg::params {
+) {
+
+  $osfamily = $facts.dig(&#39;os&#39;, &#39;family&#39;)
+  $osmajor = $facts.dig(&#39;os&#39;, &#39;release&#39;, &#39;major&#39;)
+  $supported = [&#39;RedHat-7&#39;]
+  $os = &quot;${osfamily}-${osmajor}&quot;
+  if ! ($os in $supported) {
+    fail(&quot;Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7&quot;)
+  }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
-  $_repo_gpgkey                       = pick($repo_gpgkey, &quot;https://repo.opensciencegrid.org/osg/${osg_release}/RPM-GPG-KEY-OSG&quot;)
-
-  anchor { &#39;osg::start&#39;: }
-  anchor { &#39;osg::end&#39;: }
+  $_repo_gpgkey                       = pick($repo_gpgkey, &#39;https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG&#39;)
 
   if $manage_epel {
     contain ::epel
   }
   contain osg::repos
-
-  Anchor[&#39;osg::start&#39;]
-  -&gt; Class[&#39;osg::repos&#39;]
-  -&gt; Anchor[&#39;osg::end&#39;]
 
   include osg::configure
 

@@ -71,6 +71,9 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Install lcmaps voms support
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
@@ -90,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -99,14 +101,10 @@
 8
 9
 10
-11
-12
-13
-14
-15</pre>
+11</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms/install.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms/install.pp', line 3</span>
 
 class osg::lcmaps_voms::install {
 
@@ -116,11 +114,6 @@ class osg::lcmaps_voms::install {
   package { &#39;vo-client-lcmaps-voms&#39;:
     ensure =&gt; &#39;present&#39;,
   }
-  #TODO: Move to osg::configure class
-  package { &#39;osg-configure-misc&#39;:
-    ensure =&gt; &#39;present&#39;,
-  }
-
 }</pre>
       </td>
     </tr>

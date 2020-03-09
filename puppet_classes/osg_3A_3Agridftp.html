@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::gridftp</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -77,7 +72,7 @@
 </div>
 
   <h2>Summary</h2>
-  Manage OSG GridFTP
+  Manage OSG GridFTP.
 
 <h2>Overview</h2>
 <div class="docstring">
@@ -102,6 +97,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if hostcert should be managed</p>
+</div>
+      
     </li>
   
     <li>
@@ -114,6 +114,11 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Source for hostcert</p>
+</div>
       
     </li>
   
@@ -128,6 +133,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Source for hostkey</p>
+</div>
+      
     </li>
   
     <li>
@@ -140,6 +150,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if the firewall resources should be managed</p>
+</div>
       
     </li>
   
@@ -154,6 +169,13 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Sets if the GridFTP server is standalone. This parameter is considered
+private. This parameter is intended for when installing GridFTP on a CE and
+is handled by <code>osg::ce</code> class</p>
+</div>
+      
     </li>
   
 </ul>
@@ -167,13 +189,6 @@
         <pre class="lines">
 
 
-9
-10
-11
-12
-13
-14
-15
 16
 17
 18
@@ -216,10 +231,18 @@
 55
 56
 57
-58</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/gridftp.pp', line 9</span>
+        <pre class="code"><span class="info file"># File 'manifests/gridftp.pp', line 16</span>
 
 class osg::gridftp (
   Boolean $manage_hostcert = true,
@@ -227,28 +250,29 @@ class osg::gridftp (
   Optional[String] $hostkey_source = undef,
   Boolean $manage_firewall = true,
   Boolean $standalone = true,
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts
   include osg::lcmaps_voms
+  include osg::configure::site_info
+  contain osg::gridftp::install
+  contain osg::gridftp::config
+  contain osg::gridftp::service
 
   if $standalone {
-    anchor { &#39;osg::gridftp::start&#39;: }
-    -&gt; Class[&#39;osg&#39;]
+    Class[&#39;osg&#39;]
     -&gt; Class[&#39;osg::cacerts&#39;]
-    -&gt; class { &#39;osg::gridftp::install&#39;: }
+    -&gt; Class[&#39;osg::gridftp::install&#39;]
     -&gt; Class[&#39;osg::lcmaps_voms&#39;]
-    -&gt; class { &#39;osg::gridftp::config&#39;: }
-    ~&gt; class { &#39;osg::gridftp::service&#39;: }
-    -&gt; anchor { &#39;osg::gridftp::end&#39;: }
+    -&gt; Class[&#39;osg::configure::site_info&#39;]
+    -&gt; Class[&#39;osg::gridftp::config&#39;]
+    ~&gt; Class[&#39;osg::gridftp::service&#39;]
   } else {
-    anchor { &#39;osg::gridftp::start&#39;: }
-    -&gt; class { &#39;osg::gridftp::install&#39;: }
+    Class[&#39;osg::gridftp::install&#39;]
     -&gt; Class[&#39;osg::lcmaps_voms&#39;]
-    -&gt; class { &#39;osg::gridftp::config&#39;: }
-    ~&gt; class { &#39;osg::gridftp::service&#39;: }
-    -&gt; anchor { &#39;osg::gridftp::end&#39;: }
+    -&gt; Class[&#39;osg::gridftp::config&#39;]
+    ~&gt; Class[&#39;osg::gridftp::service&#39;]
   }
 
   if $manage_firewall {

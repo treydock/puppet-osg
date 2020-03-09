@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::lcmaps_voms</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -102,6 +97,11 @@
         <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>VOMs to ban</p>
+</div>
+      
     </li>
   
     <li>
@@ -114,6 +114,11 @@
       
         <em class="default">(defaults to: <tt>[]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Users to ban</p>
+</div>
       
     </li>
   
@@ -128,6 +133,13 @@
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Define osg::lcmaps_voms::vo resources Example: <code>{ &#39;vo&#39; =&gt;
+&#39;/DN&#39; }</code> Example: <code>{ &#39;vo&#39; =&gt; { &#39;dn&#39;
+=&gt; &#39;/DN&#39; } }</code></p>
+</div>
+      
     </li>
   
     <li>
@@ -140,6 +152,13 @@
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Define osg::lcmaps_voms::user resources Example: <code>{ &#39;user&#39;
+=&gt; &#39;/DN&#39; }</code> Example: <code>{ &#39;user&#39; =&gt; {
+&#39;dn&#39; =&gt; &#39;/DN&#39; } }</code></p>
+</div>
       
     </li>
   
@@ -154,14 +173,6 @@
         <pre class="lines">
 
 
-8
-9
-10
-11
-12
-13
-14
-15
 16
 17
 18
@@ -187,27 +198,39 @@
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms.pp', line 8</span>
+        <pre class="code"><span class="info file"># File 'manifests/lcmaps_voms.pp', line 16</span>
 
 class osg::lcmaps_voms (
   Array $ban_voms = [],
   Array $ban_users = [],
   Hash[String, Variant[String, Array, Hash]] $vos = {},
   Hash[String, Variant[String, Array, Hash]] $users = {},
-) inherits osg::params {
+) {
 
-  include ::osg
-  include ::osg::cacerts
+  include osg
+  include osg::cacerts
+  include osg::configure::misc
+  contain osg::lcmaps_voms::install
+  contain osg::lcmaps_voms::config
 
-  anchor { &#39;osg::lcmaps_voms::start&#39;: }
-  -&gt; class { &#39;::osg::lcmaps_voms::install&#39;: }
-  -&gt; class { &#39;::osg::lcmaps_voms::config&#39;: }
-  -&gt; anchor { &#39;osg::lcmaps_voms::end&#39;: }
-
-  Yumrepo[&#39;osg&#39;] -&gt; Class[&#39;::osg::lcmaps_voms::install&#39;]
+  Class[&#39;osg&#39;]
+  -&gt; Class[&#39;osg::cacerts&#39;]
+  -&gt; Class[&#39;osg::configure::misc&#39;]
+  -&gt; Class[&#39;osg::lcmaps_voms::install&#39;]
+  -&gt; Class[&#39;osg::lcmaps_voms::config&#39;]
 
   $vos.each |$vo, $dn| {
     if $dn =~ String or $dn =~ Array {

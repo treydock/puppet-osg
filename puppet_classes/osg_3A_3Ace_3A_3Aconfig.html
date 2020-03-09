@@ -71,12 +71,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG CE configs
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Private class: See README.md.</p>
-
   </div>
 </div>
 
@@ -92,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -185,22 +185,10 @@
 92
 93
 94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107</pre>
+95</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/ce/config.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/ce/config.pp', line 3</span>
 
 class osg::ce::config {
 
@@ -269,19 +257,6 @@ class osg::ce::config {
     value =&gt; true
   }
 
-  osg_local_site_settings { &#39;Site Information/group&#39;: value =&gt; $osg::ce::site_info_group }
-  osg_local_site_settings { &#39;Site Information/host_name&#39;: value =&gt; $osg::ce::site_info_host_name }
-  osg_local_site_settings { &#39;Site Information/resource&#39;: value =&gt; $osg::ce::site_info_resource }
-  osg_local_site_settings { &#39;Site Information/resource_group&#39;: value =&gt; $osg::ce::site_info_resource_group }
-  osg_local_site_settings { &#39;Site Information/sponsor&#39;: value =&gt; $osg::ce::site_info_sponsor }
-  osg_local_site_settings { &#39;Site Information/site_policy&#39;: value =&gt; $osg::ce::site_info_site_policy }
-  osg_local_site_settings { &#39;Site Information/contact&#39;: value =&gt; $osg::ce::site_info_contact }
-  osg_local_site_settings { &#39;Site Information/email&#39;: value =&gt; $osg::ce::site_info_email }
-  osg_local_site_settings { &#39;Site Information/city&#39;: value =&gt; $osg::ce::site_info_city }
-  osg_local_site_settings { &#39;Site Information/country&#39;: value =&gt; $osg::ce::site_info_country }
-  osg_local_site_settings { &#39;Site Information/longitude&#39;: value =&gt; $osg::ce::site_info_longitude }
-  osg_local_site_settings { &#39;Site Information/latitude&#39;: value =&gt; $osg::ce::site_info_latitude }
-
   osg_local_site_settings { &#39;Storage/grid_dir&#39;: value =&gt; $osg::ce::storage_grid_dir }
   osg_local_site_settings { &#39;Storage/app_dir&#39;: value =&gt; $osg::ce::storage_app_dir }
   osg_local_site_settings { &#39;Storage/data_dir&#39;: value =&gt; $osg::ce::storage_data_dir }
@@ -293,8 +268,8 @@ class osg::ce::config {
 
   osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/enabled&quot;: value =&gt; true }
   osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/${osg::ce::location_name}&quot;: value =&gt; $osg::ce::batch_system_prefix }
-  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/job_contact&quot;: value =&gt; &quot;${osg::ce::site_info_host_name}/${osg::ce::job_contact}&quot; }
-  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/util_contact&quot;: value =&gt; &quot;${osg::ce::site_info_host_name}/${osg::ce::util_contact}&quot; }
+  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/job_contact&quot;: value =&gt; &quot;${osg::site_info_host_name}/${osg::ce::job_contact}&quot; }
+  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/util_contact&quot;: value =&gt; &quot;${osg::site_info_host_name}/${osg::ce::util_contact}&quot; }
   create_resources(osg_local_site_settings, $osg::ce::batch_settings)
 
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)

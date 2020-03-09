@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::client</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -102,6 +97,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Include Condor support</p>
+</div>
+      
     </li>
   
     <li>
@@ -114,6 +114,83 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Include Condor CE support</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>condor_lowport</span>
+      
+      
+        <span class='type'>(<tt>Integer[0, 65535]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>40000</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Condor lowport</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>condor_highport</span>
+      
+      
+        <span class='type'>(<tt>Integer[0, 65535]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>41999</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Condor highport</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>condor_schedd_host</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Condor schedd host</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>condor_collector_host</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Condor collector host</p>
+</div>
       
     </li>
   
@@ -128,6 +205,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Manage the firewall rules</p>
+</div>
+      
     </li>
   
     <li>
@@ -140,6 +222,11 @@
       
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Enable Condor service</p>
+</div>
       
     </li>
   
@@ -154,6 +241,11 @@
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Enable Condor CE service</p>
+</div>
+      
     </li>
   
     <li>
@@ -166,6 +258,11 @@
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Config overrides for Condor</p>
+</div>
       
     </li>
   
@@ -180,6 +277,11 @@
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Config overrides for Condor CE</p>
+</div>
+      
     </li>
   
 </ul>
@@ -193,21 +295,6 @@
         <pre class="lines">
 
 
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
 26
 27
 28
@@ -248,35 +335,60 @@
 63
 64
 65
-66</pre>
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/client.pp', line 11</span>
+        <pre class="code"><span class="info file"># File 'manifests/client.pp', line 26</span>
 
 class osg::client (
   Boolean $with_condor = true,
   Boolean $with_condor_ce = true,
+  Integer[0, 65535] $condor_lowport = 40000,
+  Integer[0, 65535] $condor_highport = 41999,
+  Optional[String] $condor_schedd_host = undef,
+  Optional[String] $condor_collector_host = undef,
   Boolean $manage_firewall = true,
   Boolean $enable_condor_service = false,
   Boolean $enable_condor_ce_service = false,
   Hash $condor_configs_override = {},
   Hash $condor_ce_configs_override = {},
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts
   include osg::wn
 
   $condor_configs_default = {
-    &#39;SCHEDD_HOST&#39;       =&gt; $osg::condor_schedd_host,
-    &#39;COLLECTOR_HOST&#39;    =&gt; $osg::condor_collector_host,
+    &#39;SCHEDD_HOST&#39;       =&gt; $condor_schedd_host,
+    &#39;COLLECTOR_HOST&#39;    =&gt; $condor_collector_host,
     &#39;use_x509userproxy&#39; =&gt; &#39;true&#39;, # lint:ignore:quoted_booleans
     &#39;SUBMIT_EXPRS&#39;      =&gt; &#39;$(SUBMIT_EXPRS), use_x509userproxy&#39;,
   }
 
   $condor_ce_configs_default = {
-    &#39;SCHEDD_HOST&#39;       =&gt; $osg::condor_schedd_host,
-    &#39;COLLECTOR_HOST&#39;    =&gt; $osg::condor_collector_host,
+    &#39;SCHEDD_HOST&#39;       =&gt; $condor_schedd_host,
+    &#39;COLLECTOR_HOST&#39;    =&gt; $condor_collector_host,
     &#39;use_x509userproxy&#39; =&gt; &#39;true&#39;, # lint:ignore:quoted_booleans
     &#39;SUBMIT_EXPRS&#39;      =&gt; &#39;$(SUBMIT_EXPRS), use_x509userproxy&#39;,
   }
@@ -284,13 +396,15 @@ class osg::client (
   $condor_configs    = merge($condor_configs_default, $condor_configs_override)
   $condor_ce_configs = merge($condor_ce_configs_default, $condor_ce_configs_override)
 
-  anchor { &#39;osg::client::start&#39;: }
-  -&gt; Class[&#39;osg&#39;]
+  contain osg::client::install
+  contain osg::client::config
+  contain osg::client::service
+
+  Class[&#39;osg&#39;]
   -&gt; Class[&#39;osg::cacerts&#39;]
-  -&gt; class { &#39;osg::client::install&#39;: }
-  -&gt; class { &#39;osg::client::config&#39;: }
-  -&gt; class { &#39;osg::client::service&#39;: }
-  -&gt; anchor { &#39;osg::client::end&#39;: }
+  -&gt; Class[&#39;osg::client::install&#39;]
+  -&gt; Class[&#39;osg::client::config&#39;]
+  -&gt; Class[&#39;osg::client::service&#39;]
 
   Class[&#39;osg::wn&#39;] -&gt; Class[&#39;osg::client::install&#39;]
 

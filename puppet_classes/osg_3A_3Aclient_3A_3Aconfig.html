@@ -71,12 +71,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG client configs
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Private class: See README.md.</p>
-
   </div>
 </div>
 
@@ -92,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -167,10 +167,11 @@
 74
 75
 76
-77</pre>
+77
+78</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/client/config.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/client/config.pp', line 3</span>
 
 class osg::client::config {
 
@@ -178,8 +179,8 @@ class osg::client::config {
   $globus_tcp_port_range_max    = $osg::globus_tcp_port_range_max
   $globus_tcp_source_range_min  = $osg::globus_tcp_source_range_min
   $globus_tcp_source_range_max  = $osg::globus_tcp_source_range_max
-  $condor_lowport               = $osg::condor_lowport
-  $condor_highport              = $osg::condor_highport
+  $condor_lowport               = $osg::client::condor_lowport
+  $condor_highport              = $osg::client::condor_highport
   $condor_configs               = $osg::client::condor_configs
   $condor_ce_configs            = $osg::client::condor_ce_configs
 

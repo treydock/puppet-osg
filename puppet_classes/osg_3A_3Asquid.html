@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::squid</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -102,6 +97,11 @@
         <em class="default">(defaults to: <tt>&#39;osg/squid/customize.sh.erb&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Path to template used to customize squid</p>
+</div>
+      
     </li>
   
     <li>
@@ -114,6 +114,11 @@
       
         <em class="default">(defaults to: <tt>[&#39;10.0.0.0/8&#39;, &#39;172.16.0.0/12&#39;, &#39;192.168.0.0/16&#39;]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Local networks</p>
+</div>
       
     </li>
   
@@ -128,6 +133,11 @@
         <em class="default">(defaults to: <tt>[&#39;128.142.0.0/16&#39;, &#39;188.184.128.0/17&#39;, &#39;188.185.128.0/17&#39;]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Monitor addresses</p>
+</div>
+      
     </li>
   
     <li>
@@ -140,6 +150,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Enables and allows <code>MAJOR_CVMFS</code></p>
+</div>
       
     </li>
   
@@ -154,6 +169,11 @@
         <em class="default">(defaults to: <tt>0</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Sets <code>max_filedescriptors</code></p>
+</div>
+      
     </li>
   
     <li>
@@ -166,6 +186,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Manage firewall resources</p>
+</div>
       
     </li>
   
@@ -180,6 +205,11 @@
         <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Ensure property for squid firewall</p>
+</div>
+      
     </li>
   
     <li>
@@ -192,6 +222,11 @@
       
         <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Ensure property for monitoring firewall</p>
+</div>
       
     </li>
   
@@ -206,6 +241,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Private interface, used by firewall rules to allow squid access</p>
+</div>
+      
     </li>
   
     <li>
@@ -218,6 +258,11 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Public interface, used by firewall rules to allow monitor addresses</p>
+</div>
       
     </li>
   
@@ -232,16 +277,6 @@
         <pre class="lines">
 
 
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
 24
 25
 26
@@ -303,10 +338,20 @@
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/squid.pp', line 14</span>
+        <pre class="code"><span class="info file"># File 'manifests/squid.pp', line 24</span>
 
 class osg::squid (
   String $customize_template = &#39;osg/squid/customize.sh.erb&#39;,
@@ -319,7 +364,7 @@ class osg::squid (
   Enum[&#39;present&#39;, &#39;absent&#39;] $monitoring_firewall_ensure = &#39;present&#39;,
   Optional[String] $private_interface = undef,
   Optional[String] $public_interface = undef,
-) inherits osg::params {
+) {
 
   include osg
 

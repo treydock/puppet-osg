@@ -83,8 +83,8 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Section/setting name to manage from
-/etc/osg/config.d/99-local-site-settings.ini</p>
+<p>This type writes values to
+<code>/etc/osg/config.d/99-local-site-settings.ini</code>.</p>
 
   </div>
 </div>
@@ -140,7 +140,9 @@
       <div class="docstring">
         <div class="discussion">
           
-<p>The value of the setting to be defined.</p>
+<p>The value to assign. A value of <code>true</code> is converted to the
+string <code>True</code>. A value of <code>false</code> is converted to the
+string <code>False</code>. All other values are converted to a string.</p>
 
         </div>
       </div>
@@ -163,8 +165,13 @@
       <div class="docstring">
         <div class="discussion">
           
-<p>Section/setting name to manage from
-/etc/osg/config.d/99-local-site-settings.ini</p>
+<p>The name must be in the format of <code>SECTION/SETTING</code></p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span><span class='const'>Squid</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_squid'>squid</span><span class='period'>.</span><span class='id identifier rubyid_example'>example</span><span class='period'>.</span><span class='id identifier rubyid_tld'>tld</span>
+</code></pre>
+
+<p>The above would have the name <code>Squid/location</code>.</p>
 
         </div>
       </div>

@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::cvmfs</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -102,6 +97,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if CVMFS user is managed</p>
+</div>
+      
     </li>
   
     <li>
@@ -114,6 +114,11 @@
       
         <em class="default">(defaults to: <tt>&#39;cvmfs&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>CVMFS user name</p>
+</div>
       
     </li>
   
@@ -128,6 +133,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>CVMFS user UID</p>
+</div>
+      
     </li>
   
     <li>
@@ -140,6 +150,11 @@
       
         <em class="default">(defaults to: <tt>&#39;/var/lib/cvmfs&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>CVMFS user home</p>
+</div>
       
     </li>
   
@@ -154,6 +169,11 @@
         <em class="default">(defaults to: <tt>&#39;/sbin/nologin&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>CVMFS user shell</p>
+</div>
+      
     </li>
   
     <li>
@@ -166,6 +186,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets if CVMFS user is a system account</p>
+</div>
       
     </li>
   
@@ -180,6 +205,11 @@
         <em class="default">(defaults to: <tt>&#39;CernVM-FS service account&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>CVMFS user comment</p>
+</div>
+      
     </li>
   
     <li>
@@ -192,6 +222,11 @@
       
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets if CVMFS user home is managed</p>
+</div>
       
     </li>
   
@@ -206,6 +241,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if CVMFS group is managed</p>
+</div>
+      
     </li>
   
     <li>
@@ -218,6 +258,11 @@
       
         <em class="default">(defaults to: <tt>&#39;cvmfs&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>CVMFS group name</p>
+</div>
       
     </li>
   
@@ -232,6 +277,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>CVMFS group GID</p>
+</div>
+      
     </li>
   
     <li>
@@ -244,6 +294,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets if CVMFS group is a system account</p>
+</div>
       
     </li>
   
@@ -258,6 +313,11 @@
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Manage FUSE group</p>
+</div>
+      
     </li>
   
     <li>
@@ -270,6 +330,11 @@
       
         <em class="default">(defaults to: <tt>&#39;fuse&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>FUSE group name</p>
+</div>
       
     </li>
   
@@ -284,6 +349,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>FUSE group GID</p>
+</div>
+      
     </li>
   
     <li>
@@ -296,6 +366,11 @@
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets if FUSE group is a system account</p>
+</div>
       
     </li>
   
@@ -310,6 +385,11 @@
         <em class="default">(defaults to: <tt>&#39;installed&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Ensure property for CVMFS package</p>
+</div>
+      
     </li>
   
     <li>
@@ -322,6 +402,11 @@
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>CVMFS repositories to enable, eg: <code>grid.cern.ch</code></p>
+</div>
       
     </li>
   
@@ -336,6 +421,12 @@
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Enable CVMFS strict mount, only allow mounting repositories from
+<code>repositories</code> parameter</p>
+</div>
+      
     </li>
   
     <li>
@@ -348,6 +439,11 @@
       
         <em class="default">(defaults to: <tt>&#39;/var/cache/cvmfs&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Base directory for CVMFS cache</p>
+</div>
       
     </li>
   
@@ -362,6 +458,11 @@
         <em class="default">(defaults to: <tt>20000</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Quota limit for CVMFS cache</p>
+</div>
+      
     </li>
   
     <li>
@@ -372,8 +473,13 @@
         <span class='type'>(<tt>Array</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[&quot;http://squid.${::domain}:3128&quot;]</tt>)</em>
+        <em class="default">(defaults to: <tt>[&quot;http://squid.${facts[&#39;networking&#39;][&#39;domain&#39;]}:3128&quot;]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Squid HTTP proxies for CVMFS</p>
+</div>
       
     </li>
   
@@ -388,6 +494,11 @@
         <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Value for <code>CVMFS_SERVER_URL</code></p>
+</div>
+      
     </li>
   
     <li>
@@ -400,6 +511,11 @@
       
         <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>glite version</p>
+</div>
       
     </li>
   
@@ -414,6 +530,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Value for <code>CMS_LOCAL_SITE</code></p>
+</div>
+      
     </li>
   
 </ul>
@@ -427,31 +548,6 @@
         <pre class="lines">
 
 
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
 54
 55
 56
@@ -472,10 +568,37 @@
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cvmfs.pp', line 29</span>
+        <pre class="code"><span class="info file"># File 'manifests/cvmfs.pp', line 54</span>
 
 class osg::cvmfs (
   Boolean $manage_user = true,
@@ -499,11 +622,11 @@ class osg::cvmfs (
   Boolean $strict_mount = false,
   String $cache_base = &#39;/var/cache/cvmfs&#39;,
   Integer $quota_limit = 20000,
-  Array $http_proxies = [&quot;http://squid.${::domain}:3128&quot;],
+  Array $http_proxies = [&quot;http://squid.${facts[&#39;networking&#39;][&#39;domain&#39;]}:3128&quot;],
   Array $cern_server_urls = [],
   String $glite_version = &#39;&#39;,
   Optional[String] $cms_local_site = undef,
-) inherits osg::params {
+) {
 
   if $repositories {
     $repositories_real = join($repositories, &#39;,&#39;)
@@ -513,14 +636,16 @@ class osg::cvmfs (
 
   include ::autofs
   include osg
+  contain osg::cvmfs::user
+  contain osg::cvmfs::install
+  contain osg::cvmfs::config
+  contain osg::cvmfs::service
 
-  anchor { &#39;osg::cvmfs::start&#39;: }
-  -&gt; Class[&#39;osg&#39;]
-  -&gt; class { &#39;osg::cvmfs::user&#39;: }
-  -&gt; class { &#39;osg::cvmfs::install&#39;: }
-  -&gt; class { &#39;osg::cvmfs::config&#39;: }
-  -&gt; class { &#39;osg::cvmfs::service&#39;: }
-  -&gt; anchor { &#39;osg::cvmfs::end&#39;: }
+  Class[&#39;osg&#39;]
+  -&gt; Class[&#39;osg::cvmfs::user&#39;]
+  -&gt; Class[&#39;osg::cvmfs::install&#39;]
+  -&gt; Class[&#39;osg::cvmfs::config&#39;]
+  -&gt; Class[&#39;osg::cvmfs::service&#39;]
 
 }</pre>
       </td>

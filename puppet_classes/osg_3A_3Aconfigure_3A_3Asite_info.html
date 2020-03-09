@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: osg::wn
+  Puppet Class: osg::configure::site_info
   
     &mdash; Documentation by YARD 0.9.24
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "puppet_classes::osg::wn";
+  pathId = "puppet_classes::osg::configure::site_info";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (o)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">osg::wn</span>
+    <span class="title">osg::configure::site_info</span>
   
 </div>
 
@@ -59,20 +59,20 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: osg::wn</h1>
+      <div id="content"><h1>Puppet Class: osg::configure::site_info</h1>
 <div class="box_info">
   
   
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/wn.pp
+      manifests/configure/site_info.pp
     </dd>
   </dl>
 </div>
 
   <h2>Summary</h2>
-  Manage OSG worker node resources
+  Manage OSG configuration site info
 
 <h2>Overview</h2>
 <div class="docstring">
@@ -93,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -107,39 +106,24 @@
 13
 14
 15
-16
-17
-18
-19
-20
-21
-22
-23</pre>
+16</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/wn.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/configure/site_info.pp', line 3</span>
 
-class osg::wn {
-
-  include osg
-  include osg::cacerts
-
-  $xrootd_client_package_name = &#39;xrootd-client&#39;
-
-  package { &#39;osg-wn-client&#39;:
-    ensure  =&gt; &#39;present&#39;,
-  }
-
-  package { &#39;xrootd-client&#39;:
-    ensure =&gt; &#39;present&#39;,
-    name   =&gt; $xrootd_client_package_name,
-  }
-
-  Class[&#39;osg&#39;]
-  -&gt; Class[&#39;osg::cacerts&#39;]
-  -&gt; Package[&#39;osg-wn-client&#39;]
-  -&gt; Package[&#39;xrootd-client&#39;]
-
+class osg::configure::site_info {
+  osg_local_site_settings { &#39;Site Information/group&#39;: value =&gt; $osg::site_info_group }
+  osg_local_site_settings { &#39;Site Information/host_name&#39;: value =&gt; $osg::site_info_host_name }
+  osg_local_site_settings { &#39;Site Information/resource&#39;: value =&gt; $osg::site_info_resource }
+  osg_local_site_settings { &#39;Site Information/resource_group&#39;: value =&gt; $osg::site_info_resource_group }
+  osg_local_site_settings { &#39;Site Information/sponsor&#39;: value =&gt; $osg::site_info_sponsor }
+  osg_local_site_settings { &#39;Site Information/site_policy&#39;: value =&gt; $osg::site_info_site_policy }
+  osg_local_site_settings { &#39;Site Information/contact&#39;: value =&gt; $osg::site_info_contact }
+  osg_local_site_settings { &#39;Site Information/email&#39;: value =&gt; $osg::site_info_email }
+  osg_local_site_settings { &#39;Site Information/city&#39;: value =&gt; $osg::site_info_city }
+  osg_local_site_settings { &#39;Site Information/country&#39;: value =&gt; $osg::site_info_country }
+  osg_local_site_settings { &#39;Site Information/longitude&#39;: value =&gt; $osg::site_info_longitude }
+  osg_local_site_settings { &#39;Site Information/latitude&#39;: value =&gt; $osg::site_info_latitude }
 }</pre>
       </td>
     </tr>

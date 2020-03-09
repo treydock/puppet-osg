@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: osg::utils</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="osg_3A_3Aparams.html" title="puppet_classes::osg::params (puppet_class)">osg::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -99,8 +94,16 @@
         <span class='type'>(<tt>Array</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$osg::params::utils_packages</tt>)</em>
+        <em class="default">(defaults to: <tt>[
+    &#39;globus-proxy-utils&#39;,
+    &#39;osg-pki-tools&#39;,
+  ]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Packages to install</p>
+</div>
       
     </li>
   
@@ -115,7 +118,6 @@
         <pre class="lines">
 
 
-5
 6
 7
 8
@@ -123,14 +125,21 @@
 10
 11
 12
-13</pre>
+13
+14
+15
+16
+17</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/utils.pp', line 5</span>
+        <pre class="code"><span class="info file"># File 'manifests/utils.pp', line 6</span>
 
 class osg::utils (
-  Array $packages = $osg::params::utils_packages,
-) inherits osg::params {
+  Array $packages = [
+    &#39;globus-proxy-utils&#39;,
+    &#39;osg-pki-tools&#39;,
+  ],
+) {
 
   include osg
 

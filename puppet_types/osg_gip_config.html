@@ -83,7 +83,7 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Section/setting name to manage from /etc/osg/config.d/30-gip.ini</p>
+<p>This type writes values to <code>/etc/osg/config.d/30-gip.ini</code></p>
 
   </div>
 </div>
@@ -139,7 +139,9 @@
       <div class="docstring">
         <div class="discussion">
           
-<p>The value of the setting to be defined.</p>
+<p>The value to assign. A value of <code>true</code> is converted to the
+string <code>True</code>. A value of <code>false</code> is converted to the
+string <code>False</code>. All other values are converted to a string.</p>
 
         </div>
       </div>
@@ -162,7 +164,13 @@
       <div class="docstring">
         <div class="discussion">
           
-<p>Section/setting name to manage from /etc/osg/config.d/30-gip.ini</p>
+<p>The name must be in the format of <code>SECTION/SETTING</code></p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span><span class='const'>GIP</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_batch'>batch</span> <span class='op'>=</span> <span class='id identifier rubyid_slurm'>slurm</span>
+</code></pre>
+
+<p>The above would have the name <code>GIP/batch</code>.</p>
 
         </div>
       </div>

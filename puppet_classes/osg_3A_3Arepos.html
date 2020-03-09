@@ -71,12 +71,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Manage OSG repos
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Private class: See README.md.</p>
-
   </div>
 </div>
 
@@ -92,7 +93,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -209,16 +209,14 @@
 116
 117
 118
-119
-120</pre>
+119</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/repos.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/repos.pp', line 3</span>
 
 class osg::repos {
 
   include osg
-  include osg::params
 
   if $osg::repo_use_mirrors {
     $baseurls   = {
@@ -266,7 +264,7 @@ class osg::repos {
     }
   }
 
-  ensure_packages([$osg::params::yum_priorities_package])
+  ensure_packages([&#39;yum-plugin-priorities&#39;])
 
   Yumrepo {
     failovermethod  =&gt; &#39;priority&#39;,
@@ -275,7 +273,6 @@ class osg::repos {
     priority        =&gt; &#39;98&#39;,
   }
 
-  #TODO : Need consider_as_osg=yes
   yumrepo { &#39;osg&#39;:
     baseurl    =&gt; $baseurls[&#39;osg&#39;],
     mirrorlist =&gt; $mirrorlists[&#39;osg&#39;],
