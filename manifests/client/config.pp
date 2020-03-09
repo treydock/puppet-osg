@@ -6,8 +6,8 @@ class osg::client::config {
   $globus_tcp_port_range_max    = $osg::globus_tcp_port_range_max
   $globus_tcp_source_range_min  = $osg::globus_tcp_source_range_min
   $globus_tcp_source_range_max  = $osg::globus_tcp_source_range_max
-  $condor_lowport               = $osg::condor_lowport
-  $condor_highport              = $osg::condor_highport
+  $condor_lowport               = $osg::client::condor_lowport
+  $condor_highport              = $osg::client::condor_highport
   $condor_configs               = $osg::client::condor_configs
   $condor_ce_configs            = $osg::client::condor_ce_configs
 

@@ -38,14 +38,6 @@
 #   Min for GLOBUS_TCP_SOURCE_RANGE
 # @param globus_tcp_source_range_max
 #   Max for GLOBUS_TCP_SOURCE_RANGE
-# @param condor_lowport
-#   TODO Move to client
-# @param condor_highport
-#   TODO Move to client
-# @param condor_schedd_host
-#   TODO Move to client
-# @param condor_collector_host
-#   TODO Move to client
 # @param enable_exported_resources
 #   Enable exported resources, useful when services like Squid and CE live on different hosts
 # @param exported_resources_export_tag
@@ -103,10 +95,6 @@ class osg (
   Integer[0, 65535] $globus_tcp_port_range_max = 41999,
   Integer[0, 65535] $globus_tcp_source_range_min = 40000,
   Integer[0, 65535] $globus_tcp_source_range_max = 41999,
-  Integer[0, 65535] $condor_lowport = 40000,
-  Integer[0, 65535] $condor_highport = 41999,
-  Optional[String] $condor_schedd_host = undef,
-  Optional[String] $condor_collector_host = undef,
   Boolean $enable_exported_resources = false,
   String $exported_resources_export_tag = $facts['domain'],
   String $exported_resource_collect_tag = $facts['domain'],

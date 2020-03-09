@@ -4,6 +4,14 @@
 #   Include Condor support
 # @param with_condor_ce
 #   Include Condor CE support
+# @param condor_lowport
+#   Condor lowport
+# @param condor_highport
+#   Condor highport
+# @param condor_schedd_host
+#   Condor schedd host
+# @param condor_collector_host
+#   Condor collector host
 # @param manage_firewall
 #   Manage the firewall rules
 # @param enable_condor_service
@@ -18,6 +26,10 @@
 class osg::client (
   Boolean $with_condor = true,
   Boolean $with_condor_ce = true,
+  Integer[0, 65535] $condor_lowport = 40000,
+  Integer[0, 65535] $condor_highport = 41999,
+  Optional[String] $condor_schedd_host = undef,
+  Optional[String] $condor_collector_host = undef,
   Boolean $manage_firewall = true,
   Boolean $enable_condor_service = false,
   Boolean $enable_condor_ce_service = false,
@@ -30,15 +42,15 @@ class osg::client (
   include osg::wn
 
   $condor_configs_default = {
-    'SCHEDD_HOST'       => $osg::condor_schedd_host,
-    'COLLECTOR_HOST'    => $osg::condor_collector_host,
+    'SCHEDD_HOST'       => $condor_schedd_host,
+    'COLLECTOR_HOST'    => $condor_collector_host,
     'use_x509userproxy' => 'true', # lint:ignore:quoted_booleans
     'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
   }
 
   $condor_ce_configs_default = {
-    'SCHEDD_HOST'       => $osg::condor_schedd_host,
-    'COLLECTOR_HOST'    => $osg::condor_collector_host,
+    'SCHEDD_HOST'       => $condor_schedd_host,
+    'COLLECTOR_HOST'    => $condor_collector_host,
     'use_x509userproxy' => 'true', # lint:ignore:quoted_booleans
     'SUBMIT_EXPRS'      => '$(SUBMIT_EXPRS), use_x509userproxy',
   }
