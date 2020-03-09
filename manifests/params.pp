@@ -1,4 +1,6 @@
-# Private class: See README.md.
+# @summary Manage osg module parameters
+# TODO move to data
+# @api private
 class osg::params {
 
   $utils_packages = [

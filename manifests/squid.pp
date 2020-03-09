@@ -1,15 +1,25 @@
 # @summary Manage OSG squid
 #
 # @param customize_template
+#   Path to template used to customize squid
 # @param net_local
+#   Local networks
 # @param monitor_addresses
+#   Monitor addresses
 # @param allow_major_cvmfs
+#   Enables and allows `MAJOR_CVMFS`
 # @param max_filedescriptors
+#   Sets `max_filedescriptors`
 # @param manage_firewall
+#   Manage firewall resources
 # @param squid_firewall_ensure
+#   Ensure property for squid firewall
 # @param monitoring_firewall_ensure
+#   Ensure property for monitoring firewall
 # @param private_interface
+#   Private interface, used by firewall rules to allow squid access
 # @param public_interface
+#   Public interface, used by firewall rules to allow monitor addresses
 #
 class osg::squid (
   String $customize_template = 'osg/squid/customize.sh.erb',

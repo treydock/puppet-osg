@@ -1,4 +1,5 @@
-#
+# @summary Manage lcmaps voms configs
+# @api private
 class osg::lcmaps_voms::config {
 
   osg_local_site_settings { 'Misc Services/authorization_method':

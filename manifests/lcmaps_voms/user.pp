@@ -1,8 +1,11 @@
 # @summary Manage lcmaps VOMs user
 #
 # @param dn
+#   DN of the user
 # @param user
+#   Name of the user
 # @param order
+#   Order in the grid-mapfile
 #
 define osg::lcmaps_voms::user (
   Variant[Array, String] $dn,

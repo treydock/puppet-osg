@@ -2,6 +2,7 @@ Puppet::Type.type(:osg_local_site_settings).provide(
   :ini_setting,
   parent: Puppet::Type.type(:ini_setting).provider(:ruby),
 ) do
+  desc 'Provider for osg_local_site_settings using ini_setting'
 
   def section
     resource[:name].split('/', 2).first

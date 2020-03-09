@@ -1,9 +1,17 @@
 # @summary Manage lcmaps VOMs
 #
 # @param ban_voms
+#   VOMs to ban
 # @param ban_users
+#   Users to ban
 # @param vos
+#   Define osg::lcmaps_voms::vo resources
+#   Example: `{ 'vo' => '/DN' }`
+#   Example: `{ 'vo' => { 'dn' => '/DN' } }`
 # @param users
+#   Define osg::lcmaps_voms::user resources
+#   Example: `{ 'user' => '/DN' }`
+#   Example: `{ 'user' => { 'dn' => '/DN' } }`
 #
 class osg::lcmaps_voms (
   Array $ban_voms = [],

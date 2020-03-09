@@ -1,6 +1,7 @@
 # @summary Manage OSG utils
 #
 # @param packages
+#   Packages to install
 #
 class osg::utils (
   Array $packages = $osg::params::utils_packages,

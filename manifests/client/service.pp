@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG client services
+# @api private
 class osg::client::service {
 
   if $osg::client::enable_condor_service {

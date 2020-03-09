@@ -1,12 +1,19 @@
 # @summary Manage OSG client
 #
 # @param with_condor
+#   Include Condor support
 # @param with_condor_ce
+#   Include Condor CE support
 # @param manage_firewall
+#   Manage the firewall rules
 # @param enable_condor_service
+#   Enable Condor service
 # @param enable_condor_ce_service
+#   Enable Condor CE service
 # @param condor_configs_override
+#   Config overrides for Condor
 # @param condor_ce_configs_override
+#   Config overrides for Condor CE
 #
 class osg::client (
   Boolean $with_condor = true,

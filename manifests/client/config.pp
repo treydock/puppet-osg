@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG client configs
+# @api private
 class osg::client::config {
 
   $globus_tcp_port_range_min    = $osg::globus_tcp_port_range_min

@@ -1,8 +1,18 @@
 Puppet::Type.newtype(:osg_gip_config) do
+  desc <<-DESC
+    This type writes values to `/etc/osg/config.d/30-gip.ini`
+  DESC
   ensurable
 
   newparam(:name, namevar: true) do
-    desc 'Section/setting name to manage from /etc/osg/config.d/30-gip.ini'
+    desc <<-DESC
+    The name must be in the format of `SECTION/SETTING`
+
+        [GIP]
+        batch = slurm
+
+    The above would have the name `GIP/batch`.
+    DESC
     # namevar should be of the form section/setting
     validate do |value|
       unless value =~ %r{\S+/\S+}
@@ -12,7 +22,12 @@ Puppet::Type.newtype(:osg_gip_config) do
   end
 
   newproperty(:value) do
-    desc 'The value of the setting to be defined.'
+    desc <<-DESC
+    The value to assign.
+    A value of `true` is converted to the string `True`.
+    A value of `false` is converted to the string `False`.
+    All other values are converted to a string.
+    DESC
     munge do |v|
       case v
       when TrueClass

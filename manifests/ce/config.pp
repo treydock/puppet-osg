@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG CE configs
+# @api private
 class osg::ce::config {
 
   file { '/etc/condor-ce/config.d/99-local.conf':

@@ -1,4 +1,4 @@
-# Class: osg::wn: See README.md for documentation.
+# @summary Manage OSG worker node resources
 class osg::wn inherits osg::params {
 
   include osg

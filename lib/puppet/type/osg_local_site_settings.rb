@@ -1,8 +1,18 @@
 Puppet::Type.newtype(:osg_local_site_settings) do
+  desc <<-DESC
+  This type writes values to `/etc/osg/config.d/99-local-site-settings.ini`.
+  DESC
   ensurable
 
   newparam(:name, namevar: true) do
-    desc 'Section/setting name to manage from /etc/osg/config.d/99-local-site-settings.ini'
+    desc <<-DESC
+    The name must be in the format of `SECTION/SETTING`
+
+        [Squid]
+        location = squid.example.tld
+
+    The above would have the name `Squid/location`.
+    DESC
     # namevar should be of the form section/setting
     validate do |value|
       unless value =~ %r{\S+/\S+}
@@ -12,7 +22,12 @@ Puppet::Type.newtype(:osg_local_site_settings) do
   end
 
   newproperty(:value) do
-    desc 'The value of the setting to be defined.'
+    desc <<-DESC
+    The value to assign.
+    A value of `true` is converted to the string `True`.
+    A value of `false` is converted to the string `False`.
+    All other values are converted to a string.
+    DESC
     munge do |v|
       case v
       when TrueClass

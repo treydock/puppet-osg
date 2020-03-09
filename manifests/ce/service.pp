@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG CE Services
+# @api private
 class osg::ce::service {
 
   service { 'condor-ce':

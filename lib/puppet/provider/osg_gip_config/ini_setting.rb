@@ -2,6 +2,7 @@ Puppet::Type.type(:osg_gip_config).provide(
   :ini_setting,
   parent: Puppet::Type.type(:ini_setting).provider(:ruby),
 ) do
+  desc 'Provider for osg_gip_config using ini_setting'
 
   def section
     resource[:name].split('/', 2).first

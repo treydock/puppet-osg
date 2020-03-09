@@ -1,10 +1,17 @@
-# @summary Manage OSG GridFTP
+# @summary Manage OSG GridFTP.
 #
 # @param manage_hostcert
+#   Boolean to set if hostcert should be managed
 # @param hostcert_source
+#   Source for hostcert
 # @param hostkey_source
+#   Source for hostkey
 # @param manage_firewall
+#   Boolean to set if the firewall resources should be managed
 # @param standalone
+#   Sets if the GridFTP server is standalone.
+#   This parameter is considered private.
+#   This parameter is intended for when installing GridFTP on a CE and is handled by `osg::ce` class
 #
 class osg::gridftp (
   Boolean $manage_hostcert = true,

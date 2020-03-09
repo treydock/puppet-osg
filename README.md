@@ -6,18 +6,18 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Usage - Configuration examples and options](#usage)
-3. [Reference - Parameter and detailed reference to all options](#reference)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for testing and contributing to the module](#development)
-6. [TODO](#todo)
-7. [Additional Information](#additional-information)
+1. [Usage - Configuration examples and options](#usage)
+1. [Reference - Parameter and detailed reference to all options](#reference)
+1. [Limitations - OS compatibility, etc.](#limitations)
+1. [Development - Guide for testing and contributing to the module](#development)
 
 ## Overview
 
-The OSG module manages the various components that make up the Open Science Grid software stack.
+The OSG module manages the various components that make up the [Open Science Grid](https://opensciencegrid.org/docs/) software stack.
 
-## OSG Compatibility
+### OSG Compatibility
+
+**Currently this module supports OSG 3.5.**
 
 The current version support matrix is as follows:
 
@@ -255,128 +255,15 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 
 ## Reference
 
-### Classes
-
-#### Public classes
-
-* `osg` - Sets global values and configures the OSG repos
-* `osg::cacerts` - Installs and configures OSG CA certs
-* `osg::cacerts::updater` - Configures the OSG CA certs updater.
-* `osg::ce` - Configures a CE.
-* `osg::client` - Configures an OSG client.
-* `osg::cvmfs` - Configures CVMFS.
-* `osg::gridftp` - Configures an OSG GridFTP server.
-* `osg::lcmaps_voms` - Manage LCMAPS VOMS
-* `osg::squid` - Configures an OSG Frontier Squid server.
-* `osg::utils` - Install OSG utility packages
-* `osg::wn` - Configures an OSG worker node.
-
-#### Private classes
-
-* `osg::configure` - Manages osg-configure
-* `osg::params` -  Defines module default values
-* `osg::repos` - Configure OSG Yumrepo resources
-* `osg::ce::install` - Installs CE packages
-* `osg::ce::config` - Configures CE
-* `osg::ce::service` - Manages CE services
-* `osg::client::install` - Installs client packages
-* `osg::client::config` - Configures client
-* `osg::client:service` - Manages client services
-* `osg::cvmfs::user` - Manages user/groups for CVMFS
-* `osg::cvmfs::install` - Installs CVMFS
-* `osg::cvmfs::config` - Configures CVMFS
-* `osg::cvmfs::service` - Manages CVMFS service
-* `osg::gridftp::install` - Installs GridFTP
-* `osg::gridftp::config` - Configures GridFTP
-* `osg::gridftp::service` - Manages GridFTP service
-* `osg::lcmaps_voms::install` - Installs LCMAPS VOMS
-* `osg::lcmaps_voms::config` - Configure LCMAPS VOMS
-
-### Parameters
-
-#### osg
-TODO
-
-#### osg::cacerts::updater
-TODO
-
-#### osg::ce
-TODO
-
-#### osg::client
-TODO
-
-#### osg::cvmfs
-TODO
-
-#### osg::gridftp
-TODO
-
-#### osg::lcmaps_voms
-TODO
-
-#### osg::squid
-TODO
-
-#### osg::utils
-TODO
-
-### Types
-
-#### osg\_gip_config
-
-This type writes values to `/etc/osg/config.d/30-gip.ini`.
-
-##### `name`
-
-The name must be in the format of `SECTION/SETTING`
-
-    [GIP]
-    batch = slurm
-
-The above would have the name `GIP/batch`.
-
-##### `value`
-
-The value to assign.
-A value of `true` is converted to the string `True`.
-A value of `false` is converted to the string `False`.
-All other values are converted to a string.
-
-#### osg\_local\_site_settings
-
-This type writes values to `/etc/osg/config.d/99-local-site-settings.ini`.
-
-##### `name`
-
-The name must be in the format of `SECTION/SETTING`
-
-    [Squid]
-    location = squid.example.tld
-
-The above would have the name `Squid/location`.
-
-##### `value`
-
-The value to assign.
-A value of `true` is converted to the string `True`.
-A value of `false` is converted to the string `False`.
-All other values are converted to a string.
-
-### Facts
-
-#### `osg_version`
-
-Returns the installed OSG version as found in `/etc/osg-version`.
+[http://treydock.github.io/puppet-osg/](http://treydock.github.io/puppet-osg/)
 
 ## Limitations
 
 Tested operating systems:
 
-* CentOS 6
-* CentOS 7
+* RedHat/CentOS 7
 
-This module has only been thoroughly tested using OSG 3.2.
+This module has only been thoroughly tested using OSG 3.5.
 
 ## Development
 
@@ -393,14 +280,8 @@ Install gem dependencies
 
 Run unit tests
 
-    bundle exec rake test
+    bundle exec rake spec
 
-If you have Vagrant >= 1.2.0 installed you can run system tests.  **NOTE: The acceptance tests spawn numerous virtual machines**
+If you have Docker installed you can run system tests.
 
     bundle exec rake beaker
-
-## TODO
-
-## Further Information
-
-* [OSG](http://opensciencegrid.github.io/docs/)

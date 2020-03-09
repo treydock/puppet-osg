@@ -1,10 +1,11 @@
-# Private class: See README.md.
+# @summary Manage GridFTP service
+# @api private
 class osg::gridftp::service {
 
   service { 'globus-gridftp-server':
     ensure     => 'running',
     enable     => true,
-    hasstatus  => true, # TODO: status does not work!
+    hasstatus  => true,
     hasrestart => true,
   }
 

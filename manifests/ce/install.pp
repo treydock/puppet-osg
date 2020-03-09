@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Install OSG CE
+# @api private
 class osg::ce::install {
 
   if $osg::ce::batch_system_package_name {

@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG repos
+# @api private
 class osg::repos {
 
   include osg

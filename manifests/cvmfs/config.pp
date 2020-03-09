@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG CVMFS configs
+# @api private
 class osg::cvmfs::config {
 
   file { '/etc/fuse.conf':

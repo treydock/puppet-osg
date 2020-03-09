@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage OSG CE Users
+# @api private
 class osg::ce::users {
 
   if $osg::ce::manage_users {
