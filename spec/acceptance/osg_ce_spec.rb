@@ -6,14 +6,9 @@ describe 'osg::ce class:' do
     it 'runs successfully' do
       pp = <<-EOS
         class { 'osg':
-          auth_type => 'lcmaps_voms',
-        }
-        class { 'osg::cacerts::updater': }
-        class { 'osg::ce':
-          manage_firewall     => false,
-          hostcert_source     => 'file:///tmp/hostcert.pem',
-          hostkey_source      => 'file:///tmp/hostkey.pem',
+          auth_type           => 'lcmaps_voms',
           site_info_host_name => 'localhost',
+          site_info_resource  => 'TEST',
           site_info_sponsor   => 'foo',
           site_info_contact   => 'Foo Bar',
           site_info_email     => 'foo@example.com',
@@ -21,6 +16,12 @@ describe 'osg::ce class:' do
           site_info_country   => 'USA',
           site_info_longitude => '0',
           site_info_latitude  => '0',
+        }
+        class { 'osg::cacerts::updater': }
+        class { 'osg::ce':
+          manage_firewall     => false,
+          hostcert_source     => 'file:///tmp/hostcert.pem',
+          hostkey_source      => 'file:///tmp/hostkey.pem',
           osg_gip_configs     => {
             'Subcluster TEST/name'           => { 'value' => 'TEST' },
             'Subcluster TEST/allowed_vos'    => { 'value' => 'foo' },

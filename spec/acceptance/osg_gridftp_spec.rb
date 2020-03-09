@@ -6,7 +6,16 @@ describe 'osg::gridftp class:' do
     it 'runs successfully' do
       pp = <<-EOS
         class { 'osg':
-          auth_type => 'lcmaps_voms',
+          auth_type           => 'lcmaps_voms',
+          site_info_host_name => 'localhost',
+          site_info_resource  => 'TEST',
+          site_info_sponsor   => 'foo',
+          site_info_contact   => 'Foo Bar',
+          site_info_email     => 'foo@example.com',
+          site_info_city      => 'Anywhere',
+          site_info_country   => 'USA',
+          site_info_longitude => '0',
+          site_info_latitude  => '0',
         }
         class { 'osg::gridftp':
           manage_firewall => false,

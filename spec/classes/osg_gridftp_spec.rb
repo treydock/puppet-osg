@@ -4,7 +4,7 @@ describe 'osg::gridftp' do
   on_supported_os(supported_os: [
                     {
                       'operatingsystem' => 'CentOS',
-                      'operatingsystemrelease' => ['6', '7'],
+                      'operatingsystemrelease' => ['7'],
                     },
                   ]).each do |os, facts|
     context "on #{os}" do
@@ -20,7 +20,8 @@ describe 'osg::gridftp' do
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cacerts]') }
       it { is_expected.to contain_class('osg::cacerts').that_comes_before('Class[osg::gridftp::install]') }
       it { is_expected.to contain_class('osg::gridftp::install').that_comes_before('Class[osg::lcmaps_voms]') }
-      it { is_expected.to contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::gridftp::config]') }
+      it { is_expected.to contain_class('osg::lcmaps_voms').that_comes_before('Class[osg::configure::site_info]') }
+      it { is_expected.to contain_class('osg::configure::site_info').that_comes_before('Class[osg::gridftp::config]') }
       it { is_expected.to contain_class('osg::gridftp::config').that_notifies('Class[osg::gridftp::service]') }
       it { is_expected.to contain_class('osg::gridftp::service').that_comes_before('Anchor[osg::gridftp::end]') }
       it { is_expected.to contain_anchor('osg::gridftp::end') }

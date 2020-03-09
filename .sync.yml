@@ -5,15 +5,13 @@
       collection: puppet5
     - set: centos-7
       collection: puppet6
-    - set: centos-6
-      collection: puppet5
-    - set: centos-6
-      collection: puppet6
   user: treydock
   secure: "mTNPKk1CRkVWP6Raou3BfDE6GJj8xLoslpeW2W9/4R/55NahoSKeQS6cy13daVnujLmqe7+lEA746XUV8Ng6HBkUrY916BEQGp2riyWeE77PHVK8wFeBylC+1gWPtZRcYqULwn6G0Zkl7l3PyiPgb5imOwnDeVMp/TCls/QoGkU="
 .gitlab-ci.yml:
   delete: true
 appveyor.yml:
+  delete: true
+spec/acceptance/nodesets/centos-6.yml:
   delete: true
 spec/acceptance/nodesets/centos-8.yml:
   delete: true

@@ -28,12 +28,24 @@
 # @param enable_exported_resources
 # @param exported_resources_export_tag
 # @param exported_resource_collect_tag
+# @param site_info_group
+# @param site_info_host_name
+# @param site_info_resource
+# @param site_info_resource_group
+# @param site_info_sponsor
+# @param site_info_site_policy
+# @param site_info_contact
+# @param site_info_email
+# @param site_info_city
+# @param site_info_country
+# @param site_info_longitude
+# @param site_info_latitude
 # @param squid_location
 # @param purge_local_site_settings
 # @param purge_gip_config
 #
 class osg (
-  Enum['3.4'] $osg_release = '3.4',
+  Enum['3.5'] $osg_release = '3.5',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
   Optional[String] $repo_testing_baseurl_bit = undef,
@@ -62,6 +74,18 @@ class osg (
   String $exported_resources_export_tag = $facts['domain'],
   String $exported_resource_collect_tag = $facts['domain'],
   # INI config values
+  String $site_info_group = 'OSG',
+  String $site_info_host_name = $::fqdn,
+  String $site_info_resource = 'UNAVAILABLE',
+  String $site_info_resource_group = 'UNAVAILABLE',
+  String $site_info_sponsor = 'UNAVAILABLE',
+  String $site_info_site_policy = 'UNAVAILABLE',
+  String $site_info_contact = 'UNAVAILABLE',
+  String $site_info_email = 'UNAVAILABLE',
+  String $site_info_city = 'UNAVAILABLE',
+  String $site_info_country = 'UNAVAILABLE',
+  String $site_info_longitude = 'UNAVAILABLE',
+  String $site_info_latitude = 'UNAVAILABLE',
   Optional[String] $squid_location = undef,
   Boolean $purge_local_site_settings = true,
   Boolean $purge_gip_config = true,
@@ -70,7 +94,7 @@ class osg (
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
   $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
-  $_repo_gpgkey                       = pick($repo_gpgkey, "https://repo.opensciencegrid.org/osg/${osg_release}/RPM-GPG-KEY-OSG")
+  $_repo_gpgkey                       = pick($repo_gpgkey, 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG')
 
   anchor { 'osg::start': }
   anchor { 'osg::end': }

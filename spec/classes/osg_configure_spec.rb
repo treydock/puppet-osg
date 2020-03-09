@@ -4,7 +4,7 @@ describe 'osg::configure' do
   on_supported_os(supported_os: [
                     {
                       'operatingsystem' => 'CentOS',
-                      'operatingsystemrelease' => ['6', '7'],
+                      'operatingsystemrelease' => ['7'],
                     },
                   ]).each do |os, facts|
     context "on #{os}" do

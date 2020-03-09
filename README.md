@@ -21,12 +21,13 @@ The OSG module manages the various components that make up the Open Science Grid
 
 The current version support matrix is as follows:
 
-OSG Versions       |  3.3 |  3.4 |
-:------------------|:----:|:----:|
-**puppet-osg 1.x** | yes  | no   |
-**puppet-osg 2.x** | yes  | yes  |
-**puppet-osg 3.x** | yes  | yes  |
-**puppet-osg 4.x** | no   | yes  |
+OSG Versions       |  3.3 |  3.4 | 3.5 |
+:------------------|:----:|:----:|:---:|
+**puppet-osg 1.x** | yes  | no   | no  |
+**puppet-osg 2.x** | yes  | yes  | no  |
+**puppet-osg 3.x** | yes  | yes  | no  |
+**puppet-osg 4.x** | no   | yes  | no  |
+**puppet-osg 5.x** | no   | no   | yes |
 
 ## Usage
 
@@ -173,25 +174,6 @@ This defined type populates `/etc/grid-security/grid-mapfile`.  The `dn` value c
       dn => '/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=rsv/ce.example.com',
     }
 
-#### osg::rsv
-
-Example of configuring RSV.
-
-    class { 'osg':
-      shared_certs_path     => '/home/osg/grid-certificates',
-      cacerts_package_name  => 'empty-ca-certs',
-    }
-    class { 'osg::rsv':
-      rsvcert_source    => 'file:///home/admin/osg/certs/rsv/rsvcert.pem',
-      rsvkey_source     => 'file:///home/admin/osg/certs/rsv/rsvkey.pem',
-      ce_hosts          => 'ce.example.tld',
-      htcondor_ce_hosts => 'ce.example.tld',
-      gridftp_hosts     => 'ce.example.tld,gridftp1.example.tld',
-      gridftp_dir       => '/data/scratch/rsv',
-      srm_hosts         => 'srm.example.tld',
-      srm_dir           => '/data/scratch/rsv',
-    }
-
 #### osg::squid
 
 The `osg::squid` class will configure a system to run the Frontier Squid service.  The example below installs squid and configures the firewall to allow access to squid on the host's `eth0` private interface and allows squid monitoring on the `eth1` public interface.
@@ -285,7 +267,6 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::cvmfs` - Configures CVMFS.
 * `osg::gridftp` - Configures an OSG GridFTP server.
 * `osg::lcmaps_voms` - Manage LCMAPS VOMS
-* `osg::rsv` - Configures the RSV service.
 * `osg::squid` - Configures an OSG Frontier Squid server.
 * `osg::utils` - Install OSG utility packages
 * `osg::wn` - Configures an OSG worker node.
@@ -310,10 +291,6 @@ This can be useful as the `99-local-site-settings.ini` does not take precedence 
 * `osg::gridftp::service` - Manages GridFTP service
 * `osg::lcmaps_voms::install` - Installs LCMAPS VOMS
 * `osg::lcmaps_voms::config` - Configure LCMAPS VOMS
-* `osg::rsv::users` - Manages RSV users/groups
-* `osg::rsv::install` - Installs RSV
-* `osg::rsv::config` - Configures RSV
-* `osg::rsv::service` - Manages RSV services
 
 ### Parameters
 
@@ -336,9 +313,6 @@ TODO
 TODO
 
 #### osg::lcmaps_voms
-TODO
-
-#### osg::rsv
 TODO
 
 #### osg::squid

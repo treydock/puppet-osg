@@ -1,17 +1,5 @@
 # @summary Manage OSG CE
 #
-# @param site_info_group
-# @param site_info_host_name
-# @param site_info_resource
-# @param site_info_resource_group
-# @param site_info_sponsor
-# @param site_info_site_policy
-# @param site_info_contact
-# @param site_info_email
-# @param site_info_city
-# @param site_info_country
-# @param site_info_longitude
-# @param site_info_latitude
 # @param storage_grid_dir
 # @param storage_app_dir
 # @param storage_data_dir
@@ -42,18 +30,6 @@
 # @param view_port
 #
 class osg::ce (
-  String $site_info_group = 'OSG',
-  String $site_info_host_name = $::fqdn,
-  String $site_info_resource = 'UNAVAILABLE',
-  String $site_info_resource_group = 'UNAVAILABLE',
-  String $site_info_sponsor = 'UNAVAILABLE',
-  String $site_info_site_policy = 'UNAVAILABLE',
-  String $site_info_contact = 'UNAVAILABLE',
-  String $site_info_email = 'UNAVAILABLE',
-  String $site_info_city = 'UNAVAILABLE',
-  String $site_info_country = 'UNAVAILABLE',
-  String $site_info_longitude = 'UNAVAILABLE',
-  String $site_info_latitude = 'UNAVAILABLE',
   String $storage_grid_dir = '/etc/osg/wn-client/',
   String $storage_app_dir = 'UNAVAILABLE',
   String $storage_data_dir = 'UNAVAILABLE',
@@ -137,6 +113,7 @@ class osg::ce (
   -> class { 'osg::ce::users': }
   -> class { 'osg::ce::install': }
   -> Class['osg::gridftp']
+  -> class { 'osg::configure::site_info': }
   -> class { 'osg::ce::config': }
   -> class { 'osg::ce::service': }
   -> anchor { 'osg::ce::end': }
