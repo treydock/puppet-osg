@@ -14,7 +14,6 @@ describe 'osg::lcmaps_voms' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::lcmaps_voms') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg') }
       it { is_expected.to contain_class('osg::cacerts') }
 

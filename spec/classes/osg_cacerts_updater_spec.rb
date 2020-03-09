@@ -12,7 +12,6 @@ describe 'osg::cacerts::updater' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::cacerts::updater') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg::cacerts') }
       # it { should contain_class('cron') }
 

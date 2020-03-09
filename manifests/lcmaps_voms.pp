@@ -18,7 +18,7 @@ class osg::lcmaps_voms (
   Array $ban_users = [],
   Hash[String, Variant[String, Array, Hash]] $vos = {},
   Hash[String, Variant[String, Array, Hash]] $users = {},
-) inherits osg::params {
+) {
 
   include ::osg
   include ::osg::cacerts

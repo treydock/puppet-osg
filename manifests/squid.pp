@@ -32,7 +32,7 @@ class osg::squid (
   Enum['present', 'absent'] $monitoring_firewall_ensure = 'present',
   Optional[String] $private_interface = undef,
   Optional[String] $public_interface = undef,
-) inherits osg::params {
+) {
 
   include osg
 

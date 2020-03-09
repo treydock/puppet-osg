@@ -4,7 +4,7 @@ describe 'osg::repos' do
   on_supported_os(supported_os: [
                     {
                       'operatingsystem' => 'CentOS',
-                      'operatingsystemrelease' => ['6', '7'],
+                      'operatingsystemrelease' => ['7'],
                     },
                   ]).each do |os, facts|
     context "on #{os}" do
@@ -15,7 +15,6 @@ describe 'osg::repos' do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::repos') }
       it { is_expected.to contain_class('osg') }
-      it { is_expected.to contain_class('osg::params') }
 
       it { is_expected.to contain_package('yum-plugin-priorities').with_ensure('present') }
 

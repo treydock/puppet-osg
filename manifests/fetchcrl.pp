@@ -33,7 +33,7 @@ class osg::fetchcrl (
   String $crl_cron_service_ensure = 'UNSET',
   Variant[Boolean, Enum['UNSET']] $crl_cron_service_enable = 'UNSET',
   Boolean $use_syslog = true,
-) inherits osg::params {
+) {
 
   require 'osg'
 

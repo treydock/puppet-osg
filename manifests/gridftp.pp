@@ -19,7 +19,7 @@ class osg::gridftp (
   Optional[String] $hostkey_source = undef,
   Boolean $manage_firewall = true,
   Boolean $standalone = true,
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts

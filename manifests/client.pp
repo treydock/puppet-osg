@@ -23,7 +23,7 @@ class osg::client (
   Boolean $enable_condor_ce_service = false,
   Hash $condor_configs_override = {},
   Hash $condor_ce_configs_override = {},
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts

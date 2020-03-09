@@ -88,7 +88,7 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
-) inherits osg::params {
+) {
 
   include osg
   include osg::cacerts

@@ -132,7 +132,15 @@ class osg (
   Optional[String] $squid_location = undef,
   Boolean $purge_local_site_settings = true,
   Boolean $purge_gip_config = true,
-) inherits osg::params {
+) {
+
+  $osfamily = $facts.dig('os', 'family')
+  $osmajor = $facts.dig('os', 'release', 'major')
+  $supported = ['RedHat-7']
+  $os = "${osfamily}-${osmajor}"
+  if ! ($os in $supported) {
+    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7")
+  }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
   $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)

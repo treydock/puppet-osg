@@ -12,7 +12,6 @@ describe 'osg::fetchcrl' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::fetchcrl') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg') }
       # it { should contain_class('cron') }
 

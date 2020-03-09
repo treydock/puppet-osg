@@ -14,7 +14,6 @@ describe 'osg::squid' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::squid') }
-      it { is_expected.to contain_class('osg::params') }
       it { is_expected.to contain_class('osg') }
 
       it do

@@ -77,7 +77,7 @@ class osg::cvmfs (
   Array $cern_server_urls = [],
   String $glite_version = '',
   Optional[String] $cms_local_site = undef,
-) inherits osg::params {
+) {
 
   if $repositories {
     $repositories_real = join($repositories, ',')

@@ -4,8 +4,11 @@
 #   Packages to install
 #
 class osg::utils (
-  Array $packages = $osg::params::utils_packages,
-) inherits osg::params {
+  Array $packages = [
+    'globus-proxy-utils',
+    'osg-pki-tools',
+  ],
+) {
 
   include osg
 

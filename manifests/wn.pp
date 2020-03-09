@@ -1,5 +1,5 @@
 # @summary Manage OSG worker node resources
-class osg::wn inherits osg::params {
+class osg::wn {
 
   include osg
   include osg::cacerts

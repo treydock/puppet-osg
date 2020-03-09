@@ -39,7 +39,7 @@ class osg::cacerts::updater (
   String $service_ensure = 'UNSET',
   String $service_enable = 'UNSET',
   Boolean $config_replace = true,
-) inherits osg::params {
+) {
 
   require 'osg::cacerts'
 

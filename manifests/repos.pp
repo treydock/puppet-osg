@@ -3,7 +3,6 @@
 class osg::repos {
 
   include osg
-  include osg::params
 
   if $osg::repo_use_mirrors {
     $baseurls   = {
@@ -51,7 +50,7 @@ class osg::repos {
     }
   }
 
-  ensure_packages([$osg::params::yum_priorities_package])
+  ensure_packages(['yum-plugin-priorities'])
 
   Yumrepo {
     failovermethod  => 'priority',

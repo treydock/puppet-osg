@@ -22,7 +22,6 @@ describe 'osg::cvmfs' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to create_class('osg::cvmfs') }
-      it { is_expected.to contain_class('osg::params') }
 
       it { is_expected.to contain_anchor('osg::cvmfs::start').that_comes_before('Class[osg]') }
       it { is_expected.to contain_class('osg').that_comes_before('Class[osg::cvmfs::user]') }

@@ -1,6 +1,6 @@
 # @summary Manage OSG CA certs
 # @api private
-class osg::cacerts inherits osg::params {
+class osg::cacerts {
 
   include osg
 
