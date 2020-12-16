@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce::config
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -183,9 +183,7 @@
 90
 91
 92
-93
-94
-95</pre>
+93</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/ce/config.pp', line 3</span>
@@ -268,8 +266,6 @@ class osg::ce::config {
 
   osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/enabled&quot;: value =&gt; true }
   osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/${osg::ce::location_name}&quot;: value =&gt; $osg::ce::batch_system_prefix }
-  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/job_contact&quot;: value =&gt; &quot;${osg::site_info_host_name}/${osg::ce::job_contact}&quot; }
-  osg_local_site_settings { &quot;${osg::ce::batch_ini_section}/util_contact&quot;: value =&gt; &quot;${osg::site_info_host_name}/${osg::ce::util_contact}&quot; }
   create_resources(osg_local_site_settings, $osg::ce::batch_settings)
 
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)

@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce::service
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -132,8 +132,8 @@ class osg::ce::service {
   }
 
   service { &#39;gratia-probes-cron&#39;:
-    ensure     =&gt; &#39;running&#39;,
-    enable     =&gt; true,
+    ensure     =&gt; $osg::ce::gratia_probes_cron_service_ensure,
+    enable     =&gt; $osg::ce::gratia_probes_cron_service_enable,
     hasstatus  =&gt; true,
     hasrestart =&gt; true,
   }

@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -595,6 +595,42 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>gratia_probes_cron_service_ensure</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;running&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Service ensure for gratia-probes-cron service</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>gratia_probes_cron_service_enable</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Service enable for gratia-probes-cron service</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -606,10 +642,6 @@
         <pre class="lines">
 
 
-62
-63
-64
-65
 66
 67
 68
@@ -724,10 +756,12 @@
 177
 178
 179
-180</pre>
+180
+181
+182</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/ce.pp', line 62</span>
+        <pre class="code"><span class="info file"># File 'manifests/ce.pp', line 66</span>
 
 class osg::ce (
   String $storage_grid_dir = &#39;/etc/osg/wn-client/&#39;,
@@ -758,6 +792,8 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
+  String $gratia_probes_cron_service_ensure = &#39;running&#39;,
+  Boolean $gratia_probes_cron_service_enable = true,
 ) {
 
   include osg
@@ -769,8 +805,6 @@ class osg::ce (
       $ce_package_name            = &#39;osg-ce-pbs&#39;
       $batch_ini_section          = &#39;PBS&#39;
       $location_name              = &#39;pbs_location&#39;
-      $job_contact                = &#39;jobmanager-pbs&#39;
-      $util_contact               = &#39;jobmanager&#39;
       $batch_settings             = {
         &#39;PBS/pbs_server&#39; =&gt; { &#39;value&#39; =&gt; $pbs_server }
       }
@@ -782,8 +816,6 @@ class osg::ce (
       $ce_package_name            = &#39;osg-ce-slurm&#39;
       $batch_ini_section          = &#39;SLURM&#39;
       $location_name              = &#39;slurm_location&#39;
-      $job_contact                = &#39;jobmanager-pbs&#39;
-      $util_contact               = &#39;jobmanager&#39;
       $batch_settings             = {}
       $gratia_probe_config        = &#39;/etc/gratia/slurm/ProbeConfig&#39;
       $blahp_submit_attributes    = &#39;/etc/blahp/slurm_local_submit_attributes.sh&#39;
