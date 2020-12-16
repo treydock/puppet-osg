@@ -78,8 +78,6 @@ class osg::ce::config {
 
   osg_local_site_settings { "${osg::ce::batch_ini_section}/enabled": value => true }
   osg_local_site_settings { "${osg::ce::batch_ini_section}/${osg::ce::location_name}": value => $osg::ce::batch_system_prefix }
-  osg_local_site_settings { "${osg::ce::batch_ini_section}/job_contact": value => "${osg::site_info_host_name}/${osg::ce::job_contact}" }
-  osg_local_site_settings { "${osg::ce::batch_ini_section}/util_contact": value => "${osg::site_info_host_name}/${osg::ce::util_contact}" }
   create_resources(osg_local_site_settings, $osg::ce::batch_settings)
 
   create_resources(osg_local_site_settings, $osg::ce::osg_local_site_settings)
