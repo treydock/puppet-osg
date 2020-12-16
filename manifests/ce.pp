@@ -58,6 +58,10 @@
 #   Boolean to determine if adding Condor CE View
 # @param view_port
 #   Port for Condor CE View
+# @param gratia_probes_cron_service_ensure
+#   Service ensure for gratia-probes-cron service
+# @param gratia_probes_cron_service_enable
+#   Service enable for gratia-probes-cron service
 #
 class osg::ce (
   String $storage_grid_dir = '/etc/osg/wn-client/',
@@ -88,6 +92,8 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
+  String $gratia_probes_cron_service_ensure = 'running',
+  Boolean $gratia_probes_cron_service_enable = true,
 ) {
 
   include osg
@@ -99,8 +105,6 @@ class osg::ce (
       $ce_package_name            = 'osg-ce-pbs'
       $batch_ini_section          = 'PBS'
       $location_name              = 'pbs_location'
-      $job_contact                = 'jobmanager-pbs'
-      $util_contact               = 'jobmanager'
       $batch_settings             = {
         'PBS/pbs_server' => { 'value' => $pbs_server }
       }
@@ -112,8 +116,6 @@ class osg::ce (
       $ce_package_name            = 'osg-ce-slurm'
       $batch_ini_section          = 'SLURM'
       $location_name              = 'slurm_location'
-      $job_contact                = 'jobmanager-pbs'
-      $util_contact               = 'jobmanager'
       $batch_settings             = {}
       $gratia_probe_config        = '/etc/gratia/slurm/ProbeConfig'
       $blahp_submit_attributes    = '/etc/blahp/slurm_local_submit_attributes.sh'

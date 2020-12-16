@@ -14,8 +14,8 @@ class osg::ce::service {
   }
 
   service { 'gratia-probes-cron':
-    ensure     => 'running',
-    enable     => true,
+    ensure     => $osg::ce::gratia_probes_cron_service_ensure,
+    enable     => $osg::ce::gratia_probes_cron_service_enable,
     hasstatus  => true,
     hasrestart => true,
   }
