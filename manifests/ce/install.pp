@@ -17,4 +17,7 @@ class osg::ce::install {
     ensure => $osg::ce::view_ensure,
   }
 
+  package { 'gratia-probe-htcondor-ce':
+    ensure => 'present',
+  }
 }

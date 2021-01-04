@@ -58,6 +58,8 @@
 #   Boolean to determine if adding Condor CE View
 # @param view_port
 #   Port for Condor CE View
+# @param per_job_history_dir
+#   Path used for Gratia probe DataFolder
 # @param gratia_probes_cron_service_ensure
 #   Service ensure for gratia-probes-cron service
 # @param gratia_probes_cron_service_enable
@@ -92,6 +94,7 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
+  Stdlib::Absolutepath $per_job_history_dir = '/var/lib/gratia/data',
   String $gratia_probes_cron_service_ensure = 'running',
   Boolean $gratia_probes_cron_service_enable = true,
 ) {

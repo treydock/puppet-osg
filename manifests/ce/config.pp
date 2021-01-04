@@ -40,14 +40,39 @@ class osg::ce::config {
       match => '^blah_disable_limited_proxy=.*',
     }
 
-    augeas { 'gratia-SuppressNoDNRecords':
+    augeas { 'gratia-disable-batch-probe':
       lens    => 'Xml.lns',
       incl    => $osg::ce::gratia_probe_config,
       context => "/files${osg::ce::gratia_probe_config}/ProbeConfiguration/#attribute",
       changes => [
+        'set EnableProbe 0',
+      ],
+    }
+
+    augeas { 'gratia-probe':
+      lens    => 'Xml.lns',
+      incl    => '/etc/gratia/htcondor-ce/ProbeConfig',
+      context => '/files/etc/gratia/htcondor-ce/ProbeConfig/ProbeConfiguration/#attribute',
+      changes => [
+        "set ProbeName htcondor-ce:${osg::site_info_host_name}",
+        "set SiteName ${osg::site_info_resource}",
+        "set DataFolder ${osg::ce::per_job_history_dir}/",
         'set EnableProbe 1',
         'set SuppressNoDNRecords 1',
       ],
+    }
+    Exec <| title == 'osg-configure' |> {
+      before => [
+        Augeas['gratia-disable-batch-probe'],
+      ]
+    }
+    augeas { 'htcondor-ce-PER_JOB_HISTORY_DIR':
+      lens    => 'Simplevars.lns',
+      incl    => '/etc/condor-ce/config.d/99_gratia.conf',
+      changes => [
+        "set PER_JOB_HISTORY_DIR ${osg::ce::per_job_history_dir}",
+      ],
+      notify  => Service['condor-ce'],
     }
   }
 
