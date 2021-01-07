@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce::config
   
-    &mdash; Documentation by YARD 0.9.25
+    &mdash; Documentation by YARD 0.9.26
   
 </title>
 
@@ -183,7 +183,32 @@
 90
 91
 92
-93</pre>
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/ce/config.pp', line 3</span>
@@ -228,14 +253,39 @@ class osg::ce::config {
       match =&gt; &#39;^blah_disable_limited_proxy=.*&#39;,
     }
 
-    augeas { &#39;gratia-SuppressNoDNRecords&#39;:
+    augeas { &#39;gratia-disable-batch-probe&#39;:
       lens    =&gt; &#39;Xml.lns&#39;,
       incl    =&gt; $osg::ce::gratia_probe_config,
       context =&gt; &quot;/files${osg::ce::gratia_probe_config}/ProbeConfiguration/#attribute&quot;,
       changes =&gt; [
+        &#39;set EnableProbe 0&#39;,
+      ],
+    }
+
+    augeas { &#39;gratia-probe&#39;:
+      lens    =&gt; &#39;Xml.lns&#39;,
+      incl    =&gt; &#39;/etc/gratia/htcondor-ce/ProbeConfig&#39;,
+      context =&gt; &#39;/files/etc/gratia/htcondor-ce/ProbeConfig/ProbeConfiguration/#attribute&#39;,
+      changes =&gt; [
+        &quot;set ProbeName htcondor-ce:${osg::site_info_host_name}&quot;,
+        &quot;set SiteName ${osg::site_info_resource}&quot;,
+        &quot;set DataFolder ${osg::ce::per_job_history_dir}/&quot;,
         &#39;set EnableProbe 1&#39;,
         &#39;set SuppressNoDNRecords 1&#39;,
       ],
+    }
+    Exec &lt;| title == &#39;osg-configure&#39; |&gt; {
+      before =&gt; [
+        Augeas[&#39;gratia-disable-batch-probe&#39;],
+      ]
+    }
+    augeas { &#39;htcondor-ce-PER_JOB_HISTORY_DIR&#39;:
+      lens    =&gt; &#39;Simplevars.lns&#39;,
+      incl    =&gt; &#39;/etc/condor-ce/config.d/99_gratia.conf&#39;,
+      changes =&gt; [
+        &quot;set PER_JOB_HISTORY_DIR ${osg::ce::per_job_history_dir}&quot;,
+      ],
+      notify  =&gt; Service[&#39;condor-ce&#39;],
     }
   }
 

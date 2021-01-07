@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce::install
   
-    &mdash; Documentation by YARD 0.9.25
+    &mdash; Documentation by YARD 0.9.26
   
 </title>
 
@@ -110,7 +110,10 @@
 17
 18
 19
-20</pre>
+20
+21
+22
+23</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/ce/install.pp', line 3</span>
@@ -132,6 +135,9 @@ class osg::ce::install {
     ensure =&gt; $osg::ce::view_ensure,
   }
 
+  package { &#39;gratia-probe-htcondor-ce&#39;:
+    ensure =&gt; &#39;present&#39;,
+  }
 }</pre>
       </td>
     </tr>

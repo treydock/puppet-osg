@@ -6,7 +6,7 @@
 <title>
   Puppet Class: osg::ce
   
-    &mdash; Documentation by YARD 0.9.25
+    &mdash; Documentation by YARD 0.9.26
   
 </title>
 
@@ -597,6 +597,24 @@
   
     <li>
       
+        <span class='name'>per_job_history_dir</span>
+      
+      
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;/var/lib/gratia/data&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Path used for Gratia probe DataFolder</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>gratia_probes_cron_service_ensure</span>
       
       
@@ -642,8 +660,6 @@
         <pre class="lines">
 
 
-66
-67
 68
 69
 70
@@ -758,10 +774,13 @@
 179
 180
 181
-182</pre>
+182
+183
+184
+185</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/ce.pp', line 66</span>
+        <pre class="code"><span class="info file"># File 'manifests/ce.pp', line 68</span>
 
 class osg::ce (
   String $storage_grid_dir = &#39;/etc/osg/wn-client/&#39;,
@@ -792,6 +811,7 @@ class osg::ce (
   Optional[String] $blahp_local_submit_source = undef,
   Boolean $include_view = false,
   Integer[0, 65535] $view_port = 8080,
+  Stdlib::Absolutepath $per_job_history_dir = &#39;/var/lib/gratia/data&#39;,
   String $gratia_probes_cron_service_ensure = &#39;running&#39;,
   Boolean $gratia_probes_cron_service_enable = true,
 ) {
