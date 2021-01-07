@@ -63,6 +63,10 @@ describe 'osg::ce' do
           is_expected.to contain_package('osg-ce-pbs').with(ensure: 'present')
         end
 
+        it do
+          is_expected.to contain_package('gratia-probe-htcondor-ce').with(ensure: 'present')
+        end
+
         context 'when batch_system => slurm' do
           let(:params) { { batch_system: 'slurm' } }
 
