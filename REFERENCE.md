@@ -699,6 +699,14 @@ Port for Condor CE View
 
 Default value: `8080`
 
+##### `per_job_history_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Path used for Gratia probe DataFolder
+
+Default value: `'/var/lib/gratia/data'`
+
 ##### `gratia_probes_cron_service_ensure`
 
 Data type: `String`

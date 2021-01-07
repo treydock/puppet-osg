@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.2.0](https://github.com/treydock/puppet-osg/tree/v5.2.0) (2021-01-07)
+
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/v5.1.0...v5.2.0)
+
+### Added
+
+- Use HTCondor-CE gratia probe by default [\#35](https://github.com/treydock/puppet-osg/pull/35) ([treydock](https://github.com/treydock))
+
 ## [v5.1.0](https://github.com/treydock/puppet-osg/tree/v5.1.0) (2020-12-16)
 
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/v5.0.0...v5.1.0)
