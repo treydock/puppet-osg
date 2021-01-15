@@ -58,7 +58,6 @@ class osg::ce::config {
         "set SiteName ${osg::site_info_resource}",
         "set DataFolder ${osg::ce::per_job_history_dir}/",
         'set EnableProbe 1',
-        'set SuppressNoDNRecords 1',
       ],
     }
     Exec <| title == 'osg-configure' |> {
