@@ -207,8 +207,7 @@
 114
 115
 116
-117
-118</pre>
+117</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/ce/config.pp', line 3</span>
@@ -271,7 +270,6 @@ class osg::ce::config {
         &quot;set SiteName ${osg::site_info_resource}&quot;,
         &quot;set DataFolder ${osg::ce::per_job_history_dir}/&quot;,
         &#39;set EnableProbe 1&#39;,
-        &#39;set SuppressNoDNRecords 1&#39;,
       ],
     }
     Exec &lt;| title == &#39;osg-configure&#39; |&gt; {
