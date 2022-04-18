@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/treydock/puppet-osg/tree/v6.0.0) (2022-04-18)
+
+[Full Changelog](https://github.com/treydock/puppet-osg/compare/v5.2.1...v6.0.0)
+
+### Changed
+
+- Drop Puppet 5, Add Puppet 7 , bump module dependencies [\#38](https://github.com/treydock/puppet-osg/pull/38) ([treydock](https://github.com/treydock))
+
 ## [v5.2.1](https://github.com/treydock/puppet-osg/tree/v5.2.1) (2021-01-15)
 
 [Full Changelog](https://github.com/treydock/puppet-osg/compare/v5.2.0...v5.2.1)

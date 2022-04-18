@@ -56,15 +56,53 @@
 
 ## Classes
 
-### `osg`
+### <a name="osg"></a>`osg`
 
 Class for common OSG parameters and common resources
 
 #### Parameters
 
-The following parameters are available in the `osg` class.
+The following parameters are available in the `osg` class:
 
-##### `osg_release`
+* [`osg_release`](#osg_release)
+* [`repo_baseurl_bit`](#repo_baseurl_bit)
+* [`repo_development_baseurl_bit`](#repo_development_baseurl_bit)
+* [`repo_testing_baseurl_bit`](#repo_testing_baseurl_bit)
+* [`repo_upcoming_baseurl_bit`](#repo_upcoming_baseurl_bit)
+* [`repo_use_mirrors`](#repo_use_mirrors)
+* [`repo_gpgkey`](#repo_gpgkey)
+* [`enable_osg`](#enable_osg)
+* [`enable_osg_empty`](#enable_osg_empty)
+* [`enable_osg_contrib`](#enable_osg_contrib)
+* [`manage_epel`](#manage_epel)
+* [`auth_type`](#auth_type)
+* [`cacerts_package_name`](#cacerts_package_name)
+* [`cacerts_package_ensure`](#cacerts_package_ensure)
+* [`shared_certs_path`](#shared_certs_path)
+* [`globus_tcp_port_range_min`](#globus_tcp_port_range_min)
+* [`globus_tcp_port_range_max`](#globus_tcp_port_range_max)
+* [`globus_tcp_source_range_min`](#globus_tcp_source_range_min)
+* [`globus_tcp_source_range_max`](#globus_tcp_source_range_max)
+* [`enable_exported_resources`](#enable_exported_resources)
+* [`exported_resources_export_tag`](#exported_resources_export_tag)
+* [`exported_resource_collect_tag`](#exported_resource_collect_tag)
+* [`site_info_group`](#site_info_group)
+* [`site_info_host_name`](#site_info_host_name)
+* [`site_info_resource`](#site_info_resource)
+* [`site_info_resource_group`](#site_info_resource_group)
+* [`site_info_sponsor`](#site_info_sponsor)
+* [`site_info_site_policy`](#site_info_site_policy)
+* [`site_info_contact`](#site_info_contact)
+* [`site_info_email`](#site_info_email)
+* [`site_info_city`](#site_info_city)
+* [`site_info_country`](#site_info_country)
+* [`site_info_longitude`](#site_info_longitude)
+* [`site_info_latitude`](#site_info_latitude)
+* [`squid_location`](#squid_location)
+* [`purge_local_site_settings`](#purge_local_site_settings)
+* [`purge_gip_config`](#purge_gip_config)
+
+##### <a name="osg_release"></a>`osg_release`
 
 Data type: `Enum['3.5']`
 
@@ -72,7 +110,7 @@ OSG release
 
 Default value: `'3.5'`
 
-##### `repo_baseurl_bit`
+##### <a name="repo_baseurl_bit"></a>`repo_baseurl_bit`
 
 Data type: `Optional[String]`
 
@@ -80,7 +118,7 @@ Base URL for osg repo, eg: `https://repo.opensciencegrid.org`
 
 Default value: `'https://repo.opensciencegrid.org'`
 
-##### `repo_development_baseurl_bit`
+##### <a name="repo_development_baseurl_bit"></a>`repo_development_baseurl_bit`
 
 Data type: `Optional[String]`
 
@@ -88,7 +126,7 @@ Base URL for osg-development repo, default: `https://repo.opensciencegrid.org`
 
 Default value: ``undef``
 
-##### `repo_testing_baseurl_bit`
+##### <a name="repo_testing_baseurl_bit"></a>`repo_testing_baseurl_bit`
 
 Data type: `Optional[String]`
 
@@ -96,7 +134,7 @@ Base URL for osg-testubg repo, default: `https://repo.opensciencegrid.org`
 
 Default value: ``undef``
 
-##### `repo_upcoming_baseurl_bit`
+##### <a name="repo_upcoming_baseurl_bit"></a>`repo_upcoming_baseurl_bit`
 
 Data type: `Optional[String]`
 
@@ -104,7 +142,7 @@ Base URL for osg-upcoming repo, default: `https://repo.opensciencegrid.org`
 
 Default value: ``undef``
 
-##### `repo_use_mirrors`
+##### <a name="repo_use_mirrors"></a>`repo_use_mirrors`
 
 Data type: `Boolean`
 
@@ -112,7 +150,7 @@ Sets if repos should use mirrors
 
 Default value: ``true``
 
-##### `repo_gpgkey`
+##### <a name="repo_gpgkey"></a>`repo_gpgkey`
 
 Data type: `Optional[String]`
 
@@ -120,7 +158,7 @@ Path to repo GPG key
 
 Default value: ``undef``
 
-##### `enable_osg`
+##### <a name="enable_osg"></a>`enable_osg`
 
 Data type: `Boolean`
 
@@ -128,7 +166,7 @@ Enable the osg repo
 
 Default value: ``true``
 
-##### `enable_osg_empty`
+##### <a name="enable_osg_empty"></a>`enable_osg_empty`
 
 Data type: `Boolean`
 
@@ -136,7 +174,7 @@ Enable the osg-empty repo
 
 Default value: ``true``
 
-##### `enable_osg_contrib`
+##### <a name="enable_osg_contrib"></a>`enable_osg_contrib`
 
 Data type: `Boolean`
 
@@ -144,7 +182,7 @@ Enable the osg-contrib repo
 
 Default value: ``false``
 
-##### `manage_epel`
+##### <a name="manage_epel"></a>`manage_epel`
 
 Data type: `Boolean`
 
@@ -152,7 +190,7 @@ Manage the EPEL repo
 
 Default value: ``true``
 
-##### `auth_type`
+##### <a name="auth_type"></a>`auth_type`
 
 Data type: `Enum['lcmaps_voms']`
 
@@ -160,7 +198,7 @@ Grid authentication type
 
 Default value: `'lcmaps_voms'`
 
-##### `cacerts_package_name`
+##### <a name="cacerts_package_name"></a>`cacerts_package_name`
 
 Data type: `Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs']`
 
@@ -168,7 +206,7 @@ Package name for osg-ca-certs
 
 Default value: `'osg-ca-certs'`
 
-##### `cacerts_package_ensure`
+##### <a name="cacerts_package_ensure"></a>`cacerts_package_ensure`
 
 Data type: `String`
 
@@ -176,7 +214,7 @@ CA certs package ensure
 
 Default value: `'installed'`
 
-##### `shared_certs_path`
+##### <a name="shared_certs_path"></a>`shared_certs_path`
 
 Data type: `String`
 
@@ -184,7 +222,7 @@ Path to location of shared certs, for example if storing certs on NFS
 
 Default value: `'/opt/grid-certificates'`
 
-##### `globus_tcp_port_range_min`
+##### <a name="globus_tcp_port_range_min"></a>`globus_tcp_port_range_min`
 
 Data type: `Integer[0, 65535]`
 
@@ -192,7 +230,7 @@ Min for GLOBUS_TCP_PORT_RANGE
 
 Default value: `40000`
 
-##### `globus_tcp_port_range_max`
+##### <a name="globus_tcp_port_range_max"></a>`globus_tcp_port_range_max`
 
 Data type: `Integer[0, 65535]`
 
@@ -200,7 +238,7 @@ Max for GLOBUS_TCP_PORT_RANGE
 
 Default value: `41999`
 
-##### `globus_tcp_source_range_min`
+##### <a name="globus_tcp_source_range_min"></a>`globus_tcp_source_range_min`
 
 Data type: `Integer[0, 65535]`
 
@@ -208,7 +246,7 @@ Min for GLOBUS_TCP_SOURCE_RANGE
 
 Default value: `40000`
 
-##### `globus_tcp_source_range_max`
+##### <a name="globus_tcp_source_range_max"></a>`globus_tcp_source_range_max`
 
 Data type: `Integer[0, 65535]`
 
@@ -216,7 +254,7 @@ Max for GLOBUS_TCP_SOURCE_RANGE
 
 Default value: `41999`
 
-##### `enable_exported_resources`
+##### <a name="enable_exported_resources"></a>`enable_exported_resources`
 
 Data type: `Boolean`
 
@@ -224,7 +262,7 @@ Enable exported resources, useful when services like Squid and CE live on differ
 
 Default value: ``false``
 
-##### `exported_resources_export_tag`
+##### <a name="exported_resources_export_tag"></a>`exported_resources_export_tag`
 
 Data type: `String`
 
@@ -232,7 +270,7 @@ Exported resources export tag
 
 Default value: `$facts['domain']`
 
-##### `exported_resource_collect_tag`
+##### <a name="exported_resource_collect_tag"></a>`exported_resource_collect_tag`
 
 Data type: `String`
 
@@ -240,7 +278,7 @@ Exported resources collect tag
 
 Default value: `$facts['domain']`
 
-##### `site_info_group`
+##### <a name="site_info_group"></a>`site_info_group`
 
 Data type: `String`
 
@@ -248,7 +286,7 @@ osg-configure Site Information/group
 
 Default value: `'OSG'`
 
-##### `site_info_host_name`
+##### <a name="site_info_host_name"></a>`site_info_host_name`
 
 Data type: `String`
 
@@ -256,7 +294,7 @@ osg-configure Site Information/host_name
 
 Default value: `$::fqdn`
 
-##### `site_info_resource`
+##### <a name="site_info_resource"></a>`site_info_resource`
 
 Data type: `String`
 
@@ -264,7 +302,7 @@ osg-configure Site Information/resource
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_resource_group`
+##### <a name="site_info_resource_group"></a>`site_info_resource_group`
 
 Data type: `String`
 
@@ -272,7 +310,7 @@ osg-configure Site Information/resource_group
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_sponsor`
+##### <a name="site_info_sponsor"></a>`site_info_sponsor`
 
 Data type: `String`
 
@@ -280,7 +318,7 @@ osg-configure Site Information/sponsor
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_site_policy`
+##### <a name="site_info_site_policy"></a>`site_info_site_policy`
 
 Data type: `String`
 
@@ -288,7 +326,7 @@ osg-configure Site Information/site_policy
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_contact`
+##### <a name="site_info_contact"></a>`site_info_contact`
 
 Data type: `String`
 
@@ -296,7 +334,7 @@ osg-configure Site Information/contact
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_email`
+##### <a name="site_info_email"></a>`site_info_email`
 
 Data type: `String`
 
@@ -304,7 +342,7 @@ osg-configure Site Information/email
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_city`
+##### <a name="site_info_city"></a>`site_info_city`
 
 Data type: `String`
 
@@ -312,7 +350,7 @@ osg-configure Site Information/city
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_country`
+##### <a name="site_info_country"></a>`site_info_country`
 
 Data type: `String`
 
@@ -320,7 +358,7 @@ osg-configure Site Information/country
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_longitude`
+##### <a name="site_info_longitude"></a>`site_info_longitude`
 
 Data type: `String`
 
@@ -328,7 +366,7 @@ osg-configure Site Information/longitude
 
 Default value: `'UNAVAILABLE'`
 
-##### `site_info_latitude`
+##### <a name="site_info_latitude"></a>`site_info_latitude`
 
 Data type: `String`
 
@@ -336,7 +374,7 @@ osg-configure Site Information/latitude
 
 Default value: `'UNAVAILABLE'`
 
-##### `squid_location`
+##### <a name="squid_location"></a>`squid_location`
 
 Data type: `Optional[String]`
 
@@ -344,7 +382,7 @@ osg-confgiure Squid/location
 
 Default value: ``undef``
 
-##### `purge_local_site_settings`
+##### <a name="purge_local_site_settings"></a>`purge_local_site_settings`
 
 Data type: `Boolean`
 
@@ -352,7 +390,7 @@ Purge unmanaged osg_local_site_settings resources
 
 Default value: ``true``
 
-##### `purge_gip_config`
+##### <a name="purge_gip_config"></a>`purge_gip_config`
 
 Data type: `Boolean`
 
@@ -360,15 +398,28 @@ Purge unmanaged osg_gip_config
 
 Default value: ``true``
 
-### `osg::cacerts::updater`
+### <a name="osgcacertsupdater"></a>`osg::cacerts::updater`
 
 Manage OSG CA certs updater
 
 #### Parameters
 
-The following parameters are available in the `osg::cacerts::updater` class.
+The following parameters are available in the `osg::cacerts::updater` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`min_age`](#min_age)
+* [`max_age`](#max_age)
+* [`random_wait`](#random_wait)
+* [`quiet`](#quiet)
+* [`logfile`](#logfile)
+* [`package_name`](#package_name)
+* [`package_ensure`](#package_ensure)
+* [`service_name`](#service_name)
+* [`service_ensure`](#service_ensure)
+* [`service_enable`](#service_enable)
+* [`config_replace`](#config_replace)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent', 'disabled']`
 
@@ -377,7 +428,7 @@ State of the resources managed by this class
 
 Default value: `'present'`
 
-##### `min_age`
+##### <a name="min_age"></a>`min_age`
 
 Data type: `Integer`
 
@@ -385,7 +436,7 @@ Min time between running updater
 
 Default value: `23`
 
-##### `max_age`
+##### <a name="max_age"></a>`max_age`
 
 Data type: `Integer`
 
@@ -393,7 +444,7 @@ Max time between running updater
 
 Default value: `72`
 
-##### `random_wait`
+##### <a name="random_wait"></a>`random_wait`
 
 Data type: `Integer`
 
@@ -401,7 +452,7 @@ Random wait time
 
 Default value: `30`
 
-##### `quiet`
+##### <a name="quiet"></a>`quiet`
 
 Data type: `Boolean`
 
@@ -409,7 +460,7 @@ Only display errors
 
 Default value: ``true``
 
-##### `logfile`
+##### <a name="logfile"></a>`logfile`
 
 Data type: `Variant[Boolean,Undef,String]`
 
@@ -417,7 +468,7 @@ Path to logfile
 
 Default value: ``false``
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -425,7 +476,7 @@ Package name
 
 Default value: `'osg-ca-certs-updater'`
 
-##### `package_ensure`
+##### <a name="package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -433,7 +484,7 @@ Package ensure value
 
 Default value: `'UNSET'`
 
-##### `service_name`
+##### <a name="service_name"></a>`service_name`
 
 Data type: `String`
 
@@ -441,7 +492,7 @@ Service name
 
 Default value: `'osg-ca-certs-updater-cron'`
 
-##### `service_ensure`
+##### <a name="service_ensure"></a>`service_ensure`
 
 Data type: `String`
 
@@ -449,7 +500,7 @@ Service ensure value
 
 Default value: `'UNSET'`
 
-##### `service_enable`
+##### <a name="service_enable"></a>`service_enable`
 
 Data type: `String`
 
@@ -457,7 +508,7 @@ Service enable value
 
 Default value: `'UNSET'`
 
-##### `config_replace`
+##### <a name="config_replace"></a>`config_replace`
 
 Data type: `Boolean`
 
@@ -465,15 +516,47 @@ Should the cron config be replaced
 
 Default value: ``true``
 
-### `osg::ce`
+### <a name="osgce"></a>`osg::ce`
 
 Manage OSG CE
 
 #### Parameters
 
-The following parameters are available in the `osg::ce` class.
+The following parameters are available in the `osg::ce` class:
 
-##### `storage_grid_dir`
+* [`storage_grid_dir`](#storage_grid_dir)
+* [`storage_app_dir`](#storage_app_dir)
+* [`storage_data_dir`](#storage_data_dir)
+* [`storage_worker_node_temp`](#storage_worker_node_temp)
+* [`storage_site_read`](#storage_site_read)
+* [`storage_site_write`](#storage_site_write)
+* [`batch_system`](#batch_system)
+* [`batch_system_prefix`](#batch_system_prefix)
+* [`pbs_server`](#pbs_server)
+* [`manage_hostcert`](#manage_hostcert)
+* [`hostcert_source`](#hostcert_source)
+* [`hostkey_source`](#hostkey_source)
+* [`htcondor_ce_port`](#htcondor_ce_port)
+* [`htcondor_ce_shared_port`](#htcondor_ce_shared_port)
+* [`manage_firewall`](#manage_firewall)
+* [`osg_local_site_settings`](#osg_local_site_settings)
+* [`osg_gip_configs`](#osg_gip_configs)
+* [`manage_users`](#manage_users)
+* [`condor_uid`](#condor_uid)
+* [`condor_gid`](#condor_gid)
+* [`gratia_uid`](#gratia_uid)
+* [`gratia_gid`](#gratia_gid)
+* [`condor_ce_config_content`](#condor_ce_config_content)
+* [`condor_ce_config_source`](#condor_ce_config_source)
+* [`blahp_local_submit_content`](#blahp_local_submit_content)
+* [`blahp_local_submit_source`](#blahp_local_submit_source)
+* [`include_view`](#include_view)
+* [`view_port`](#view_port)
+* [`per_job_history_dir`](#per_job_history_dir)
+* [`gratia_probes_cron_service_ensure`](#gratia_probes_cron_service_ensure)
+* [`gratia_probes_cron_service_enable`](#gratia_probes_cron_service_enable)
+
+##### <a name="storage_grid_dir"></a>`storage_grid_dir`
 
 Data type: `String`
 
@@ -481,7 +564,7 @@ osg-configure Storage/grid_dir
 
 Default value: `'/etc/osg/wn-client/'`
 
-##### `storage_app_dir`
+##### <a name="storage_app_dir"></a>`storage_app_dir`
 
 Data type: `String`
 
@@ -489,7 +572,7 @@ osg-configure Storage/app_dir
 
 Default value: `'UNAVAILABLE'`
 
-##### `storage_data_dir`
+##### <a name="storage_data_dir"></a>`storage_data_dir`
 
 Data type: `String`
 
@@ -497,7 +580,7 @@ osg-configure Storage/data_dir
 
 Default value: `'UNAVAILABLE'`
 
-##### `storage_worker_node_temp`
+##### <a name="storage_worker_node_temp"></a>`storage_worker_node_temp`
 
 Data type: `String`
 
@@ -505,7 +588,7 @@ osg-configure Storage/worker_node_temp
 
 Default value: `'UNAVAILABLE'`
 
-##### `storage_site_read`
+##### <a name="storage_site_read"></a>`storage_site_read`
 
 Data type: `String`
 
@@ -513,7 +596,7 @@ osg-configure Storage/site_read
 
 Default value: `'UNAVAILABLE'`
 
-##### `storage_site_write`
+##### <a name="storage_site_write"></a>`storage_site_write`
 
 Data type: `String`
 
@@ -521,7 +604,7 @@ osg-configure Storage/site_write
 
 Default value: `'UNAVAILABLE'`
 
-##### `batch_system`
+##### <a name="batch_system"></a>`batch_system`
 
 Data type: `Enum['torque', 'pbs', 'slurm']`
 
@@ -529,7 +612,7 @@ Batch system used to submit jobs
 
 Default value: `'torque'`
 
-##### `batch_system_prefix`
+##### <a name="batch_system_prefix"></a>`batch_system_prefix`
 
 Data type: `String`
 
@@ -537,7 +620,7 @@ Prefix of where batch system commands are installed
 
 Default value: `'/usr'`
 
-##### `pbs_server`
+##### <a name="pbs_server"></a>`pbs_server`
 
 Data type: `String`
 
@@ -545,7 +628,7 @@ PBS server address when `batch_system` is `torque` or `pbs`
 
 Default value: `'UNAVAILABLE'`
 
-##### `manage_hostcert`
+##### <a name="manage_hostcert"></a>`manage_hostcert`
 
 Data type: `Boolean`
 
@@ -553,7 +636,7 @@ Boolean that determines if hostcert is managed
 
 Default value: ``true``
 
-##### `hostcert_source`
+##### <a name="hostcert_source"></a>`hostcert_source`
 
 Data type: `Optional[String]`
 
@@ -561,7 +644,7 @@ The source of the hostcert
 
 Default value: ``undef``
 
-##### `hostkey_source`
+##### <a name="hostkey_source"></a>`hostkey_source`
 
 Data type: `Optional[String]`
 
@@ -569,7 +652,7 @@ The source of the hostkey
 
 Default value: ``undef``
 
-##### `htcondor_ce_port`
+##### <a name="htcondor_ce_port"></a>`htcondor_ce_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -577,7 +660,7 @@ HTCondor CE port
 
 Default value: `9619`
 
-##### `htcondor_ce_shared_port`
+##### <a name="htcondor_ce_shared_port"></a>`htcondor_ce_shared_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -585,7 +668,7 @@ HTCondor CE shared port
 
 Default value: `9620`
 
-##### `manage_firewall`
+##### <a name="manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -593,7 +676,7 @@ Boolean taht determines if firewall rules should be managed
 
 Default value: ``true``
 
-##### `osg_local_site_settings`
+##### <a name="osg_local_site_settings"></a>`osg_local_site_settings`
 
 Data type: `Hash`
 
@@ -602,7 +685,7 @@ Example: `{ 'Local Settings/PATH' => { 'value' => '/opt/singularity/bin:$PATH' }
 
 Default value: `{}`
 
-##### `osg_gip_configs`
+##### <a name="osg_gip_configs"></a>`osg_gip_configs`
 
 Data type: `Hash`
 
@@ -611,7 +694,7 @@ Example: `{ 'Subcluster owens/ram_mb' => { 'value' => 128000 } }`
 
 Default value: `{}`
 
-##### `manage_users`
+##### <a name="manage_users"></a>`manage_users`
 
 Data type: `Boolean`
 
@@ -619,7 +702,7 @@ Boolean of whether to manage users and groups
 
 Default value: ``true``
 
-##### `condor_uid`
+##### <a name="condor_uid"></a>`condor_uid`
 
 Data type: `Optional[Integer]`
 
@@ -627,7 +710,7 @@ The UID of condor user
 
 Default value: ``undef``
 
-##### `condor_gid`
+##### <a name="condor_gid"></a>`condor_gid`
 
 Data type: `Optional[Integer]`
 
@@ -635,7 +718,7 @@ The GID of condor group
 
 Default value: ``undef``
 
-##### `gratia_uid`
+##### <a name="gratia_uid"></a>`gratia_uid`
 
 Data type: `Optional[Integer]`
 
@@ -643,7 +726,7 @@ The UID of gratia user
 
 Default value: ``undef``
 
-##### `gratia_gid`
+##### <a name="gratia_gid"></a>`gratia_gid`
 
 Data type: `Optional[Integer]`
 
@@ -651,7 +734,7 @@ The GID of gratia group
 
 Default value: ``undef``
 
-##### `condor_ce_config_content`
+##### <a name="condor_ce_config_content"></a>`condor_ce_config_content`
 
 Data type: `Optional[String]`
 
@@ -659,7 +742,7 @@ Content for /etc/condor-ce/config.d/99-local.conf
 
 Default value: ``undef``
 
-##### `condor_ce_config_source`
+##### <a name="condor_ce_config_source"></a>`condor_ce_config_source`
 
 Data type: `Optional[String]`
 
@@ -667,7 +750,7 @@ Source for /etc/condor-ce/config.d/99-local.conf
 
 Default value: ``undef``
 
-##### `blahp_local_submit_content`
+##### <a name="blahp_local_submit_content"></a>`blahp_local_submit_content`
 
 Data type: `Optional[String]`
 
@@ -675,7 +758,7 @@ Content for blahp local submit attributes
 
 Default value: ``undef``
 
-##### `blahp_local_submit_source`
+##### <a name="blahp_local_submit_source"></a>`blahp_local_submit_source`
 
 Data type: `Optional[String]`
 
@@ -683,7 +766,7 @@ Source for blahp local submit attributes
 
 Default value: ``undef``
 
-##### `include_view`
+##### <a name="include_view"></a>`include_view`
 
 Data type: `Boolean`
 
@@ -691,7 +774,7 @@ Boolean to determine if adding Condor CE View
 
 Default value: ``false``
 
-##### `view_port`
+##### <a name="view_port"></a>`view_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -699,7 +782,7 @@ Port for Condor CE View
 
 Default value: `8080`
 
-##### `per_job_history_dir`
+##### <a name="per_job_history_dir"></a>`per_job_history_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -707,7 +790,7 @@ Path used for Gratia probe DataFolder
 
 Default value: `'/var/lib/gratia/data'`
 
-##### `gratia_probes_cron_service_ensure`
+##### <a name="gratia_probes_cron_service_ensure"></a>`gratia_probes_cron_service_ensure`
 
 Data type: `String`
 
@@ -715,7 +798,7 @@ Service ensure for gratia-probes-cron service
 
 Default value: `'running'`
 
-##### `gratia_probes_cron_service_enable`
+##### <a name="gratia_probes_cron_service_enable"></a>`gratia_probes_cron_service_enable`
 
 Data type: `Boolean`
 
@@ -723,15 +806,27 @@ Service enable for gratia-probes-cron service
 
 Default value: ``true``
 
-### `osg::client`
+### <a name="osgclient"></a>`osg::client`
 
 Manage OSG client
 
 #### Parameters
 
-The following parameters are available in the `osg::client` class.
+The following parameters are available in the `osg::client` class:
 
-##### `with_condor`
+* [`with_condor`](#with_condor)
+* [`with_condor_ce`](#with_condor_ce)
+* [`condor_lowport`](#condor_lowport)
+* [`condor_highport`](#condor_highport)
+* [`condor_schedd_host`](#condor_schedd_host)
+* [`condor_collector_host`](#condor_collector_host)
+* [`manage_firewall`](#manage_firewall)
+* [`enable_condor_service`](#enable_condor_service)
+* [`enable_condor_ce_service`](#enable_condor_ce_service)
+* [`condor_configs_override`](#condor_configs_override)
+* [`condor_ce_configs_override`](#condor_ce_configs_override)
+
+##### <a name="with_condor"></a>`with_condor`
 
 Data type: `Boolean`
 
@@ -739,7 +834,7 @@ Include Condor support
 
 Default value: ``true``
 
-##### `with_condor_ce`
+##### <a name="with_condor_ce"></a>`with_condor_ce`
 
 Data type: `Boolean`
 
@@ -747,7 +842,7 @@ Include Condor CE support
 
 Default value: ``true``
 
-##### `condor_lowport`
+##### <a name="condor_lowport"></a>`condor_lowport`
 
 Data type: `Integer[0, 65535]`
 
@@ -755,7 +850,7 @@ Condor lowport
 
 Default value: `40000`
 
-##### `condor_highport`
+##### <a name="condor_highport"></a>`condor_highport`
 
 Data type: `Integer[0, 65535]`
 
@@ -763,7 +858,7 @@ Condor highport
 
 Default value: `41999`
 
-##### `condor_schedd_host`
+##### <a name="condor_schedd_host"></a>`condor_schedd_host`
 
 Data type: `Optional[String]`
 
@@ -771,7 +866,7 @@ Condor schedd host
 
 Default value: ``undef``
 
-##### `condor_collector_host`
+##### <a name="condor_collector_host"></a>`condor_collector_host`
 
 Data type: `Optional[String]`
 
@@ -779,7 +874,7 @@ Condor collector host
 
 Default value: ``undef``
 
-##### `manage_firewall`
+##### <a name="manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -787,7 +882,7 @@ Manage the firewall rules
 
 Default value: ``true``
 
-##### `enable_condor_service`
+##### <a name="enable_condor_service"></a>`enable_condor_service`
 
 Data type: `Boolean`
 
@@ -795,7 +890,7 @@ Enable Condor service
 
 Default value: ``false``
 
-##### `enable_condor_ce_service`
+##### <a name="enable_condor_ce_service"></a>`enable_condor_ce_service`
 
 Data type: `Boolean`
 
@@ -803,7 +898,7 @@ Enable Condor CE service
 
 Default value: ``false``
 
-##### `condor_configs_override`
+##### <a name="condor_configs_override"></a>`condor_configs_override`
 
 Data type: `Hash`
 
@@ -811,7 +906,7 @@ Config overrides for Condor
 
 Default value: `{}`
 
-##### `condor_ce_configs_override`
+##### <a name="condor_ce_configs_override"></a>`condor_ce_configs_override`
 
 Data type: `Hash`
 
@@ -819,15 +914,41 @@ Config overrides for Condor CE
 
 Default value: `{}`
 
-### `osg::cvmfs`
+### <a name="osgcvmfs"></a>`osg::cvmfs`
 
 Manage OSG CVMFS
 
 #### Parameters
 
-The following parameters are available in the `osg::cvmfs` class.
+The following parameters are available in the `osg::cvmfs` class:
 
-##### `manage_user`
+* [`manage_user`](#manage_user)
+* [`user_name`](#user_name)
+* [`user_uid`](#user_uid)
+* [`user_home`](#user_home)
+* [`user_shell`](#user_shell)
+* [`user_system`](#user_system)
+* [`user_comment`](#user_comment)
+* [`user_managehome`](#user_managehome)
+* [`manage_group`](#manage_group)
+* [`group_name`](#group_name)
+* [`group_gid`](#group_gid)
+* [`group_system`](#group_system)
+* [`manage_fuse_group`](#manage_fuse_group)
+* [`fuse_group_name`](#fuse_group_name)
+* [`fuse_group_gid`](#fuse_group_gid)
+* [`fuse_group_system`](#fuse_group_system)
+* [`package_ensure`](#package_ensure)
+* [`repositories`](#repositories)
+* [`strict_mount`](#strict_mount)
+* [`cache_base`](#cache_base)
+* [`quota_limit`](#quota_limit)
+* [`http_proxies`](#http_proxies)
+* [`cern_server_urls`](#cern_server_urls)
+* [`glite_version`](#glite_version)
+* [`cms_local_site`](#cms_local_site)
+
+##### <a name="manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -835,7 +956,7 @@ Boolean to set if CVMFS user is managed
 
 Default value: ``true``
 
-##### `user_name`
+##### <a name="user_name"></a>`user_name`
 
 Data type: `String`
 
@@ -843,7 +964,7 @@ CVMFS user name
 
 Default value: `'cvmfs'`
 
-##### `user_uid`
+##### <a name="user_uid"></a>`user_uid`
 
 Data type: `Optional[Integer]`
 
@@ -851,7 +972,7 @@ CVMFS user UID
 
 Default value: ``undef``
 
-##### `user_home`
+##### <a name="user_home"></a>`user_home`
 
 Data type: `String`
 
@@ -859,7 +980,7 @@ CVMFS user home
 
 Default value: `'/var/lib/cvmfs'`
 
-##### `user_shell`
+##### <a name="user_shell"></a>`user_shell`
 
 Data type: `String`
 
@@ -867,7 +988,7 @@ CVMFS user shell
 
 Default value: `'/sbin/nologin'`
 
-##### `user_system`
+##### <a name="user_system"></a>`user_system`
 
 Data type: `Boolean`
 
@@ -875,7 +996,7 @@ Sets if CVMFS user is a system account
 
 Default value: ``true``
 
-##### `user_comment`
+##### <a name="user_comment"></a>`user_comment`
 
 Data type: `String`
 
@@ -883,7 +1004,7 @@ CVMFS user comment
 
 Default value: `'CernVM-FS service account'`
 
-##### `user_managehome`
+##### <a name="user_managehome"></a>`user_managehome`
 
 Data type: `Boolean`
 
@@ -891,7 +1012,7 @@ Sets if CVMFS user home is managed
 
 Default value: ``false``
 
-##### `manage_group`
+##### <a name="manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -899,7 +1020,7 @@ Boolean to set if CVMFS group is managed
 
 Default value: ``true``
 
-##### `group_name`
+##### <a name="group_name"></a>`group_name`
 
 Data type: `String`
 
@@ -907,7 +1028,7 @@ CVMFS group name
 
 Default value: `'cvmfs'`
 
-##### `group_gid`
+##### <a name="group_gid"></a>`group_gid`
 
 Data type: `Optional[Integer]`
 
@@ -915,7 +1036,7 @@ CVMFS group GID
 
 Default value: ``undef``
 
-##### `group_system`
+##### <a name="group_system"></a>`group_system`
 
 Data type: `Boolean`
 
@@ -923,7 +1044,7 @@ Sets if CVMFS group is a system account
 
 Default value: ``true``
 
-##### `manage_fuse_group`
+##### <a name="manage_fuse_group"></a>`manage_fuse_group`
 
 Data type: `Boolean`
 
@@ -931,7 +1052,7 @@ Manage FUSE group
 
 Default value: ``true``
 
-##### `fuse_group_name`
+##### <a name="fuse_group_name"></a>`fuse_group_name`
 
 Data type: `String`
 
@@ -939,7 +1060,7 @@ FUSE group name
 
 Default value: `'fuse'`
 
-##### `fuse_group_gid`
+##### <a name="fuse_group_gid"></a>`fuse_group_gid`
 
 Data type: `Optional[Integer]`
 
@@ -947,7 +1068,7 @@ FUSE group GID
 
 Default value: ``undef``
 
-##### `fuse_group_system`
+##### <a name="fuse_group_system"></a>`fuse_group_system`
 
 Data type: `Boolean`
 
@@ -955,7 +1076,7 @@ Sets if FUSE group is a system account
 
 Default value: ``true``
 
-##### `package_ensure`
+##### <a name="package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -963,7 +1084,7 @@ Ensure property for CVMFS package
 
 Default value: `'installed'`
 
-##### `repositories`
+##### <a name="repositories"></a>`repositories`
 
 Data type: `Optional[Array]`
 
@@ -971,7 +1092,7 @@ CVMFS repositories to enable, eg: `grid.cern.ch`
 
 Default value: ``undef``
 
-##### `strict_mount`
+##### <a name="strict_mount"></a>`strict_mount`
 
 Data type: `Boolean`
 
@@ -979,7 +1100,7 @@ Enable CVMFS strict mount, only allow mounting repositories from `repositories` 
 
 Default value: ``false``
 
-##### `cache_base`
+##### <a name="cache_base"></a>`cache_base`
 
 Data type: `String`
 
@@ -987,7 +1108,7 @@ Base directory for CVMFS cache
 
 Default value: `'/var/cache/cvmfs'`
 
-##### `quota_limit`
+##### <a name="quota_limit"></a>`quota_limit`
 
 Data type: `Integer`
 
@@ -995,7 +1116,7 @@ Quota limit for CVMFS cache
 
 Default value: `20000`
 
-##### `http_proxies`
+##### <a name="http_proxies"></a>`http_proxies`
 
 Data type: `Array`
 
@@ -1003,7 +1124,7 @@ Squid HTTP proxies for CVMFS
 
 Default value: `["http://squid.${facts['networking']['domain']}:3128"]`
 
-##### `cern_server_urls`
+##### <a name="cern_server_urls"></a>`cern_server_urls`
 
 Data type: `Array`
 
@@ -1011,7 +1132,7 @@ Value for `CVMFS_SERVER_URL`
 
 Default value: `[]`
 
-##### `glite_version`
+##### <a name="glite_version"></a>`glite_version`
 
 Data type: `String`
 
@@ -1019,7 +1140,7 @@ glite version
 
 Default value: `''`
 
-##### `cms_local_site`
+##### <a name="cms_local_site"></a>`cms_local_site`
 
 Data type: `Optional[String]`
 
@@ -1027,15 +1148,26 @@ Value for `CMS_LOCAL_SITE`
 
 Default value: ``undef``
 
-### `osg::fetchcrl`
+### <a name="osgfetchcrl"></a>`osg::fetchcrl`
 
 Manage OSG fetchcrl
 
 #### Parameters
 
-The following parameters are available in the `osg::fetchcrl` class.
+The following parameters are available in the `osg::fetchcrl` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`crl_package_name`](#crl_package_name)
+* [`crl_package_ensure`](#crl_package_ensure)
+* [`crl_boot_service_name`](#crl_boot_service_name)
+* [`crl_boot_service_ensure`](#crl_boot_service_ensure)
+* [`crl_boot_service_enable`](#crl_boot_service_enable)
+* [`crl_cron_service_name`](#crl_cron_service_name)
+* [`crl_cron_service_ensure`](#crl_cron_service_ensure)
+* [`crl_cron_service_enable`](#crl_cron_service_enable)
+* [`use_syslog`](#use_syslog)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent', 'disabled']`
 
@@ -1044,7 +1176,7 @@ State of OSG fetchcrl
 
 Default value: `'present'`
 
-##### `crl_package_name`
+##### <a name="crl_package_name"></a>`crl_package_name`
 
 Data type: `String`
 
@@ -1052,7 +1184,7 @@ fetch-crl package name
 
 Default value: `'fetch-crl'`
 
-##### `crl_package_ensure`
+##### <a name="crl_package_ensure"></a>`crl_package_ensure`
 
 Data type: `String`
 
@@ -1060,7 +1192,7 @@ Ensure property for fetch-crl package
 
 Default value: `'UNSET'`
 
-##### `crl_boot_service_name`
+##### <a name="crl_boot_service_name"></a>`crl_boot_service_name`
 
 Data type: `String`
 
@@ -1068,7 +1200,7 @@ fetch-crl-boot package name
 
 Default value: `'fetch-crl-boot'`
 
-##### `crl_boot_service_ensure`
+##### <a name="crl_boot_service_ensure"></a>`crl_boot_service_ensure`
 
 Data type: `String`
 
@@ -1076,7 +1208,7 @@ fetch-crl-boot service ensure
 
 Default value: `'stopped'`
 
-##### `crl_boot_service_enable`
+##### <a name="crl_boot_service_enable"></a>`crl_boot_service_enable`
 
 Data type: `Boolean`
 
@@ -1084,7 +1216,7 @@ fetch-crl-boot service enable
 
 Default value: ``false``
 
-##### `crl_cron_service_name`
+##### <a name="crl_cron_service_name"></a>`crl_cron_service_name`
 
 Data type: `String`
 
@@ -1092,7 +1224,7 @@ fetch-crl-cron service name
 
 Default value: `'fetch-crl-cron'`
 
-##### `crl_cron_service_ensure`
+##### <a name="crl_cron_service_ensure"></a>`crl_cron_service_ensure`
 
 Data type: `String`
 
@@ -1100,7 +1232,7 @@ fetch-crl-cron service ensure
 
 Default value: `'UNSET'`
 
-##### `crl_cron_service_enable`
+##### <a name="crl_cron_service_enable"></a>`crl_cron_service_enable`
 
 Data type: `Variant[Boolean, Enum['UNSET']]`
 
@@ -1108,7 +1240,7 @@ fetch-crl-cron service enable
 
 Default value: `'UNSET'`
 
-##### `use_syslog`
+##### <a name="use_syslog"></a>`use_syslog`
 
 Data type: `Boolean`
 
@@ -1116,15 +1248,21 @@ Boolean to set if syslog should be used
 
 Default value: ``true``
 
-### `osg::gridftp`
+### <a name="osggridftp"></a>`osg::gridftp`
 
 Manage OSG GridFTP.
 
 #### Parameters
 
-The following parameters are available in the `osg::gridftp` class.
+The following parameters are available in the `osg::gridftp` class:
 
-##### `manage_hostcert`
+* [`manage_hostcert`](#manage_hostcert)
+* [`hostcert_source`](#hostcert_source)
+* [`hostkey_source`](#hostkey_source)
+* [`manage_firewall`](#manage_firewall)
+* [`standalone`](#standalone)
+
+##### <a name="manage_hostcert"></a>`manage_hostcert`
 
 Data type: `Boolean`
 
@@ -1132,7 +1270,7 @@ Boolean to set if hostcert should be managed
 
 Default value: ``true``
 
-##### `hostcert_source`
+##### <a name="hostcert_source"></a>`hostcert_source`
 
 Data type: `Optional[String]`
 
@@ -1140,7 +1278,7 @@ Source for hostcert
 
 Default value: ``undef``
 
-##### `hostkey_source`
+##### <a name="hostkey_source"></a>`hostkey_source`
 
 Data type: `Optional[String]`
 
@@ -1148,7 +1286,7 @@ Source for hostkey
 
 Default value: ``undef``
 
-##### `manage_firewall`
+##### <a name="manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -1156,7 +1294,7 @@ Boolean to set if the firewall resources should be managed
 
 Default value: ``true``
 
-##### `standalone`
+##### <a name="standalone"></a>`standalone`
 
 Data type: `Boolean`
 
@@ -1166,15 +1304,20 @@ This parameter is intended for when installing GridFTP on a CE and is handled by
 
 Default value: ``true``
 
-### `osg::lcmaps_voms`
+### <a name="osglcmaps_voms"></a>`osg::lcmaps_voms`
 
 Manage lcmaps VOMs
 
 #### Parameters
 
-The following parameters are available in the `osg::lcmaps_voms` class.
+The following parameters are available in the `osg::lcmaps_voms` class:
 
-##### `ban_voms`
+* [`ban_voms`](#ban_voms)
+* [`ban_users`](#ban_users)
+* [`vos`](#vos)
+* [`users`](#users)
+
+##### <a name="ban_voms"></a>`ban_voms`
 
 Data type: `Array`
 
@@ -1182,7 +1325,7 @@ VOMs to ban
 
 Default value: `[]`
 
-##### `ban_users`
+##### <a name="ban_users"></a>`ban_users`
 
 Data type: `Array`
 
@@ -1190,7 +1333,7 @@ Users to ban
 
 Default value: `[]`
 
-##### `vos`
+##### <a name="vos"></a>`vos`
 
 Data type: `Hash[String, Variant[String, Array, Hash]]`
 
@@ -1200,7 +1343,7 @@ Example: `{ 'vo' => { 'dn' => '/DN' } }`
 
 Default value: `{}`
 
-##### `users`
+##### <a name="users"></a>`users`
 
 Data type: `Hash[String, Variant[String, Array, Hash]]`
 
@@ -1210,15 +1353,26 @@ Example: `{ 'user' => { 'dn' => '/DN' } }`
 
 Default value: `{}`
 
-### `osg::squid`
+### <a name="osgsquid"></a>`osg::squid`
 
 Manage OSG squid
 
 #### Parameters
 
-The following parameters are available in the `osg::squid` class.
+The following parameters are available in the `osg::squid` class:
 
-##### `customize_template`
+* [`customize_template`](#customize_template)
+* [`net_local`](#net_local)
+* [`monitor_addresses`](#monitor_addresses)
+* [`allow_major_cvmfs`](#allow_major_cvmfs)
+* [`max_filedescriptors`](#max_filedescriptors)
+* [`manage_firewall`](#manage_firewall)
+* [`squid_firewall_ensure`](#squid_firewall_ensure)
+* [`monitoring_firewall_ensure`](#monitoring_firewall_ensure)
+* [`private_interface`](#private_interface)
+* [`public_interface`](#public_interface)
+
+##### <a name="customize_template"></a>`customize_template`
 
 Data type: `String`
 
@@ -1226,7 +1380,7 @@ Path to template used to customize squid
 
 Default value: `'osg/squid/customize.sh.erb'`
 
-##### `net_local`
+##### <a name="net_local"></a>`net_local`
 
 Data type: `Array`
 
@@ -1234,7 +1388,7 @@ Local networks
 
 Default value: `['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16']`
 
-##### `monitor_addresses`
+##### <a name="monitor_addresses"></a>`monitor_addresses`
 
 Data type: `Array`
 
@@ -1242,7 +1396,7 @@ Monitor addresses
 
 Default value: `['128.142.0.0/16', '188.184.128.0/17', '188.185.128.0/17']`
 
-##### `allow_major_cvmfs`
+##### <a name="allow_major_cvmfs"></a>`allow_major_cvmfs`
 
 Data type: `Boolean`
 
@@ -1250,7 +1404,7 @@ Enables and allows `MAJOR_CVMFS`
 
 Default value: ``true``
 
-##### `max_filedescriptors`
+##### <a name="max_filedescriptors"></a>`max_filedescriptors`
 
 Data type: `Integer`
 
@@ -1258,7 +1412,7 @@ Sets `max_filedescriptors`
 
 Default value: `0`
 
-##### `manage_firewall`
+##### <a name="manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -1266,7 +1420,7 @@ Manage firewall resources
 
 Default value: ``true``
 
-##### `squid_firewall_ensure`
+##### <a name="squid_firewall_ensure"></a>`squid_firewall_ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -1274,7 +1428,7 @@ Ensure property for squid firewall
 
 Default value: `'present'`
 
-##### `monitoring_firewall_ensure`
+##### <a name="monitoring_firewall_ensure"></a>`monitoring_firewall_ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -1282,7 +1436,7 @@ Ensure property for monitoring firewall
 
 Default value: `'present'`
 
-##### `private_interface`
+##### <a name="private_interface"></a>`private_interface`
 
 Data type: `Optional[String]`
 
@@ -1290,7 +1444,7 @@ Private interface, used by firewall rules to allow squid access
 
 Default value: ``undef``
 
-##### `public_interface`
+##### <a name="public_interface"></a>`public_interface`
 
 Data type: `Optional[String]`
 
@@ -1298,15 +1452,17 @@ Public interface, used by firewall rules to allow monitor addresses
 
 Default value: ``undef``
 
-### `osg::utils`
+### <a name="osgutils"></a>`osg::utils`
 
 Manage OSG utils
 
 #### Parameters
 
-The following parameters are available in the `osg::utils` class.
+The following parameters are available in the `osg::utils` class:
 
-##### `packages`
+* [`packages`](#packages)
+
+##### <a name="packages"></a>`packages`
 
 Data type: `Array`
 
@@ -1317,27 +1473,31 @@ Default value: `[
     'osg-pki-tools',
   ]`
 
-### `osg::wn`
+### <a name="osgwn"></a>`osg::wn`
 
 Manage OSG worker node resources
 
 ## Defined types
 
-### `osg::lcmaps_voms::user`
+### <a name="osglcmaps_vomsuser"></a>`osg::lcmaps_voms::user`
 
 Manage lcmaps VOMs user
 
 #### Parameters
 
-The following parameters are available in the `osg::lcmaps_voms::user` defined type.
+The following parameters are available in the `osg::lcmaps_voms::user` defined type:
 
-##### `dn`
+* [`dn`](#dn)
+* [`user`](#user)
+* [`order`](#order)
+
+##### <a name="dn"></a>`dn`
 
 Data type: `Variant[Array, String]`
 
 DN of the user
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String`
 
@@ -1345,7 +1505,7 @@ Name of the user
 
 Default value: `$name`
 
-##### `order`
+##### <a name="order"></a>`order`
 
 Data type: `Integer`
 
@@ -1353,21 +1513,25 @@ Order in the grid-mapfile
 
 Default value: `50`
 
-### `osg::lcmaps_voms::vo`
+### <a name="osglcmaps_vomsvo"></a>`osg::lcmaps_voms::vo`
 
 Manage lcmaps VOMs VO entry
 
 #### Parameters
 
-The following parameters are available in the `osg::lcmaps_voms::vo` defined type.
+The following parameters are available in the `osg::lcmaps_voms::vo` defined type:
 
-##### `dn`
+* [`dn`](#dn)
+* [`user`](#user)
+* [`order`](#order)
+
+##### <a name="dn"></a>`dn`
 
 Data type: `Variant[Array, String]`
 
 DN of the VO
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String`
 
@@ -1375,7 +1539,7 @@ User name
 
 Default value: `$name`
 
-##### `order`
+##### <a name="order"></a>`order`
 
 Data type: `Integer`
 
@@ -1385,7 +1549,7 @@ Default value: `50`
 
 ## Resource types
 
-### `osg_gip_config`
+### <a name="osg_gip_config"></a>`osg_gip_config`
 
 This type writes values to `/etc/osg/config.d/30-gip.ini`
 
@@ -1412,7 +1576,10 @@ All other values are converted to a string.
 
 The following parameters are available in the `osg_gip_config` type.
 
-##### `name`
+* [`name`](#name)
+* [`provider`](#provider)
+
+##### <a name="name"></a>`name`
 
 namevar
 
@@ -1423,12 +1590,12 @@ The name must be in the format of `SECTION/SETTING`
 
 The above would have the name `GIP/batch`.
 
-##### `provider`
+##### <a name="provider"></a>`provider`
 
 The specific backend to use for this `osg_gip_config` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
 
-### `osg_local_site_settings`
+### <a name="osg_local_site_settings"></a>`osg_local_site_settings`
 
 This type writes values to `/etc/osg/config.d/99-local-site-settings.ini`.
 
@@ -1455,7 +1622,10 @@ All other values are converted to a string.
 
 The following parameters are available in the `osg_local_site_settings` type.
 
-##### `name`
+* [`name`](#name)
+* [`provider`](#provider)
+
+##### <a name="name"></a>`name`
 
 namevar
 
@@ -1466,7 +1636,7 @@ The name must be in the format of `SECTION/SETTING`
 
 The above would have the name `Squid/location`.
 
-##### `provider`
+##### <a name="provider"></a>`provider`
 
 The specific backend to use for this `osg_local_site_settings` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
