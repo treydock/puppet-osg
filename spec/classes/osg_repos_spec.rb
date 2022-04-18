@@ -16,7 +16,7 @@ describe 'osg::repos' do
       it { is_expected.to create_class('osg::repos') }
       it { is_expected.to contain_class('osg') }
 
-      it { is_expected.to contain_package('yum-plugin-priorities').with_ensure('present') }
+      it { is_expected.to contain_package('yum-plugin-priorities').with_ensure('installed') }
 
       it do
         is_expected.to contain_yumrepo('osg-empty').only_with(name: 'osg-empty',

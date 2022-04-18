@@ -26,7 +26,7 @@ describe 'osg::utils' do
         'osg-pki-tools',
       ].each do |p|
         it do
-          is_expected.to contain_package(p).with(ensure: 'present',
+          is_expected.to contain_package(p).with(ensure: 'installed',
                                                  require: 'Class[Osg::Repos]')
         end
       end
