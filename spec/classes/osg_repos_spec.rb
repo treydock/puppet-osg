@@ -51,16 +51,16 @@ describe 'osg::repos' do
       end
 
       [
-        { name: 'osg-upcoming', path: 'release', desc: 'Upcoming' },
-        { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development' },
-        { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing' },
+        { name: 'osg-upcoming', path: 'release', desc: 'Upcoming', enabled: '1' },
+        { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development', enabled: '0' },
+        { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing', enabled: '0' },
       ].each do |h|
         it do
           is_expected.to contain_yumrepo(h[:name]).only_with(name: h[:name],
                                                              baseurl: 'absent',
                                                              mirrorlist: "https://repo.opensciencegrid.org/mirror/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                                                              descr: "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
-                                                             enabled: '0',
+                                                             enabled: h[:enabled],
                                                              failovermethod: 'priority',
                                                              gpgcheck: '1',
                                                              gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
@@ -104,16 +104,16 @@ describe 'osg::repos' do
         end
 
         [
-          { name: 'osg-upcoming', path: 'release', desc: 'Upcoming' },
-          { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development' },
-          { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing' },
+          { name: 'osg-upcoming', path: 'release', desc: 'Upcoming', enabled: '1' },
+          { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development', enabled: '0' },
+          { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing', enabled: '0' },
         ].each do |h|
           it do
             is_expected.to contain_yumrepo(h[:name]).only_with(name: h[:name],
                                                                baseurl: "https://repo.opensciencegrid.org/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                                                                mirrorlist: 'absent',
                                                                descr: "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
-                                                               enabled: '0',
+                                                               enabled: h[:enabled],
                                                                failovermethod: 'priority',
                                                                gpgcheck: '1',
                                                                gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
@@ -157,16 +157,16 @@ describe 'osg::repos' do
           end
 
           [
-            { name: 'osg-upcoming', path: 'release', desc: 'Upcoming' },
-            { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development' },
-            { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing' },
+            { name: 'osg-upcoming', path: 'release', desc: 'Upcoming', enabled: '1' },
+            { name: 'osg-upcoming-development', path: 'development', desc: 'Upcoming Development', enabled: '0' },
+            { name: 'osg-upcoming-testing', path: 'testing', desc: 'Upcoming Testing', enabled: '0' },
           ].each do |h|
             it do
               is_expected.to contain_yumrepo(h[:name]).only_with(name: h[:name],
                                                                  baseurl: "https://foo.example.com/osg/upcoming/el#{facts[:operatingsystemmajrelease]}/#{h[:path]}/x86_64",
                                                                  mirrorlist: 'absent',
                                                                  descr: "OSG Software for Enterprise Linux #{facts[:operatingsystemmajrelease]} - #{h[:desc]} - x86_64",
-                                                                 enabled: '0',
+                                                                 enabled: h[:enabled],
                                                                  failovermethod: 'priority',
                                                                  gpgcheck: '1',
                                                                  gpgkey: 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG',
